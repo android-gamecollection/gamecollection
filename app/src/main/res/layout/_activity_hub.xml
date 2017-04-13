@@ -11,33 +11,32 @@
     <!-- Geht alles auch im Layout Editor ("Design" Knopf) bei den Properties -->
 
     <Button
-        android:id="@+id/kartenspielButton"
+        android:id="@+id/button_brettspiele"
         android:layout_width="285dp"
         android:layout_height="180dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/kartenspiele"
-        android:textSize="30sp"
-        android:drawable="@drawable/buttonsfeedback"
-        android:onClick="gotoKartenspiele"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.857" />
-
-    <Button
-        android:id="@+id/brettspileButton"
-        android:layout_width="285dp"
-        android:layout_height="180dp"
-        android:fontFamily="sans-serif-smallcaps"
+        android:onClick="gotoBrettspiele"
         android:text="@string/brettspiele"
         android:textSize="30sp"
-        android:onClick="gotoBrettspiele"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.15" />
+
+    <Button
+        android:id="@+id/button_kartenspiele"
+        android:layout_width="285dp"
+        android:layout_height="180dp"
+        android:drawable="@drawable/buttonsfeedback"
+        android:fontFamily="sans-serif-smallcaps"
+        android:onClick="gotoKartenspiele"
+        android:text="@string/kartenspiele"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85" />
 
 </android.support.constraint.ConstraintLayout>
