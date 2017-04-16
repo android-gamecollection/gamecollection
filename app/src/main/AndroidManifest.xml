@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        //Parentactivity
+        <!-- Parentactivity Hub -->
         <activity android:name="._Hub">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        //Childactivity
+        <!-- Childactivity Brettspiele -->
         <activity android:name=".Brettspiele"
             android:label="@string/brettspiele"
             android:parentActivityName="todo.spielesammlungprototyp._Hub" >
@@ -26,6 +26,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp._Hub" />
         </activity>
+
+        <!-- Childactivity Kartenspiele -->
         <activity android:name=".Kartenspiele"
             android:label="@string/kartenspiele"
             android:parentActivityName="todo.spielesammlungprototyp._Hub" >
@@ -35,6 +37,6 @@
         </activity>
     </application>
 
-    //Durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich
+    <!-- durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich -->
 
 </manifest>
