@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context="todo.spielesammlungprototyp._Hub">
 
-    <!-- Jegliche Feature wie Knöpfe, Textviews, etc. immer schön einen Ort geben (Constraints) -->
-    <!-- Auch IDs vergeben hilft -->
+    <!-- Jegliche Feature wie Knöpfe, Textviews, etc. immer schön einen Ort geben (Constraints), sonst "springen" sie -->
+    <!-- Auch IDs vergeben hilft, so kann man auf das gewünschte Feature zugreifen -->
     <!-- Geht alles auch im Layout Editor ("Design" Knopf) bei den Properties -->
+    <!-- Was ihr im Layout Editor seht, ist nicht umbedingt das, was ihr in der App sehen werdet -->
 
     <Button
         android:id="@+id/button_brettspiele"
