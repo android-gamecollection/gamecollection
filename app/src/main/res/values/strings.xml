@@ -5,4 +5,5 @@
     <string name="app_name">Spielesammlung Prototyp</string>
     <string name="brettspiele">Brettspiele</string>
     <string name="kartenspiele">Kartenspiele</string>
+    <string name="enter_cmd_here">Bitte Command eingeben</string>
 </resources>

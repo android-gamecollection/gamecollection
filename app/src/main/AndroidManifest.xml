@@ -21,7 +21,8 @@
         <!-- Childactivity Brettspiele -->
         <activity android:name=".Brettspiele"
             android:label="@string/brettspiele"
-            android:parentActivityName="todo.spielesammlungprototyp._Hub" >
+            android:parentActivityName="todo.spielesammlungprototyp._Hub"
+            android:windowSoftInputMode="stateVisible" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp._Hub" />
