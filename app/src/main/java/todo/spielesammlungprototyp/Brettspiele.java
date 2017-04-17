@@ -10,10 +10,17 @@ import android.widget.Toast;
 
 public class Brettspiele extends AppCompatActivity {
 
+    private ScrollView scroll_console;
+    private TextView text_console;
+    private EditText input_console;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brettspiele);
+        scroll_console = (ScrollView) findViewById(R.id.scroll_console);
+        text_console = (TextView) findViewById(R.id.text_console);
+        input_console = (EditText) findViewById(R.id.input_console);
     }
 
     @Override
@@ -23,17 +30,15 @@ public class Brettspiele extends AppCompatActivity {
     }
 
     private void scrollToBottom() {
-        final ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_console);
-        scrollView.post(new Runnable() {
+        scroll_console.post(new Runnable() {
             @Override
             public void run() {
-                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                scroll_console.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
     }
 
     public void confirmInput(View view) {
-        final EditText input_console = (EditText) findViewById(R.id.input_console);
         String input = input_console.getText().toString();
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
@@ -41,8 +46,7 @@ public class Brettspiele extends AppCompatActivity {
     }
 
     public void addOutput(String str) {
-        final TextView textView = (TextView) findViewById(R.id.text_console);
-        textView.append(str + "\n");
+        text_console.append(str + "\n");
     }
 
     public void addOutputln(String str) {
@@ -50,12 +54,10 @@ public class Brettspiele extends AppCompatActivity {
     }
 
     public void clearOutput() {
-        final TextView textView = (TextView) findViewById(R.id.text_console);
-        textView.setText("");
+        text_console.setText("");
     }
 
     private void clearInput() {
-        final EditText editText = (EditText) findViewById(R.id.input_console);
-        editText.getText().clear();
+        input_console.getText().clear();
     }
 }
