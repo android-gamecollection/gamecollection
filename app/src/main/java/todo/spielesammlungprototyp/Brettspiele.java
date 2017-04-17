@@ -12,7 +12,6 @@ public class Brettspiele extends AppCompatActivity {
         setContentView(R.layout.activity_brettspiele);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
