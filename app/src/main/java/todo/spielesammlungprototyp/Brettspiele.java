@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Brettspiele extends AppCompatActivity {
@@ -37,6 +38,20 @@ public class Brettspiele extends AppCompatActivity {
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
         clearInput();
+    }
+
+    public void addOutput(String str) {
+        final TextView textView = (TextView) findViewById(R.id.text_console);
+        textView.append(str + "\n");
+    }
+
+    public void addOutputln(String str) {
+        addOutput(str + "\n");
+    }
+
+    public void clearOutput() {
+        final TextView textView = (TextView) findViewById(R.id.text_console);
+        textView.setText("");
     }
 
     private void clearInput() {
