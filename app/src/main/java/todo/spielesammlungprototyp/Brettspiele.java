@@ -38,7 +38,7 @@ public class Brettspiele extends AppCompatActivity {
         });
     }
 
-    public void confirmInput(View view) {
+    public void processInput(View view) {
         String input = input_console.getText().toString();
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
