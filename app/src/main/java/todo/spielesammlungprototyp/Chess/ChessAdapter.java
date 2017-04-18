@@ -19,6 +19,7 @@ public class ChessAdapter {
     public ChessAdapter(Brettspiele brettspielInstance) {
         this.brettspielInstance = brettspielInstance;
         this.chessTest = new Chesstest();
+        chessTest.startPosition();
     }
 
     private class ProcessInputTask extends AsyncTask<String, Integer, String[]> {
