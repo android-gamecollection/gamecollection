@@ -41,12 +41,12 @@ public class _Hub extends AppCompatActivity {
     // "onClick" wird von einem Feature aufgerufen, hier ein "Button"
     // (definiert in der zugehörigen Layout-Datei. Hier: "_activity_hub.xml")
     // =>
-    protected void gotoKartenspiele(View view) {
+    public void gotoKartenspiele(View view) {
         Intent gotoActivity = new Intent(this, Kartenspiele.class);
         startActivity(gotoActivity);
     }
 
-    protected void gotoBrettspiele(View view) {
+    public void gotoBrettspiele(View view) {
         Intent gotoActivity = new Intent(this, Brettspiele.class);
         startActivity(gotoActivity);
     }
