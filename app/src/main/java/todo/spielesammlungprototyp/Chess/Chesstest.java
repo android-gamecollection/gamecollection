@@ -8,17 +8,16 @@ import chesspresso.Chess;
 public class Chesstest {
     private Position position;
 
-    public void startposition()
-    {
+    public void startposition() {
         position = Position.createInitialPosition();
     }
-    public String getBoard()
-    {
+
+    public String getBoard() {
         return position.toString();
     }
-    public void testmove() throws Exception
-    {
-        short move = Move.getRegularMove(Chess.E2,Chess.E4,false);
+
+    public void testmove() throws Exception {
+        short move = Move.getRegularMove(Chess.E2, Chess.E4, false);
         position.doMove(move);
     }
 }
