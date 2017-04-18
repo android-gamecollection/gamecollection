@@ -9,9 +9,10 @@ import chesspresso.Chess;
 
 
 public class Chesstest {
+
     private Position position;
 
-    public void startposition() {
+    public void startPosition() {
         position = Position.createInitialPosition();
     }
 
@@ -23,8 +24,8 @@ public class Chesstest {
         short move = Move.getRegularMove(Chess.E2, Chess.E4, false);
         position.doMove(move);
     }
-    public void move(String from,String to)throws Exception {
 
+    public void move(String from,String to) throws Exception {
         Class<?> c = Class.forName("Chess");
         Method methodfrom = c.getDeclaredMethod("from");
         Method methodto = c.getDeclaredMethod("from");
