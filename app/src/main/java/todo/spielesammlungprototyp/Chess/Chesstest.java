@@ -27,9 +27,9 @@ public class Chesstest {
     }
 
     public void move(String from, String to) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, IllegalMoveException {
-        Class<?> c = Class.forName("Chess");
-        Method methodfrom = c.getDeclaredMethod("from");
-        Method methodto = c.getDeclaredMethod("from");
+        Class<?> c = Class.forName("chesspresso.Chess");
+        Method methodfrom = c.getDeclaredMethod(from);
+        Method methodto = c.getDeclaredMethod(to);
         int f = 0;
         int t = 0;
         methodfrom.invoke(f);
