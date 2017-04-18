@@ -65,7 +65,7 @@ public class ChessAdapter {
                 try {
                     chessTest.move(cmd[1], cmd[2]);
                     output = processCommand("show")[0];
-                } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | IllegalMoveException e) {
+                } catch (IllegalMoveException e) {
                     error = e.getClass().getName() + ": " + e.getMessage();
                     e.printStackTrace();
                 }
