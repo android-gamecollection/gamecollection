@@ -49,8 +49,12 @@ public class Brettspiele extends AppCompatActivity {
         String input = input_console.getText().toString();
 
         clearInput();
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
         chessAdapter.processInput(input);
+    }
+
+    public void displayError(String errMessage) {
+        errMessage = "Error: " + errMessage;
+        Toast.makeText(getApplicationContext(), errMessage, Toast.LENGTH_SHORT).show();
     }
 
 
