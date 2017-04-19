@@ -13,7 +13,7 @@ public class Kartenspiele extends AppCompatActivity {
         setContentView(R.layout.activity_kartenspiele);
     }
     public void gotoBauernkrieg(View view) {
-        Intent gotoActivity = new Intent(this, todo.spielesammlungprototyp.Bauernkrieg.src.app.bauernkrieg.Bauernkrieg.class);
+        Intent gotoActivity = new Intent(this, todo.spielesammlungprototyp.Bauernkrieg.BauernkriegMenu.class);
         startActivity(gotoActivity);
     }
 }

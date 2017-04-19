@@ -1,6 +1,6 @@
 // Bauernkrieg.java
 
-package todo.spielesammlungprototyp.Bauernkrieg.src.app.bauernkrieg;
+package app.bauernkrieg;
 
 import ch.aplu.android.*;
 import android.graphics.Color;
@@ -9,8 +9,6 @@ import ch.aplu.util.Monitor;
 
 public class Bauernkrieg extends CardGame
 {
-    //TEST
- //Kartenwertigkeiten festlegen
   public enum Suit
   {
     KREUZ, HERZ, KARO, PIK
@@ -20,14 +18,11 @@ public class Bauernkrieg extends CardGame
   {
     ASS, KOENIG, DAME, BAUER, ZEHN, NEUN, ACHT, SIEBEN, SECHS
   }
-  //Deck erstellen
+
   private Deck deck;
-  //Anzahl Spieler festlegen
   private final int nbPlayers = 2;
-  //Anzahl Karten die man bekommt
   private final int nbCards = 18;
   private boolean isBlindRound;
-  //Hand Position
   private final Location[] handLocations =
   {
     new Location(210, 440),

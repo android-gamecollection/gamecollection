@@ -36,13 +36,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp._Hub" />
         </activity>
-        <!-- Childactivity Bauernkrieg -->
-        <activity android:name=".Bauernkrieg.src.app.bauernkrieg.Bauernkrieg"
+        <!-- Childactivity BauernKriegMenu von Kartenspiele -->
+        <activity android:name=".Bauernkrieg.BauernkriegMenu"
             android:label="@string/bauernkrieg"
             android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp.Kartenspiele" />
+        </activity>
+        <!-- Childactivity BauernKriegGame von BauernKriegMenu -->
+        <activity android:name=".Bauernkrieg.Bauernkrieg"
+            android:label="@string/bauernkrieg"
+            android:parentActivityName="todo.spielesammlungprototyp.Bauernkrieg.BauernkriegMenu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="todo.spielesammlungprototyp.Bauernkrieg.BauernkriegMenu" />
         </activity>
     </application>
 
