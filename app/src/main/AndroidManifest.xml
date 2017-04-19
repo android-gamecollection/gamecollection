@@ -36,14 +36,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp._Hub" />
         </activity>
-        <!-- Childactivity Bauernkrieg -->
-        <activity android:name=".Bauernkrieg.src.app.bauernkrieg.Bauernkrieg"
-            android:label="@string/bauernkrieg"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele" />
-        </activity>
     </application>
 
     <!-- durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich -->
