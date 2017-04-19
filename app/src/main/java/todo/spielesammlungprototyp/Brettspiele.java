@@ -3,7 +3,9 @@ package todo.spielesammlungprototyp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ public class Brettspiele extends AppCompatActivity {
         scroll_console = (ScrollView) findViewById(R.id.scroll_console);
         text_console = (TextView) findViewById(R.id.text_console);
         input_console = (EditText) findViewById(R.id.input_console);
+        setKeyboardListener();
 
         chessAdapter = new ChessAdapter(this);
     }
@@ -71,6 +74,20 @@ public class Brettspiele extends AppCompatActivity {
             @Override
             public void run() {
                 scroll_console.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
+
+    private void setKeyboardListener() {
+        input_console.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    processInput(getCurrentFocus());
+                    handled = true;
+                }
+                return handled;
             }
         });
     }
