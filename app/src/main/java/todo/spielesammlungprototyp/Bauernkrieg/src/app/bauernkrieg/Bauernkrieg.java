@@ -9,6 +9,7 @@ import ch.aplu.util.Monitor;
 
 public class Bauernkrieg extends CardGame
 {
+    //TEST
  //Kartenwertigkeiten festlegen
   public enum Suit
   {
