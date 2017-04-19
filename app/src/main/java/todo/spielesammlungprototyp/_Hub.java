@@ -31,8 +31,8 @@ public class _Hub extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this, "Das ist eine Toast Nachricht", // Hier sollte man eigentlich auch wieder den String referenzieren
-                Toast.LENGTH_SHORT).show(); // es gibt LENGTH_SHORT und LENGTH_LONG
+//        Toast.makeText(this, "Das ist eine Toast Nachricht", // Hier sollte man eigentlich auch wieder den String referenzieren
+//                Toast.LENGTH_SHORT).show(); // es gibt LENGTH_SHORT und LENGTH_LONG
                 // "Toasts" sind schön für Error-Meldungen für den User
     }
 
