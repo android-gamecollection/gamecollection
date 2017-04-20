@@ -22,14 +22,17 @@ public class ChessAdapter {
         @Override
         protected String[] doInBackground(String... params) {
             String str = params[0];
-            String[] output = processCommand(str);
-            return output;
+            return processCommand(str);
         }
 
         @Override
         protected void onPostExecute(String[] str) {
             if (!TextUtils.isEmpty(str[0]))
-                addOutput(str[0]);
+                if (str[0].equals("\\clear")) {
+                    brettspielInstance.clearOutput();
+                } else {
+                    addOutput(str[0]);
+                }
             if (!TextUtils.isEmpty(str[1]))
                 brettspielInstance.displayError(str[1]);
         }
@@ -51,6 +54,9 @@ public class ChessAdapter {
         String error = "";
 
         switch(cmd[0].toLowerCase()) {
+            case "clear":
+                output = "\\clear";
+                break;
             case "restart":
                 chessBoard.startPosition();
                 output = processCommand("show")[0];
