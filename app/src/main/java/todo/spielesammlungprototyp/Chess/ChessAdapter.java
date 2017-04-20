@@ -59,7 +59,6 @@ public class ChessAdapter {
                 break;
             case "restart":
                 chessBoard.startPosition();
-                output = processCommand("show")[0];
                 break;
             case "show":
                 output = chessBoard.getBoard();
