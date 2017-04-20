@@ -24,7 +24,8 @@
             android:id="@+id/text_console"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="6dp" />
+            android:padding="6dp"
+            android:typeface="monospace" />
     </ScrollView>
 
     <EditText

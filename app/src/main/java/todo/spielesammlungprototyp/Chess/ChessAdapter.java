@@ -58,10 +58,12 @@ public class ChessAdapter {
             case "show":
                 output = chessBoard.getBoard();
                 break;
+            case "overview":
+                output = chessBoard.getOverview();
+                break;
             case "move":
                 try {
                     chessBoard.move(cmd[1], cmd[2]);
-                    output = processCommand("show")[0];
                 } catch (IllegalMoveException e) {
                     error = e.getClass().getName() + ": " + e.getMessage();
                     e.printStackTrace();
