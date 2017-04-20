@@ -1,11 +1,7 @@
 package todo.spielesammlungprototyp.Chess;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.widget.Toast;
-
-import java.lang.reflect.InvocationTargetException;
 
 import chesspresso.move.IllegalMoveException;
 import todo.spielesammlungprototyp.Brettspiele;
@@ -14,12 +10,12 @@ import todo.spielesammlungprototyp.R;
 public class ChessAdapter {
 
     private Brettspiele brettspielInstance;
-    private Chesstest chessTest;
+    private ChessBoard chessBoard;
 
     public ChessAdapter(Brettspiele brettspielInstance) {
         this.brettspielInstance = brettspielInstance;
-        this.chessTest = new Chesstest();
-        chessTest.startPosition();
+        this.chessBoard = new ChessBoard();
+        chessBoard.startPosition();
     }
 
     private class ProcessInputTask extends AsyncTask<String, Integer, String[]> {
@@ -56,15 +52,15 @@ public class ChessAdapter {
 
         switch(cmd[0].toLowerCase()) {
             case "restart":
-                chessTest.startPosition();
+                chessBoard.startPosition();
                 output = processCommand("show")[0];
                 break;
             case "show":
-                output = chessTest.getBoard();
+                output = chessBoard.getBoard();
                 break;
             case "move":
                 try {
-                    chessTest.move(cmd[1], cmd[2]);
+                    chessBoard.move(cmd[1], cmd[2]);
                     output = processCommand("show")[0];
                 } catch (IllegalMoveException e) {
                     error = e.getClass().getName() + ": " + e.getMessage();
