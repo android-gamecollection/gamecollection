@@ -6,7 +6,7 @@ import chesspresso.Chess;
 
 
 
-class Chesstest {
+class ChessBoard {
 
     private Position position;
 
