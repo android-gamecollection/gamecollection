@@ -64,9 +64,11 @@ public class ChessAdapter {
             case "show":
                 output = chessBoard.getBoard();
                 break;
+            case "ov":
             case "overview":
                 output = chessBoard.getOverview();
                 break;
+            case "mv":
             case "move":
                 try {
                     chessBoard.move(cmd[1], cmd[2]);
