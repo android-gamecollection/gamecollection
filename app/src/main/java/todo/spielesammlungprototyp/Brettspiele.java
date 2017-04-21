@@ -82,23 +82,22 @@ public class Brettspiele extends AppCompatActivity {
         input_console.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    processInput(getCurrentFocus());
-                    handled = true;
-                }
-                return handled;
+                return processOnEnter(actionId == EditorInfo.IME_ACTION_GO);
             }
         });
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        boolean handled = false;
-        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+        return processOnEnter(keyCode == KeyEvent.KEYCODE_ENTER);
+    }
+
+    private boolean processOnEnter(boolean condition) {
+        if (condition) {
             processInput(getCurrentFocus());
-            handled = true;
+            return true;
+        } else {
+            return false;
         }
-        return handled;
     }
 }
