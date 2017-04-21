@@ -26,7 +26,7 @@ class ChessBoard {
             int piece = position.getPiece(positionNumber);
             char pieceChar = piece != 0 ? Chess.pieceToChar(piece) : '-';
             // Newline every 8 fields
-            str += pieceChar + ((i + 1) % 8 == 0 ? "\n" : " ");
+            str += pieceChar + ((i + 1) % 8 == 0 && i != 63 ? "\n" : " ");
         }
         return str;
     }

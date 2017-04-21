@@ -18,72 +18,75 @@ public class ChessAdapter {
         chessBoard.startPosition();
     }
 
-    private class ProcessInputTask extends AsyncTask<String, Integer, String[]> {
+    private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
         @Override
-        protected String[] doInBackground(String... params) {
+        protected ConsoleResponse doInBackground(String... params) {
             String str = params[0];
             return processCommand(str);
         }
 
         @Override
-        protected void onPostExecute(String[] str) {
-            if (!TextUtils.isEmpty(str[0]))
-                if (str[0].equals("\\clear")) {
-                    brettspielInstance.clearOutput();
-                } else {
-                    addOutput(str[0]);
+        protected void onPostExecute(ConsoleResponse response) {
+            if (!TextUtils.isEmpty(response.escapeSequence)) {
+                switch(response.escapeSequence) {
+                    case "clear":
+                        brettspielInstance.clearOutput();
                 }
-            if (!TextUtils.isEmpty(str[1]))
-                brettspielInstance.displayError(str[1]);
+            } else {
+                if (!TextUtils.isEmpty(response.output))
+                    brettspielInstance.addOutputln(response.output);
+                if (!TextUtils.isEmpty(response.errorMessage))
+                    brettspielInstance.displayError(response.errorMessage);
+            }
         }
+    }
 
+    private class ConsoleResponse {
+        String output;
+        String errorMessage;
+        String escapeSequence;
     }
 
     public void processInput(String input) {
         new ProcessInputTask().execute(input);
     }
 
-    private void addOutput(String str) {
-        brettspielInstance.addOutputln(str);
-    }
-
-    private String[] processCommand(String str) {
+    private ConsoleResponse processCommand(String str) {
         String[] cmd = splitString(str);
 
-        String output = "";
-        String error = "";
+        ConsoleResponse response = new ConsoleResponse();
 
         switch(cmd[0].toLowerCase()) {
             case "clear":
-                output = "\\clear";
+                response.escapeSequence = "clear";
                 break;
             case "restart":
                 chessBoard.startPosition();
                 break;
             case "show":
-                output = chessBoard.getBoard();
+                response.output = chessBoard.getBoard();
                 break;
             case "ov":
             case "overview":
-                output = chessBoard.getOverview();
+                response.output = chessBoard.getOverview();
                 break;
             case "mv":
             case "move":
                 try {
                     chessBoard.move(cmd[1], cmd[2]);
                 } catch (IllegalMoveException e) {
-                    error = e.getClass().getName() + ": " + e.getMessage();
+                    response.errorMessage = e.getClass().getName() + ": " + e.getMessage();
                     e.printStackTrace();
                 }
                 break;
             case "help":
-                output = getString(R.string.cmd_help);
+                response.output = getString(R.string.cmd_help);
                 break;
             default:
-                error = getString(R.string.err_invalid_cmd);
+                response.errorMessage = getString(R.string.err_invalid_cmd);
         }
 
-        return new String[] {output, error};
+        return response;
     }
 
     private String getString(int xmlString) {
