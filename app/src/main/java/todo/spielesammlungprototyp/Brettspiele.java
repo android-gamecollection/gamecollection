@@ -1,7 +1,7 @@
 package todo.spielesammlungprototyp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -93,7 +93,7 @@ public class Brettspiele extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
         boolean handled = false;
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             processInput(getCurrentFocus());
