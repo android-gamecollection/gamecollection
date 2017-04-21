@@ -10,4 +10,6 @@
     <string name="confirm_console_input">desc_button_confirm</string>
     <string name="err_invalid_cmd">Not a valid command</string>
     <string name="cmd_help">Available commands:\nhelp, restart, show, move &lt;from&gt; &lt;to&gt;</string>
+    <string name="info">Info</string>
+    <string name="settings">Settings</string>
 </resources>
