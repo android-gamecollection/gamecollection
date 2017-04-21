@@ -8,6 +8,9 @@
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <!--<color name="colorAccent">#FF4081</color>-->
     <color name="colorPrimary">#388E3C</color>
-    <color name="colorPrimaryDark">#307F40</color>
-    <color name="colorAccent">#388E3C</color>
+    <color name="colorPrimaryDark">#307f40</color>
+    <color name="colorPrimaryLight">#6ABF69</color>
+    <color name="colorAccent">#388e3c</color>
+    <color name="colorFont">#ffffff</color>
+
 </resources>
