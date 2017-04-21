@@ -91,4 +91,14 @@ public class Brettspiele extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean handled = false;
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            processInput(getCurrentFocus());
+            handled = true;
+        }
+        return handled;
+    }
 }
