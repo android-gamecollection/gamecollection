@@ -28,6 +28,5 @@ class ChessBoard {
     boolean move(String from, String to){
         int move = Move.getFromString(board,from + " " + to,true);
         return board.doMove(move);
-
     }
 }
