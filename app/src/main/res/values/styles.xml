@@ -12,6 +12,7 @@
         <item name="android:textColorPrimary">@color/colorPrimaryText</item>
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>
         <item name="android:colorBackground">@color/background</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
 </resources>
