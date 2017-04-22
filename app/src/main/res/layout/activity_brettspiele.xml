@@ -53,6 +53,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/input_console"
-        app:srcCompat="@android:drawable/ic_menu_send"
+        android:src="@android:drawable/ic_menu_send"
         android:contentDescription="@string/confirm_console_input" />
 </android.support.constraint.ConstraintLayout>
