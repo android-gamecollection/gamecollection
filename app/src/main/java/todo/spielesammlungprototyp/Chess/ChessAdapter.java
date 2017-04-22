@@ -71,9 +71,13 @@ public class ChessAdapter {
                 break;
             case "mv":
             case "move":
-                boolean validMove = chessBoard.move(cmd[1], cmd[2]);
-                if(!validMove){
-                    response.errorMessage = getString(R.string.err_invalid_move);
+                if (cmd.length < 3) {
+                    response.errorMessage = getString(R.string.err_invalid_cmd);
+                } else {
+                    boolean validMove = chessBoard.move(cmd[1], cmd[2]);
+                    if (!validMove){
+                        response.errorMessage = getString(R.string.err_invalid_move);
+                    }
                 }
                 break;
             case "help":
