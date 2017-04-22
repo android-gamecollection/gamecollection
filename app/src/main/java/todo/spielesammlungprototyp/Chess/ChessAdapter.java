@@ -3,7 +3,6 @@ package todo.spielesammlungprototyp.Chess;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import chesspresso.move.IllegalMoveException;
 import todo.spielesammlungprototyp.Brettspiele;
 import todo.spielesammlungprototyp.R;
 
@@ -72,12 +71,12 @@ public class ChessAdapter {
                 break;
             case "mv":
             case "move":
-                try {
-                    chessBoard.move(cmd[1], cmd[2]);
-                } catch (IllegalMoveException e) {
-                    response.errorMessage = e.getClass().getName() + ": " + e.getMessage();
-                    e.printStackTrace();
+                if(!chessBoard.move(cmd[1], cmd[2]))
+                {
+                    response.errorMessage = getString(R.string.Invalid_move);
                 }
+
+
                 break;
             case "help":
                 response.output = getString(R.string.cmd_help);
