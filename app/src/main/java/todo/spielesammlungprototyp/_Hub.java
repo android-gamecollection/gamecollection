@@ -1,12 +1,12 @@
 package todo.spielesammlungprototyp;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class _Hub extends AppCompatActivity {
+public class _Hub extends Activity {
 
 
     // "onCreate()" wird beim Start der Activity gerufen
