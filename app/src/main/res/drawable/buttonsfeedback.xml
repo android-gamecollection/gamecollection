@@ -2,11 +2,10 @@
 
 <!-- Ist in Arbeit, geht um Buttonfeedback mit Farbänderung auf API21-->
 
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?attr/colorControlHighlight">
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/colorAccent">
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="2dp"/>
+            <corners android:radius="4dp"/>
             <solid android:color="@color/colorPrimary"/>
         </shape>
     </item>
