@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spiele_details"
-            android:text="@string/spiele_details"
+            android:text="@string/schach_details"
             android:layout_toEndOf="@+id/spiele_icon"
             android:layout_below="@+id/spiele_titel"
             />

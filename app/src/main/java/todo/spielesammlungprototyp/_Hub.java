@@ -42,7 +42,7 @@ public class _Hub extends Activity {
     // (definiert in der zugehörigen Layout-Datei. Hier: "_activity_hub.xml")
     // =>
     public void gotoKartenspiele(View view) {
-        Intent gotoActivity = new Intent(this, Kartenspiele.class);
+        Intent gotoActivity = new Intent(this, Kartenspiele_Auswahl.class);
         startActivity(gotoActivity);
     }
 
