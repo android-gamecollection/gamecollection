@@ -44,11 +44,13 @@ public class _Hub extends Activity {
     public void gotoKartenspiele(View view) {
         Intent gotoActivity = new Intent(this, Kartenspiele_Auswahl.class);
         startActivity(gotoActivity);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void gotoBrettspiele(View view) {
         Intent gotoActivity = new Intent(this, Brettspiele_Auswahl.class);
         startActivity(gotoActivity);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
     // <=
 }

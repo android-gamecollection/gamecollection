@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
+import android.view.Gravity;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,11 @@ public class Brettspiele_Auswahl extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brettspiele_auswahl);
+
+        getWindow().setAllowEnterTransitionOverlap(false);
+        Slide slide = new Slide(Gravity.END);
+        getWindow().setReturnTransition(slide);
+
         spiele_titel = getResources().getStringArray(R.array.spiele_titel_brettspiele);
         spiele_details = getResources().getStringArray(R.array.spiele_details_brettspiele);
         int counter = 0;
@@ -34,5 +42,22 @@ public class Brettspiele_Auswahl extends Activity {
         recyclerView.setHasFixedSize(true);
         adapter = new Spiel_CardViewAdapter(spieleListe);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

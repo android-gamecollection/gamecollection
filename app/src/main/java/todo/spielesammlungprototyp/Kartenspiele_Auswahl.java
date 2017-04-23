@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -34,5 +35,22 @@ public class Kartenspiele_Auswahl extends Activity {
         recyclerView.setHasFixedSize(true);
         adapter = new Spiel_CardViewAdapter(spieleListe);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
