@@ -18,10 +18,17 @@
 
     <string-array name="spiele_titel_brettspiele">
         <item>"Schach"</item>
+    </string-array>
+
+    <string-array name="spiele_titel_kartenspiele">
         <item>"Bauernkrieg"</item>
     </string-array>
+
     <string-array name="spiele_details_brettspiele">
         <item>"Klassisches Schach"</item>
+    </string-array>
+
+    <string-array name="spiele_details_kartenspiele">
         <item>"Trumpfkartenspiel"</item>
     </string-array>
 </resources>
