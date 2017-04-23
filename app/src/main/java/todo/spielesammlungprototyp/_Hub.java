@@ -47,7 +47,7 @@ public class _Hub extends Activity {
     }
 
     public void gotoBrettspiele(View view) {
-        Intent gotoActivity = new Intent(this, Brettspiele.class);
+        Intent gotoActivity = new Intent(this, Brettspiele_Auswahl.class);
         startActivity(gotoActivity);
     }
     // <=
