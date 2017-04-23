@@ -7,11 +7,20 @@
     tools:context="todo.spielesammlungprototyp.Kartenspiele">
 
     <Button
-        android:id="@+id/b_krieg"
+        android:id="@+id/MauMau"
         android:layout_width="285dp"
         android:layout_height="180dp"
         android:onClick="gotoBauernkrieg"
         android:text="Bauernkrieg"
         tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="45dp" />
+        tools:layout_editor_absoluteY="50dp" />
+
+    <Button
+        android:id="@+id/b_krieg"
+        android:layout_width="285dp"
+        android:layout_height="180dp"
+        android:onClick="gotoMauMauMenu"
+        android:text="MauMau"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="244dp" />
 </android.support.constraint.ConstraintLayout>
