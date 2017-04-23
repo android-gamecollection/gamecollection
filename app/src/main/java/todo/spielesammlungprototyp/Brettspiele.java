@@ -1,7 +1,7 @@
 package todo.spielesammlungprototyp;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import todo.spielesammlungprototyp.Chess.ChessAdapter;
 
-public class Brettspiele extends AppCompatActivity {
+public class Brettspiele extends Activity {
 
     private ScrollView scroll_console;
     private TextView text_console;

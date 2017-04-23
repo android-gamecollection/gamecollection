@@ -15,6 +15,7 @@
     <string name="schach_details">Klassisches Schach</string>
     <string name="bauernkrieg_titel">Bauernkrieg</string>
     <string name="bauernkrieg_details">Trumpfkartenspiel</string>
+    <string name="err_invalid_move">Invalid move</string>
 
     <string-array name="spiele_titel_brettspiele">
         <item>"Schach"</item>
