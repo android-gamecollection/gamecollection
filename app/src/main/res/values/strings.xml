@@ -12,7 +12,9 @@
     <string name="info">Info</string>
     <string name="settings">Optionen</string>
     <string name="schach_titel">Schach</string>
-    <string name="spiele_details">Klassisches Schach</string>
+    <string name="schach_details">Klassisches Schach</string>
+    <string name="bauernkrieg_titel">Bauernkrieg</string>
+    <string name="bauernkrieg_details">Trumpfkartenspiel</string>
 
     <string-array name="spiele_titel_brettspiele">
         <item>"Schach"</item>
