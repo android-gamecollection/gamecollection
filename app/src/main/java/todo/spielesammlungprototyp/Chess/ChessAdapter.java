@@ -1,84 +1,93 @@
 package todo.spielesammlungprototyp.Chess;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
-
-import chesspresso.move.IllegalMoveException;
 import todo.spielesammlungprototyp.Brettspiele;
 import todo.spielesammlungprototyp.R;
 
 public class ChessAdapter {
 
     private Brettspiele brettspielInstance;
-    private Chesstest chessTest;
+    private ChessBoard chessBoard;
 
     public ChessAdapter(Brettspiele brettspielInstance) {
         this.brettspielInstance = brettspielInstance;
-        this.chessTest = new Chesstest();
-        chessTest.startPosition();
+        this.chessBoard = new ChessBoard();
+        chessBoard.startPosition();
     }
 
-    private class ProcessInputTask extends AsyncTask<String, Integer, String[]> {
+    private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
         @Override
-        protected String[] doInBackground(String... params) {
+        protected ConsoleResponse doInBackground(String... params) {
             String str = params[0];
-            String[] output = processCommand(str);
-            return output;
+            return processCommand(str);
         }
 
         @Override
-        protected void onPostExecute(String[] str) {
-            if (!TextUtils.isEmpty(str[0]))
-                addOutput(str[0]);
-            if (!TextUtils.isEmpty(str[1]))
-                brettspielInstance.displayError(str[1]);
+        protected void onPostExecute(ConsoleResponse response) {
+            if (!TextUtils.isEmpty(response.escapeSequence)) {
+                switch(response.escapeSequence) {
+                    case "clear":
+                        brettspielInstance.clearOutput();
+                }
+            } else {
+                if (!TextUtils.isEmpty(response.output))
+                    brettspielInstance.addOutputln(response.output);
+                if (!TextUtils.isEmpty(response.errorMessage))
+                    brettspielInstance.displayError(response.errorMessage);
+            }
         }
+    }
 
+    private class ConsoleResponse {
+        String output;
+        String errorMessage;
+        String escapeSequence;
     }
 
     public void processInput(String input) {
         new ProcessInputTask().execute(input);
     }
 
-    private void addOutput(String str) {
-        brettspielInstance.addOutputln(str);
-    }
-
-    private String[] processCommand(String str) {
+    private ConsoleResponse processCommand(String str) {
         String[] cmd = splitString(str);
 
-        String output = "";
-        String error = "";
+        ConsoleResponse response = new ConsoleResponse();
 
         switch(cmd[0].toLowerCase()) {
+            case "clear":
+                response.escapeSequence = "clear";
+                break;
             case "restart":
-                chessTest.startPosition();
-                output = processCommand("show")[0];
+                chessBoard.startPosition();
                 break;
             case "show":
-                output = chessTest.getBoard();
+                response.output = chessBoard.getBoard();
                 break;
+            case "ov":
+            case "overview":
+                response.output = chessBoard.getOverview();
+                break;
+            case "mv":
             case "move":
-                try {
-                    chessTest.move(cmd[1], cmd[2]);
-                    output = processCommand("show")[0];
-                } catch (IllegalMoveException e) {
-                    error = e.getClass().getName() + ": " + e.getMessage();
-                    e.printStackTrace();
+                if (cmd.length < 3) {
+                    response.errorMessage = getString(R.string.err_invalid_cmd);
+                } else {
+                    boolean validMove = chessBoard.move(cmd[1], cmd[2]);
+                    if (!validMove){
+                        response.errorMessage = getString(R.string.err_invalid_move);
+                    }
                 }
                 break;
             case "help":
-                output = getString(R.string.cmd_help);
+                response.output = getString(R.string.cmd_help);
                 break;
             default:
-                error = getString(R.string.err_invalid_cmd);
+                response.errorMessage = getString(R.string.err_invalid_cmd);
         }
 
-        return new String[] {output, error};
+        return response;
     }
 
     private String getString(int xmlString) {
