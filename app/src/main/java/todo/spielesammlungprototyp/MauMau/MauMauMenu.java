@@ -11,9 +11,7 @@ import android.view.View;
 
 import todo.spielesammlungprototyp.R;
 
-/**
- * Created by phil2 on 19.04.2017.
- */
+
 
 public class MauMauMenu extends AppCompatActivity {
     @Override
