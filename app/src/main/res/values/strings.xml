@@ -15,4 +15,5 @@
     <string name="start">Start</string>
     <string name="rules">Regeln</string>
     <string name="maumau_regeln">Platzhalter für die Mau Mau regeln</string>
+    <string name="maumau">Mau Mau</string>
 </resources>
