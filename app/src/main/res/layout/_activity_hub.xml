@@ -18,7 +18,7 @@
         android:layout_margin="32dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/buttonsfeedback"
-        android:onClick="gotoBrettspiele"
+        android:onClick="gotoChessActivity"
         android:text="@string/brettspiele"
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
