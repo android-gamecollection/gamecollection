@@ -6,16 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
 
 public class ChessGrid extends BaseAdapter {
     private Context mContext;
     private final int[] Imageid;
+    private final String[] chessFigure;
 
-    public ChessGrid(Context c, int[] Imageid ) {
+    public ChessGrid(Context c, int[] Imageid, String[] chessFigure) {
         mContext = c;
         this.Imageid = Imageid;
+        this.chessFigure = chessFigure;
     }
 
     @Override
@@ -47,8 +50,11 @@ public class ChessGrid extends BaseAdapter {
 
             //grid = new View(mContext);
             grid = inflater.inflate(R.layout.chess_grid_single, null);
-            ImageView imageView = (ImageView)grid.findViewById(R.id.chess_figure);
+            ImageView imageView = (ImageView)grid.findViewById(R.id.chess_plate);
+            TextView textView = (TextView)grid.findViewById(R.id.chess_figure);
+            textView.setText(chessFigure[position]);
             imageView.setImageResource(Imageid[position]);
+
         } else {
             grid = convertView;
         }
