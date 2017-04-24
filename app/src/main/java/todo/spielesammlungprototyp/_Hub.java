@@ -52,5 +52,10 @@ public class _Hub extends Activity {
         startActivity(gotoActivity);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
+
+    public void gotoChessActivity(View view) {
+        Intent gotoActivity = new Intent(this, ChessActivity.class);
+        startActivity(gotoActivity);
+    }
     // <=
 }

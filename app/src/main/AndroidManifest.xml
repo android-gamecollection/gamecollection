@@ -37,6 +37,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp._Hub" />
         </activity>
+        <activity android:name=".ChessActivity"
+            android:label="Schach"
+            android:parentActivityName=".Brettspiele_Auswahl">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Brettspiele_Auswahl" />
+        </activity>
 
         <!-- Childactivity Kartenspiele -->
         <!--activity
