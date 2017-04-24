@@ -8,156 +8,85 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import todo.spielesammlungprototyp.Chess.ChessGrid;
+import todo.spielesammlungprototyp.Chess.ucChessPiece;
 
 public class ChessActivity extends Activity {
     GridView grid;
 
-    int[] imageId = {
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-            R.drawable.chess_white_plate,
-            R.drawable.chess_black_plate,
-    };
+    int[] imageId = new int[64];
 
     String[] chessFigure = {
-            "\u265C",
-            "\u265E",
-            "\u265D",
-            "\u265A",
-            "\u265B",
-            "\u265D",
-            "\u265E",
-            "\u265C",
+            ucChessPiece.ROOK_B,
+            ucChessPiece.KNIGHT_B,
+            ucChessPiece.BISHOP_B,
+            ucChessPiece.QUEEN_B,
+            ucChessPiece.KING_B,
+            ucChessPiece.BISHOP_B,
+            ucChessPiece.KNIGHT_B,
+            ucChessPiece.ROOK_B,
 
-            "\u265F",
-            "\u265F",
-            "\u265F",
-            "\u265F",
-            "\u265F",
-            "\u265F",
-            "\u265F",
-            "\u265F",
+            ucChessPiece.PAWN_B,
+            ucChessPiece.PAWN_B,
+            ucChessPiece.PAWN_B,
+            ucChessPiece.PAWN_B,
+            ucChessPiece.PAWN_B,
+            ucChessPiece.PAWN_B,
+            ucChessPiece.PAWN_B,
+            ucChessPiece.PAWN_B,
 
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
 
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
 
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
 
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
+            ucChessPiece.NONE,
 
-            "\u2659",
-            "\u2659",
-            "\u2659",
-            "\u2659",
-            "\u2659",
-            "\u2659",
-            "\u2659",
-            "\u2659",
+            ucChessPiece.PAWN_W,
+            ucChessPiece.PAWN_W,
+            ucChessPiece.PAWN_W,
+            ucChessPiece.PAWN_W,
+            ucChessPiece.PAWN_W,
+            ucChessPiece.PAWN_W,
+            ucChessPiece.PAWN_W,
+            ucChessPiece.PAWN_W,
 
-            "\u2656",
-            "\u2658",
-            "\u2657",
-            "\u2654",
-            "\u2655",
-            "\u2657",
-            "\u2658",
-            "\u2656",
+            ucChessPiece.ROOK_W,
+            ucChessPiece.KNIGHT_W,
+            ucChessPiece.BISHOP_W,
+            ucChessPiece.QUEEN_W,
+            ucChessPiece.KING_W,
+            ucChessPiece.BISHOP_W,
+            ucChessPiece.KNIGHT_W,
+            ucChessPiece.ROOK_W,
     };
 
     @Override
@@ -165,6 +94,7 @@ public class ChessActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chess_grid);
 
+        setGridColors();
         ChessGrid adapter = new ChessGrid(ChessActivity.this, imageId, chessFigure);
         grid=(GridView)findViewById(R.id.gridview_Chess);
             grid.setAdapter(adapter);
@@ -173,10 +103,14 @@ public class ChessActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(ChessActivity.this, "You Clicked at "+imageId[position], Toast.LENGTH_SHORT).show();
-
             }
         });
-
     }
 
+    private void setGridColors() {
+        for (int i = 0; i < 64; i++) {
+            boolean testable = (i + i/8 % 2) % 2 == 0;
+            imageId[i] = testable ? R.drawable.chess_white_plate : R.drawable.chess_black_plate;
+        }
+    }
 }
