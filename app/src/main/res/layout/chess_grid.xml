@@ -12,7 +12,7 @@
         android:columnWidth="32dp"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:background="@drawable/background_border">
+        android:background="@drawable/chess_board_complete_bw">
     </GridView>
 
 </LinearLayout>
