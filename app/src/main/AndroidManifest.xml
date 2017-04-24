@@ -36,6 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp._Hub" />
         </activity>
+
+        <!-- BauernKrieg -->
         <!-- Childactivity BauernKriegMenu von Kartenspiele -->
         <activity android:name=".Bauernkrieg.BauernkriegMenu"
             android:label="@string/bauernkrieg"
@@ -52,6 +54,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp.Bauernkrieg.BauernkriegMenu" />
         </activity>
+        <!-- MauMau -->
+        <!-- Childactivity MauMauMenu von Kartenspiele -->
+        <activity android:name=".MauMau.MauMauMenu"
+            android:label="@string/maumau"
+            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="todo.spielesammlungprototyp.Kartenspiele" />
+        </activity>
+        <!-- Childactivity MauMau von MauMauMenu -->
+        <activity android:name=".MauMau.MauMau"
+            android:label="@string/maumau"
+            android:parentActivityName="todo.spielesammlungprototyp.MauMau.MauMauMenu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="todo.spielesammlungprototyp.MauMau.MauMauMenu" />
+        </activity>
+
+
+
+
+
+
+
+
+
+
     </application>
 
     <!-- durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich -->
