@@ -16,4 +16,6 @@
     <string name="rules">Regeln</string>
     <string name="maumau_regeln">Platzhalter für die Mau Mau regeln</string>
     <string name="maumau">Mau Mau</string>
+    <string name="err_invalid_move">Invalid move</string>
+
 </resources>

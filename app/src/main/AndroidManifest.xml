@@ -58,7 +58,7 @@
         <!-- Childactivity MauMauMenu von Kartenspiele -->
         <activity android:name=".MauMau.MauMauMenu"
             android:label="@string/maumau"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele" >
+            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp.Kartenspiele" />
@@ -67,7 +67,7 @@
         <activity android:name=".MauMau.MauMau"
             android:label="@string/maumau"
             android:parentActivityName="todo.spielesammlungprototyp.MauMau.MauMauMenu"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape">>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp.MauMau.MauMauMenu" />
