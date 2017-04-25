@@ -1,64 +1,41 @@
 package todo.spielesammlungprototyp.Chess;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
 
-public class ChessGrid extends BaseAdapter {
-    private Context mContext;
-    private final int[] Imageid;
-    private final String[] chessFigure;
+public class ChessGrid extends ArrayAdapter<String> {
 
-    public ChessGrid(Context c, int[] Imageid, String[] chessFigure) {
-        mContext = c;
-        this.Imageid = Imageid;
-        this.chessFigure = chessFigure;
+    public ChessGrid(Context context, String[] objects) {
+        super(context, R.layout.chess_grid_single, objects);
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return Imageid.length;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        String chessPiece = getItem(position);
 
         if (convertView == null) {
-
-            //grid = new View(mContext);
-            grid = inflater.inflate(R.layout.chess_grid_single, null);
-            ImageView imageView = (ImageView)grid.findViewById(R.id.chess_plate);
-            TextView textView = (TextView)grid.findViewById(R.id.chess_figure);
-            textView.setText(chessFigure[position]);
-            imageView.setImageResource(Imageid[position]);
-
-        } else {
-            grid = convertView;
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.chess_grid_single, parent, false);
         }
 
-        return grid;
+        TextView textView = (TextView) convertView.findViewById(R.id.chess_figure);
+        textView.setText(chessPiece);
+        textView.setBackgroundColor(ContextCompat.getColor(getContext(), getColorFromInd(position)));
+
+        return convertView;
+    }
+
+    private int getColorFromInd(int i) {
+        boolean testable = (i + i/8 % 2) % 2 == 0;
+        return testable ? R.color.chessWhite : R.color.chessBlack;
     }
 }

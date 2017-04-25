@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp">
-
-    <!--GridView
-        android:id="@+id/gridview_Chess"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:numColumns="8"
-        android:gravity="center"
-        android:columnWidth="32dp"
-        android:background="@drawable/chess_background"
-        android:stretchMode="none"
-        >
-    </GridView-->
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <GridView
         android:id="@+id/gridview_Chess"
-        android:stretchMode="none"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:numColumns="8"
-        android:gravity="center"
-        android:columnWidth="36dp"
-        android:background="@drawable/chess_background"
-        />
+        android:stretchMode="columnWidth"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
