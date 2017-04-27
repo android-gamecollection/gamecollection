@@ -11,12 +11,10 @@
     <string name="cmd_help">Available commands:\nhelp, restart, show, move &lt;from&gt; &lt;to&gt;</string>
     <string name="info">Info</string>
     <string name="settings">Optionen</string>
-    <string name="schach_titel">Schach</string>
-    <string name="schach_details">Klassisches Schach</string>
-    <string name="bauernkrieg_titel">Bauernkrieg</string>
-    <string name="bauernkrieg_details">Trumpfkartenspiel</string>
     <string name="err_invalid_move">Invalid move</string>
+    <string name="bauernkrieg">"Bauernkrieg"</string>
 
+    <!-- Arrays für CardView START -->
     <string-array name="spiele_titel_brettspiele">
         <item>"Schach"</item>
     </string-array>
@@ -32,4 +30,15 @@
     <string-array name="spiele_details_kartenspiele">
         <item>"Trumpfkartenspiel"</item>
     </string-array>
+
+    <string-array name="spiele_activity_brettspiele">
+        <item>"ChessActivity"</item>
+    </string-array>
+
+    <string-array name="spiele_activity_kartenspiele">
+        <item>"Bauernkrieg"</item>
+    </string-array>
+    <!-- Arrays für CardView ENDE -->
+
+
 </resources>

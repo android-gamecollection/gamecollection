@@ -1,31 +1,28 @@
 package todo.spielesammlungprototyp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
-public class Brettspiele_Auswahl extends Activity {
+public class Brettspiele_Auswahl extends Activity implements ClickListener{
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    Spiel_CardViewAdapter adapterC;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
     int[] spiele_icon_id = {R.mipmap.ic_game_dark};
-    String[] spiele_titel,spiele_details;
+    String[] spiele_titel, spiele_details;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brettspiele_auswahl);
-
-        getWindow().setAllowEnterTransitionOverlap(false);
-        Slide slide = new Slide(Gravity.END);
-        getWindow().setReturnTransition(slide);
 
         spiele_titel = getResources().getStringArray(R.array.spiele_titel_brettspiele);
         spiele_details = getResources().getStringArray(R.array.spiele_details_brettspiele);
@@ -40,8 +37,9 @@ public class Brettspiele_Auswahl extends Activity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapter = new Spiel_CardViewAdapter(spieleListe);
-        recyclerView.setAdapter(adapter);
+        adapterC = new Spiel_CardViewAdapter(spieleListe);
+        adapterC.setClickListener(this);
+        recyclerView.setAdapter(adapterC);
     }
 
     @Override
@@ -60,4 +58,14 @@ public class Brettspiele_Auswahl extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void itemClicked(View view, int position) {
+        Intent intent = new Intent();
+        Context context = view.getContext();
+        String[] stringClassnames = getResources().getStringArray(R.array.spiele_activity_brettspiele);
+        intent.setClassName(context, context.getPackageName() + "." + stringClassnames[position]);
+        context.startActivity(intent);
+    }
+
 }

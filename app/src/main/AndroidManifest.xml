@@ -45,15 +45,15 @@
                 android:value=".Brettspiele_Auswahl" />
         </activity>
 
-        <!-- Childactivity Kartenspiele -->
-        <!--activity
-            android:name=".Kartenspiele"
-            android:label="@string/kartenspiele"
+        <!-- Childactivity Bauernkrieg -->
+        <activity
+            android:name=".Bauernkrieg"
+            android:label="@string/bauernkrieg"
             android:parentActivityName="._Hub">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="to do.spielesammlungprototyp._Hub" />
-        </activity-->
+                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
+        </activity>
         <activity android:name=".Kartenspiele_Auswahl"
             android:label="@string/kartenspiele"
             android:parentActivityName="._Hub">

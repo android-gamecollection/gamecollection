@@ -9,19 +9,20 @@
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/brettspiele_auswahl_card_view"
+    android:id="@+id/spiele_auswahl_card_view"
     card_view:cardBackgroundColor="@color/background"
     android:layout_margin="16dp"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="2dp"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
     >
 
     <RelativeLayout
+        android:id="@+id/complete_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <ImageView
             android:layout_width="100dp"
@@ -37,14 +38,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/spiele_icon"
-            android:text="@string/schach_titel"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spiele_details"
-            android:text="@string/schach_details"
             android:layout_toEndOf="@+id/spiele_icon"
             android:layout_below="@+id/spiele_titel"
             />
