@@ -2,6 +2,7 @@ package todo.spielesammlungprototyp;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,6 +60,23 @@ public class ChessActivity extends Activity {
             matcher.appendReplacement(s, genSpace(Integer.parseInt(matcher.group(1))));
         matcher.appendTail(s);
         return s.toString();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private String genSpace(int length) {

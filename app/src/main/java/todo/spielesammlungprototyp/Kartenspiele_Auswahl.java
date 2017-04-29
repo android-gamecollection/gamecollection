@@ -66,6 +66,7 @@ public class Kartenspiele_Auswahl extends Activity implements ClickListener{
         String[] stringClassnames = getResources().getStringArray(R.array.spiele_activity_kartenspiele);
         intent.setClassName(context, context.getPackageName() + "." + stringClassnames[position]);
         context.startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 }
