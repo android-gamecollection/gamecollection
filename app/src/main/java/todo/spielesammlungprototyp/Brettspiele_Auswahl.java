@@ -29,7 +29,7 @@ public class Brettspiele_Auswahl extends Activity implements ClickListener{
         int counter = 0;
         for(String titel : spiele_titel)
         {
-            Spiel_CardView spiel_cardView = new Spiel_CardView(spiele_icon_id[counter],titel,spiele_details[counter]);
+            Spiel_CardView spiel_cardView = new Spiel_CardView(spiele_icon_id[0],titel,spiele_details[counter]);
             counter++;
             spieleListe.add(spiel_cardView);
         }

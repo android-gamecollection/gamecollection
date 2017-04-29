@@ -20,22 +20,22 @@
         </activity>
 
         <!-- Childactivity Brettspiele -->
-        <!--activity
+        <activity
             android:name=".Brettspiele"
             android:label="@string/brettspiele"
-            android:parentActivityName="._Hub"
+            android:parentActivityName=".Brettspiele_Auswahl"
             android:windowSoftInputMode="stateVisible">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="to do.spielesammlungprototyp._Hub" />
-        </activity-->
+                android:value=".Brettspiele_Auswahl"/>
+        </activity>
         <activity
             android:name=".Brettspiele_Auswahl"
             android:label="@string/brettspiele"
             android:parentActivityName="._Hub">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp._Hub" />
+                android:value="._Hub" />
         </activity>
         <activity android:name=".ChessActivity"
             android:label="Schach"
@@ -49,10 +49,10 @@
         <activity
             android:name=".Bauernkrieg"
             android:label="@string/bauernkrieg"
-            android:parentActivityName="._Hub">
+            android:parentActivityName=".Kartenspiele_Auswahl">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
+                android:value=".Kartenspiele_Auswahl" />
         </activity>
         <activity android:name=".Kartenspiele_Auswahl"
             android:label="@string/kartenspiele"
