@@ -193,26 +193,6 @@ private void initHands()
         hands[i].draw();
     }*/
 }
-    //TO BE ADDED, HAS TO CHANGE TO CHECK WHOLE DECK; NOT THE LAST PLAYED CARD//
-    private boolean isSameRank()
-    {
-        return bids[0].getLast().getRank() == bids[1].getLast().getRank();
-
-    }
-
-    //# NOTWENDIG FÜR SCHAFKOPF; MUSS MAN BEKENNEN? #//
-    // TO BE ADDED//
-    private boolean isSameColor()
-    {
-        return bids[0].getLast().getSuit() == bids[1].getLast().getSuit();
-
-    }
-    private boolean isRankHigher()
-    {
-    return true;
-    }
-
-
     private boolean isGameOver()
     {
         if (hands[0].isEmpty())
@@ -254,6 +234,40 @@ private void initHands()
             });
         }
     }
+
+    private boolean isTrumpf(){
+        return true;
+    }
+    private boolean isTrumpfHigher() {
+        return true;
+    }
+    private boolean isOber(){
+        return true;
+    }
+    private boolean isUnter(){
+        return true;
+    }
+    private boolean isHerz(){
+        return true;
+    }
+
+
+    private boolean sameColorOnHand(){
+        return true;
+    }
+    private boolean isRankHigher(){
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
 }
 
 
