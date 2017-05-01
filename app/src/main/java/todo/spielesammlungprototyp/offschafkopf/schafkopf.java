@@ -255,6 +255,9 @@ private void initHands()
     private boolean sameColorOnHand(){
         return true;
     }
+    private boolean isColorHigher(){
+        return true;
+    }
     private boolean isRankHigher(){
         return true;
     }
