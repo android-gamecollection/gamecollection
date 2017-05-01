@@ -43,7 +43,7 @@ public class schafkopf extends CardGame {
 
     public enum Ranks
     {
-    SEVEN, EIGHT, NINE, UNTER, OBER, KING, TEN, ACE
+    ACE, TEN, KING, OBER, UNTER, NINE, EIGHT, SEVEN
     }
 
 //Locations festlegen und Anzahl spieler/Karten
@@ -235,23 +235,117 @@ private void initHands()
         }
     }
 
-    private boolean isTrumpf(){
-        return true;
+    private boolean isTrumpf(int Player)
+    {
+        if(bids[Player].getLast().getRankId() == 4 || bids[Player].getLast().getRankId() == 5){
+           return true;
+        }
+        else if(bids[Player].getLast().getSuitId() == 3){
+            return true;
+        }
+        else{return false;}
     }
-    private boolean isTrumpfHigher() {
-        return true;
+    private boolean isOber(int Player){
+        if(bids[Player].getLast().getRankId() == 4){return true;}
+        else{return false;}
     }
-    private boolean isOber(){
-        return true;
+    private boolean isUnter(int Player){
+        if(bids[Player].getLast().getRankId() == 5){return true;}
+        else{return false;}
     }
-    private boolean isUnter(){
-        return true;
+    private boolean isHerz(int Player){
+        if(bids[Player].getLast().getSuitId() == 3){return true;}
+        else{return false;}
     }
-    private boolean isHerz(){
-        return true;
-    }
+    private boolean isTrumpfHigher(int Player) {
+        if (Player == 0) {
+            if (isOber(Player)) {
+                if (isOber(1)) {
+                    if (bids[Player].getLast().getSuitId() > bids[1].getLast().getSuitId()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            else if (isUnter(Player)) {
+                if (isOber(1)) {
+                    return false;
+                } else if (isUnter(1)) {
+                    if (bids[Player].getLast().getSuitId() > bids[1].getLast().getSuitId()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            else if (isHerz(Player)) {
+                if (isOber(1)) {
+                    return false;
+                } else if (isUnter(1)) {
+                    return false;
+                } else if (isHerz(1)) {
+                    if (bids[Player].getLast().getRankId() > bids[1].getLast().getRankId()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
 
+        } else if (Player == 1)
 
+        {
+            if (isOber(Player)) {
+                if (isOber(0)) {
+                    if (bids[Player].getLast().getSuitId() > bids[0].getLast().getSuitId()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            else if (isUnter(Player)) {
+                if (isOber(0)) {
+                    return false;
+                } else if (isUnter(0)) {
+                    if (bids[Player].getLast().getSuitId() > bids[0].getLast().getSuitId()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            else if (isHerz(Player)) {
+                if (isOber(0)) {
+                    return false;
+                } else if (isUnter(0)) {
+                    return false;
+                } else if (isHerz(0)) {
+                    if (bids[Player].getLast().getRankId() > bids[0].getLast().getRankId()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+
+        }
+     else{}
+        return false;
+    }
     private boolean sameColorOnHand(){
         return true;
     }
