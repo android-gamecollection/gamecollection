@@ -108,16 +108,6 @@ public void main(String[]args)
     p1c = hands[1];
     p2o = hands[2];
     p2c = hands[3];
-
-
-
-
-
-
-
-
-
-
 }
 
 
@@ -204,14 +194,9 @@ private void initHands()
     }*/
 }
     //TO BE ADDED, HAS TO CHANGE TO CHECK WHOLE DECK; NOT THE LAST PLAYED CARD//
-    private boolean isSameRank(int playerToCompare)
+    private boolean isSameRank()
     {
-        if(playerToCompare == 1) {
-        return true;
-        }
-        else {
-        return true;
-        }
+        return bids[0].getLast().getRank() == bids[1].getLast().getRank();
 
     }
 
@@ -219,7 +204,7 @@ private void initHands()
     // TO BE ADDED//
     private boolean isSameColor()
     {
-    return true;
+        return bids[0].getLast().getSuit() == bids[1].getLast().getSuit();
 
     }
     private boolean isRankHigher()
