@@ -209,7 +209,7 @@ private void initHands()
         if(playerToCompare == 1) {
         return true;
         }
-        if(playerToCompare == 2) {
+        else {
         return true;
         }
 
@@ -293,4 +293,4 @@ private void initHands()
 
 
 
-}
+

@@ -6,6 +6,7 @@ package todo.spielesammlungprototyp.MauMau;
 
 // MauMau2.java
 // For debugging, see comments // Debug
+
         import android.graphics.Color;
         import ch.aplu.jcardgame.*;
         import ch.aplu.android.*;
