@@ -343,17 +343,41 @@ private void initHands()
             }
 
         }
-     else{}
         return false;
     }
     private boolean sameColorOnHand(){
         return true;
     }
-    private boolean isColorHigher(){
-        return true;
+    private boolean isColorHigher(int Player){
+        if(Player == 0){
+            if (bids[Player].getLast().getSuitId() > bids[1].getLast().getSuitId()) {
+                return true;
+            }
+            else{return false;}
+        }
+        else if(Player == 1){
+            if (bids[Player].getLast().getSuitId() > bids[0].getLast().getSuitId()) {
+                return true;
+            }
+            else{return false;}
+        }
+        return false;
+
     }
-    private boolean isRankHigher(){
-        return true;
+    private boolean isRankHigher(int Player){
+        if(Player == 0){
+            if (bids[Player].getLast().getRankId() > bids[1].getLast().getRankId()) {
+                return true;
+            }
+            else{return false;}
+        }
+        else if(Player == 1){
+            if (bids[Player].getLast().getRankId() > bids[0].getLast().getRankId()) {
+                return true;
+            }
+            else{return false;}
+        }
+        return false;
     }
 
 
