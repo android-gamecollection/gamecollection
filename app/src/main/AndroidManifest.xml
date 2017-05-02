@@ -72,7 +72,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp.MauMau.MauMauMenu" />
         </activity>
-
+        <!-- Childactivity Schafkopf von Kartenspiele -->
+        <activity android:name=".offschafkopf.schafkopf"
+            android:label="@string/schafkopf"
+            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele"
+            android:screenOrientation="landscape">>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="todo.spielesammlungprototyp.Kartenspiele" />
+        </activity>
 
 
 

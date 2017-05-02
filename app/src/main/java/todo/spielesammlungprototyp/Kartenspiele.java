@@ -20,5 +20,8 @@ public class Kartenspiele extends AppCompatActivity {
         Intent gotoActivity = new Intent(this, todo.spielesammlungprototyp.MauMau.MauMauMenu.class);
         startActivity(gotoActivity);
     }
-
+    public void gotooffschafkopf(View view) {
+        Intent gotoActivity = new Intent(this, todo.spielesammlungprototyp.offschafkopf.schafkopf.class);
+        startActivity(gotoActivity);
+    }
 }
