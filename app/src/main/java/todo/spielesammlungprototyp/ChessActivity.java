@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +25,7 @@ public class ChessActivity extends Activity {
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
-    String[] chessFigure = new String[64];
+    List<String> chessFigure = Arrays.asList(new String[64]);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class ChessActivity extends Activity {
         fen = fen.replace("/", "");
 
         for (int i = 0; i < 64; i++)
-            chessFigure[i] = ucChessPiece.pieces.get(fen.charAt(i));
+            chessFigure.set(i, ucChessPiece.pieces.get(fen.charAt(i)));
     }
 
     private String replaceNumbers(String str) {

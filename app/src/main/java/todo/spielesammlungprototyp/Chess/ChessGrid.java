@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 import todo.spielesammlungprototyp.R;
 
 public class ChessGrid extends ArrayAdapter<String> {
 
-    public ChessGrid(Context context, String[] objects) {
+    public ChessGrid(Context context, List<String> objects) {
         super(context, R.layout.chess_grid_single, objects);
     }
 
