@@ -22,14 +22,14 @@ public class ChessWrapper {
         switch (difficlty)
         {
             case 3:
-                config.setTranspositionTableSize(5);
+                config.setTranspositionTableSize(100);
                 break;
             case 2:
-                config.setTranspositionTableSize(2);
+                config.setTranspositionTableSize(50);
                 break;
             case 1:
             default:
-                config.setTranspositionTableSize(1);
+                config.setTranspositionTableSize(10);
         }
     }
     private void initiate()
@@ -65,6 +65,10 @@ public class ChessWrapper {
         String string = Move.toString(searchengine.getBestMove());
         return string;
     }
+    public void Aimove()
+    {
+        doMove(getBestMove());
+    }
     public void restart()
     {
         initiate();
@@ -79,6 +83,10 @@ public class ChessWrapper {
         str = str.substring(0, 144); // 144 = amount of chars on a normal field
         str = str + "\n" + "a b c d e f g h";
         return str;
+    }
+    public int isEndgame()
+    {
+        return board.isEndGame();
     }
     private void animation(String move)
     {
