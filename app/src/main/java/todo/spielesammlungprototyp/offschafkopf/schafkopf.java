@@ -16,19 +16,15 @@ import ch.aplu.jcardgame.*;
 import ch.aplu.android.*;
 import java.util.*;
 
-public class schafkopf extends CardGame
-{
-    public enum Suit
-    {
+public class schafkopf extends CardGame {
+    public enum Suit {
         SPADES, HEARTS, DIAMONDS, CLUBS
     }
 
-    public enum Rank
-    {
+    public enum Rank {
         ACE, KING, QUEEN, JACK, TEN, NINE, EIGHT, SEVEN
         //  ACE, KING, QUEEN, JACK // Debug
     }
-
 
 
     private final int handWidth = 650;
@@ -51,12 +47,16 @@ public class schafkopf extends CardGame
     private final Location pileLocation = new Location(350, 450);
 
     private Hand[] hands;//8 Hands für Anzeige
-    private Hand pile = new Hand(deck);  //Hand für Stiche
+    private Hand pile = new Hand(deck);
+    private Hand pile2 = new Hand(deck);//Hand für Stiche
+    private Hand[] bids = {pile, pile2};//Array Für vergleichsMethoden
+
     private Hand[] player;//Hand der 2 Spieler mit verdeckten Karten
     private Hand p1Pile = new Hand(deck);//StichStapel
     private Hand p2Pile = new Hand(deck);
-    public schafkopf()
-    {
+
+
+    public schafkopf() {
         super(Color.rgb(0, 0, 0), Color.WHITE, BoardType.VERT_FULL, windowZoom(600));
     }
 
@@ -69,28 +69,27 @@ public class schafkopf extends CardGame
     }
 
 
-    private void initPlayer(){
+    private void initPlayer() {
 
         player = deck.dealingOut(2, 0, true);//hand arrays initalisierung
         initPlayer0();
         initPlayer1();
     }
 
-    private void initPlayer0(){
-        for (int n = 0; n < 4;n++){
+    private void initPlayer0() {
+        for (int n = 0; n < 4; n++) {
             player[0].insert(hands[n], false);//hands[0-3 sind spieler 0)
         }
     }
 
-    private void initPlayer1(){
-        for (int i = 4; i < 8;i++){
+    private void initPlayer1() {
+        for (int i = 4; i < 8; i++) {
             player[1].insert(hands[i], false);//hands[4-7 sind spieler 1)
         }
     }
 
 
-
-    private boolean testAreSynchronized(){
+    private boolean testAreSynchronized() {
         //player1 cards
         int numberOfCardsInHand0 = hands[0].getNumberOfCards();
         int numberOfCardsInHand1 = hands[1].getNumberOfCards();
@@ -112,36 +111,34 @@ public class schafkopf extends CardGame
         */
 
 
-
-        if(!((numberOfCardsInHand0+numberOfCardsInHand1+numberOfCardsInHand2+numberOfCardsInHand3)==numberOfCardsPlayer0))
+        if (!((numberOfCardsInHand0 + numberOfCardsInHand1 + numberOfCardsInHand2 + numberOfCardsInHand3) == numberOfCardsPlayer0))
             return false;
 
-        if(!((numberOfCardsInHand4+numberOfCardsInHand5+numberOfCardsInHand6+numberOfCardsInHand7)==numberOfCardsPlayer1))
+        if (!((numberOfCardsInHand4 + numberOfCardsInHand5 + numberOfCardsInHand6 + numberOfCardsInHand7) == numberOfCardsPlayer1))
             return false;
 
 
-        for(int i=0;i<numberOfCardsInHand0;i++){
-            if(!(player[0].get(i).equals(hands[0].get(i)))){
+        for (int i = 0; i < numberOfCardsInHand0; i++) {
+            if (!(player[0].get(i).equals(hands[0].get(i)))) {
                 showToast("Error: " + player[0].get(i) + " doesn't equal" + hands[0].get(i));
-            }}
+            }
+        }
 
-        for(int i=0;i<numberOfCardsInHand4;i++){
-            if(!(player[1].get(i).equals(hands[4].get(i))))
+        for (int i = 0; i < numberOfCardsInHand4; i++) {
+            if (!(player[1].get(i).equals(hands[4].get(i))))
                 showToast("Error: " + player[1].get(i) + " doesn't equal" + hands[4].get(i));
         }
         return true;
     }
 
 
-    private void initHands()
-    {
+    private void initHands() {
 
         hands = deck.dealingOut(7, 4, true);// 8 hands mit jeweils 4 karten
 
         RowLayout[] layouts = new RowLayout[8];
 
-        for (int i = 0; i < 8; i++)
-        {
+        for (int i = 0; i < 8; i++) {
             layouts[i] = new RowLayout(handLocations[i], handWidth);
             hands[i].setView(this, layouts[i]);
             hands[i].setTargetArea(new TargetArea(pileLocation));
@@ -151,10 +148,10 @@ public class schafkopf extends CardGame
         for (int i = 1; i < 8; i++)
             hands[i].setVerso(false);//false = revealed
 
-        for(int i = 4; i < 6; i++)
+        for (int i = 4; i < 6; i++)
             hands[i].setVerso(true);
 
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
             hands[i].setVerso(true);
 
         pile.setView(this, new StackLayout(pileLocation));
@@ -162,53 +159,66 @@ public class schafkopf extends CardGame
 
         hands[0].addCardListener(new CardAdapter()  // Player 0 plays card
         {
-            public void longPressed(Card card)
-            {
+            public void longPressed(Card card) {
 
                 Card played = pile.getLast();//gespielte Karte
                 card.transfer(pile, true);//karte wird gespielt
             }
 
-            public void atTarget(Card card, Location targetLocation)
-            {
+            public void atTarget(Card card, Location targetLocation) {
                 //aufgerufen wenn karte bei ziel ist
             }
 
         });
     }
 
-    private void setPlayerMove(int playerID)
-    {
+    private void setPlayerMove(int playerID) {
         hands[playerID].setTouchEnabled(true);
-        showToast("Player " + (playerID+1) + " ");
+        showToast("Player " + (playerID + 1) + " ");
     }
-}
 
-/*
 
-    private boolean isTrumpf(int Player)
-    {
-        if(bids[Player].getLast().getRankId() == 4 || bids[Player].getLast().getRankId() == 5){
+    private boolean isTrumpf(int Player) {
+        //int Player = Player der ausspielt
+        if (bids[Player].getLast().getRankId() == 4 || bids[Player].getLast().getRankId() == 5) {
             return true;
-        }
-        else if(bids[Player].getLast().getSuitId() == 3){
+        } else if (bids[Player].getLast().getSuitId() == 3) {
             return true;
+        } else {
+            return false;
         }
-        else{return false;}
     }
-    private boolean isOber(int Player){
-        if(bids[Player].getLast().getRankId() == 4){return true;}
-        else{return false;}
+
+
+    private boolean isOber(int Player) {
+        //int Player = Player der ausspielt
+        if (bids[Player].getLast().getRankId() == 4) {
+            return true;
+        } else {
+            return false;
+        }
     }
-    private boolean isUnter(int Player){
-        if(bids[Player].getLast().getRankId() == 5){return true;}
-        else{return false;}
+
+    private boolean isUnter(int Player) {
+        //int Player = Player der ausspielt
+        if (bids[Player].getLast().getRankId() == 5) {
+            return true;
+        } else {
+            return false;
+        }
     }
-    private boolean isHerz(int Player){
-        if(bids[Player].getLast().getSuitId() == 3){return true;}
-        else{return false;}
+
+    private boolean isHerz(int Player) {
+        //int Player = Player der ausspielt
+        if (bids[Player].getLast().getSuitId() == 3) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
     private boolean isTrumpfHigher(int Player) {
+        //int Player = Player der ausspielt
         if (Player == 0) {
             if (isOber(Player)) {
                 if (isOber(1)) {
@@ -220,8 +230,7 @@ public class schafkopf extends CardGame
                 } else {
                     return true;
                 }
-            }
-            else if (isUnter(Player)) {
+            } else if (isUnter(Player)) {
                 if (isOber(1)) {
                     return false;
                 } else if (isUnter(1)) {
@@ -233,8 +242,7 @@ public class schafkopf extends CardGame
                 } else {
                     return true;
                 }
-            }
-            else if (isHerz(Player)) {
+            } else if (isHerz(Player)) {
                 if (isOber(1)) {
                     return false;
                 } else if (isUnter(1)) {
@@ -263,8 +271,7 @@ public class schafkopf extends CardGame
                 } else {
                     return true;
                 }
-            }
-            else if (isUnter(Player)) {
+            } else if (isUnter(Player)) {
                 if (isOber(0)) {
                     return false;
                 } else if (isUnter(0)) {
@@ -276,8 +283,7 @@ public class schafkopf extends CardGame
                 } else {
                     return true;
                 }
-            }
-            else if (isHerz(Player)) {
+            } else if (isHerz(Player)) {
                 if (isOber(0)) {
                     return false;
                 } else if (isUnter(0)) {
@@ -296,10 +302,76 @@ public class schafkopf extends CardGame
         }
         return false;
     }
-    private boolean sameColorOnHand(){
-        return true;
+
+    private boolean sameColorOnHand(int Player) {
+        //int Player = Player der ausspielt
+        if (Player == 0) {
+            if (isTrumpf(Player)) {
+                if(TrumphOnHand(hands, 1)){return true;}
+                else{return false;}
+            }
+            else{
+                for(int i = 4; i < 8; i++){
+                    if(hands[i].getLast().getSuitId() == bids[Player].getLast().getSuitId()){
+                        return true;}
+                }
+            }
+        }
+        else if (Player == 1) {
+            if (isTrumpf(Player)) {
+                if(TrumphOnHand(hands, 0)){return true;}
+                else{return false;}
+            }
+            else{
+                for(int i = 0; i < 4; i++){
+                    if(hands[i].getLast().getSuitId() == bids[Player].getLast().getSuitId()){
+                        return true;}
+                }
+            }
+        }
+    return false;
     }
+    private boolean TrumphOnHand(Hand[] hand, int Player){
+        //int Player = Player dessen Deck abgeglichen wird
+        if(Player == 0){
+            //Decks durchgehen und checken ob  Rank/Suit Id mit Ober/Unter/herzübereinstimmen
+            for(int i = 0; i < 4; i++){
+                if(hands[i].getLast().getRankId()==4){
+                    return true;
+                }
+                else if(hands[i].getLast().getRankId()==5){
+                    return true;
+                }
+                else if(hands[i].getLast().getSuitId()==3){
+                    return true;
+                }
+                else{return false;}
+            }
+        }
+        else if(Player == 1){
+            for(int i = 4; i < 8; i++){
+                if(hands[i].getLast().getRankId()==4){
+                    return true;
+                }
+                else if(hands[i].getLast().getRankId()==5){
+                    return true;
+                }
+                else if(hands[i].getLast().getSuitId()==3){
+                    return true;
+                }
+                else{return false;}
+            }
+        }
+        return false;
+    }
+
+
+
+
+
     private boolean isColorHigher(int Player){
+        //Suit Ids vergleichen
+        //int Player = Player der ausspielt
         if(Player == 0){
             if (bids[Player].getLast().getSuitId() > bids[1].getLast().getSuitId()) {
                 return true;
@@ -316,6 +388,7 @@ public class schafkopf extends CardGame
 
     }
     private boolean isRankHigher(int Player){
+        //int Player = Player der ausspielt
         if(Player == 0){
             if (bids[Player].getLast().getRankId() > bids[1].getLast().getRankId()) {
                 return true;
@@ -330,7 +403,10 @@ public class schafkopf extends CardGame
         }
         return false;
     }
-    */
+
+
+}
+
 
 
 
