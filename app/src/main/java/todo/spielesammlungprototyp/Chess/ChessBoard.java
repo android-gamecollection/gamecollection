@@ -1,13 +1,20 @@
 package todo.spielesammlungprototyp.Chess;
 
 import com.alonsoruibal.chess.*;
+import com.alonsoruibal.chess.search.SearchEngine;
+
+import java.util.concurrent.ExecutionException;
 
 class ChessBoard {
-
+    private Config config;
+    private SearchEngine se;
     private Board board;
     public ChessBoard()
     {
-        board = new Board();
+        config = new Config();
+        se = new SearchEngine(config);
+
+        board = se.getBoard();
     }
 
     void startPosition() {
@@ -28,5 +35,17 @@ class ChessBoard {
     boolean move(String from, String to){
         int move = Move.getFromString(board,from + " " + to,true);
         return board.doMove(move);
+    }
+    boolean aimove()
+    {
+        try
+        {
+            se.run();
+        }
+        catch (Exception e)
+        {
+
+        }
+        return board.doMove(se.getBestMove());
     }
 }

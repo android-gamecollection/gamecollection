@@ -3,11 +3,20 @@
 <!-- Farben werden hier deklariert und können dadurch referenziert werden -->
 
 <resources>
-    <!-- Old colors -->
-    <!--<color name="colorPrimary">#3F51B5</color>-->
-    <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <!--<color name="colorAccent">#FF4081</color>-->
-    <color name="colorPrimary">#388E3C</color>
-    <color name="colorPrimaryDark">#307F40</color>
-    <color name="colorAccent">#388E3C</color>
+    <color name="colorPrimary">#4caf50</color>
+    <color name="colorPrimaryDark">#388e3c</color>
+    <color name="colorPrimaryLight">#C8E6C9</color>
+    <color name="colorAccent">#ff5722</color>
+
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+
+    <color name="chessWhite">#FFFFFF</color>
+    <color name="chessBlack">#000000</color>
+    <color name="chessPiece">#ff5722</color>
+    <color name="background">#ffffff</color>
+
 </resources>

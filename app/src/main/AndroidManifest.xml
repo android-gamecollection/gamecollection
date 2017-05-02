@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="todo.spielesammlungprototyp">
 
+    <!-- durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_game_dark"
@@ -19,19 +20,43 @@
         </activity>
 
         <!-- Childactivity Brettspiele -->
-        <activity android:name=".Brettspiele"
+        <activity
+            android:name=".Brettspiele"
             android:label="@string/brettspiele"
-            android:parentActivityName="todo.spielesammlungprototyp._Hub"
-            android:windowSoftInputMode="stateVisible" >
+            android:parentActivityName=".Brettspiele_Auswahl"
+            android:windowSoftInputMode="stateVisible">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp._Hub" />
+                android:value=".Brettspiele_Auswahl"/>
+        </activity>
+        <activity
+            android:name=".Brettspiele_Auswahl"
+            android:label="@string/brettspiele"
+            android:parentActivityName="._Hub">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="._Hub" />
+        </activity>
+        <activity android:name=".ChessActivity"
+            android:label="Schach"
+            android:parentActivityName=".Brettspiele_Auswahl">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Brettspiele_Auswahl" />
         </activity>
 
-        <!-- Childactivity Kartenspiele -->
-        <activity android:name=".Kartenspiele"
+        <!-- Childactivity Bauernkrieg -->
+        <activity
+            android:name=".Bauernkrieg"
+            android:label="@string/bauernkrieg"
+            android:parentActivityName=".Kartenspiele_Auswahl">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Kartenspiele_Auswahl" />
+        </activity>
+        <activity android:name=".Kartenspiele_Auswahl"
             android:label="@string/kartenspiele"
-            android:parentActivityName="todo.spielesammlungprototyp._Hub" >
+            android:parentActivityName="._Hub">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="todo.spielesammlungprototyp._Hub" />
@@ -91,7 +116,5 @@
 
 
     </application>
-
-    <!-- durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich -->
 
 </manifest>

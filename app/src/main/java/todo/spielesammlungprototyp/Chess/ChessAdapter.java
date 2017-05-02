@@ -83,6 +83,10 @@ public class ChessAdapter {
             case "help":
                 response.output = getString(R.string.cmd_help);
                 break;
+            case "ai":
+            case "aimove":
+                chessBoard.aimove();
+                break;
             default:
                 response.errorMessage = getString(R.string.err_invalid_cmd);
         }

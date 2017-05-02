@@ -1,12 +1,12 @@
 package todo.spielesammlungprototyp;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class _Hub extends AppCompatActivity {
+public class _Hub extends Activity {
 
 
     // "onCreate()" wird beim Start der Activity gerufen
@@ -42,13 +42,15 @@ public class _Hub extends AppCompatActivity {
     // (definiert in der zugehörigen Layout-Datei. Hier: "_activity_hub.xml")
     // =>
     public void gotoKartenspiele(View view) {
-        Intent gotoActivity = new Intent(this, Kartenspiele.class);
+        Intent gotoActivity = new Intent(this, Kartenspiele_Auswahl.class);
         startActivity(gotoActivity);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void gotoBrettspiele(View view) {
-        Intent gotoActivity = new Intent(this, Brettspiele.class);
+        Intent gotoActivity = new Intent(this, Brettspiele_Auswahl.class);
         startActivity(gotoActivity);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
     // <=
 }

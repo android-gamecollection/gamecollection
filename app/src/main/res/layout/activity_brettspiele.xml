@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="todo.spielesammlungprototyp.Brettspiele">
+    tools:context=".Brettspiele">
 
     <ScrollView
         android:id="@+id/scroll_console"
@@ -54,6 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/input_console"
-        app:srcCompat="@android:drawable/ic_menu_send"
+        android:src="@android:drawable/ic_menu_send"
         android:contentDescription="@string/confirm_console_input" />
 </android.support.constraint.ConstraintLayout>
