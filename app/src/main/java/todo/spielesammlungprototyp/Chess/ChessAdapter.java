@@ -9,12 +9,12 @@ import todo.spielesammlungprototyp.R;
 public class ChessAdapter {
 
     private Brettspiele brettspielInstance;
-    private ChessBoard chessBoard;
+    ChessWrapper wrapper;
 
     public ChessAdapter(Brettspiele brettspielInstance) {
         this.brettspielInstance = brettspielInstance;
-        this.chessBoard = new ChessBoard();
-        chessBoard.startPosition();
+        this.wrapper = new ChessWrapper();
+        wrapper.restart();
     }
 
     private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
@@ -60,21 +60,21 @@ public class ChessAdapter {
                 response.escapeSequence = "clear";
                 break;
             case "restart":
-                chessBoard.startPosition();
+                wrapper.restart();
                 break;
             case "show":
-                response.output = chessBoard.getBoard();
+                response.output = wrapper.getFen();
                 break;
             case "ov":
             case "overview":
-                response.output = chessBoard.getOverview();
+                response.output = wrapper.getOverview();
                 break;
             case "mv":
             case "move":
                 if (cmd.length < 3) {
                     response.errorMessage = getString(R.string.err_invalid_cmd);
                 } else {
-                    boolean validMove = chessBoard.move(cmd[1], cmd[2]);
+                     boolean validMove = wrapper.doMove(cmd[1]+" "+cmd[2]);
                     if (!validMove){
                         response.errorMessage = getString(R.string.err_invalid_move);
                     }
@@ -85,7 +85,12 @@ public class ChessAdapter {
                 break;
             case "ai":
             case "aimove":
-                chessBoard.aimove();
+                String move = wrapper.getBestMove();
+                wrapper.doMove(move);
+                break;
+            case "hint":
+                String zug = wrapper.getBestMove();
+                response.output = "Ein möglicher Zug wäre: " + zug;
                 break;
             default:
                 response.errorMessage = getString(R.string.err_invalid_cmd);
