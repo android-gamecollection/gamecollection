@@ -17,7 +17,7 @@ public class Kartenspiele_Auswahl extends Activity implements ClickListener{
     Spiel_CardViewAdapter adapterC;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
-    int[] spiele_icon_id = {R.mipmap.ic_game_dark};
+    int[] spiele_icon_id = {R.mipmap.ic_game_dark,R.mipmap.ic_game_dark,R.mipmap.ic_game_dark};
     String[] spiele_titel, spiele_details;
 
     protected void onCreate(Bundle savedInstanceState) {

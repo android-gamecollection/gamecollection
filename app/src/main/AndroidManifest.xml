@@ -46,14 +46,14 @@
         </activity>
 
         <!-- Childactivity Bauernkrieg -->
-        <activity
+        <!--activity
             android:name=".Bauernkrieg"
             android:label="@string/bauernkrieg"
             android:parentActivityName=".Kartenspiele_Auswahl">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Kartenspiele_Auswahl" />
-        </activity>
+        </activity-->
         <activity android:name=".Kartenspiele_Auswahl"
             android:label="@string/kartenspiele"
             android:parentActivityName="._Hub">
@@ -66,10 +66,10 @@
         <!-- Childactivity BauernKriegMenu von Kartenspiele -->
         <activity android:name=".Bauernkrieg.BauernkriegMenu"
             android:label="@string/bauernkrieg"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele" >
+            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele_Auswahl" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele" />
+                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
         </activity>
         <!-- Childactivity BauernKriegGame von BauernKriegMenu -->
         <activity android:name=".Bauernkrieg.Bauernkrieg"
@@ -83,10 +83,10 @@
         <!-- Childactivity MauMauMenu von Kartenspiele -->
         <activity android:name=".MauMau.MauMauMenu"
             android:label="@string/maumau"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele">
+            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele_Auswahl">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele" />
+                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
         </activity>
         <!-- Childactivity MauMau von MauMauMenu -->
         <activity android:name=".MauMau.MauMau"
@@ -100,11 +100,11 @@
         <!-- Childactivity Schafkopf von Kartenspiele -->
         <activity android:name=".offschafkopf.schafkopf"
             android:label="@string/schafkopf"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele"
+            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele_Auswahl"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele" />
+                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
         </activity>
 
 

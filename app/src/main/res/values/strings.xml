@@ -13,7 +13,12 @@
     <string name="settings">Optionen</string>
     <string name="err_invalid_move">Invalid move</string>
     <string name="bauernkrieg">"Bauernkrieg"</string>
-
+    <string name="bauernkrieg_regeln">Zu Beginn des Spieles werden alle Karten verteilt und verdeckt bei jedem Spieler auf einen Stapel aufgelegt. Dann spielen die beiden Spieler die oberste Karte und die beiden vergleichen die Ränge. Wer den höhere Rang hat, nimmt beide Karten zu sich. Gewinner ist, wer mehr Karten erspielt hat. Haben die zwei Karten denselben Rang, so spielt jeder Spieler die nächste Karte verdeckt. Dann spielen sie eine nächste Karte auf. Wer jetzt den höheren Rang hat, nimmt danach alle sechs Karten. Besteht wieder Kartengleichheit, so wird das Verfahren wiederholt. Das Spiel dauert solange, bis die beiden Stapel aufgebraucht sind (Besteht zu dieser Zeit Kartengleichheit, bleiben die Karten in der Mitte liegen).</string>
+    <string name="start">Start</string>
+    <string name="rules">Regeln</string>
+    <string name="maumau_regeln">Platzhalter für die Mau Mau regeln</string>
+    <string name="maumau">Mau Mau</string>
+    <string name="schafkopf">schafkopf</string>
     <!-- Arrays für CardView START -->
     <string-array name="spiele_titel_brettspiele">
         <item>"Schach"</item>
@@ -22,6 +27,8 @@
 
     <string-array name="spiele_titel_kartenspiele">
         <item>"Bauernkrieg"</item>
+        <item>"Mau Mau"</item>
+        <item>"Schafkopf"</item>
     </string-array>
 
     <string-array name="spiele_details_brettspiele">
@@ -31,6 +38,8 @@
 
     <string-array name="spiele_details_kartenspiele">
         <item>"Trumpfkartenspiel"</item>
+        <item>"Mau Mau"</item>
+        <item>"Schafkopf"</item>
     </string-array>
 
     <string-array name="spiele_activity_brettspiele">
@@ -39,7 +48,9 @@
     </string-array>
 
     <string-array name="spiele_activity_kartenspiele">
-        <item>"Bauernkrieg"</item>
+        <item>"Bauernkrieg.Bauernkrieg"</item>
+        <item>"MauMau.MauMau"</item>
+        <item>"offschafkopf.schafkopf"</item>
     </string-array>
     <!-- Arrays für CardView ENDE -->
 
