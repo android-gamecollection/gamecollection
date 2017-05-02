@@ -65,7 +65,7 @@ public class ChessWrapper {
         String string = Move.toString(searchengine.getBestMove());
         return string;
     }
-    public void Aimove()
+    public void aimove()
     {
         doMove(getBestMove());
     }

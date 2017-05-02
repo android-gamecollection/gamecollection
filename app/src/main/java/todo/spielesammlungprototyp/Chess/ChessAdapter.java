@@ -85,8 +85,7 @@ public class ChessAdapter {
                 break;
             case "ai":
             case "aimove":
-                String move = wrapper.getBestMove();
-                wrapper.doMove(move);
+                wrapper.aimove();
                 break;
             case "hint":
                 String zug = wrapper.getBestMove();
