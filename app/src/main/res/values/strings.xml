@@ -19,6 +19,9 @@
     <string name="maumau_regeln">Platzhalter für die Mau Mau regeln</string>
     <string name="maumau">Mau Mau</string>
     <string name="schafkopf">schafkopf</string>
+    <string name="objErfolg">objekt erfolgreich erstellt</string>
+    <string name="debug">Debugger wurde erfolgreich erreicht</string>
+
     <!-- Arrays für CardView START -->
     <string-array name="spiele_titel_brettspiele">
         <item>"Schach"</item>
