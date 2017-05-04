@@ -12,10 +12,8 @@ import ch.aplu.jcardgame.Hand;
 import ch.aplu.android.*;
 import todo.spielesammlungprototyp.R;
 
-import static android.R.attr.duration;
 
-
-public class schafkopf_test extends AppCompatActivity {
+public class schafkopf_test extends schafkopf {
     private int Player;
     private Hand[] bids;
     private Deck deck;

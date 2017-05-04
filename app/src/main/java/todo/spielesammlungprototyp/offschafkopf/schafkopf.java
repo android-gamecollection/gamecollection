@@ -53,13 +53,13 @@ public class schafkopf extends CardGame {
     }
 
     public void main() {
-        //ToCompare Objekt um vergleichsmethoden zu nutzen
         deck = new Deck(Suit.values(), Rank.values(), "cover");
         initHands();
         initPlayer();
         if (testAreSynchronized()) showToast("Synchro: OK");
         hands[0].setTouchEnabled(true);
-
+        //ToCompare Objekt um vergleichsmethoden zu nutzen
+        //testObjekt um Klasse zu testen
         schafkopf_vergleichsmethoden toCompare = new schafkopf_vergleichsmethoden(0, bids);
         schafkopf_test testObjekt = new schafkopf_test(0, bids, deck);
         showToast(testObjekt.debugger());
