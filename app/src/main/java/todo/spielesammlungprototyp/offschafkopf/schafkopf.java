@@ -1,4 +1,5 @@
 package todo.spielesammlungprototyp.offschafkopf;
+import ch.aplu.util.Monitor;
 import todo.spielesammlungprototyp.offschafkopf.schafkopf_vergleichsmethoden;
 import todo.spielesammlungprototyp.offschafkopf.schafkopf_test;
 //JGameGrid DOC http://www.aplu.ch/classdoc/jgamegrid/index.html
@@ -19,33 +20,54 @@ public class schafkopf extends CardGame {
     }
 
 
-    private final int handWidth = 650;
     private Deck deck;
     private final Location[] handLocations =
             {
-                    new Location(300, 850),//player1 unten
-                    new Location(300, 700),//player1 unten
-                    new Location(300, 825),//player1 oben hands[2]
-                    new Location(300, 675),//player1 oben hands[3]
+                    new Location(100, 850),//player1
+                    new Location(200, 850),
+                    new Location(300, 850),
+                    new Location(400, 850),
 
-                    new Location(300, 125),//player2 unten hands[4}
-                    new Location(300, 275),//player2 unten hands[5]
-                    new Location(300, 100),//player2 oben
-                    new Location(300, 250)//player2 oben
+                    new Location(100, 650),
+                    new Location(200, 650),
+                    new Location(300, 650),
+                    new Location(400, 650),
+
+                    new Location(100, 100),//player2
+                    new Location(200, 100),
+                    new Location(300, 100),
+                    new Location(400, 100),
+
+                    new Location(100, 300),
+                    new Location(200, 300),
+                    new Location(300, 300),
+                    new Location(400, 300)
+
 
 
             };
 
+    private final Location p1SticheLocation = new Location(520, 750);
+    private final Location p2SticheLocation = new Location(520, 200);
     private final Location pileLocation = new Location(350, 450);
+    private final Location pileLocation2 = new Location(250, 450);
 
-    private Hand[] hands;//8 Hands für Anzeige
+    private Hand[] hands;//16 Hands ala 2 Karten
+
+    private int z=0;//counter für initialisierung der cardlistener
+
     private Hand pile = new Hand(deck);
     private Hand pile2 = new Hand(deck);//Hand für Stiche
-    private Hand[] bids = {pile, pile2};//Array Für vergleichsMethoden
 
-    private Hand[] player;//Hand der 2 Spieler mit verdeckten Karten
-    private Hand p1Pile = new Hand(deck);//StichStapel
-    private Hand p2Pile = new Hand(deck);
+
+
+    //private Hand[] bids = {pile, pile2};//Array Für vergleichsMethoden
+
+    private Hand[] player;
+    private Hand p1Stiche = new Hand(deck);//StichStapel
+    private Hand p2Stiche = new Hand(deck);
+
+    private int playerTurn=1;
 
 
     public schafkopf() {
@@ -55,18 +77,18 @@ public class schafkopf extends CardGame {
     public void main() {
         deck = new Deck(Suit.values(), Rank.values(), "cover");
         initHands();
-        initPlayer();
-        if (testAreSynchronized()) showToast("Synchro: OK");
-        hands[0].setTouchEnabled(true);
+        //initPlayer();
+
+        //for(int i=0;i<16;i++)hands[i].setTouchEnabled(true);
+        setPlayerMove(playerTurn);
+
         //ToCompare Objekt um vergleichsmethoden zu nutzen
         //testObjekt um Klasse zu testen
-        schafkopf_vergleichsmethoden toCompare = new schafkopf_vergleichsmethoden(0, bids);
-        schafkopf_test testObjekt = new schafkopf_test(0, bids, deck);
-        showToast(testObjekt.debugger());
-        testObjekt.tester();
-
-    }
-
+        //schafkopf_vergleichsmethoden toCompare = new schafkopf_vergleichsmethoden(0, bids);
+        //schafkopf_test testObjekt = new schafkopf_test(0, bids, deck);
+        //showToast(testObjekt.debugger());
+        //testObjekt.tester();
+        }
 
     private void initPlayer() {
         player = deck.dealingOut(2, 0, true);//hand arrays initalisierung
@@ -87,96 +109,128 @@ public class schafkopf extends CardGame {
     }
 
 
-    private boolean testAreSynchronized() {
-        //player1 cards
-        int numberOfCardsInHand0 = hands[0].getNumberOfCards();
-        int numberOfCardsInHand1 = hands[1].getNumberOfCards();
-        int numberOfCardsInHand2 = hands[2].getNumberOfCards();
-        int numberOfCardsInHand3 = hands[3].getNumberOfCards();
-        //player2 cards
-        int numberOfCardsInHand4 = hands[4].getNumberOfCards();
-        int numberOfCardsInHand5 = hands[5].getNumberOfCards();
-        int numberOfCardsInHand6 = hands[6].getNumberOfCards();
-        int numberOfCardsInHand7 = hands[7].getNumberOfCards();
-
-        int numberOfCardsPlayer0 = player[0].getNumberOfCards();
-        int numberOfCardsPlayer1 = player[1].getNumberOfCards();
-        /*
-        showToast("player0 : " + numberOfCardsPlayer0);
-        showToast("sum : " + (numberOfCardsInHand0+numberOfCardsInHand1+numberOfCardsInHand2+numberOfCardsInHand3));
-        showToast("player1 : " + numberOfCardsPlayer1);
-        showToast("sum : " + (numberOfCardsInHand4+numberOfCardsInHand5+numberOfCardsInHand6+numberOfCardsInHand7));
-        */
-
-
-        if (!((numberOfCardsInHand0 + numberOfCardsInHand1 + numberOfCardsInHand2 + numberOfCardsInHand3) == numberOfCardsPlayer0))
-            return false;
-
-        if (!((numberOfCardsInHand4 + numberOfCardsInHand5 + numberOfCardsInHand6 + numberOfCardsInHand7) == numberOfCardsPlayer1))
-            return false;
-
-
-        for (int i = 0; i < numberOfCardsInHand0; i++) {
-            if (!(player[0].get(i).equals(hands[0].get(i)))) {
-                showToast("Error: " + player[0].get(i) + " doesn't equal" + hands[0].get(i));
-            }
-        }
-
-        for (int i = 0; i < numberOfCardsInHand4; i++) {
-            if (!(player[1].get(i).equals(hands[4].get(i))))
-                showToast("Error: " + player[1].get(i) + " doesn't equal" + hands[4].get(i));
-        }
-        return true;
-    }
-
-
     private void initHands() {
 
-        hands = deck.dealingOut(7, 4, true);// 8 hands mit jeweils 4 karten
+        hands = deck.dealingOut(16, 2, true);// 8 hands mit jeweils 4 karten
 
-        RowLayout[] layouts = new RowLayout[8];
+        StackLayout[] layouts = new StackLayout[16];
 
-        for (int i = 0; i < 8; i++) {
-            layouts[i] = new RowLayout(handLocations[i], handWidth);
+
+        for (int i = 0; i < 16; i++) {
+            layouts[i] = new StackLayout(handLocations[i]);
             hands[i].setView(this, layouts[i]);
-            hands[i].setTargetArea(new TargetArea(pileLocation));
+            if(i<8)
+                hands[i].setTargetArea(new TargetArea(pileLocation));
+            else
+                hands[i].setTargetArea(new TargetArea(pileLocation2));
             hands[i].draw();
         }
 
-        for (int i = 1; i < 8; i++)
-            hands[i].setVerso(false);//false = revealed
 
-        for (int i = 4; i < 6; i++)
-            hands[i].setVerso(true);
 
-        for (int i = 0; i < 2; i++)
-            hands[i].setVerso(true);
-
+        //pile.setVerso(false);
         pile.setView(this, new StackLayout(pileLocation));
         pile.draw();
 
-        hands[0].addCardListener(new CardAdapter()  // Player 0 plays card
-        {
-            public void longPressed(Card card) {
+        pile2.setView(this, new StackLayout(pileLocation2));
+        pile2.draw();
 
-                Card played = pile.getLast();//gespielte Karte
-                card.transfer(pile, true);//karte wird gespielt
-            }
+        p1Stiche.setView(this, new StackLayout(p1SticheLocation));
+        p2Stiche.setView(this, new StackLayout(p2SticheLocation));
 
-            public void atTarget(Card card, Location targetLocation) {
-                //aufgerufen wenn karte bei ziel ist
-            }
+        p1Stiche.draw();
+        p2Stiche.draw();
 
-        });
+        for(z=0; z<8;z++) {
+            hands[z].addCardListener(new CardAdapter()  // Player 1 plays card
+            {
+                public void clicked(Card card) {
+
+                    //Card played = pile.getLast();//gespielte Karte
+                    if(pile.isEmpty())
+                    card.transfer(pile, true);//karte wird gespiel-t
+                    //pile.draw();
+                }
+
+                public void atTarget(Card card, Location targetLocation) {
+                    /*Card top1 = pile.getLast();
+                    Card top2 = pile.getLast();
+                    if(top1.getRank() > top2.getRank())
+                    */
+
+
+                    if(pile2.isEmpty())setPlayerMove(2);//abhängig von stich
+                    if(!pile2.isEmpty())transferBidsToStock(2);
+                }
+
+
+            });
+        }
+
+        for(z=8; z<16;z++) {
+            hands[z].addCardListener(new CardAdapter()  // Player 2 plays card
+            {
+                public void clicked(Card card) {
+
+                    //Card played = pile.getLast();//gespielte Karte
+                    if(pile2.isEmpty())
+                    card.transfer(pile2, true);//karte wird gespiel-t
+                    //pile2.draw();
+                }
+
+                public void atTarget(Card card, Location targetLocation) {
+                    if(pile.isEmpty())setPlayerMove(1);
+
+                    if(!pile.isEmpty())transferBidsToStock(1);
+                }
+
+
+            });
+        }}
+
+
+
+
+    private void transferBidsToStock(int playerWon) {
+        if (playerWon == 1) {
+            pile.setTargetArea(new TargetArea(p1SticheLocation));
+            pile2.setTargetArea(new TargetArea(p1SticheLocation));
+
+            pile.transferNonBlocking(pile.getLast(), p1Stiche, true);
+            pile2.transferNonBlocking(pile2.getLast(), p1Stiche, true);
+
+        } else {
+            pile.setTargetArea(new TargetArea(p2SticheLocation));
+            pile2.setTargetArea(new TargetArea(p2SticheLocation));
+            pile.transferNonBlocking(pile.getLast(), p2Stiche, true);
+            pile2.transferNonBlocking(pile2.getLast(), p2Stiche, true);
+        }
     }
 
     private void setPlayerMove(int playerID) {
-        hands[playerID].setTouchEnabled(true);
-        showToast("Player " + (playerID + 1) + " ");
+        if(playerID==1){
+            playerTurn=1;
+            for(int i=0;i<8;i++)hands[i].setTouchEnabled(true);
+            for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
+            showToast("Player  1");
+        }
+
+        if(playerID==2){
+            playerTurn=2;
+            for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
+            for(int i=8;i<16;i++)hands[i].setTouchEnabled(true);
+            showToast("Player  2");
+        }
+
+
+
+
     }
 
-
-
+    private void changeCurrentPlayer()
+    {
+        playerTurn = (playerTurn + 1) % 2;
+    }
 }
 
 
