@@ -4,7 +4,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
@@ -13,6 +13,16 @@
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>
         <item name="android:colorBackground">@color/background</item>
         <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- Actionbarstyle -->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+    </style>
+    <style name="AppTheme.PopupOverlay" parent="Base.Widget.AppCompat.Light.ActionBar">
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
     </style>
 
 </resources>

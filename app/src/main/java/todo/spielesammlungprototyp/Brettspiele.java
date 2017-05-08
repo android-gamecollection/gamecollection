@@ -1,7 +1,8 @@
 package todo.spielesammlungprototyp;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -14,18 +15,24 @@ import android.widget.Toast;
 
 import todo.spielesammlungprototyp.Chess.ChessAdapter;
 
-public class Brettspiele extends Activity {
+public class Brettspiele extends AppCompatActivity {
 
     private ScrollView scroll_console;
     private TextView text_console;
     private EditText input_console;
-
+    private Toolbar toolbar;
     private ChessAdapter chessAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brettspiele);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         scroll_console = (ScrollView) findViewById(R.id.scroll_console);
         text_console = (TextView) findViewById(R.id.text_console);
         input_console = (EditText) findViewById(R.id.input_console);
