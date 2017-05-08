@@ -43,5 +43,40 @@
     </string-array>
     <!-- Arrays für CardView ENDE -->
 
+    <!-- Strings für NavDrawer START -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+    <string name="subTextHeader">Spiel, Spaß und Spannung</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_hub">Spielehub</string>
+    <string name="nav_kartenspiele">Kartenspiele</string>
+    <string name="nav_brettspiele">Brettspiele</string>
+    <string name="nav_info">Info</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Spielehub</item>
+        <item>Kartenspiele</item>
+        <item>Brettspiele</item>
+        <item>Info</item>
+        <item>Settings</item>
+    </string-array>
+
+    <string name="activity_title_about_us">About Us</string>
+    <string name="activity_title_privacy_policy">Privacy Policy</string>
+    <string name="action_clear_all">Clear All</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_mark_all_read">Mark All as Read</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Spielehub Content</string>
+    <string name="nav_divider_title">Other</string>
+    <!-- Strings für NavDrawer ENDE -->
+
 
 </resources>

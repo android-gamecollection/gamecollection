@@ -1,7 +1,8 @@
 package todo.spielesammlungprototyp;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,10 +17,11 @@ import com.alonsoruibal.chess.Board;
 import todo.spielesammlungprototyp.Chess.ChessGrid;
 import todo.spielesammlungprototyp.Chess.ucChessPiece;
 
-public class ChessActivity extends Activity {
+public class ChessActivity extends AppCompatActivity {
 
     GridView gridView;
     ArrayAdapter<String> adapter;
+    private Toolbar toolbar;
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
@@ -30,6 +32,12 @@ public class ChessActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chess_grid);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //
         setFromFen(Board.FEN_START_POSITION);
         adapter = new ChessGrid(this, chessFigure);
         gridView = (GridView) findViewById(R.id.gridview_Chess);

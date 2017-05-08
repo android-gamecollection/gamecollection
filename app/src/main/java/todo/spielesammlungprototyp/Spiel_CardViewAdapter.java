@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAdapter.SpieleViewHolder> {
+public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAdapter.SpieleViewHolder> {
 
     private ArrayList<Spiel_CardView> spiele_cardview = new ArrayList<>();
     private  ClickListener clicklistener = null;
 
-    Spiel_CardViewAdapter(ArrayList<Spiel_CardView> spiele_cardview) {
+    public Spiel_CardViewAdapter(ArrayList<Spiel_CardView> spiele_cardview) {
         this.spiele_cardview = spiele_cardview;
     }
 

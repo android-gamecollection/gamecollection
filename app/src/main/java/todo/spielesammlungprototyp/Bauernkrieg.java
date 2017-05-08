@@ -1,10 +1,10 @@
 package todo.spielesammlungprototyp;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-public class Bauernkrieg extends Activity {
+public class Bauernkrieg extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
