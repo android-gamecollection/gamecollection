@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.animation.AnimatorCompatHelper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import todo.spielesammlungprototyp.Fragements.Brettspiele_AuswahlFragment;
 import todo.spielesammlungprototyp.Fragements.HubFragment;
@@ -30,9 +30,11 @@ public class _Hub extends AppCompatActivity {
     private DrawerLayout drawer;
     private View navHeader;
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+    private FloatingActionButton fab_new_game, fab_new_game_k, fab_new_game_b;
     private ImageView navDrawerBackground, navDrawerIcon;
     private TextView navDrawerTitle, navDrawerSubTitle;
+    private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAnticlockwise;
+    private boolean isFabOpen = false;
 
     // urls to load navigation header background image
     // and profile image
@@ -74,7 +76,13 @@ public class _Hub extends AppCompatActivity {
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab_new_game = (FloatingActionButton) findViewById(R.id.fab_new_game);
+        fab_new_game_k = (FloatingActionButton) findViewById(R.id.fab_new_game_kartenspiele);
+        fab_new_game_b = (FloatingActionButton) findViewById(R.id.fab_new_game_brettspiele);
+        fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clockwise);
+        fabRotateAnticlockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlockwise);
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
@@ -86,11 +94,27 @@ public class _Hub extends AppCompatActivity {
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab_new_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                if(isFabOpen) {
+                    fab_new_game_b.startAnimation(fabClose);
+                    fab_new_game_k.startAnimation(fabClose);
+                    fab_new_game.startAnimation(fabRotateAnticlockwise);
+                    fab_new_game_b.setClickable(false);
+                    fab_new_game_k.setClickable(false);
+                    isFabOpen = false;
+                }
+                else {
+                    fab_new_game_b.startAnimation(fabOpen);
+                    fab_new_game_k.startAnimation(fabOpen);
+                    fab_new_game.startAnimation(fabRotateClockwise);
+                    fab_new_game_b.setClickable(true);
+                    fab_new_game_k.setClickable(true);
+                    isFabOpen = true;
+                }
+
             }
         });
 
@@ -149,7 +173,7 @@ public class _Hub extends AppCompatActivity {
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
 
-            // show or hide the fab button
+            // show or hide the fab_new_game button
             toggleFab();
             return;
         }
@@ -176,7 +200,7 @@ public class _Hub extends AppCompatActivity {
             mHandler.post(mPendingRunnable);
         }
 
-        // show or hide the fab button
+        // show or hide the fab_new_game button
         toggleFab();
 
         //Closing drawer on item click
@@ -369,12 +393,12 @@ public class _Hub extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     } */
 
-    // show or hide the fab
+    // show or hide the fab_new_game
     private void toggleFab() {
         if (navItemIndex == 0)
-            fab.show();
+            fab_new_game.show();
         else
-            fab.hide();
+            fab_new_game.hide();
     }
 
     // Funktionen zum wechseln zur anderen Activities
