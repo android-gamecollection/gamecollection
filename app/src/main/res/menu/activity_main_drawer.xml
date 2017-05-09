@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_hub"
-            android:icon="@mipmap/ic_game_dark"
+            android:icon="@drawable/view_dashboard"
             android:title="@string/nav_hub" />
         <item
             android:id="@+id/nav_kartenspiele"
-            android:icon="@mipmap/ic_game_dark"
+            android:icon="@drawable/cards_playing_outline"
             android:title="@string/nav_kartenspiele" />
         <item
             android:id="@+id/nav_brettspiele"
-            android:icon="@mipmap/ic_game_dark"
+            android:icon="@drawable/checkerboard"
             android:title="@string/nav_brettspiele" />
 
     </group>
@@ -21,12 +21,12 @@
         <menu>
             <item
                 android:id="@+id/nav_information"
-                android:icon="@mipmap/ic_info"
+                android:icon="@drawable/information"
                 android:title="@string/nav_info" />
 
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@mipmap/ic_settings"
+                android:icon="@drawable/settings"
                 android:title="@string/nav_settings" />
         </menu>
     </item>

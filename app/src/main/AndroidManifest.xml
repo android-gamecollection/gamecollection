@@ -5,7 +5,7 @@
     <!-- durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich -->
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_game_dark"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

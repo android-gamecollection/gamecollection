@@ -28,7 +28,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/spiele_icon"
-            android:src="@mipmap/ic_game_dark"
+            android:src="@mipmap/ic_launcher"
             android:layout_marginEnd="16dp"
             />
 
