@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.animation.AnimatorCompatHelper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -20,9 +19,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import todo.spielesammlungprototyp.Fragements.Brettspiele_AuswahlFragment;
-import todo.spielesammlungprototyp.Fragements.HubFragment;
-import todo.spielesammlungprototyp.Fragements.Kartenspiele_AuswahlFragment;
+import todo.spielesammlungprototyp.Fragments.Brettspiele_AuswahlFragment;
+import todo.spielesammlungprototyp.Fragments.HubFragment;
+import todo.spielesammlungprototyp.Fragments.Kartenspiele_AuswahlFragment;
 
 public class _Hub extends AppCompatActivity {
 
