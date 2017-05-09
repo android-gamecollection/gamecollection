@@ -23,43 +23,28 @@
         <activity
             android:name=".Brettspiele"
             android:label="@string/brettspiele"
-            android:parentActivityName=".Brettspiele_Auswahl"
+            android:parentActivityName="._Hub"
             android:windowSoftInputMode="stateVisible">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Brettspiele_Auswahl"/>
+                android:value="._Hub"/>
         </activity>
-        <activity
-            android:name=".Brettspiele_Auswahl"
-            android:label="@string/brettspiele"
+        <activity android:name=".ChessActivity"
+            android:label="Schach"
             android:parentActivityName="._Hub">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="._Hub" />
-        </activity>
-        <activity android:name=".ChessActivity"
-            android:label="Schach"
-            android:parentActivityName=".Brettspiele_Auswahl">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Brettspiele_Auswahl" />
         </activity>
 
         <!-- Childactivity Bauernkrieg -->
         <activity
             android:name=".Bauernkrieg"
             android:label="@string/bauernkrieg"
-            android:parentActivityName=".Kartenspiele_Auswahl">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Kartenspiele_Auswahl" />
-        </activity>
-        <activity android:name=".Kartenspiele_Auswahl"
-            android:label="@string/kartenspiele"
             android:parentActivityName="._Hub">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp._Hub" />
+                android:value="._Hub" />
         </activity>
     </application>
 
