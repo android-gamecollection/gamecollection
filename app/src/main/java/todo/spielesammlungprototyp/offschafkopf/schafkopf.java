@@ -183,7 +183,23 @@ public class schafkopf extends CardGame
     |              vergleichsmethoden            |
     ______________________________________________
 */
+/*
+int p == Spieler der ausspielt
 
+<--------------->
+sticht(int p)
+isTrumpf(int p)
+isOber(int p)
+isUnter(int p)
+isHerz(int p)
+isTrumpfHigher(int p)
+isColorHigher(int p)
+sameColor(int p)
+sameRank(int p)
+sameColorOnHand(int p)
+TrumpfOnHand(int p)
+<--------------->
+*/
     public int sticht(int p){
         //int p == spieler der ausspielt
         if(p == 0) {
