@@ -7,21 +7,17 @@ import ch.aplu.jcardgame.Hand;
 
 
 public  class schafkopf_vergleichsmethoden extends schafkopf implements vergleichsmethoden {
-
-
-    public schafkopf_vergleichsmethoden(int Player, Hand[] bids) {
-        this.Player = Player;
+    public schafkopf_vergleichsmethoden(Hand[] bids, Hand[] hands, int Player){
         this.bids = bids;
-    }
-
-
-    private int Player;
-    private Hand[] bids;
-
-
-    public void ChangePlayer(int Player) {
+        this.hands = hands;
         this.Player = Player;
     }
+
+    private int Player = 0;
+    private Hand[] bids = super.bids;
+    private Hand[] hands = super.hands;
+
+    public void ChangePlayer(int Player) {this.Player = Player;}
 
     public void ChangeBids(Hand[] bids) {
         this.bids = bids;
@@ -30,7 +26,6 @@ public  class schafkopf_vergleichsmethoden extends schafkopf implements vergleic
 
     public int sticht(int p){
         //int p == spieler der ausspielt
-
         if(p == 0) {
 
         if (isTrumpf(p)) {
