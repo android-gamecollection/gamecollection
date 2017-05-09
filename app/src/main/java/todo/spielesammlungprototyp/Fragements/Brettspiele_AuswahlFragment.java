@@ -1,6 +1,5 @@
 package todo.spielesammlungprototyp.Fragements;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +17,6 @@ import todo.spielesammlungprototyp.ClickListener;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.Spiel_CardView;
 import todo.spielesammlungprototyp.Spiel_CardViewAdapter;
-
-import static android.support.v7.recyclerview.R.attr.layoutManager;
-import static todo.spielesammlungprototyp.R.id.spiele_details;
-import static todo.spielesammlungprototyp.R.id.spiele_titel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +40,7 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
     Spiel_CardViewAdapter adapterC;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
-    int[] spiele_icon_id = {R.mipmap.ic_game_dark};
+    int[] spiele_icon_id = {R.mipmap.ic_launcher};
     String[] spiele_titel, spiele_details;
 
     private OnFragmentInteractionListener mListener;
