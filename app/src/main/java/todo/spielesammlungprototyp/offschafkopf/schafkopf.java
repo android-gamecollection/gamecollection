@@ -13,7 +13,7 @@ public class schafkopf extends CardGame
 {
     public enum Suit
     {
-        schellen, herz, gruen, eichel
+        EICHEL, BLATT, HERZ, SCHELLEN
     }
 
     public enum Rank
@@ -54,8 +54,8 @@ public class schafkopf extends CardGame
             };
 
     private Deck deck;
-    private Hand[] hands;//16 Hands ala 2 Karten
-    private Hand[] bids = new Hand[2];
+    public Hand[] hands;//16 Hands ala 2 Karten
+    public Hand[] bids = new Hand[2];
     private Hand[] stacks = new Hand[2];
     private int z=0;//initialisierung cardlistener
 

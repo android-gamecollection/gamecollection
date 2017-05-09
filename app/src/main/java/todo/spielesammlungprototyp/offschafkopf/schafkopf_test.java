@@ -17,7 +17,7 @@ public class schafkopf_test extends schafkopf {
     private int Player;
     private Hand[] bids;
     private Deck deck;
-
+    String debug = "debug";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class schafkopf_test extends schafkopf {
 
 
     public String debugger(){
-        return "debugger erreicht";
+        return debug;
     }
 
 }
