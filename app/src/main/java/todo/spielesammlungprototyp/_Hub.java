@@ -252,27 +252,21 @@ public class _Hub extends AppCompatActivity {
                         //drawer.closeDrawers();
                         break;
                     case R.id.nav_kartenspiele:
-                        //startActivity(new Intent(_Hub.this, Kartenspiele_Auswahl.class));
-                        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        //return true;
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_KARTENSPIELE;
                         break;
                     case R.id.nav_brettspiele:
-                        //startActivity(new Intent(_Hub.this, Brettspiele_Auswahl.class));
-                        //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        //return true;
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_BRETTSPIELE;
                         break;
                     case R.id.nav_settings:
                         // launch new intent instead of loading fragment
-                        //startActivity(new Intent(_Hub.this, Brettspiele_Auswahl.class));
+                        //startActivity(new Intent(_Hub.this, ));
                         //drawer.closeDrawers();
                         return true;
                     case R.id.nav_information:
                         // launch new intent instead of loading fragment
-                        //startActivity(new Intent(_Hub.this, Kartenspiele_Auswahl.class));
+                        //startActivity(new Intent(_Hub.this, ));
                         //drawer.closeDrawers();
                         return true;
                     default:
@@ -399,22 +393,4 @@ public class _Hub extends AppCompatActivity {
         else
             fab_new_game.hide();
     }
-
-    // Funktionen zum wechseln zur anderen Activities
-    // wird mit "onClick" des jeweiligen Buttons aufgerufen
-    // "onClick" wird von einem Feature aufgerufen, hier ein "Button"
-    // (definiert in der zugehörigen Layout-Datei. Hier: "_activity_hub.xml")
-    // =>
-    public void gotoKartenspiele(View view) {
-        Intent gotoActivity = new Intent(this, Kartenspiele_Auswahl.class);
-        startActivity(gotoActivity);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    public void gotoBrettspiele(View view) {
-        Intent gotoActivity = new Intent(this, Brettspiele_Auswahl.class);
-        startActivity(gotoActivity);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-    // <=
 }

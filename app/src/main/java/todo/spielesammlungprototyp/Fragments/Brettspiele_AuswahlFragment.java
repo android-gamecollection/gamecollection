@@ -80,7 +80,7 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_brettspiele__auswahl, container, false);
+        return inflater.inflate(R.layout.fragment_spiele_auswahl, container, false);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
             counter++;
             spieleListe.add(spiel_cardView);
         }
-        recyclerView = (RecyclerView) getView().findViewById(R.id.brettspiele_auswahl_RecyclerView);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.spiele_auswahl_RecyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
