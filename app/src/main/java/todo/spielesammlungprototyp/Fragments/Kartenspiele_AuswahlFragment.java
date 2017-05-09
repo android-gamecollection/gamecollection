@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.Fragements;
+package todo.spielesammlungprototyp.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,12 +21,12 @@ import todo.spielesammlungprototyp.Spiel_CardViewAdapter;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Brettspiele_AuswahlFragment.OnFragmentInteractionListener} interface
+ * {@link Kartenspiele_AuswahlFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Brettspiele_AuswahlFragment#newInstance} factory method to
+ * Use the {@link Kartenspiele_AuswahlFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Brettspiele_AuswahlFragment extends Fragment implements ClickListener {
+public class Kartenspiele_AuswahlFragment extends Fragment implements ClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,7 +45,7 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
 
     private OnFragmentInteractionListener mListener;
 
-    public Brettspiele_AuswahlFragment() {
+    public Kartenspiele_AuswahlFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +55,11 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Brettspiele_AuswahlFragment.
+     * @return A new instance of fragment Kartenspiele_AuswahlFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Brettspiele_AuswahlFragment newInstance(String param1, String param2) {
-        Brettspiele_AuswahlFragment fragment = new Brettspiele_AuswahlFragment();
+    public static Kartenspiele_AuswahlFragment newInstance(String param1, String param2) {
+        Kartenspiele_AuswahlFragment fragment = new Kartenspiele_AuswahlFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,28 +80,28 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_brettspiele__auswahl, container, false);
+        return inflater.inflate(R.layout.fragment_kartenspiele__auswahl, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        spiele_titel = getResources().getStringArray(R.array.spiele_titel_brettspiele);
-        spiele_details = getResources().getStringArray(R.array.spiele_details_brettspiele);
+        spiele_titel = getResources().getStringArray(R.array.spiele_titel_kartenspiele);
+        spiele_details = getResources().getStringArray(R.array.spiele_details_kartenspiele);
         int counter = 0;
-        for(String titel : spiele_titel)
-        {
-            Spiel_CardView spiel_cardView = new Spiel_CardView(spiele_icon_id[0],titel,spiele_details[counter]);
+        for (String titel : spiele_titel) {
+            Spiel_CardView spiel_cardView = new Spiel_CardView(spiele_icon_id[counter], titel, spiele_details[counter]);
             counter++;
             spieleListe.add(spiel_cardView);
         }
-        recyclerView = (RecyclerView) getView().findViewById(R.id.brettspiele_auswahl_RecyclerView);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.kartenspiele_auswahl_RecyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         adapterC = new Spiel_CardViewAdapter(spieleListe);
         adapterC.setClickListener(this);
-        recyclerView.setAdapter(adapterC);}
+        recyclerView.setAdapter(adapterC);
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -119,7 +119,7 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }*/
+        } */
     }
 
     @Override
@@ -132,7 +132,7 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
     public void itemClicked(View view, int position) {
         Intent intent = new Intent();
         Context context = view.getContext();
-        String[] stringClassnames = getResources().getStringArray(R.array.spiele_activity_brettspiele);
+        String[] stringClassnames = getResources().getStringArray(R.array.spiele_activity_kartenspiele);
         intent.setClassName(context, context.getPackageName() + "." + stringClassnames[position]);
         context.startActivity(intent);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -148,7 +148,7 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
