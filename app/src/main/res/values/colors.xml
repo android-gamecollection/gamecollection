@@ -11,9 +11,6 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
 
-    <color name="icons">#FFFFFF</color>
-    <color name="divider">#BDBDBD</color>
-
     <color name="chessWhite">#FFFFFF</color>
     <color name="chessBlack">#000000</color>
     <color name="chessPiece">#ff5722</color>
