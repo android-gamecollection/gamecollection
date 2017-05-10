@@ -1,21 +1,25 @@
 package todo.spielesammlungprototyp.games.consolechess;
 
+import android.util.Log;
+
 import com.alonsoruibal.chess.*;
 import com.alonsoruibal.chess.search.SearchEngine;
 
 class ChessBoard {
-    private Config config;
-    private SearchEngine se;
-    private Board board;
-    public ChessBoard()
-    {
-        config = new Config();
-        se = new SearchEngine(config);
+    private final String TAG = this.getClass().getSimpleName();
 
-        board = se.getBoard();
+    private Config config;
+    private SearchEngine searchEngine;
+    private Board board;
+
+    ChessBoard() {
+        config = new Config();
+        searchEngine = new SearchEngine(config);
+
+        board = searchEngine.getBoard();
     }
 
-    void startPosition() {
+    void setStartPosition() {
         board.startPosition();
     }
 
@@ -30,20 +34,18 @@ class ChessBoard {
         return str;
     }
 
-    boolean move(String from, String to){
+    boolean move(String from, String to) {
         int move = Move.getFromString(board,from + " " + to,true);
         return board.doMove(move);
     }
-    boolean aimove()
-    {
-        try
-        {
-            se.run();
-        }
-        catch (Exception e)
-        {
 
+    boolean aimove() {
+        try {
+            searchEngine.run();
+        } catch (NullPointerException e) {
+            Log.w(TAG, "aimove():", e);
         }
-        return board.doMove(se.getBestMove());
+
+        return board.doMove(searchEngine.getBestMove());
     }
 }
