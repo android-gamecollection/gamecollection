@@ -77,7 +77,7 @@ public class BoardGameSelection extends Fragment implements ClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_spiele_auswahl, container, false);
+        return inflater.inflate(R.layout.fragment_game_selection, container, false);
     }
 
     @Override

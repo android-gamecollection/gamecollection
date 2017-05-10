@@ -27,7 +27,7 @@ public class ConsoleChess extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_brettspiele);
+        setContentView(R.layout.activity_console_chess);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
