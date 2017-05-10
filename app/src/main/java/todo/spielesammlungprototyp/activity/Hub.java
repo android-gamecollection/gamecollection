@@ -20,11 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.fragment.Brettspiele_AuswahlFragment;
-import todo.spielesammlungprototyp.fragment.HubFragment;
-import todo.spielesammlungprototyp.fragment.Kartenspiele_AuswahlFragment;
+import todo.spielesammlungprototyp.fragment.BoardGameSelection;
+import todo.spielesammlungprototyp.fragment.CardGameSelection;
 
-public class _Hub extends AppCompatActivity {
+public class Hub extends AppCompatActivity {
 
     // urls to load navigation header background image
     // and profile image
@@ -204,15 +203,15 @@ public class _Hub extends AppCompatActivity {
         switch (navItemIndex) {
             case 0:
                 // home
-                return new HubFragment();
+                return new todo.spielesammlungprototyp.fragment.Hub();
             case 1:
                 // Kartenspiele
-                return new Kartenspiele_AuswahlFragment();
+                return new CardGameSelection();
             case 2:
-                // Brettspiele
-                return new Brettspiele_AuswahlFragment();
+                // ConsoleChess
+                return new BoardGameSelection();
             default:
-                return new HubFragment();
+                return new todo.spielesammlungprototyp.fragment.Hub();
         }
     }
 
@@ -250,12 +249,12 @@ public class _Hub extends AppCompatActivity {
                         break;
                     case R.id.nav_settings:
                         // launch new intent instead of loading fragment
-                        //startActivity(new Intent(_Hub.this, ));
+                        //startActivity(new Intent(Hub.this, ));
                         //drawer.closeDrawers();
                         return true;
                     case R.id.nav_information:
                         // launch new intent instead of loading fragment
-                        //startActivity(new Intent(_Hub.this, ));
+                        //startActivity(new Intent(Hub.this, ));
                         //drawer.closeDrawers();
                         return true;
                     default:

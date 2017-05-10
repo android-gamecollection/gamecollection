@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
 
-public class ChessGrid extends ArrayAdapter<String> {
+public class ChessAdapter extends ArrayAdapter<String> {
 
-    public ChessGrid(Context context, String[] objects) {
+    public ChessAdapter(Context context, String[] objects) {
         super(context, R.layout.chess_grid_single, objects);
     }
 

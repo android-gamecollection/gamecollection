@@ -14,15 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.games.consolechess.ChessAdapter;
+import todo.spielesammlungprototyp.games.consolechess.CmdProcessor;
 
-public class Brettspiele extends AppCompatActivity {
+public class ConsoleChess extends AppCompatActivity {
 
     private ScrollView scroll_console;
     private TextView text_console;
     private EditText input_console;
     private Toolbar toolbar;
-    private ChessAdapter chessAdapter;
+    private CmdProcessor cmdProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class Brettspiele extends AppCompatActivity {
         input_console = (EditText) findViewById(R.id.input_console);
         setKeyboardListener();
 
-        chessAdapter = new ChessAdapter(this);
+        cmdProcessor = new CmdProcessor(this);
     }
 
     public void addOutput(String str) {
@@ -61,7 +61,7 @@ public class Brettspiele extends AppCompatActivity {
         String input = input_console.getText().toString();
 
         clearInput();
-        chessAdapter.processInput(input);
+        cmdProcessor.processInput(input);
     }
 
     public void displayError(String errMessage) {

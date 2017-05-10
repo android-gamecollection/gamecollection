@@ -16,10 +16,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.games.chess.ChessGrid;
-import todo.spielesammlungprototyp.games.chess.ucChessPiece;
+import todo.spielesammlungprototyp.games.chess.ChessAdapter;
+import todo.spielesammlungprototyp.games.chess.UnicodePieces;
 
-public class ChessActivity extends AppCompatActivity {
+public class Chess extends AppCompatActivity {
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
@@ -39,7 +39,7 @@ public class ChessActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setFromFen(Board.FEN_START_POSITION);
-        adapter = new ChessGrid(this, chessFigure);
+        adapter = new ChessAdapter(this, chessFigure);
         gridView = (GridView) findViewById(R.id.gridview_Chess);
         gridView.setAdapter(adapter);
 
@@ -57,7 +57,7 @@ public class ChessActivity extends AppCompatActivity {
         fen = fen.replace("/", "");
 
         for (int i = 0; i < 64; i++)
-            chessFigure[i] = ucChessPiece.pieces.get(fen.charAt(i));
+            chessFigure[i] = UnicodePieces.pieces.get(fen.charAt(i));
     }
 
     private String replaceNumbers(String str) {

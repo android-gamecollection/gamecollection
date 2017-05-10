@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ucChessPiece {
-    public static final Map<Character, String> pieces;
+public abstract class UnicodePieces {
+
     public static final String BISHOP_B = "\u265D";
     public static final String KING_B = "\u265A";
     public static final String KNIGHT_B = "\u265E";
@@ -19,6 +19,8 @@ public abstract class ucChessPiece {
     public static final String ROOK_W = "\u2656";
     public static final String QUEEN_W = "\u2655";
     public static final String NONE = "";
+
+    public static final Map<Character, String> pieces;
 
     static {
         Map<Character, String> map = new HashMap<>();

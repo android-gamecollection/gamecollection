@@ -30,8 +30,8 @@
     </string-array>
 
     <string-array name="spiele_activity_brettspiele">
-        <item>"ChessActivity"</item>
-        <item>"Brettspiele"</item>
+        <item>"Chess"</item>
+        <item>"ConsoleChess"</item>
     </string-array>
 
     <string-array name="spiele_activity_kartenspiele">

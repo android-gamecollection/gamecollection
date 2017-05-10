@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".activity.Brettspiele">
+    tools:context=".activity.ConsoleChess">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_parent"
@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:paddingTop="64dp"
-        tools:context=".activity.Brettspiele">
+        tools:context=".activity.ConsoleChess">
 
         <ScrollView
             android:id="@+id/scroll_console"

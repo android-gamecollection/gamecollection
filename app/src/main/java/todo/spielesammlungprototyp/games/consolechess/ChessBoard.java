@@ -32,7 +32,7 @@ class ChessBoard {
     String getOverview() {
         String str = board.toString();
         str = str.substring(0, 144); // 144 = amount of chars on a normal field
-        str = str + "\n" + "a b c d e f g h";
+        str += "\n" + "a b c d e f g h";
         return str;
     }
 
