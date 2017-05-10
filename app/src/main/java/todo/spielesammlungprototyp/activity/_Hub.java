@@ -1,6 +1,5 @@
-package todo.spielesammlungprototyp;
+package todo.spielesammlungprototyp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -19,9 +18,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import todo.spielesammlungprototyp.Fragments.Brettspiele_AuswahlFragment;
-import todo.spielesammlungprototyp.Fragments.HubFragment;
-import todo.spielesammlungprototyp.Fragments.Kartenspiele_AuswahlFragment;
+import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.fragment.Brettspiele_AuswahlFragment;
+import todo.spielesammlungprototyp.fragment.HubFragment;
+import todo.spielesammlungprototyp.fragment.Kartenspiele_AuswahlFragment;
 
 public class _Hub extends AppCompatActivity {
 

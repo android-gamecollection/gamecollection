@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.Chess;
+package todo.spielesammlungprototyp.games.chess;
 
 import java.util.Collections;
 import java.util.HashMap;

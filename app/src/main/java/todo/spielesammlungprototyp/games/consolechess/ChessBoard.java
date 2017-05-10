@@ -1,9 +1,7 @@
-package todo.spielesammlungprototyp.Chess;
+package todo.spielesammlungprototyp.games.consolechess;
 
 import com.alonsoruibal.chess.*;
 import com.alonsoruibal.chess.search.SearchEngine;
-
-import java.util.concurrent.ExecutionException;
 
 class ChessBoard {
     private Config config;

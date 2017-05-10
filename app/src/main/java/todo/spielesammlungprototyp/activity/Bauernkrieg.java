@@ -1,8 +1,10 @@
-package todo.spielesammlungprototyp;
+package todo.spielesammlungprototyp.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import todo.spielesammlungprototyp.R;
 
 public class Bauernkrieg extends AppCompatActivity {
 
