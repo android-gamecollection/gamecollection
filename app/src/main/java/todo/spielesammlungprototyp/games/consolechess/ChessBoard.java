@@ -2,7 +2,9 @@ package todo.spielesammlungprototyp.games.consolechess;
 
 import android.util.Log;
 
-import com.alonsoruibal.chess.*;
+import com.alonsoruibal.chess.Board;
+import com.alonsoruibal.chess.Config;
+import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.search.SearchEngine;
 
 class ChessBoard {
