@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="todo.spielesammlungprototyp.Fragments.HubFragment">
+    tools:context="todo.spielesammlungprototyp.fragment.HubFragment">
 
     <TextView
         android:layout_width="match_parent"

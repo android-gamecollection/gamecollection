@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Brettspiele"
+    tools:context=".activity.Brettspiele"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
@@ -26,7 +26,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Brettspiele"
+        tools:context=".activity.Brettspiele"
         android:fitsSystemWindows="true"
         android:paddingTop="64dp">
 

@@ -1,9 +1,9 @@
-package todo.spielesammlungprototyp.Chess;
+package todo.spielesammlungprototyp.games.consolechess;
 
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import todo.spielesammlungprototyp.Brettspiele;
+import todo.spielesammlungprototyp.activity.Brettspiele;
 import todo.spielesammlungprototyp.R;
 
 public class ChessAdapter {

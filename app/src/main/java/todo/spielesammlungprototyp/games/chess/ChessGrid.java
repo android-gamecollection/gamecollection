@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.Chess;
+package todo.spielesammlungprototyp.games.chess;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

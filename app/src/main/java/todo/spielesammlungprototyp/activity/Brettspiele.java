@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp;
+package todo.spielesammlungprototyp.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +13,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import todo.spielesammlungprototyp.Chess.ChessAdapter;
+import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.games.consolechess.ChessAdapter;
 
 public class Brettspiele extends AppCompatActivity {
 
