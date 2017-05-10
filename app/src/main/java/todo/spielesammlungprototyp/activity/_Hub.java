@@ -2,6 +2,7 @@ package todo.spielesammlungprototyp.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -195,9 +196,7 @@ public class _Hub extends AppCompatActivity {
         };
 
         // If mPendingRunnable is not null, then add to the message queue
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
+        mHandler.post(mPendingRunnable);
 
         // show or hide the fab_new_game button
         toggleFab();
@@ -212,16 +211,13 @@ public class _Hub extends AppCompatActivity {
         switch (navItemIndex) {
             case 0:
                 // home
-                HubFragment hubFragment = new HubFragment();
-                return hubFragment;
+                return new HubFragment();
             case 1:
                 // Kartenspiele
-                Kartenspiele_AuswahlFragment kartenspiele_auswahlFragment = new Kartenspiele_AuswahlFragment();
-                return kartenspiele_auswahlFragment;
+                return new Kartenspiele_AuswahlFragment();
             case 2:
                 // Brettspiele
-                Brettspiele_AuswahlFragment brettspiele_auswahlFragment = new Brettspiele_AuswahlFragment();
-                return brettspiele_auswahlFragment;
+                return new Brettspiele_AuswahlFragment();
             default:
                 return new HubFragment();
         }
@@ -241,7 +237,7 @@ public class _Hub extends AppCompatActivity {
 
             // This method will trigger on item Click of navigation menu
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
@@ -304,7 +300,7 @@ public class _Hub extends AppCompatActivity {
         };
 
         //Setting the actionbarToggle to drawer layout
-        drawer.setDrawerListener(actionBarDrawerToggle);
+        drawer.addDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
