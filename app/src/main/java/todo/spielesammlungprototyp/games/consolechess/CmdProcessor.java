@@ -4,14 +4,14 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.activity.Brettspiele;
+import todo.spielesammlungprototyp.activity.ConsoleChess;
 
-public class ChessAdapter {
+public class CmdProcessor {
 
-    private final Brettspiele brettspielInstance;
+    private final ConsoleChess brettspielInstance;
     private final ChessBoard chessBoard;
 
-    public ChessAdapter(Brettspiele brettspielInstance) {
+    public CmdProcessor(ConsoleChess brettspielInstance) {
         this.brettspielInstance = brettspielInstance;
         this.chessBoard = new ChessBoard();
         chessBoard.setStartPosition();

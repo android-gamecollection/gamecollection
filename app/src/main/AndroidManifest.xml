@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <!-- Hub -->
-        <activity android:name=".activity._Hub">
+        <activity android:name=".activity.Hub">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,15 +20,15 @@
 
         </activity>
 
-        <!-- Brettspiele -->
+        <!-- ConsoleChess -->
         <activity
-            android:name=".activity.Brettspiele"
+            android:name=".activity.ConsoleChess"
             android:label="@string/brettspiele"
             android:windowSoftInputMode="stateVisible">
         </activity>
 
         <activity
-            android:name=".activity.ChessActivity"
+            android:name=".activity.Chess"
             android:label="Schach">
         </activity>
 

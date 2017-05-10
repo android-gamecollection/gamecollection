@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAdapter.SpieleViewHolder> {
+public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapter.GameViewHolder> {
 
-    private ArrayList<Spiel_CardView> spiele_cardview = new ArrayList<>();
+    private ArrayList<GameCardView> gameCardViews = new ArrayList<>();
     private ClickListener clicklistener = null;
 
-    public Spiel_CardViewAdapter(ArrayList<Spiel_CardView> spiele_cardview) {
-        this.spiele_cardview = spiele_cardview;
+    public GameCardViewAdapter(ArrayList<GameCardView> gameCardViews) {
+        this.gameCardViews = gameCardViews;
     }
 
     public void setClickListener(ClickListener clicklistener) {
@@ -24,14 +24,14 @@ public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAd
     }
 
     @Override
-    public SpieleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_spiele_auswahl_card_view, parent, false);
-        return new SpieleViewHolder(view);
+        return new GameViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final SpieleViewHolder holder, final int position) {
-        Spiel_CardView SCV = spiele_cardview.get(position);
+    public void onBindViewHolder(final GameViewHolder holder, final int position) {
+        GameCardView SCV = gameCardViews.get(position);
         holder.spiel_icon.setImageResource(SCV.getSpiele_icon_id());
         holder.spiel_titel.setText(SCV.getSpiele_titel());
         holder.spiel_details.setText(SCV.getSpiele_details());
@@ -39,17 +39,17 @@ public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAd
 
     @Override
     public int getItemCount() {
-        return spiele_cardview.size();
+        return gameCardViews.size();
     }
 
-    class SpieleViewHolder extends RecyclerView.ViewHolder {
+    class GameViewHolder extends RecyclerView.ViewHolder {
 
         final RelativeLayout card;
         final ImageView spiel_icon;
         final TextView spiel_titel;
         final TextView spiel_details;
 
-        SpieleViewHolder(View view) {
+        GameViewHolder(View view) {
             super(view);
             card = (RelativeLayout) view.findViewById(R.id.complete_card);
             spiel_icon = (ImageView) view.findViewById(R.id.spiele_icon);
