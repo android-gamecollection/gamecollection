@@ -8,8 +8,8 @@ import todo.spielesammlungprototyp.R;
 
 public class ChessAdapter {
 
-    private Brettspiele brettspielInstance;
-    private ChessBoard chessBoard;
+    private final Brettspiele brettspielInstance;
+    private final ChessBoard chessBoard;
 
     public ChessAdapter(Brettspiele brettspielInstance) {
         this.brettspielInstance = brettspielInstance;

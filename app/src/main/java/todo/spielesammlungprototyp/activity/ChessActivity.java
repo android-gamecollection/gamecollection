@@ -21,13 +21,13 @@ import todo.spielesammlungprototyp.games.chess.ucChessPiece;
 
 public class ChessActivity extends AppCompatActivity {
 
-    GridView gridView;
-    ArrayAdapter<String> adapter;
+    private GridView gridView;
+    private ArrayAdapter<String> adapter;
     private Toolbar toolbar;
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
-    String[] chessFigure = new String[64];
+    private final String[] chessFigure = new String[64];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

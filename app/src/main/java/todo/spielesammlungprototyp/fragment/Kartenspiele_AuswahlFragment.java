@@ -39,8 +39,8 @@ public class Kartenspiele_AuswahlFragment extends Fragment implements ClickListe
     RecyclerView recyclerView;
     Spiel_CardViewAdapter adapterC;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
-    int[] spiele_icon_id = {R.mipmap.ic_launcher};
+    final ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
+    final int[] spiele_icon_id = {R.mipmap.ic_launcher};
     String[] spiele_titel, spiele_details;
 
     private OnFragmentInteractionListener mListener;

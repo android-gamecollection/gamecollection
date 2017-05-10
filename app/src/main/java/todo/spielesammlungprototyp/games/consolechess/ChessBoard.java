@@ -10,9 +10,9 @@ import com.alonsoruibal.chess.search.SearchEngine;
 class ChessBoard {
     private final String TAG = this.getClass().getSimpleName();
 
-    private Config config;
-    private SearchEngine searchEngine;
-    private Board board;
+    private final Config config;
+    private final SearchEngine searchEngine;
+    private final Board board;
 
     ChessBoard() {
         config = new Config();
