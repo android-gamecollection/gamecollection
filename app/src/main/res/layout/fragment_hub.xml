@@ -2,13 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="todo.spielesammlungprototyp.fragment.HubFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/hello_blank_fragment"/>
+        android:text="@string/hello_blank_fragment" />
 
 </RelativeLayout>

@@ -26,6 +26,19 @@ import todo.spielesammlungprototyp.fragment.Kartenspiele_AuswahlFragment;
 
 public class _Hub extends AppCompatActivity {
 
+    // urls to load navigation header background image
+    // and profile image
+    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
+    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+    // tags used to attach the fragments
+    private static final String TAG_HUB = "hub";
+    private static final String TAG_KARTENSPIELE = "kartenspiele_auswahl";
+    private static final String TAG_BRETTSPIELE = "brettspiele_auswahl";
+    public static String CURRENT_TAG = TAG_HUB;
+    // index to identify current nav menu item
+    private static int navItemIndex = 0;
+    // flag to load home fragment when user presses back key
+    private final boolean shouldLoadHomeFragOnBackPress = true;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
@@ -35,26 +48,8 @@ public class _Hub extends AppCompatActivity {
     private TextView navDrawerTitle, navDrawerSubTitle;
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAnticlockwise;
     private boolean isFabOpen = false;
-
-    // urls to load navigation header background image
-    // and profile image
-    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
-    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
-
-    // index to identify current nav menu item
-    private static int navItemIndex = 0;
-
-    // tags used to attach the fragments
-    private static final String TAG_HUB = "hub";
-    private static final String TAG_KARTENSPIELE = "kartenspiele_auswahl";
-    private static final String TAG_BRETTSPIELE = "brettspiele_auswahl";
-    public static String CURRENT_TAG = TAG_HUB;
-
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
-
-    // flag to load home fragment when user presses back key
-    private final boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
     // "onCreate()" wird beim Start der Activity gerufen
@@ -98,15 +93,14 @@ public class _Hub extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(isFabOpen) {
+                if (isFabOpen) {
                     fab_new_game_b.startAnimation(fabClose);
                     fab_new_game_k.startAnimation(fabClose);
                     fab_new_game.startAnimation(fabRotateAnticlockwise);
                     fab_new_game_b.setClickable(false);
                     fab_new_game_k.setClickable(false);
                     isFabOpen = false;
-                }
-                else {
+                } else {
                     fab_new_game_b.startAnimation(fabOpen);
                     fab_new_game_k.startAnimation(fabOpen);
                     fab_new_game.startAnimation(fabRotateClockwise);
@@ -124,13 +118,11 @@ public class _Hub extends AppCompatActivity {
         // initializing navigation menu
         setUpNavigationView();
 
-
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HUB;
             loadHomeFragment();
         }
-
     }
 
     /***
@@ -207,6 +199,7 @@ public class _Hub extends AppCompatActivity {
         // refresh toolbar menu
         invalidateOptionsMenu();
     }
+
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
@@ -335,7 +328,6 @@ public class _Hub extends AppCompatActivity {
 
         //super.onBackPressed(); //would close the app
     }
-
 
     /*
     @Override

@@ -10,10 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.alonsoruibal.chess.Board;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.alonsoruibal.chess.Board;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.games.chess.ChessGrid;
@@ -21,13 +21,12 @@ import todo.spielesammlungprototyp.games.chess.ucChessPiece;
 
 public class ChessActivity extends AppCompatActivity {
 
-    private GridView gridView;
-    private ArrayAdapter<String> adapter;
-    private Toolbar toolbar;
-
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
     private final String[] chessFigure = new String[64];
+    private GridView gridView;
+    private ArrayAdapter<String> adapter;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class ChessActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        //
         setFromFen(Board.FEN_START_POSITION);
         adapter = new ChessGrid(this, chessFigure);
         gridView = (GridView) findViewById(R.id.gridview_Chess);
@@ -84,7 +82,7 @@ public class ChessActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
-
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

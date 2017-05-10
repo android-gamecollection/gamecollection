@@ -1,6 +1,3 @@
-
-<!-- Der Style der App -->
-
 <resources>
 
     <!-- Base application theme. -->
@@ -9,20 +6,21 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/background</item>
-        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
-        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="android:colorBackground">@color/background</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <!-- Actionbarstyle -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
-        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
     </style>
+
     <style name="AppTheme.PopupOverlay" parent="Base.Widget.AppCompat.Light.ActionBar">
-        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
-        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
     </style>
 
 </resources>

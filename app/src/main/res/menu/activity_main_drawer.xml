@@ -2,14 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_hub"
             android:icon="@drawable/view_dashboard"
             android:title="@string/nav_hub" />
+
         <item
             android:id="@+id/nav_kartenspiele"
             android:icon="@drawable/cards_playing_outline"
             android:title="@string/nav_kartenspiele" />
+
         <item
             android:id="@+id/nav_brettspiele"
             android:icon="@drawable/checkerboard"
@@ -18,7 +21,9 @@
     </group>
 
     <item android:title="@string/nav_divider_title">
+
         <menu>
+
             <item
                 android:id="@+id/nav_information"
                 android:icon="@drawable/information"
@@ -28,7 +33,9 @@
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/settings"
                 android:title="@string/nav_settings" />
+
         </menu>
+
     </item>
 
 </menu>

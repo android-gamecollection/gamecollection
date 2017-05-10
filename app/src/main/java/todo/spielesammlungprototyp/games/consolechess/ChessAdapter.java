@@ -3,8 +3,8 @@ package todo.spielesammlungprototyp.games.consolechess;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import todo.spielesammlungprototyp.activity.Brettspiele;
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.activity.Brettspiele;
 
 public class ChessAdapter {
 
@@ -17,35 +17,6 @@ public class ChessAdapter {
         chessBoard.setStartPosition();
     }
 
-    private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
-        @Override
-        protected ConsoleResponse doInBackground(String... params) {
-            String str = params[0];
-            return processCommand(str);
-        }
-
-        @Override
-        protected void onPostExecute(ConsoleResponse response) {
-            if (!TextUtils.isEmpty(response.escapeSequence)) {
-                switch(response.escapeSequence) {
-                    case "clear":
-                        brettspielInstance.clearOutput();
-                }
-            } else {
-                if (!TextUtils.isEmpty(response.output))
-                    brettspielInstance.addOutputln(response.output);
-                if (!TextUtils.isEmpty(response.errorMessage))
-                    brettspielInstance.displayError(response.errorMessage);
-            }
-        }
-    }
-
-    private class ConsoleResponse {
-        String output;
-        String errorMessage;
-        String escapeSequence;
-    }
-
     public void processInput(String input) {
         new ProcessInputTask().execute(input);
     }
@@ -55,7 +26,7 @@ public class ChessAdapter {
 
         ConsoleResponse response = new ConsoleResponse();
 
-        switch(cmd[0].toLowerCase()) {
+        switch (cmd[0].toLowerCase()) {
             case "clear":
                 response.escapeSequence = "clear";
                 break;
@@ -75,7 +46,7 @@ public class ChessAdapter {
                     response.errorMessage = getString(R.string.err_invalid_cmd);
                 } else {
                     boolean validMove = chessBoard.move(cmd[1], cmd[2]);
-                    if (!validMove){
+                    if (!validMove) {
                         response.errorMessage = getString(R.string.err_invalid_move);
                     }
                 }
@@ -100,5 +71,34 @@ public class ChessAdapter {
 
     private String[] splitString(String str) {
         return str.split("\\s+");
+    }
+
+    private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
+        @Override
+        protected ConsoleResponse doInBackground(String... params) {
+            String str = params[0];
+            return processCommand(str);
+        }
+
+        @Override
+        protected void onPostExecute(ConsoleResponse response) {
+            if (!TextUtils.isEmpty(response.escapeSequence)) {
+                switch (response.escapeSequence) {
+                    case "clear":
+                        brettspielInstance.clearOutput();
+                }
+            } else {
+                if (!TextUtils.isEmpty(response.output))
+                    brettspielInstance.addOutputln(response.output);
+                if (!TextUtils.isEmpty(response.errorMessage))
+                    brettspielInstance.displayError(response.errorMessage);
+            }
+        }
+    }
+
+    private class ConsoleResponse {
+        String output;
+        String errorMessage;
+        String escapeSequence;
     }
 }

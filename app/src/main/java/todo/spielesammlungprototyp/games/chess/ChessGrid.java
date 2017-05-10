@@ -35,7 +35,7 @@ public class ChessGrid extends ArrayAdapter<String> {
     }
 
     private int getColorFromInd(int i) {
-        boolean testable = (i + i/8 % 2) % 2 == 0;
+        boolean testable = (i + i / 8 % 2) % 2 == 0;
         return testable ? R.color.chessWhite : R.color.chessBlack;
     }
 }

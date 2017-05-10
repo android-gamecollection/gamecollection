@@ -26,7 +26,7 @@ public class Bauernkrieg extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
-
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,11 +36,11 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin_bottom_k"
         android:layout_marginEnd="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/plus"
         android:elevation="6dp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorPrimary"
         app:pressedTranslationZ="12dp"
-        android:visibility="invisible"/>
+        app:srcCompat="@drawable/plus" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_game_brettspiele"
@@ -50,11 +49,11 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin_bottom_b"
         android:layout_marginEnd="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/plus"
         android:elevation="6dp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorPrimary"
         app:pressedTranslationZ="12dp"
-        android:visibility="invisible"/>
+        app:srcCompat="@drawable/plus" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_game"
@@ -63,9 +62,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginEnd="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/plus"
         android:elevation="6dp"
-        app:pressedTranslationZ="12dp"/>
+        app:backgroundTint="@color/colorPrimary"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/plus" />
 
 </android.support.design.widget.CoordinatorLayout>
