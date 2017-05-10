@@ -14,7 +14,7 @@ public class ChessAdapter {
     public ChessAdapter(Brettspiele brettspielInstance) {
         this.brettspielInstance = brettspielInstance;
         this.chessBoard = new ChessBoard();
-        chessBoard.startPosition();
+        chessBoard.setStartPosition();
     }
 
     private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
@@ -60,7 +60,7 @@ public class ChessAdapter {
                 response.escapeSequence = "clear";
                 break;
             case "restart":
-                chessBoard.startPosition();
+                chessBoard.setStartPosition();
                 break;
             case "show":
                 response.output = chessBoard.getBoard();
