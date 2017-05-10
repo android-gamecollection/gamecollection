@@ -29,12 +29,12 @@ public class ChessAdapter extends ArrayAdapter<String> {
 
         TextView textView = (TextView) convertView.findViewById(R.id.chess_figure);
         textView.setText(chessPiece);
-        textView.setBackgroundColor(ContextCompat.getColor(getContext(), getColorFromInd(position)));
+        textView.setBackgroundColor(ContextCompat.getColor(getContext(), colorFromIdx(position)));
 
         return convertView;
     }
 
-    private int getColorFromInd(int i) {
+    private int colorFromIdx(int i) {
         boolean testable = (i + i / 8 % 2) % 2 == 0;
         return testable ? R.color.chessWhite : R.color.chessBlack;
     }

@@ -27,16 +27,17 @@ import todo.spielesammlungprototyp.GameCardViewAdapter;
  * create an instance of this fragment.
  */
 public class CardGameSelection extends Fragment implements ClickListener {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    final ArrayList<GameCardView> spieleListe = new ArrayList<>();
-    final int[] spiele_icon_id = {R.mipmap.ic_launcher};
+    final ArrayList<GameCardView> gameList = new ArrayList<>();
+    final int[] gameIconId = {R.mipmap.ic_launcher};
     RecyclerView recyclerView;
     GameCardViewAdapter adapterC;
     RecyclerView.LayoutManager layoutManager;
-    String[] spiele_titel, spiele_details;
+    String[] gameTitle, gameDetails;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -83,28 +84,21 @@ public class CardGameSelection extends Fragment implements ClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        spiele_titel = getResources().getStringArray(R.array.spiele_titel_kartenspiele);
-        spiele_details = getResources().getStringArray(R.array.spiele_details_kartenspiele);
+        gameTitle = getResources().getStringArray(R.array.spiele_titel_kartenspiele);
+        gameDetails = getResources().getStringArray(R.array.spiele_details_kartenspiele);
         int counter = 0;
-        for (String titel : spiele_titel) {
-            GameCardView gameCardView = new GameCardView(spiele_icon_id[counter], titel, spiele_details[counter]);
+        for (String titel : gameTitle) {
+            GameCardView gameCardView = new GameCardView(gameIconId[counter], titel, gameDetails[counter]);
             counter++;
-            spieleListe.add(gameCardView);
+            gameList.add(gameCardView);
         }
         recyclerView = (RecyclerView) getView().findViewById(R.id.spiele_auswahl_RecyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapterC = new GameCardViewAdapter(spieleListe);
+        adapterC = new GameCardViewAdapter(gameList);
         adapterC.setClickListener(this);
         recyclerView.setAdapter(adapterC);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -133,6 +127,13 @@ public class CardGameSelection extends Fragment implements ClickListener {
         intent.setClassName(context, context.getPackageName() + ".activity." + stringClassnames[position]);
         context.startActivity(intent);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
     }
 
     /**

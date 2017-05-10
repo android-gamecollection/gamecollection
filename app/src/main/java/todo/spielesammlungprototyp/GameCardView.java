@@ -2,36 +2,36 @@ package todo.spielesammlungprototyp;
 
 public class GameCardView {
 
-    private int spiele_icon_id;
-    private String spiele_titel, spiele_details;
+    private int gameIconId;
+    private String gameTitle, gameDetails;
 
-    public GameCardView(int spiele_icon_id, String spiele_titel, String spiele_details) {
-        this.spiele_icon_id = spiele_icon_id;
-        this.spiele_titel = spiele_titel;
-        this.spiele_details = spiele_details;
+    public GameCardView(int gameIconId, String gameTitle, String gameDetails) {
+        this.gameIconId = gameIconId;
+        this.gameTitle = gameTitle;
+        this.gameDetails = gameDetails;
     }
 
-    int getSpiele_icon_id() {
-        return spiele_icon_id;
+    int getGameIconId() {
+        return gameIconId;
     }
 
-    public void setSpiele_icon_id(int spiele_icon_id) {
-        this.spiele_icon_id = spiele_icon_id;
+    void setGameIconId(int gameIconId) {
+        this.gameIconId = gameIconId;
     }
 
-    String getSpiele_titel() {
-        return spiele_titel;
+    String getGameTitle() {
+        return gameTitle;
     }
 
-    public void setSpiele_titel(String spiele_titel) {
-        this.spiele_titel = spiele_titel;
+    void setGameTitle(String gameTitle) {
+        this.gameTitle = gameTitle;
     }
 
-    String getSpiele_details() {
-        return spiele_details;
+    String getGameDetails() {
+        return gameDetails;
     }
 
-    public void setSpiele_details(String spiele_details) {
-        this.spiele_details = spiele_details;
+    void setGameDetails(String gameDetails) {
+        this.gameDetails = gameDetails;
     }
 }

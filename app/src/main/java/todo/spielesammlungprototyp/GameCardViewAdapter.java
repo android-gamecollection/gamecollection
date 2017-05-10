@@ -13,15 +13,7 @@ import java.util.ArrayList;
 public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapter.GameViewHolder> {
 
     private ArrayList<GameCardView> gameCardViews = new ArrayList<>();
-    private ClickListener clicklistener = null;
-
-    public GameCardViewAdapter(ArrayList<GameCardView> gameCardViews) {
-        this.gameCardViews = gameCardViews;
-    }
-
-    public void setClickListener(ClickListener clicklistener) {
-        this.clicklistener = clicklistener;
-    }
+    private ClickListener clickListener = null;
 
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,14 +24,22 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
     @Override
     public void onBindViewHolder(final GameViewHolder holder, final int position) {
         GameCardView SCV = gameCardViews.get(position);
-        holder.spiel_icon.setImageResource(SCV.getSpiele_icon_id());
-        holder.spiel_titel.setText(SCV.getSpiele_titel());
-        holder.spiel_details.setText(SCV.getSpiele_details());
+        holder.spiel_icon.setImageResource(SCV.getGameIconId());
+        holder.spiel_titel.setText(SCV.getGameTitle());
+        holder.spiel_details.setText(SCV.getGameDetails());
     }
 
     @Override
     public int getItemCount() {
         return gameCardViews.size();
+    }
+
+    public GameCardViewAdapter(ArrayList<GameCardView> gameCardViews) {
+        this.gameCardViews = gameCardViews;
+    }
+
+    public void setClickListener(ClickListener clicklistener) {
+        this.clickListener = clicklistener;
     }
 
     class GameViewHolder extends RecyclerView.ViewHolder {
@@ -55,15 +55,15 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
             spiel_icon = (ImageView) view.findViewById(R.id.spiele_icon);
             spiel_titel = (TextView) view.findViewById(R.id.spiele_titel);
             spiel_details = (TextView) view.findViewById(R.id.spiele_details);
+
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (clicklistener != null) {
-                        clicklistener.itemClicked(v, getAdapterPosition());
+                    if (clickListener != null) {
+                        clickListener.itemClicked(v, getAdapterPosition());
                     }
                 }
             });
         }
     }
-
 }

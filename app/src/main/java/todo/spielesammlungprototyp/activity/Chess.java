@@ -23,7 +23,7 @@ public class Chess extends AppCompatActivity {
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
-    private final String[] chessFigure = new String[64];
+    private final String[] chessFigures = new String[64];
     private GridView gridView;
     private ArrayAdapter<String> adapter;
     private Toolbar toolbar;
@@ -39,7 +39,7 @@ public class Chess extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setFromFen(Board.FEN_START_POSITION);
-        adapter = new ChessAdapter(this, chessFigure);
+        adapter = new ChessAdapter(this, chessFigures);
         gridView = (GridView) findViewById(R.id.gridview_Chess);
         gridView.setAdapter(adapter);
 
@@ -49,25 +49,6 @@ public class Chess extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "You Clicked at " + position, Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void setFromFen(String fen) {
-        fen = fen.split("\\s+")[0];
-        fen = replaceNumbers(fen);
-        fen = fen.replace("/", "");
-
-        for (int i = 0; i < 64; i++)
-            chessFigure[i] = UnicodePieces.pieces.get(fen.charAt(i));
-    }
-
-    private String replaceNumbers(String str) {
-        Pattern pattern = Pattern.compile("(\\d)");
-        Matcher matcher = pattern.matcher(str);
-        StringBuffer s = new StringBuffer();
-        while (matcher.find())
-            matcher.appendReplacement(s, genSpace(Integer.parseInt(matcher.group(1))));
-        matcher.appendTail(s);
-        return s.toString();
     }
 
     @Override
@@ -85,6 +66,25 @@ public class Chess extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setFromFen(String fen) {
+        fen = fen.split("\\s+")[0];
+        fen = replaceNumbersBySpaces(fen);
+        fen = fen.replace("/", "");
+
+        for (int i = 0; i < 64; i++)
+            chessFigures[i] = UnicodePieces.pieces.get(fen.charAt(i));
+    }
+
+    private String replaceNumbersBySpaces(String str) {
+        Pattern pattern = Pattern.compile("(\\d)");
+        Matcher matcher = pattern.matcher(str);
+        StringBuffer s = new StringBuffer();
+        while (matcher.find())
+            matcher.appendReplacement(s, genSpace(Integer.parseInt(matcher.group(1))));
+        matcher.appendTail(s);
+        return s.toString();
     }
 
     private String genSpace(int length) {

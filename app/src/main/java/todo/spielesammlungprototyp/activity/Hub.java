@@ -33,7 +33,7 @@ public class Hub extends AppCompatActivity {
     private static final String TAG_HUB = "hub";
     private static final String TAG_KARTENSPIELE = "kartenspiele_auswahl";
     private static final String TAG_BRETTSPIELE = "brettspiele_auswahl";
-    public static String CURRENT_TAG = TAG_HUB;
+    public static String currentTag = TAG_HUB;
     // index to identify current nav menu item
     private static int navItemIndex = 0;
     // flag to load home fragment when user presses back key
@@ -42,7 +42,7 @@ public class Hub extends AppCompatActivity {
     private DrawerLayout drawer;
     private View navHeader;
     private Toolbar toolbar;
-    private FloatingActionButton fab_new_game, fab_new_game_k, fab_new_game_b;
+    private FloatingActionButton fabNewGame, fabNewGameK, fabNewGameB;
     private ImageView navDrawerBackground, navDrawerIcon;
     private TextView navDrawerTitle, navDrawerSubTitle;
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAnticlockwise;
@@ -70,9 +70,9 @@ public class Hub extends AppCompatActivity {
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        fab_new_game = (FloatingActionButton) findViewById(R.id.fab_new_game);
-        fab_new_game_k = (FloatingActionButton) findViewById(R.id.fab_new_game_kartenspiele);
-        fab_new_game_b = (FloatingActionButton) findViewById(R.id.fab_new_game_brettspiele);
+        fabNewGame = (FloatingActionButton) findViewById(R.id.fab_new_game);
+        fabNewGameK = (FloatingActionButton) findViewById(R.id.fab_new_game_kartenspiele);
+        fabNewGameB = (FloatingActionButton) findViewById(R.id.fab_new_game_brettspiele);
         fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clockwise);
@@ -88,23 +88,23 @@ public class Hub extends AppCompatActivity {
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        fab_new_game.setOnClickListener(new View.OnClickListener() {
+        fabNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (isFabOpen) {
-                    fab_new_game_b.startAnimation(fabClose);
-                    fab_new_game_k.startAnimation(fabClose);
-                    fab_new_game.startAnimation(fabRotateAnticlockwise);
-                    fab_new_game_b.setClickable(false);
-                    fab_new_game_k.setClickable(false);
+                    fabNewGameB.startAnimation(fabClose);
+                    fabNewGameK.startAnimation(fabClose);
+                    fabNewGame.startAnimation(fabRotateAnticlockwise);
+                    fabNewGameB.setClickable(false);
+                    fabNewGameK.setClickable(false);
                     isFabOpen = false;
                 } else {
-                    fab_new_game_b.startAnimation(fabOpen);
-                    fab_new_game_k.startAnimation(fabOpen);
-                    fab_new_game.startAnimation(fabRotateClockwise);
-                    fab_new_game_b.setClickable(true);
-                    fab_new_game_k.setClickable(true);
+                    fabNewGameB.startAnimation(fabOpen);
+                    fabNewGameK.startAnimation(fabOpen);
+                    fabNewGame.startAnimation(fabRotateClockwise);
+                    fabNewGameB.setClickable(true);
+                    fabNewGameK.setClickable(true);
                     isFabOpen = true;
                 }
 
@@ -119,108 +119,9 @@ public class Hub extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             navItemIndex = 0;
-            CURRENT_TAG = TAG_HUB;
+            currentTag = TAG_HUB;
             loadHomeFragment();
         }
-    }
-
-    /***
-     * Load navigation menu header information
-     * like background image, profile image
-     * name, website, notifications action view (dot)
-     */
-
-    private void loadNavHeader() {
-
-        navDrawerTitle.setText(R.string.app_name);
-        navDrawerSubTitle.setText(R.string.subTextHeader);
-        /*
-        // loading header background image
-        Glide.with(this).load("http://i.imgur.com/DvpvklR.png")
-                .into(navDrawerBackground);
-
-        // Loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .into(navDrawerIcon);
-
-        // showing dot next to notifications label
-        navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
-        */
-    }
-
-    /***
-     * Returns respected fragment that user
-     * selected from navigation menu
-     */
-    private void loadHomeFragment() {
-        // selecting appropriate nav menu item
-        selectNavMenu();
-
-        // set toolbar title
-        setToolbarTitle();
-
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            drawer.closeDrawers();
-
-            // show or hide the fab_new_game button
-            toggleFab();
-            return;
-        }
-
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // update the main content by replacing fragments
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-
-        // If mPendingRunnable is not null, then add to the message queue
-        mHandler.post(mPendingRunnable);
-
-        // show or hide the fab_new_game button
-        toggleFab();
-
-        //Closing drawer on item click
-        drawer.closeDrawers();
-
-        // refresh toolbar menu
-        invalidateOptionsMenu();
-    }
-
-    private Fragment getHomeFragment() {
-        switch (navItemIndex) {
-            case 0:
-                // home
-                return new todo.spielesammlungprototyp.fragment.Hub();
-            case 1:
-                // Kartenspiele
-                return new CardGameSelection();
-            case 2:
-                // ConsoleChess
-                return new BoardGameSelection();
-            default:
-                return new todo.spielesammlungprototyp.fragment.Hub();
-        }
-    }
-
-    private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
-    }
-
-    private void selectNavMenu() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
     public void setUpNavigationView() {
@@ -236,16 +137,16 @@ public class Hub extends AppCompatActivity {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_hub:
                         navItemIndex = 0;
-                        CURRENT_TAG = TAG_HUB;
+                        currentTag = TAG_HUB;
                         //drawer.closeDrawers();
                         break;
                     case R.id.nav_kartenspiele:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_KARTENSPIELE;
+                        currentTag = TAG_KARTENSPIELE;
                         break;
                     case R.id.nav_brettspiele:
                         navItemIndex = 2;
-                        CURRENT_TAG = TAG_BRETTSPIELE;
+                        currentTag = TAG_BRETTSPIELE;
                         break;
                     case R.id.nav_settings:
                         // launch new intent instead of loading fragment
@@ -277,7 +178,6 @@ public class Hub extends AppCompatActivity {
 
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
@@ -320,7 +220,7 @@ public class Hub extends AppCompatActivity {
             // rather than home
             if (navItemIndex != 0) {
                 navItemIndex = 0;
-                CURRENT_TAG = TAG_HUB;
+                currentTag = TAG_HUB;
                 loadHomeFragment();
             }
         }
@@ -373,11 +273,109 @@ public class Hub extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     } */
 
-    // show or hide the fab_new_game
+    /***
+     * Load navigation menu header information
+     * like background image, profile image
+     * name, website, notifications action view (dot)
+     */
+    private void loadNavHeader() {
+
+        navDrawerTitle.setText(R.string.app_name);
+        navDrawerSubTitle.setText(R.string.subTextHeader);
+        /*
+        // loading header background image
+        Glide.with(this).load("http://i.imgur.com/DvpvklR.png")
+                .into(navDrawerBackground);
+
+        // Loading profile image
+        Glide.with(this).load(urlProfileImg)
+                .into(navDrawerIcon);
+
+        // showing dot next to notifications label
+        navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
+        */
+    }
+
+    /***
+     * Returns respected fragment that user
+     * selected from navigation menu
+     */
+    private void loadHomeFragment() {
+        // selecting appropriate nav menu item
+        selectNavMenu();
+
+        // set toolbar title
+        setToolbarTitle();
+
+        // if user select the current navigation menu again, don't do anything
+        // just close the navigation drawer
+        if (getSupportFragmentManager().findFragmentByTag(currentTag) != null) {
+            drawer.closeDrawers();
+
+            // show or hide the fabNewGame button
+            toggleFab();
+            return;
+        }
+
+        // Sometimes, when fragment has huge data, screen seems hanging
+        // when switching between navigation menus
+        // So using runnable, the fragment is loaded with cross fade effect
+        // This effect can be seen in GMail app
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // update the main content by replacing fragments
+                Fragment fragment = getHomeFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, currentTag);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
+
+        // If mPendingRunnable is not null, then add to the message queue
+        mHandler.post(mPendingRunnable);
+
+        // show or hide the fabNewGame button
+        toggleFab();
+
+        //Closing drawer on item click
+        drawer.closeDrawers();
+
+        // refresh toolbar menu
+        invalidateOptionsMenu();
+    }
+
+    private Fragment getHomeFragment() {
+        switch (navItemIndex) {
+            case 0:
+                // home
+                return new todo.spielesammlungprototyp.fragment.Hub();
+            case 1:
+                // Kartenspiele
+                return new CardGameSelection();
+            case 2:
+                // ConsoleChess
+                return new BoardGameSelection();
+            default:
+                return new todo.spielesammlungprototyp.fragment.Hub();
+        }
+    }
+
+    private void setToolbarTitle() {
+        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+    }
+
+    private void selectNavMenu() {
+        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+    }
+
+    // show or hide the fabNewGame
     private void toggleFab() {
         if (navItemIndex == 0)
-            fab_new_game.show();
+            fabNewGame.show();
         else
-            fab_new_game.hide();
+            fabNewGame.hide();
     }
 }

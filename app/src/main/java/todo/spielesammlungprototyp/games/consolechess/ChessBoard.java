@@ -8,6 +8,7 @@ import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.search.SearchEngine;
 
 class ChessBoard {
+
     private final String TAG = this.getClass().getSimpleName();
 
     private final Config config;
@@ -17,7 +18,6 @@ class ChessBoard {
     ChessBoard() {
         config = new Config();
         searchEngine = new SearchEngine(config);
-
         board = searchEngine.getBoard();
     }
 

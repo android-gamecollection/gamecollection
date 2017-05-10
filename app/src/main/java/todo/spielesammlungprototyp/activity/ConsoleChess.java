@@ -18,9 +18,9 @@ import todo.spielesammlungprototyp.games.consolechess.CmdProcessor;
 
 public class ConsoleChess extends AppCompatActivity {
 
-    private ScrollView scroll_console;
-    private TextView text_console;
-    private EditText input_console;
+    private ScrollView scrollConsole;
+    private TextView textConsole;
+    private EditText inputConsole;
     private Toolbar toolbar;
     private CmdProcessor cmdProcessor;
 
@@ -34,80 +34,12 @@ public class ConsoleChess extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        scroll_console = (ScrollView) findViewById(R.id.scroll_console);
-        text_console = (TextView) findViewById(R.id.text_console);
-        input_console = (EditText) findViewById(R.id.input_console);
+        scrollConsole = (ScrollView) findViewById(R.id.scroll_console);
+        textConsole = (TextView) findViewById(R.id.text_console);
+        inputConsole = (EditText) findViewById(R.id.input_console);
         setKeyboardListener();
 
         cmdProcessor = new CmdProcessor(this);
-    }
-
-    public void addOutput(String str) {
-        if (!isOutputEmtpy())
-            str = "\n" + str;
-        text_console.append(str);
-        scrollToBottom();
-    }
-
-    public void addOutputln(String str) {
-        addOutput(str + "\n");
-    }
-
-    public void clearOutput() {
-        text_console.setText("");
-    }
-
-    public void processInput(View view) {
-        String input = input_console.getText().toString();
-
-        clearInput();
-        cmdProcessor.processInput(input);
-    }
-
-    public void displayError(String errMessage) {
-        errMessage = "Error: " + errMessage;
-        Toast.makeText(getApplicationContext(), errMessage, Toast.LENGTH_SHORT).show();
-    }
-
-
-    private void clearInput() {
-        input_console.getText().clear();
-    }
-
-    private boolean isOutputEmtpy() {
-        return TextUtils.isEmpty(text_console.getText());
-    }
-
-    private void scrollToBottom() {
-        scroll_console.post(new Runnable() {
-            @Override
-            public void run() {
-                scroll_console.fullScroll(ScrollView.FOCUS_DOWN);
-            }
-        });
-    }
-
-    private void setKeyboardListener() {
-        input_console.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                return processOnEnter(actionId == EditorInfo.IME_ACTION_GO);
-            }
-        });
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        return processOnEnter(keyCode == KeyEvent.KEYCODE_ENTER);
-    }
-
-    private boolean processOnEnter(boolean condition) {
-        if (condition) {
-            processInput(getCurrentFocus());
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
@@ -125,5 +57,72 @@ public class ConsoleChess extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return processOnEnter(keyCode == KeyEvent.KEYCODE_ENTER);
+    }
+
+    public void addOutput(String str) {
+        if (!isOutputEmtpy())
+            str = "\n" + str;
+        textConsole.append(str);
+        scrollToBottom();
+    }
+
+    public void addOutputln(String str) {
+        addOutput(str + "\n");
+    }
+
+    public void clearOutput() {
+        textConsole.setText("");
+    }
+
+    public void processInput(View view) {
+        String input = inputConsole.getText().toString();
+
+        clearInput();
+        cmdProcessor.processInput(input);
+    }
+
+    public void displayError(String errMessage) {
+        errMessage = "Error: " + errMessage;
+        Toast.makeText(getApplicationContext(), errMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    private void clearInput() {
+        inputConsole.getText().clear();
+    }
+
+    private boolean isOutputEmtpy() {
+        return TextUtils.isEmpty(textConsole.getText());
+    }
+
+    private void scrollToBottom() {
+        scrollConsole.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollConsole.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
+
+    private void setKeyboardListener() {
+        inputConsole.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return processOnEnter(actionId == EditorInfo.IME_ACTION_GO);
+            }
+        });
+    }
+
+    private boolean processOnEnter(boolean condition) {
+        if (condition) {
+            processInput(getCurrentFocus());
+            return true;
+        } else {
+            return false;
+        }
     }
 }

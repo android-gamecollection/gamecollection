@@ -8,11 +8,11 @@ import todo.spielesammlungprototyp.activity.ConsoleChess;
 
 public class CmdProcessor {
 
-    private final ConsoleChess brettspielInstance;
+    private final ConsoleChess consoleChessActivity;
     private final ChessBoard chessBoard;
 
-    public CmdProcessor(ConsoleChess brettspielInstance) {
-        this.brettspielInstance = brettspielInstance;
+    public CmdProcessor(ConsoleChess consoleChessActivity) {
+        this.consoleChessActivity = consoleChessActivity;
         this.chessBoard = new ChessBoard();
         chessBoard.setStartPosition();
     }
@@ -66,7 +66,7 @@ public class CmdProcessor {
     }
 
     private String getString(int xmlString) {
-        return brettspielInstance.getString(xmlString);
+        return consoleChessActivity.getString(xmlString);
     }
 
     private String[] splitString(String str) {
@@ -74,6 +74,7 @@ public class CmdProcessor {
     }
 
     private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
+
         @Override
         protected ConsoleResponse doInBackground(String... params) {
             String str = params[0];
@@ -82,17 +83,16 @@ public class CmdProcessor {
 
         @Override
         protected void onPostExecute(ConsoleResponse response) {
-            if (!TextUtils.isEmpty(response.escapeSequence)) {
+            if (!TextUtils.isEmpty(response.escapeSequence))
                 switch (response.escapeSequence) {
                     case "clear":
-                        brettspielInstance.clearOutput();
+                        consoleChessActivity.clearOutput();
+                        break;
                 }
-            } else {
-                if (!TextUtils.isEmpty(response.output))
-                    brettspielInstance.addOutputln(response.output);
-                if (!TextUtils.isEmpty(response.errorMessage))
-                    brettspielInstance.displayError(response.errorMessage);
-            }
+            if (!TextUtils.isEmpty(response.errorMessage))
+                consoleChessActivity.displayError(response.errorMessage);
+            if (!TextUtils.isEmpty(response.output))
+                consoleChessActivity.addOutputln(response.output);
         }
     }
 
