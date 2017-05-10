@@ -31,18 +31,15 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    final ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
+    final int[] spiele_icon_id = {R.mipmap.ic_launcher};
     RecyclerView recyclerView;
     Spiel_CardViewAdapter adapterC;
     RecyclerView.LayoutManager layoutManager;
-    final ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
-    final int[] spiele_icon_id = {R.mipmap.ic_launcher};
     String[] spiele_titel, spiele_details;
-
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
     private OnFragmentInteractionListener mListener;
 
     public Brettspiele_AuswahlFragment() {
@@ -89,9 +86,8 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
         spiele_titel = getResources().getStringArray(R.array.spiele_titel_brettspiele);
         spiele_details = getResources().getStringArray(R.array.spiele_details_brettspiele);
         int counter = 0;
-        for(String titel : spiele_titel)
-        {
-            Spiel_CardView spiel_cardView = new Spiel_CardView(spiele_icon_id[0],titel,spiele_details[counter]);
+        for (String titel : spiele_titel) {
+            Spiel_CardView spiel_cardView = new Spiel_CardView(spiele_icon_id[0], titel, spiele_details[counter]);
             counter++;
             spieleListe.add(spiel_cardView);
         }
@@ -101,7 +97,8 @@ public class Brettspiele_AuswahlFragment extends Fragment implements ClickListen
         recyclerView.setHasFixedSize(true);
         adapterC = new Spiel_CardViewAdapter(spieleListe);
         adapterC.setClickListener(this);
-        recyclerView.setAdapter(adapterC);}
+        recyclerView.setAdapter(adapterC);
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

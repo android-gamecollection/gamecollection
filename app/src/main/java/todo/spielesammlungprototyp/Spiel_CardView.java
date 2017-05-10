@@ -2,14 +2,14 @@ package todo.spielesammlungprototyp;
 
 public class Spiel_CardView {
 
+    private int spiele_icon_id;
+    private String spiele_titel, spiele_details;
+
     public Spiel_CardView(int spiele_icon_id, String spiele_titel, String spiele_details) {
         this.spiele_icon_id = spiele_icon_id;
         this.spiele_titel = spiele_titel;
         this.spiele_details = spiele_details;
     }
-
-    private int spiele_icon_id;
-    private String spiele_titel,spiele_details;
 
     int getSpiele_icon_id() {
         return spiele_icon_id;

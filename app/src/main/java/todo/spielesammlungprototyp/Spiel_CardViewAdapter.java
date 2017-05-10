@@ -19,14 +19,14 @@ public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAd
         this.spiele_cardview = spiele_cardview;
     }
 
-    public void setClickListener(ClickListener clicklistener){
+    public void setClickListener(ClickListener clicklistener) {
         this.clicklistener = clicklistener;
     }
 
     @Override
     public SpieleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_spiele_auswahl_card_view, parent, false);
-                return new SpieleViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_spiele_auswahl_card_view, parent, false);
+        return new SpieleViewHolder(view);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAd
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(clicklistener != null){
+                    if (clicklistener != null) {
                         clicklistener.itemClicked(v, getAdapterPosition());
                     }
                 }

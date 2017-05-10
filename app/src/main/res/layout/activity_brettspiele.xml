@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Brettspiele"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    tools:context=".activity.Brettspiele">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_parent"
@@ -26,9 +26,9 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.Brettspiele"
         android:fitsSystemWindows="true"
-        android:paddingTop="64dp">
+        android:paddingTop="64dp"
+        tools:context=".activity.Brettspiele">
 
         <ScrollView
             android:id="@+id/scroll_console"
@@ -38,11 +38,11 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/background_border"
             app:layout_constraintBottom_toTopOf="@+id/input_console"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/background_border" >
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/text_console"
@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:padding="6dp"
                 android:typeface="monospace" />
+
         </ScrollView>
 
         <EditText
@@ -59,10 +60,10 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:hint="@string/enter_cmd_here"
-            android:inputType="textVisiblePassword"
-            android:selectAllOnFocus="true"
-            android:maxLines="1"
             android:imeOptions="actionGo"
+            android:inputType="textVisiblePassword"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/button_confirm" />
@@ -73,12 +74,14 @@
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="2dp"
+            android:contentDescription="@string/confirm_console_input"
             android:elevation="1dp"
             android:onClick="processInput"
+            android:src="@android:drawable/ic_menu_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/input_console"
-            android:src="@android:drawable/ic_menu_send"
-            android:contentDescription="@string/confirm_console_input" />
+            app:layout_constraintTop_toTopOf="@+id/input_console" />
+
     </android.support.constraint.ConstraintLayout>
+
 </RelativeLayout>

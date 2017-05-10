@@ -1,6 +1,5 @@
-<!-- Strings werden hier deklariert und können dadurch referenziert werden -->
-
 <resources>
+
     <string name="app_name">Spielesammlung Prototyp</string>
     <string name="brettspiele">Brettspiele</string>
     <string name="kartenspiele">Kartenspiele</string>
@@ -65,6 +64,5 @@
     <string name="hello_blank_fragment">Spielehub Content</string>
     <string name="nav_divider_title">Other</string>
     <!-- Strings für NavDrawer ENDE -->
-
 
 </resources>

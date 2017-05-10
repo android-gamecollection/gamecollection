@@ -31,18 +31,15 @@ public class Kartenspiele_AuswahlFragment extends Fragment implements ClickListe
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    final ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
+    final int[] spiele_icon_id = {R.mipmap.ic_launcher};
     RecyclerView recyclerView;
     Spiel_CardViewAdapter adapterC;
     RecyclerView.LayoutManager layoutManager;
-    final ArrayList<Spiel_CardView> spieleListe = new ArrayList<>();
-    final int[] spiele_icon_id = {R.mipmap.ic_launcher};
     String[] spiele_titel, spiele_details;
-
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
     private OnFragmentInteractionListener mListener;
 
     public Kartenspiele_AuswahlFragment() {
