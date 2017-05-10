@@ -42,7 +42,7 @@ public class _Hub extends AppCompatActivity {
     private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
 
     // index to identify current nav menu item
-    public static int navItemIndex = 0;
+    private static int navItemIndex = 0;
 
     // tags used to attach the fragments
     private static final String TAG_HUB = "hub";
@@ -54,7 +54,7 @@ public class _Hub extends AppCompatActivity {
     private String[] activityTitles;
 
     // flag to load home fragment when user presses back key
-    private boolean shouldLoadHomeFragOnBackPress = true;
+    private final boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
     // "onCreate()" wird beim Start der Activity gerufen

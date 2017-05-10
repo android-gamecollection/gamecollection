@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAdapter.SpieleViewHolder> {
 
     private ArrayList<Spiel_CardView> spiele_cardview = new ArrayList<>();
-    private  ClickListener clicklistener = null;
+    private ClickListener clicklistener = null;
 
     public Spiel_CardViewAdapter(ArrayList<Spiel_CardView> spiele_cardview) {
         this.spiele_cardview = spiele_cardview;
@@ -44,9 +44,10 @@ public class Spiel_CardViewAdapter extends RecyclerView.Adapter<Spiel_CardViewAd
 
     class SpieleViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout card;
-        ImageView spiel_icon;
-        TextView spiel_titel,spiel_details;
+        final RelativeLayout card;
+        final ImageView spiel_icon;
+        final TextView spiel_titel;
+        final TextView spiel_details;
 
         SpieleViewHolder(View view) {
             super(view);
