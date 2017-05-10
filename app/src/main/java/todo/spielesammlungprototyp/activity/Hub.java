@@ -61,7 +61,7 @@ public class Hub extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // deklariert die UI (ruft das Layout auf):
-        setContentView(R.layout._activity_hub);
+        setContentView(R.layout.activity_hub);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

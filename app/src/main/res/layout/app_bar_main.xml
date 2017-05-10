@@ -40,7 +40,7 @@
         android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/icon_plus" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_game_brettspiele"
@@ -53,7 +53,7 @@
         android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/icon_plus" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_game"
@@ -65,6 +65,6 @@
         android:elevation="6dp"
         app:backgroundTint="@color/colorPrimary"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/icon_plus" />
 
 </android.support.design.widget.CoordinatorLayout>

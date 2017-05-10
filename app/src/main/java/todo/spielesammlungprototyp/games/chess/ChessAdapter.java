@@ -15,7 +15,7 @@ import todo.spielesammlungprototyp.R;
 public class ChessAdapter extends ArrayAdapter<String> {
 
     public ChessAdapter(Context context, String[] objects) {
-        super(context, R.layout.chess_grid_single, objects);
+        super(context, R.layout.game_chess_grid_cell, objects);
     }
 
     @NonNull
@@ -24,7 +24,7 @@ public class ChessAdapter extends ArrayAdapter<String> {
         String chessPiece = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.chess_grid_single, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.game_chess_grid_cell, parent, false);
         }
 
         TextView textView = (TextView) convertView.findViewById(R.id.chess_figure);

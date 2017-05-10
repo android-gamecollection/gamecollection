@@ -5,17 +5,17 @@
 
         <item
             android:id="@+id/nav_hub"
-            android:icon="@drawable/view_dashboard"
+            android:icon="@drawable/icon_dashboard"
             android:title="@string/nav_hub" />
 
         <item
             android:id="@+id/nav_kartenspiele"
-            android:icon="@drawable/cards_playing_outline"
+            android:icon="@drawable/icon_cards_playing"
             android:title="@string/nav_kartenspiele" />
 
         <item
             android:id="@+id/nav_brettspiele"
-            android:icon="@drawable/checkerboard"
+            android:icon="@drawable/icon_checkerboard"
             android:title="@string/nav_brettspiele" />
 
     </group>
@@ -26,12 +26,12 @@
 
             <item
                 android:id="@+id/nav_information"
-                android:icon="@drawable/information"
+                android:icon="@drawable/icon_information"
                 android:title="@string/nav_info" />
 
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/settings"
+                android:icon="@drawable/icon_settings"
                 android:title="@string/nav_settings" />
 
         </menu>
