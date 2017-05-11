@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".view.activity.ConsoleChess">
 
     <include layout="@layout/fragment_app_bar" />
@@ -13,12 +12,11 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:paddingTop="64dp"
+        android:paddingTop="?attr/actionBarSize"
         tools:context=".view.activity.ConsoleChess">
 
         <ScrollView
-            android:id="@+id/scroll_console"
+            android:id="@+id/scroll_output"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
@@ -26,27 +24,27 @@
             android:layout_marginRight="6dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/shape_rect_border"
-            app:layout_constraintBottom_toTopOf="@+id/input_console"
+            app:layout_constraintBottom_toTopOf="@+id/edittext_input"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/text_console"
+                android:id="@+id/text_output"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="6dp"
-                android:typeface="monospace" />
+                android:fontFamily="monospace"
+                android:padding="6dp" />
 
         </ScrollView>
 
         <EditText
-            android:id="@+id/input_console"
+            android:id="@+id/edittext_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:hint="@string/enter_cmd_here"
+            android:hint="@string/game_consolechess_enter_cmd_here"
             android:imeOptions="actionGo"
             android:inputType="textVisiblePassword"
             android:maxLines="1"
@@ -61,13 +59,13 @@
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="2dp"
-            android:contentDescription="@string/confirm_console_input"
+            android:contentDescription="@string/game_consolechess_confirm_input"
             android:elevation="1dp"
             android:onClick="processInput"
             android:src="@android:drawable/ic_menu_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/input_console" />
+            app:layout_constraintTop_toTopOf="@+id/edittext_input" />
 
     </android.support.constraint.ConstraintLayout>
 

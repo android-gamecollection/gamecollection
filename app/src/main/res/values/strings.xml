@@ -1,40 +1,42 @@
 <resources>
 
     <string name="app_name">Spielesammlung Prototyp</string>
-    <string name="brettspiele">Brettspiele</string>
-    <string name="kartenspiele">Kartenspiele</string>
-    <string name="enter_cmd_here">Bitte Command eingeben</string>
-    <string name="confirm_console_input">desc_button_confirm</string>
-    <string name="err_invalid_cmd">Not a valid command</string>
-    <string name="cmd_help">Available commands:\nhelp, restart, show, move &lt;from&gt; &lt;to&gt;</string>
-    <string name="err_invalid_move">Invalid move</string>
+    <string name="boardgames">Brettspiele</string>
+    <string name="cardgames">Kartenspiele</string>
     <string name="bauernkrieg">"Bauernkrieg"</string>
 
+    <!-- Console Chess -->
+    <string name="game_consolechess_enter_cmd_here">Bitte Command eingeben</string>
+    <string name="game_consolechess_confirm_input">desc_button_confirm</string>
+    <string name="game_consolechess_cmd_help">Available commands:\nhelp, restart, show, move &lt;from&gt; &lt;to&gt;</string>
+    <string name="game_consolechess_err_invalid_cmd">Not a valid command</string>
+    <string name="game_consolechess_err_invalid_move">Invalid move</string>
+
     <!-- Arrays für CardView START -->
-    <string-array name="spiele_titel_brettspiele">
+    <string-array name="game_boardgame_titles">
         <item>"Schach"</item>
         <item>"Schach"</item>
     </string-array>
 
-    <string-array name="spiele_titel_kartenspiele">
-        <item>"Bauernkrieg"</item>
-    </string-array>
-
-    <string-array name="spiele_details_brettspiele">
+    <string-array name="game_boardgames_details">
         <item>"Klassisches Schach"</item>
         <item>"Schach mit Konsole"</item>
     </string-array>
 
-    <string-array name="spiele_details_kartenspiele">
-        <item>"Trumpfkartenspiel"</item>
-    </string-array>
-
-    <string-array name="spiele_activity_brettspiele">
+    <string-array name="game_boardgames_activities">
         <item>"Chess"</item>
         <item>"ConsoleChess"</item>
     </string-array>
 
-    <string-array name="spiele_activity_kartenspiele">
+    <string-array name="game_cardcames_titles">
+        <item>"Bauernkrieg"</item>
+    </string-array>
+
+    <string-array name="game_cardgames_details">
+        <item>"Trumpfkartenspiel"</item>
+    </string-array>
+
+    <string-array name="game_cardgames_activities">
         <item>"Bauernkrieg"</item>
     </string-array>
     <!-- Arrays für CardView ENDE -->
@@ -45,24 +47,16 @@
     <string name="subTextHeader">Spiel, Spaß und Spannung</string>
 
     <!-- Navigation Drawer menu labels -->
-    <string name="nav_hub">Spielehub</string>
-    <string name="nav_kartenspiele">Kartenspiele</string>
-    <string name="nav_brettspiele">Brettspiele</string>
-    <string name="nav_info">Info</string>
-    <string name="nav_settings">Settings</string>
-
-    <!-- Toolbar titles when navigation menu item is selected -->
-    <string-array name="nav_item_activity_titles">
-        <item>Spielehub</item>
-        <item>Kartenspiele</item>
-        <item>Brettspiele</item>
-        <item>Info</item>
-        <item>Settings</item>
-    </string-array>
+    <string name="nav_item_hub">Spielehub</string>
+    <string name="nav_item_cardgames">Kartenspiele</string>
+    <string name="nav_item_boardgames">Brettspiele</string>
+    <string name="nav_item_info">Info</string>
+    <string name="nav_item_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Spielehub Content</string>
     <string name="nav_divider_title">Other</string>
     <!-- Strings für NavDrawer ENDE -->
+
+    <string name="hello_blank_fragment">Spielehub Content</string>
 
 </resources>

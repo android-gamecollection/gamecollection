@@ -71,8 +71,8 @@ public class Hub extends AppCompatActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         fabNewGame = (FloatingActionButton) findViewById(R.id.fab_new_game);
-        fabNewGameK = (FloatingActionButton) findViewById(R.id.fab_new_game_kartenspiele);
-        fabNewGameB = (FloatingActionButton) findViewById(R.id.fab_new_game_brettspiele);
+        fabNewGameK = (FloatingActionButton) findViewById(R.id.fab_new_cardgame);
+        fabNewGameB = (FloatingActionButton) findViewById(R.id.fab_new_boardgame);
         fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clockwise);
@@ -85,13 +85,9 @@ public class Hub extends AppCompatActivity {
         navDrawerBackground = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_background);
         navDrawerIcon = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_icon);
 
-        // load toolbar titles from string resources
-        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-
         fabNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (isFabOpen) {
                     fabNewGameB.startAnimation(fabClose);
                     fabNewGameK.startAnimation(fabClose);
@@ -107,7 +103,6 @@ public class Hub extends AppCompatActivity {
                     fabNewGameK.setClickable(true);
                     isFabOpen = true;
                 }
-
             }
         });
 
@@ -135,25 +130,25 @@ public class Hub extends AppCompatActivity {
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_hub:
+                    case R.id.nav_item_hub:
                         navItemIndex = 0;
                         currentTag = TAG_HUB;
                         //drawer.closeDrawers();
                         break;
-                    case R.id.nav_kartenspiele:
+                    case R.id.nav_item_cardgames:
                         navItemIndex = 1;
                         currentTag = TAG_KARTENSPIELE;
                         break;
-                    case R.id.nav_brettspiele:
+                    case R.id.nav_item_boardgames:
                         navItemIndex = 2;
                         currentTag = TAG_BRETTSPIELE;
                         break;
-                    case R.id.nav_settings:
+                    case R.id.nav_item_settings:
                         // launch new intent instead of loading fragment
                         //startActivity(new Intent(Hub.this, ));
                         //drawer.closeDrawers();
                         return true;
-                    case R.id.nav_information:
+                    case R.id.nav_item_information:
                         // launch new intent instead of loading fragment
                         //startActivity(new Intent(Hub.this, ));
                         //drawer.closeDrawers();
@@ -301,11 +296,11 @@ public class Hub extends AppCompatActivity {
      * selected from navigation menu
      */
     private void loadHomeFragment() {
-        // selecting appropriate nav menu item
-        selectNavMenu();
-
-        // set toolbar title
-        setToolbarTitle();
+        // Select item and set Action Bar title
+        MenuItem selectedItem = navigationView.getMenu().getItem(navItemIndex);
+        String itemTitle = selectedItem.getTitle().toString();
+        selectedItem.setChecked(true);
+        getSupportActionBar().setTitle(itemTitle);
 
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
@@ -360,14 +355,6 @@ public class Hub extends AppCompatActivity {
             default:
                 return new todo.spielesammlungprototyp.view.fragment.Hub();
         }
-    }
-
-    private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
-    }
-
-    private void selectNavMenu() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
     // show or hide the fabNewGame

@@ -9,9 +9,10 @@
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#757575</color>
 
+    <color name="background">#FFFFFF</color>
+
     <color name="chessWhite">#FFFFFF</color>
     <color name="chessBlack">#000000</color>
     <color name="chessPiece">#FF5722</color>
-    <color name="background">#FFFFFF</color>
 
 </resources>

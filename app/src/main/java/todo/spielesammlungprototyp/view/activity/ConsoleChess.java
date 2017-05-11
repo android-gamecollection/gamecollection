@@ -34,9 +34,9 @@ public class ConsoleChess extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        scrollConsole = (ScrollView) findViewById(R.id.scroll_console);
-        textConsole = (TextView) findViewById(R.id.text_console);
-        inputConsole = (EditText) findViewById(R.id.input_console);
+        scrollConsole = (ScrollView) findViewById(R.id.scroll_output);
+        textConsole = (TextView) findViewById(R.id.text_output);
+        inputConsole = (EditText) findViewById(R.id.edittext_input);
         setKeyboardListener();
 
         cmdProcessor = new CmdProcessor(this);

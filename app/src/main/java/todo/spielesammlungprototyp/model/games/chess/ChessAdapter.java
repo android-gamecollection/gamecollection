@@ -27,7 +27,7 @@ public class ChessAdapter extends ArrayAdapter<String> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.game_chess_grid_cell, parent, false);
         }
 
-        TextView textView = (TextView) convertView.findViewById(R.id.chess_figure);
+        TextView textView = (TextView) convertView.findViewById(R.id.text_chesspiece);
         textView.setText(chessPiece);
         textView.setBackgroundColor(ContextCompat.getColor(getContext(), colorFromIdx(position)));
 

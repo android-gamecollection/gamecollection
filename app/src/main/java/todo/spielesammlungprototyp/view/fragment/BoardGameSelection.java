@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.view.GameCardView;
 import todo.spielesammlungprototyp.view.GameCardViewAdapter;
 
@@ -84,15 +84,15 @@ public class BoardGameSelection extends Fragment implements ClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        gameTitle = getResources().getStringArray(R.array.spiele_titel_brettspiele);
-        gameDetails = getResources().getStringArray(R.array.spiele_details_brettspiele);
+        gameTitle = getResources().getStringArray(R.array.game_boardgame_titles);
+        gameDetails = getResources().getStringArray(R.array.game_boardgames_details);
         int counter = 0;
         for (String titel : gameTitle) {
             GameCardView gameCardView = new GameCardView(gameIconId[0], titel, gameDetails[counter]);
             counter++;
             gameList.add(gameCardView);
         }
-        recyclerView = (RecyclerView) getView().findViewById(R.id.spiele_auswahl_RecyclerView);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview_game_selection);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -123,7 +123,7 @@ public class BoardGameSelection extends Fragment implements ClickListener {
     public void itemClicked(View view, int position) {
         Intent intent = new Intent();
         Context context = view.getContext();
-        String[] stringClassnames = getResources().getStringArray(R.array.spiele_activity_brettspiele);
+        String[] stringClassnames = getResources().getStringArray(R.array.game_boardgames_activities);
         intent.setClassName(context, context.getPackageName() + ".view.activity." + stringClassnames[position]);
         context.startActivity(intent);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -43,23 +43,23 @@ public class CmdProcessor {
             case "mv":
             case "move":
                 if (cmd.length < 3) {
-                    response.errorMessage = getString(R.string.err_invalid_cmd);
+                    response.errorMessage = getString(R.string.game_consolechess_err_invalid_cmd);
                 } else {
                     boolean validMove = chessBoard.move(cmd[1], cmd[2]);
                     if (!validMove) {
-                        response.errorMessage = getString(R.string.err_invalid_move);
+                        response.errorMessage = getString(R.string.game_consolechess_err_invalid_move);
                     }
                 }
                 break;
             case "help":
-                response.output = getString(R.string.cmd_help);
+                response.output = getString(R.string.game_consolechess_cmd_help);
                 break;
             case "ai":
             case "aimove":
                 chessBoard.aimove();
                 break;
             default:
-                response.errorMessage = getString(R.string.err_invalid_cmd);
+                response.errorMessage = getString(R.string.game_consolechess_err_invalid_cmd);
         }
 
         return response;

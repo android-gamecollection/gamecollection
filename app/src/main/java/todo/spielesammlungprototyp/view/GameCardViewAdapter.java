@@ -17,6 +17,10 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
     private ArrayList<GameCardView> gameCardViews = new ArrayList<>();
     private ClickListener clickListener = null;
 
+    public GameCardViewAdapter(ArrayList<GameCardView> gameCardViews) {
+        this.gameCardViews = gameCardViews;
+    }
+
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_game_selection_card_view, parent, false);
@@ -36,10 +40,6 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
         return gameCardViews.size();
     }
 
-    public GameCardViewAdapter(ArrayList<GameCardView> gameCardViews) {
-        this.gameCardViews = gameCardViews;
-    }
-
     public void setClickListener(ClickListener clicklistener) {
         this.clickListener = clicklistener;
     }
@@ -53,10 +53,10 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
 
         GameViewHolder(View view) {
             super(view);
-            card = (RelativeLayout) view.findViewById(R.id.complete_card);
-            spiel_icon = (ImageView) view.findViewById(R.id.spiele_icon);
-            spiel_titel = (TextView) view.findViewById(R.id.spiele_titel);
-            spiel_details = (TextView) view.findViewById(R.id.spiele_details);
+            card = (RelativeLayout) view.findViewById(R.id.card);
+            spiel_icon = (ImageView) view.findViewById(R.id.image_game);
+            spiel_titel = (TextView) view.findViewById(R.id.text_game_title);
+            spiel_details = (TextView) view.findViewById(R.id.text_game_details);
 
             card.setOnClickListener(new View.OnClickListener() {
                 @Override

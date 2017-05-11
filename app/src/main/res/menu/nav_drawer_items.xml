@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_hub"
+            android:id="@+id/nav_item_hub"
             android:icon="@drawable/icon_dashboard"
-            android:title="@string/nav_hub" />
+            android:title="@string/nav_item_hub" />
 
         <item
-            android:id="@+id/nav_kartenspiele"
+            android:id="@+id/nav_item_cardgames"
             android:icon="@drawable/icon_cards_playing"
-            android:title="@string/nav_kartenspiele" />
+            android:title="@string/nav_item_cardgames" />
 
         <item
-            android:id="@+id/nav_brettspiele"
+            android:id="@+id/nav_item_boardgames"
             android:icon="@drawable/icon_checkerboard"
-            android:title="@string/nav_brettspiele" />
+            android:title="@string/nav_item_boardgames" />
 
     </group>
 
@@ -25,14 +25,14 @@
         <menu>
 
             <item
-                android:id="@+id/nav_information"
+                android:id="@+id/nav_item_information"
                 android:icon="@drawable/icon_information"
-                android:title="@string/nav_info" />
+                android:title="@string/nav_item_info" />
 
             <item
-                android:id="@+id/nav_settings"
+                android:id="@+id/nav_item_settings"
                 android:icon="@drawable/icon_settings"
-                android:title="@string/nav_settings" />
+                android:title="@string/nav_item_settings" />
 
         </menu>
 

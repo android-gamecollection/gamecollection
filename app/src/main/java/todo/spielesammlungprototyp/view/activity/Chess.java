@@ -40,7 +40,7 @@ public class Chess extends AppCompatActivity {
 
         setFromFen(Board.FEN_START_POSITION);
         adapter = new ChessAdapter(this, chessFigures);
-        gridView = (GridView) findViewById(R.id.gridview_Chess);
+        gridView = (GridView) findViewById(R.id.gridview_chess);
         gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

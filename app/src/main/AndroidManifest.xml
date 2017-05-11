@@ -23,7 +23,7 @@
         <!-- ConsoleChess -->
         <activity
             android:name=".view.activity.ConsoleChess"
-            android:label="@string/brettspiele"
+            android:label="@string/boardgames"
             android:windowSoftInputMode="stateVisible">
         </activity>
 
