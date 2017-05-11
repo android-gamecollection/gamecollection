@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.games.consolechess;
+package todo.spielesammlungprototyp.model.games.consolechess;
 
 import com.alonsoruibal.chess.Board;
 import com.alonsoruibal.chess.Config;

@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.activity;
+package todo.spielesammlungprototyp.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.games.consolechess.CmdProcessor;
+import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
 
 public class ConsoleChess extends AppCompatActivity {
 

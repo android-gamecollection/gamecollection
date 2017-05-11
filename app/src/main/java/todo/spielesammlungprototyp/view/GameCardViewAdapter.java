@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp;
+package todo.spielesammlungprototyp.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import todo.spielesammlungprototyp.R;
 
 public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapter.GameViewHolder> {
 

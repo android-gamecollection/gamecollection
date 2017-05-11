@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.fragment;
+package todo.spielesammlungprototyp.view.fragment;
 
 import android.content.Context;
 import android.net.Uri;

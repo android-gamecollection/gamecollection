@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.activity;
+package todo.spielesammlungprototyp.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

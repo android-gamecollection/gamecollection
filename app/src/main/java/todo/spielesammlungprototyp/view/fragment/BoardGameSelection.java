@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.fragment;
+package todo.spielesammlungprototyp.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import todo.spielesammlungprototyp.ClickListener;
+import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.GameCardView;
-import todo.spielesammlungprototyp.GameCardViewAdapter;
+import todo.spielesammlungprototyp.view.GameCardView;
+import todo.spielesammlungprototyp.view.GameCardViewAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,7 +124,7 @@ public class BoardGameSelection extends Fragment implements ClickListener {
         Intent intent = new Intent();
         Context context = view.getContext();
         String[] stringClassnames = getResources().getStringArray(R.array.spiele_activity_brettspiele);
-        intent.setClassName(context, context.getPackageName() + ".activity." + stringClassnames[position]);
+        intent.setClassName(context, context.getPackageName() + ".view.activity." + stringClassnames[position]);
         context.startActivity(intent);
         //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }

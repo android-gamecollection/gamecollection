@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp;
+package todo.spielesammlungprototyp.view;
 
 public class GameCardView {
 

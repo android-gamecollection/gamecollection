@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.activity;
+package todo.spielesammlungprototyp.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +16,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.games.chess.ChessAdapter;
-import todo.spielesammlungprototyp.games.chess.UnicodePieces;
+import todo.spielesammlungprototyp.model.games.chess.ChessAdapter;
+import todo.spielesammlungprototyp.model.games.chess.UnicodePieces;
 
 public class Chess extends AppCompatActivity {
 

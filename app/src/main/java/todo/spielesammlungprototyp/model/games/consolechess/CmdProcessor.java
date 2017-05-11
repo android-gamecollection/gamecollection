@@ -1,10 +1,10 @@
-package todo.spielesammlungprototyp.games.consolechess;
+package todo.spielesammlungprototyp.model.games.consolechess;
 
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.activity.ConsoleChess;
+import todo.spielesammlungprototyp.view.activity.ConsoleChess;
 
 public class CmdProcessor {
 

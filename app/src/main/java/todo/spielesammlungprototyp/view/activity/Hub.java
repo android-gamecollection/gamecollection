@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.activity;
+package todo.spielesammlungprototyp.view.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,8 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.fragment.BoardGameSelection;
-import todo.spielesammlungprototyp.fragment.CardGameSelection;
+import todo.spielesammlungprototyp.view.fragment.BoardGameSelection;
+import todo.spielesammlungprototyp.view.fragment.CardGameSelection;
 
 public class Hub extends AppCompatActivity {
 
@@ -351,7 +351,7 @@ public class Hub extends AppCompatActivity {
         switch (navItemIndex) {
             case 0:
                 // home
-                return new todo.spielesammlungprototyp.fragment.Hub();
+                return new todo.spielesammlungprototyp.view.fragment.Hub();
             case 1:
                 // Kartenspiele
                 return new CardGameSelection();
@@ -359,7 +359,7 @@ public class Hub extends AppCompatActivity {
                 // ConsoleChess
                 return new BoardGameSelection();
             default:
-                return new todo.spielesammlungprototyp.fragment.Hub();
+                return new todo.spielesammlungprototyp.view.fragment.Hub();
         }
     }
 
