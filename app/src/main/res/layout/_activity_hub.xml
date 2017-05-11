@@ -26,7 +26,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:itemTextColor="@drawable/nav_highlight_color_selector_text"
+        app:itemIconTint="@drawable/nav_highlight_color_selector_icons"
+        app:menu="@menu/activity_main_drawer"/>
 
     <!--android.support.constraint.ConstraintLayout
         android:layout_height="match_parent"
