@@ -8,15 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <!-- Jegliche Feature wie Knöpfe, Textviews, etc. immer schön einen Ort geben (Constraints), sonst "springen" sie -->
-    <!-- Auch IDs vergeben hilft, so kann man auf das gewünschte Feature zugreifen -->
-    <!-- Geht alles auch im Layout Editor ("Design" Knopf) bei den Properties -->
-    <!-- Was ihr im Layout Editor seht, ist nicht umbedingt das, was ihr in der App sehen werdet -->
-
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/fragment_hub" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -25,66 +17,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/nav_drawer_items"
+        app:itemIconTint="@drawable/nav_highlight_color_selector_icons"
         app:itemTextColor="@drawable/nav_highlight_color_selector_text"
-        app:itemIconTint="@drawable/nav_highlight_color_selector_icons" />
-
-    <!--android.support.constraint.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-        <Button
-            android:id="@+id/button_kartenspiele"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/buttonsfeedback"
-            android:onClick="gotoKartenspiele"
-            android:text="@string/kartenspiele"
-            android:textSize="30sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <Button
-            android:id="@+id/button_brettspiele"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/buttonsfeedback"
-            android:onClick="gotoBrettspiele"
-            android:text="@string/brettspiele"
-            android:textSize="30sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_kartenspiele" />
-
-        <Button
-            android:id="@+id/button_Info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:background="@drawable/buttonsfeedback"
-            android:text="@string/info"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <Button
-            android:id="@+id/button_Settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:background="@drawable/buttonsfeedback"
-            android:text="@string/settings"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
-
-    </android.support.constraint.ConstraintLayout-->
+        app:menu="@menu/nav_drawer_items" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,13 +1,56 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.Hub">
+    android:fitsSystemWindows="true"
+    tools:context=".view.activity.Hub">
 
-    <TextView
+    <include layout="@layout/fragment_app_bar" />
+
+    <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_game_kartenspiele"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom_k"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorPrimary"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_plus" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_game_brettspiele"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom_b"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorPrimary"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_plus" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_plus" />
+
+</android.support.design.widget.CoordinatorLayout>

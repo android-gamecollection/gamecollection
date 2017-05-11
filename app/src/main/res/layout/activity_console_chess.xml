@@ -8,20 +8,7 @@
     android:orientation="vertical"
     tools:context=".view.activity.ConsoleChess">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbar_parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/fragment_app_bar" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

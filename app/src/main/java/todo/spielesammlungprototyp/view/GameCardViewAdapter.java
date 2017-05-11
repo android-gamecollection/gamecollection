@@ -19,7 +19,7 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
 
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_game_selection_card_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_game_selection_card_view, parent, false);
         return new GameViewHolder(view);
     }
 
