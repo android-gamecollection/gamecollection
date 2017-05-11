@@ -1,7 +1,5 @@
 package todo.spielesammlungprototyp.games.consolechess;
 
-import android.util.Log;
-
 import com.alonsoruibal.chess.Board;
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
@@ -9,8 +7,6 @@ import com.alonsoruibal.chess.search.SearchEngine;
 import com.alonsoruibal.chess.search.SearchParameters;
 
 class ChessBoard {
-
-    private final String TAG = this.getClass().getSimpleName();
 
     private final Config config;
     private final SearchEngine searchEngine;
