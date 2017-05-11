@@ -1,6 +1,5 @@
 package todo.spielesammlungprototyp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -32,7 +31,7 @@ public class _Hub extends AppCompatActivity {
     private FloatingActionButton fab_new_game, fab_new_game_k, fab_new_game_b;
     private ImageView navDrawerBackground, navDrawerIcon;
     private TextView navDrawerTitle, navDrawerSubTitle;
-    private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAnticlockwise;
+    private Animation fabOpenUpper, fabCloseUpper, fabCloseLower, fabOpenLower, fabRotateClockwise, fabRotateAnticlockwise;
     private boolean isFabOpen = false;
 
     // urls to load navigation header background image
@@ -78,8 +77,10 @@ public class _Hub extends AppCompatActivity {
         fab_new_game = (FloatingActionButton) findViewById(R.id.fab_new_game);
         fab_new_game_k = (FloatingActionButton) findViewById(R.id.fab_new_game_kartenspiele);
         fab_new_game_b = (FloatingActionButton) findViewById(R.id.fab_new_game_brettspiele);
-        fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fabOpenUpper = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open_upper);
+        fabCloseUpper = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close_upper);
+        fabOpenLower = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open_lower);
+        fabCloseLower = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close_lower);
         fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clockwise);
         fabRotateAnticlockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlockwise);
 
@@ -96,24 +97,7 @@ public class _Hub extends AppCompatActivity {
         fab_new_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(isFabOpen) {
-                    fab_new_game_b.startAnimation(fabClose);
-                    fab_new_game_k.startAnimation(fabClose);
-                    fab_new_game.startAnimation(fabRotateAnticlockwise);
-                    fab_new_game_b.setClickable(false);
-                    fab_new_game_k.setClickable(false);
-                    isFabOpen = false;
-                }
-                else {
-                    fab_new_game_b.startAnimation(fabOpen);
-                    fab_new_game_k.startAnimation(fabOpen);
-                    fab_new_game.startAnimation(fabRotateClockwise);
-                    fab_new_game_b.setClickable(true);
-                    fab_new_game_k.setClickable(true);
-                    isFabOpen = true;
-                }
-
+                animateFab(isFabOpen);
             }
         });
 
@@ -130,6 +114,26 @@ public class _Hub extends AppCompatActivity {
             loadHomeFragment();
         }
 
+    }
+
+    private void animateFab(boolean isOpen) {
+
+        if(isOpen) {
+            fab_new_game_b.startAnimation(fabCloseLower);
+            fab_new_game_k.startAnimation(fabCloseUpper);
+            fab_new_game.startAnimation(fabRotateAnticlockwise);
+            fab_new_game_b.setClickable(false);
+            fab_new_game_k.setClickable(false);
+            isFabOpen = false;
+        }
+        else {
+            fab_new_game_b.startAnimation(fabOpenLower);
+            fab_new_game_k.startAnimation(fabOpenUpper);
+            fab_new_game.startAnimation(fabRotateClockwise);
+            fab_new_game_b.setClickable(true);
+            fab_new_game_k.setClickable(true);
+            isFabOpen = true;
+        }
     }
 
     /***
@@ -388,9 +392,13 @@ public class _Hub extends AppCompatActivity {
 
     // show or hide the fab_new_game
     private void toggleFab() {
-        if (navItemIndex == 0)
+        if (navItemIndex == 0) {
             fab_new_game.show();
-        else
+        }
+        else {
             fab_new_game.hide();
+            animateFab(true);
+        }
     }
+
 }
