@@ -6,6 +6,7 @@ import com.alonsoruibal.chess.Board;
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.search.SearchEngine;
+import com.alonsoruibal.chess.search.SearchParameters;
 
 class ChessBoard {
 
@@ -14,10 +15,13 @@ class ChessBoard {
     private final Config config;
     private final SearchEngine searchEngine;
     private final Board board;
+    private final SearchParameters searchParameters;
 
     ChessBoard() {
         config = new Config();
+        searchParameters = new SearchParameters();
         searchEngine = new SearchEngine(config);
+        searchEngine.setInitialSearchParameters(searchParameters);
         board = searchEngine.getBoard();
     }
 
@@ -42,12 +46,7 @@ class ChessBoard {
     }
 
     boolean aimove() {
-        try {
-            searchEngine.run();
-        } catch (NullPointerException e) {
-            Log.w(TAG, "aimove():", e);
-        }
-
+        searchEngine.run();
         return board.doMove(searchEngine.getBestMove());
     }
 }
