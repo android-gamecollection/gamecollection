@@ -1,26 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE games [<!ELEMENT games (boardgames, cardgames)><!ELEMENT boardgames (game*)><!ELEMENT cardgames (game*)><!ELEMENT game EMPTY><!ATTLIST game title CDATA #REQUIRED><!ATTLIST game description CDATA #REQUIRED><!ATTLIST game activity CDATA #REQUIRED>]>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE games [
+    <!ELEMENT games (boardgames, cardgames)>
+    <!ELEMENT boardgames (game*)>
+    <!ELEMENT cardgames (game*)>
+    <!ELEMENT game EMPTY>
+    <!ATTLIST game title CDATA #REQUIRED>
+    <!ATTLIST game description CDATA #REQUIRED>
+    <!ATTLIST game activity CDATA #REQUIRED>
+]>
 <games>
 
     <boardgames>
 
         <game
-            activity="Chess"
+            title="Schach"
             description="Klassisches Schach"
-            title="Schach" />
+            activity="Chess" />
 
         <game
-            activity="ConsoleChess"
+            title="Schach"
             description="Schach mit Konsole"
-            title="Schach" />
+            activity="ConsoleChess" />
 
     </boardgames>
 
     <cardgames>
 
         <game
-            activity="Bauernkrieg"
+            title="Bauernkrieg"
             description="Trumpfkartenspiel"
-            title="Bauernkrieg" />
+            activity="Bauernkrieg" />
 
     </cardgames>
 
