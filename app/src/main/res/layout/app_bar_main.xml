@@ -39,7 +39,7 @@
         android:layout_marginBottom="@dimen/fab_margin_bottom_k"
         android:layout_marginEnd="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/plus"
+        app:srcCompat="@drawable/cards_playing_outline"
         android:elevation="6dp"
         app:pressedTranslationZ="12dp"
         android:visibility="invisible" />
@@ -52,7 +52,7 @@
         android:layout_marginBottom="@dimen/fab_margin_bottom_b"
         android:layout_marginEnd="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/plus"
+        app:srcCompat="@drawable/checkerboard"
         android:elevation="6dp"
         app:pressedTranslationZ="12dp"
         android:visibility="invisible"/>

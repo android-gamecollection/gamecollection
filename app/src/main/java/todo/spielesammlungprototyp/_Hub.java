@@ -33,6 +33,7 @@ public class _Hub extends AppCompatActivity {
     private TextView navDrawerTitle, navDrawerSubTitle;
     private Animation fabOpenUpper, fabCloseUpper, fabCloseLower, fabOpenLower, fabRotateClockwise, fabRotateAnticlockwise;
     private boolean isFabOpen = false;
+    private boolean fragHome = true;
 
     // urls to load navigation header background image
     // and profile image
@@ -394,10 +395,14 @@ public class _Hub extends AppCompatActivity {
     private void toggleFab() {
         if (navItemIndex == 0) {
             fab_new_game.show();
+            fab_new_game.setClickable(true);
+            fragHome = true;
         }
         else {
             fab_new_game.hide();
-            animateFab(true);
+            fab_new_game.setClickable(false);
+            if(fragHome && isFabOpen) animateFab(true);
+            fragHome = false;
         }
     }
 
