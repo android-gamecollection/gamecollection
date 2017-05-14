@@ -25,43 +25,38 @@ import todo.spielesammlungprototyp.view.fragment.CardGameSelection;
 
 public class Hub extends AppCompatActivity {
 
-    // urls to load navigation header background image
-    // and profile image
-    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
-    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
     // tags used to attach the fragments
     private static final String TAG_HUB = "hub";
     private static final String TAG_KARTENSPIELE = "kartenspiele_auswahl";
     private static final String TAG_BRETTSPIELE = "brettspiele_auswahl";
     public static String currentTag = TAG_HUB;
+
     // index to identify current nav menu item
     private static int navItemIndex = 0;
+
     // flag to load home fragment when user presses back key
     private final boolean shouldLoadHomeFragOnBackPress = true;
+
+    //views
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
     private Toolbar toolbar;
     private FloatingActionButton fabNewGame, fabNewGameK, fabNewGameB;
-    private ImageView navDrawerBackground, navDrawerIcon;
     private TextView navDrawerTitle, navDrawerSubTitle;
+    private ImageView navDrawerBackground, navDrawerIcon;
+
+    // fab
     private Animation fabOpenUpper, fabCloseUpper, fabCloseLower, fabOpenLower, fabRotateClockwise, fabRotateAnticlockwise;
     private boolean fabOpen = false;
     private boolean fragHome = true;
-    // toolbar titles respected to selected nav menu item
-    private String[] activityTitles;
+
     private Handler mHandler;
 
-    // "onCreate()" wird beim Start der Activity gerufen
-    // hier sollten alle Initialisierungen implementiert werden
-    // wie zum Beispiel: views, Daten zu Listen binden, etc.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // wenn die Activity nochmals gebaut werden muss ("onDestroy()" => "onCreate()")
-        // wird der Status in einem Bundle gespeichert (bei "onDestroy()" wird er nochmals gespeichert)
         super.onCreate(savedInstanceState);
 
-        // deklariert die UI (ruft das Layout auf):
         setContentView(R.layout.activity_hub);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -129,25 +124,12 @@ public class Hub extends AppCompatActivity {
     /***
      * Load navigation menu header information
      * like background image, profile image
-     * name, website, notifications action view (dot)
      */
 
     private void loadNavHeader() {
 
         navDrawerTitle.setText(R.string.app_name);
         navDrawerSubTitle.setText(R.string.subTextHeader);
-        /*
-        // loading header background image
-        Glide.with(this).load("http://i.imgur.com/DvpvklR.png")
-                .into(navDrawerBackground);
-
-        // Loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .into(navDrawerIcon);
-
-        // showing dot next to notifications label
-        navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
-        */
     }
 
     /***
@@ -171,7 +153,7 @@ public class Hub extends AppCompatActivity {
             return;
         }
 
-        // Sometimes, when fragment has huge data, screen seems hanging
+        // Sometimes, when a fragment has huge data, screen seems hanging
         // when switching between navigation menus
         // So using runnable, the fragment is loaded with cross fade effect
         // This effect can be seen in GMail app
@@ -181,8 +163,7 @@ public class Hub extends AppCompatActivity {
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, currentTag);
                 fragmentTransaction.commitAllowingStateLoss();
             }
@@ -206,7 +187,7 @@ public class Hub extends AppCompatActivity {
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
-                // home
+                // Hub
                 return new todo.spielesammlungprototyp.view.fragment.Hub();
             case 1:
                 // Kartenspiele
@@ -237,11 +218,9 @@ public class Hub extends AppCompatActivity {
 
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_item_hub:
                         navItemIndex = 0;
                         currentTag = TAG_HUB;
-                        //drawer.closeDrawers();
                         break;
                     case R.id.nav_item_cardgames:
                         navItemIndex = 1;
@@ -301,14 +280,6 @@ public class Hub extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-    // es existiert auch "onStart()", "onResume()", "onStop()" und weitere
-    // zu sehen im Activity Lifecycle: "https://developer.android.com/reference/android/app/Activity.html#ActivityLifecycle"
-    // "onStart()" wird nach "onCreate()" oder "onRestart()" gerufen
-
-    // Hier ein Beispiel für onStart()
-    // Es wird ein "Toast" ausgegeben sobald der User die App offen hat
-    // Wenn er sie pausiert und wieder öffnet auch
-
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -330,51 +301,6 @@ public class Hub extends AppCompatActivity {
 
         //super.onBackPressed(); //would close the app
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        // show menu only when home fragment is selected
-        if (navItemIndex == 0) {
-            getMenuInflater().inflate(R.menu.main, menu);
-        }
-
-        // when fragment is notifications, load the menu created for notifications
-        if (navItemIndex == 1) {
-            getMenuInflater().inflate(R.menu.notifications, menu);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-        // user is in notifications fragment
-        // and selected 'Mark all as Read'
-        if (id == R.id.action_mark_all_read) {
-            Toast.makeText(getApplicationContext(), "All notifications marked as read!", Toast.LENGTH_LONG).show();
-        }
-
-        // user is in notifications fragment
-        // and selected 'Clear All'
-        if (id == R.id.action_clear_notifications) {
-            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
-        }
-
-        return super.onOptionsItemSelected(item);
-    } */
 
     // show or hide the fab_new_game
     private void toggleFab() {
