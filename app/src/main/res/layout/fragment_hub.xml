@@ -26,7 +26,7 @@
         android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/icon_plus" />
+        app:srcCompat="@drawable/icon_cards_playing" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_boardgame"
@@ -39,7 +39,7 @@
         android:visibility="invisible"
         app:backgroundTint="@color/colorPrimary"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/icon_plus" />
+        app:srcCompat="@drawable/icon_checkerboard" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_game"
@@ -50,7 +50,6 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:elevation="6dp"
         app:backgroundTint="@color/colorPrimary"
-        app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/icon_plus" />
 
 </android.support.design.widget.CoordinatorLayout>

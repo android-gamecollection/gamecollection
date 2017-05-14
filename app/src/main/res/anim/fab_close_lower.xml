@@ -18,4 +18,11 @@
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toAlpha="0.0" />
 
+    <translate
+        android:duration="300"
+        android:fillAfter="true"
+        android:fromYDelta="0%p"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:toYDelta="10%p" />
+
 </set>
