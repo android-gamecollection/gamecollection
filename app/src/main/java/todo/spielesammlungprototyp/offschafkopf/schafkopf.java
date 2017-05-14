@@ -130,6 +130,7 @@ public class schafkopf extends CardGame
                                 showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(0);
+                                delay(1500);
                                 isGameOver();
                                 setPlayerMove(0);
                             }
@@ -138,6 +139,7 @@ public class schafkopf extends CardGame
                                 showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(1);
+                                delay(1500);
                                 isGameOver();
                                 setPlayerMove(1);
                             }
@@ -168,12 +170,14 @@ public class schafkopf extends CardGame
                             showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                             delay(2000);
                             transferBidsToStock(1);
+                            delay(1500);
                             isGameOver();
                             setPlayerMove(1);
                         } else {
                             showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                             delay(2000);
                             transferBidsToStock(0);
+                            delay(1500);
                             isGameOver();
                             setPlayerMove(0);
                         }
@@ -185,7 +189,7 @@ public class schafkopf extends CardGame
     }
 
     private void isGameOver(){
-
+    showToast("anzahl" + (stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards()));
     //Wenn alle karten auf den stacks sind ist das spiel vorbei
 
         if (stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32) {
@@ -214,17 +218,20 @@ public class schafkopf extends CardGame
             //Gewinner herausfinden und ausgeben
 
               if(pointsp1 > pointsp2){
+                  delay(2000);
                   showToast("Spieler 1:" + pointsp1 + "Spieler 2:" + pointsp2);
                   delay(2000);
                   showToast("Spieler 1 gewinnt!");
 
               }
               else if(pointsp1 == pointsp2){
+                  delay(2000);
                   showToast("Spieler 1:" + pointsp1 + "Spieler 2:" + pointsp2);
                   delay(2000);
                   showToast("Unentschieden!");
               }
               else {
+                  delay(2000);
                   showToast("Spieler 1:" + pointsp1 + "Spieler 2:" + pointsp2);
                   delay(2000);
                   showToast("Spieler 2 gewinnt!");
