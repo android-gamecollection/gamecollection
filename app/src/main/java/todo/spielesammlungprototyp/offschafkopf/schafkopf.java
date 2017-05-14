@@ -122,7 +122,6 @@ public class schafkopf extends CardGame
                     //if(bids[1].isEmpty())setPlayerMove(1);//abhängig von stich
                     //if(!bids[1].isEmpty())transferBidsTo
                     // Stock(1);
-
                     if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
 
                             if (sticht(0) == 0)
@@ -131,6 +130,7 @@ public class schafkopf extends CardGame
                                 showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(0);
+                                isGameOver();
                                 setPlayerMove(0);
                             }
 
@@ -138,6 +138,7 @@ public class schafkopf extends CardGame
                                 showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(1);
+                                isGameOver();
                                 setPlayerMove(1);
                             }
                         }
@@ -161,18 +162,19 @@ public class schafkopf extends CardGame
                 public void atTarget(Card card, Location targetLocation) {
                     //if (bids[0].isEmpty()) setPlayerMove(0);
                     //if(!bids[0].isEmpty())transferBidsToStock(0);
-
                     if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
                         if (sticht(1) == 1) {
 
                             showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                             delay(2000);
                             transferBidsToStock(1);
+                            isGameOver();
                             setPlayerMove(1);
                         } else {
                             showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                             delay(2000);
                             transferBidsToStock(0);
+                            isGameOver();
                             setPlayerMove(0);
                         }
                     }
@@ -181,6 +183,55 @@ public class schafkopf extends CardGame
             });
         }
     }
+
+    private void isGameOver(){
+
+    //Wenn alle karten auf den stacks sind ist das spiel vorbei
+
+        if (stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32) {
+
+            //Anzahl der Karten mit Punkten pro Spieler herausfinden
+
+            int ass = stacks[0].getNumberOfCardsWithRank(Rank.ASS);
+            int zehn = stacks[0].getNumberOfCardsWithRank(Rank.ZEHN);
+            int k = stacks[0].getNumberOfCardsWithRank(Rank.KOENIG);
+            int o = stacks[0].getNumberOfCardsWithRank(Rank.OBER);
+            int u = stacks[0].getNumberOfCardsWithRank(Rank.UNTER);
+
+            int ass2 = stacks[1].getNumberOfCardsWithRank(Rank.ASS);
+            int zehn2 = stacks[1].getNumberOfCardsWithRank(Rank.ZEHN);
+            int k2 = stacks[1].getNumberOfCardsWithRank(Rank.KOENIG);
+            int o2 = stacks[1].getNumberOfCardsWithRank(Rank.OBER);
+            int u2 = stacks[1].getNumberOfCardsWithRank(Rank.UNTER);
+
+
+            //Punkte zusammen rechnen
+            //ASS = 11 , ZEHN = 10, KOENIG = 4, OBER = 3, UNTER = 2, Alles andere = 0
+
+            int pointsp1 = ass * 11 + zehn * 10 + k * 4 + o * 3 + u * 2;
+            int pointsp2 = ass2 * 11 + zehn2 * 10 + k2 * 4 + o2 * 3 + u2 * 2;
+
+            //Gewinner herausfinden und ausgeben
+
+              if(pointsp1 > pointsp2){
+                  showToast("Spieler 1:" + pointsp1 + "Spieler 2:" + pointsp2);
+                  delay(2000);
+                  showToast("Spieler 1 gewinnt!");
+
+              }
+              else if(pointsp1 == pointsp2){
+                  showToast("Spieler 1:" + pointsp1 + "Spieler 2:" + pointsp2);
+                  delay(2000);
+                  showToast("Unentschieden!");
+              }
+              else {
+                  showToast("Spieler 1:" + pointsp1 + "Spieler 2:" + pointsp2);
+                  delay(2000);
+                  showToast("Spieler 2 gewinnt!");
+              }
+        }
+    }
+
 
     private void transferBidsToStock(int playerWon)
     {
@@ -226,6 +277,7 @@ public class schafkopf extends CardGame
         if(sameColor()) {
             if (isTrumpf(otherPlayer)) return otherPlayer;
             if (isRankHigher(Player)) return Player;
+                else return otherPlayer;
         }
         if(isTrumpf(otherPlayer))return otherPlayer;
         if(!sameColor()) return otherPlayer;
@@ -312,12 +364,17 @@ public class schafkopf extends CardGame
         int otherPlayer = (Player + 1) % 2;
         if (bids[Player].getLast().getRankId() < bids[otherPlayer].getLast().getRankId())
             return true;
-        if (bids[Player].getLast().getRank() == Rank.ASS)
-            return true;
-        if(bids[otherPlayer].getLast().getRank() == Rank.ASS)
+        else if(bids[otherPlayer].getLast().getRankId() < bids[Player].getLast().getRankId())
             return false;
 
-        return false;
+
+        else if (bids[Player].getLast().getRank() == Rank.ASS)
+            return true;
+
+        else if (bids[otherPlayer].getLast().getRank() == Rank.ASS)
+            return false;
+
+        else return false;
     }
 
 
