@@ -120,24 +120,28 @@ public class schafkopf extends CardGame
 
                 public void atTarget(Card card, Location targetLocation) {
                     //if(bids[1].isEmpty())setPlayerMove(1);//abhängig von stich
-                    //if(!bids[1].isEmpty())transferBidsToStock(1);
+                    //if(!bids[1].isEmpty())transferBidsTo
+                    // Stock(1);
 
                     if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
-                            if (sticht(0) == 0) {
+
+                            if (sticht(0) == 0)
+                            {
+
+                                showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
+                                delay(2000);
                                 transferBidsToStock(0);
                                 setPlayerMove(0);
-                            } else {
+                            }
+
+                            else {
+                                showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
+                                delay(2000);
                                 transferBidsToStock(1);
                                 setPlayerMove(1);
                             }
                         }
-
-                    else if(!bids[0].isEmpty()){
-                        setPlayerMove(1);
-
-
-                    }
-                    else{setPlayerMove(1);}
+                        else setPlayerMove(1);
 
                     }
 
@@ -160,22 +164,19 @@ public class schafkopf extends CardGame
 
                     if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
                         if (sticht(1) == 1) {
+
+                            showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
+                            delay(2000);
                             transferBidsToStock(1);
                             setPlayerMove(1);
                         } else {
+                            showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
+                            delay(2000);
                             transferBidsToStock(0);
                             setPlayerMove(0);
                         }
                     }
-
-                    else if(!bids[0].isEmpty()){
-                        setPlayerMove(0);
-
-
-                    }
-                    else{setPlayerMove(0);}
-
-
+                    else setPlayerMove(0);
                 }
             });
         }
@@ -196,13 +197,13 @@ public class schafkopf extends CardGame
         {
             for(int i=0;i<8;i++)hands[i].setTouchEnabled(true);
             for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
-            showToast("Player  1");
+
         }
         if(playerWon==1)
         {
             for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
             for(int i=8;i<16;i++)hands[i].setTouchEnabled(true);
-            showToast("Player  2");
+            //showToast("Player  2");
         }
     }
 
@@ -211,293 +212,167 @@ public class schafkopf extends CardGame
         for(int i=0;i<16;i++)hands[i].setTouchEnabled(false);
     }
 
-/*
-    ----------------------------------------------
-    |              vergleichsmethoden            |
-    ______________________________________________
-*/
-/*
-int p == Spieler der ausspielt
 
-<--------------->
-sticht(int p)
-isTrumpf(int p)
-isOber(int p)
-isUnter(int p)
-isHerz(int p)
-isTrumpfHigher(int p)
-isColorHigher(int p)
-sameColor(int p)
-sameRank(int p)
-sameColorOnHand(int p)
-TrumpfOnHand(int p)
-<--------------->
-*/
-    public int sticht(int p){
-        //int p == spieler der ausspielt
-        if(p == 0) {
+    public int sticht(int Player)
+    {
+        int otherPlayer = (Player + 1) % 2;
 
-            if (isTrumpf(p)) {
-                if (isTrumpfHigher(p)) {
-                    return p;
-                } else {
-                    return 1;
-                }
-            }
-            else if(sameColor()) {
-                if (isTrumpf(1)) {
-                    return 1;
-                } else {
-                    isRankHigher(p);
-                }
-
-            }
-            else{
-                if(isTrumpf(1)){return 1;}
-                else{return p;}
-            }
-
-
-
+        if(isTrumpf(Player))
+        {
+            if (isTrumpfHigher(Player))
+                return Player;
+            return otherPlayer;
         }
-        else if(p == 1) {
-
-            if (isTrumpf(p)) {
-                if (isTrumpfHigher(p)) {
-                    return p;
-                } else {
-                    return 0;
-                }
-            } else if (sameColor()) {
-                if (isTrumpf(0)) {
-                    return 0;
-                } else {
-                    isRankHigher(p);
-                }
-
-            } else {
-                if (isTrumpf(1)) {
-                    return 1;
-                } else {
-                    return p;
-                }
-            }
+        if(sameColor()) {
+            if (isTrumpf(otherPlayer)) return otherPlayer;
+            if (isRankHigher(Player)) return Player;
         }
-        return p;
-
+        if(isTrumpf(otherPlayer))return otherPlayer;
+        return Player;
     }
-
-
 
 
 
 
     public boolean isTrumpf(int Player) {
         //int Player = Player der ausspielt
-        if (bids[Player].getLast().getRank() == Rank.OBER || bids[Player].getLast().getRank() == Rank.UNTER) {
-            return true;
-        } else if (bids[Player].getLast().getSuit() == Suit.HERZ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public boolean isOber(int Player) {
-        //int Player = Player der ausspielt
-        if (bids[Player].getLast().getRank() == Rank.OBER) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isUnter(int Player) {
-        //int Player = Player der ausspielt
-        if (bids[Player].getLast().getRank() == Rank.UNTER) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isHerz(int Player) {
-        //int Player = Player der ausspielt
-        if (bids[Player].getLast().getSuit() == Suit.HERZ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isTrumpfHigher(int Player) {
-        //int Player = Player der ausspielt
-        if (Player == 0) {
-            if (isOber(Player)) {
-                if (isOber(1)) {
-                    if (isColorHigher(Player)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return true;
-                }
-            } else if (isUnter(Player)) {
-                if (isOber(1)) {
-                    return false;
-                } else if (isUnter(1)) {
-                    if (isColorHigher(Player)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return true;
-                }
-            } else if (isHerz(Player)) {
-                if (isOber(1)) {
-                    return false;
-                } else if (isUnter(1)) {
-                    return false;
-                } else if (isHerz(1)) {
-                    if (isRankHigher(Player)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            } else {
-                return false;
-            }
-
-        } else if (Player == 1)
-
+        if(     bids[Player].getLast().getRank() == Rank.OBER ||
+                bids[Player].getLast().getRank() == Rank.UNTER ||
+                bids[Player].getLast().getSuit() == Suit.HERZ)
         {
-            if (isOber(Player)) {
-                if (isOber(0)) {
-                    if (isColorHigher(Player)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return true;
-                }
-            } else if (isUnter(Player)) {
-                if (isOber(0)) {
-                    return false;
-                } else if (isUnter(0)) {
-                    if (isColorHigher(Player)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return true;
-                }
-            } else if (isHerz(Player)) {
-                if (isOber(0)) {
-                    return false;
-                } else if (isUnter(0)) {
-                    return false;
-                } else if (isHerz(0)) {
-                    if (isRankHigher(Player)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            } else {
-                return false;
-            }
+            return true;
         }
         return false;
     }
 
-    public boolean isColorHigher(int Player) {
-        //Suit Ids vergleichen
+
+
+
+    public boolean isTrumpfHigher(int Player) {
         //int Player = Player der ausspielt
+        int otherPlayer = (Player + 1) % 2;
 
-        if (Player == 0) {
-            if (bids[Player].getLast().getSuitId() < bids[1].getLast().getSuitId()) {
+            if (isOber(Player))
+            {
+                if (isOber(otherPlayer))
+                {
+                    if (isColorHigher(otherPlayer))
+                        return false;    // Wenn beide Ober, entscheidet die höhere Farbe
+                }
                 return true;
-            } else {
-                return false;
             }
-        } else if (Player == 1) {
-            if (bids[Player].getLast().getSuitId() < bids[0].getLast().getSuitId()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        else return false;
 
+            else if(isUnter(Player))
+            {
+                if (isOber(otherPlayer))
+                    return false;   // Ober sticht Unter
+
+                if (isUnter(otherPlayer))
+                {
+                    if (isColorHigher(otherPlayer))
+                        return false; // Wenn beide Unter, entscheidet die höhere Farbe
+                }
+                return true;
+            }
+
+            else if(isHerz(Player))
+            {
+                if (isOber(otherPlayer)) // Ober sticht Herz
+                    return false;
+
+                if (isUnter(otherPlayer)) // Unter sticht Herz
+                    return false;
+
+                else if (isHerz(otherPlayer))
+                {
+                    if (isRankHigher(otherPlayer))
+                        return false; //wenn beide Herz sticht die höhere Zahl
+                }
+                return true;
+            }
+
+        return false;
     }
+
+
+
+
+    public boolean isColorHigher(int Player)
+    {
+        int otherPlayer = (Player + 1) % 2;
+        if (bids[Player].getLast().getSuitId() < bids[otherPlayer].getLast().getSuitId())
+            return true;
+        return false;
+    }
+
+
 
     public boolean isRankHigher(int Player) {
-        //int Player = Player der ausspielt
+        int otherPlayer = (Player + 1) % 2;
+        if (bids[Player].getLast().getRankId() < bids[otherPlayer].getLast().getRankId())
+            return true;
+        return false;
+    }
 
-        if (Player == 0) {
-            if (bids[Player].getLast().getRankId() < bids[1].getLast().getRankId()) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (Player == 1) {
-            if (bids[Player].getLast().getRankId() < bids[0].getLast().getRankId()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        else return false;
-    }
+
+
+
     public boolean sameColor(){
-        //int player == spieler der ausspielt
-            if(bids[0].getLast().getSuit() == bids[1].getLast().getSuit()){
+            if(bids[0].getLast().getSuit() == bids[1].getLast().getSuit())
                 return true;
-            }
-            else{return false;}
+            return false;
     }
+
+    public boolean isOber(int Player) {
+        //int Player = Player der ausspielt
+        if (bids[Player].getLast().getRank() == Rank.OBER)
+            return true;
+        return false;
+    }
+
+    public boolean isUnter(int Player) {
+        //int Player = Player der ausspielt
+        if (bids[Player].getLast().getRank() == Rank.UNTER)
+            return true;
+        return false;
+    }
+
+    public boolean isHerz(int Player) {
+        //int Player = Player der ausspielt
+        if (bids[Player].getLast().getSuit() == Suit.HERZ)
+            return true;
+        return false;
+    }
+
     public boolean sameRank(){
 
             if(bids[1].getLast().getRank() == bids[0].getLast().getRank())
-            {
                 return true;
-            }
-            else{return false;}
+            return false;
     }
 
-    public boolean sameColorOnHand(int Player, Suit farb) {
-//int Player = spieler der ausspielt
-        if (Player == 0) {
+
+    public boolean isColorOnHand(int Player, Suit farb)
+    {
+
+
+        if(Player == 0)
+        {
 
             for (int i = 8; i < 16; i++) {
-
                 if (hands[i].getNumberOfCardsWithSuit(farb) > 0)
                     return true;
-                else {
-                    return false;
-                }
-            }
-
-        }
-        else if (Player == 1) {
-
-
-            for (int i = 0; i < 8; i++) {
-
-                if (hands[i].getNumberOfCardsWithSuit(farb) > 0)
-                    return true;
-                else {
-                    return false;
-                }
             }
         }
 
+        if(Player == 1)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                if (hands[i].getNumberOfCardsWithSuit(farb) > 0)
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -536,26 +411,6 @@ TrumpfOnHand(int p)
         return false;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
