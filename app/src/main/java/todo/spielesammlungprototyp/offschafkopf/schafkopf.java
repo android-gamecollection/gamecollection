@@ -19,7 +19,7 @@ public class schafkopf extends CardGame
 
     public enum Rank
     {
-        ASS, KOENIG, OBER, UNTER, ZEHN, NEUN, ACHT, SIEBEN
+        ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
     }
 
     private final Location[] handLocations =
@@ -228,6 +228,7 @@ public class schafkopf extends CardGame
             if (isRankHigher(Player)) return Player;
         }
         if(isTrumpf(otherPlayer))return otherPlayer;
+        if(!sameColor()) return otherPlayer;
         return Player;
     }
 
@@ -311,6 +312,11 @@ public class schafkopf extends CardGame
         int otherPlayer = (Player + 1) % 2;
         if (bids[Player].getLast().getRankId() < bids[otherPlayer].getLast().getRankId())
             return true;
+        if (bids[Player].getLast().getRank() == Rank.ASS)
+            return true;
+        if(bids[otherPlayer].getLast().getRank() == Rank.ASS)
+            return false;
+
         return false;
     }
 
