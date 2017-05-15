@@ -3,35 +3,33 @@ package todo.spielesammlungprototyp.view;
 public class GameCardView {
 
     private int gameIconId;
-    private String gameTitle, gameDetails;
+    private String gameTitle, gameDetails, activity;
 
-    public GameCardView(int gameIconId, String gameTitle, String gameDetails) {
+    public GameCardView(int gameIconId, String gameTitle, String gameDetails, String activity) {
         this.gameIconId = gameIconId;
         this.gameTitle = gameTitle;
         this.gameDetails = gameDetails;
+        this.activity = activity;
     }
 
-    int getGameIconId() {
+    public int getGameIconId() {
         return gameIconId;
     }
 
-    void setGameIconId(int gameIconId) {
-        this.gameIconId = gameIconId;
-    }
-
-    String getGameTitle() {
+    public String getGameTitle() {
         return gameTitle;
     }
 
-    void setGameTitle(String gameTitle) {
-        this.gameTitle = gameTitle;
-    }
-
-    String getGameDetails() {
+    public String getGameDetails() {
         return gameDetails;
     }
 
-    void setGameDetails(String gameDetails) {
-        this.gameDetails = gameDetails;
+    public String getActivity() {
+        return activity;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s, %s, %s", gameIconId, gameTitle, gameDetails, activity);
     }
 }

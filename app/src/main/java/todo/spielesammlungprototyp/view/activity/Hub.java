@@ -20,8 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.view.fragment.BoardGameSelection;
-import todo.spielesammlungprototyp.view.fragment.CardGameSelection;
+import todo.spielesammlungprototyp.view.fragment.GameSelection;
 
 public class Hub extends AppCompatActivity {
 
@@ -191,10 +190,10 @@ public class Hub extends AppCompatActivity {
                 return new todo.spielesammlungprototyp.view.fragment.Hub();
             case 1:
                 // Kartenspiele
-                return new CardGameSelection();
+                return GameSelection.newInstance("cardgames");
             case 2:
                 // Brettspiele
-                return new BoardGameSelection();
+                return GameSelection.newInstance("boardgames");
             default:
                 return new todo.spielesammlungprototyp.view.fragment.Hub();
         }

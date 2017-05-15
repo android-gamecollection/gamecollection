@@ -9,15 +9,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import todo.spielesammlungprototyp.R;
 
 public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapter.GameViewHolder> {
 
-    private ArrayList<GameCardView> gameCardViews = new ArrayList<>();
+    private List<GameCardView> gameCardViews = new ArrayList<>();
     private ClickListener clickListener = null;
 
-    public GameCardViewAdapter(ArrayList<GameCardView> gameCardViews) {
+    public GameCardViewAdapter(List<GameCardView> gameCardViews) {
         this.gameCardViews = gameCardViews;
     }
 
@@ -30,9 +31,9 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
     @Override
     public void onBindViewHolder(final GameViewHolder holder, final int position) {
         GameCardView SCV = gameCardViews.get(position);
-        holder.spiel_icon.setImageResource(SCV.getGameIconId());
-        holder.spiel_titel.setText(SCV.getGameTitle());
-        holder.spiel_details.setText(SCV.getGameDetails());
+        holder.gameIcon.setImageResource(SCV.getGameIconId());
+        holder.gameTitle.setText(SCV.getGameTitle());
+        holder.gameDetails.setText(SCV.getGameDetails());
     }
 
     @Override
@@ -47,16 +48,16 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
     class GameViewHolder extends RecyclerView.ViewHolder {
 
         final RelativeLayout card;
-        final ImageView spiel_icon;
-        final TextView spiel_titel;
-        final TextView spiel_details;
+        final ImageView gameIcon;
+        final TextView gameTitle;
+        final TextView gameDetails;
 
         GameViewHolder(View view) {
             super(view);
             card = (RelativeLayout) view.findViewById(R.id.card);
-            spiel_icon = (ImageView) view.findViewById(R.id.image_game);
-            spiel_titel = (TextView) view.findViewById(R.id.text_game_title);
-            spiel_details = (TextView) view.findViewById(R.id.text_game_details);
+            gameIcon = (ImageView) view.findViewById(R.id.image_game);
+            gameTitle = (TextView) view.findViewById(R.id.text_game_title);
+            gameDetails = (TextView) view.findViewById(R.id.text_game_details);
 
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
