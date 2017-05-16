@@ -1,9 +1,7 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +17,7 @@ import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.chess.ChessAdapter;
 import todo.spielesammlungprototyp.model.games.chess.UnicodePieces;
 
-public class Chess extends AppCompatActivity {
+public class Chess extends GameActivity {
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
@@ -30,13 +28,9 @@ public class Chess extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState == null) savedInstanceState = new Bundle();
+        savedInstanceState.putInt("layout", R.layout.activity_chess);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chess);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setFromFen(Board.FEN_START_POSITION);
         adapter = new ChessAdapter(this, chessFigures);
@@ -49,23 +43,6 @@ public class Chess extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "You Clicked at " + position, Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void setFromFen(String fen) {

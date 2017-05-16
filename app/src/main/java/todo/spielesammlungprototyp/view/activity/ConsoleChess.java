@@ -1,11 +1,8 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -16,23 +13,18 @@ import android.widget.Toast;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
 
-public class ConsoleChess extends AppCompatActivity {
+public class ConsoleChess extends GameActivity {
 
     private ScrollView scrollConsole;
     private TextView textConsole;
     private EditText inputConsole;
-    private Toolbar toolbar;
     private CmdProcessor cmdProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState == null) savedInstanceState = new Bundle();
+        savedInstanceState.putInt("layout", R.layout.activity_console_chess);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_console_chess);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         scrollConsole = (ScrollView) findViewById(R.id.scroll_output);
         textConsole = (TextView) findViewById(R.id.text_output);
@@ -40,23 +32,6 @@ public class ConsoleChess extends AppCompatActivity {
         setKeyboardListener();
 
         cmdProcessor = new CmdProcessor(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
