@@ -8,8 +8,7 @@ public class Bauernkrieg extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState == null) savedInstanceState = new Bundle();
-        savedInstanceState.putInt("layout", R.layout.activity_bauernkrieg);
+        getIntent().putExtra(GameActivity.KEY_LAYOUT, R.layout.activity_bauernkrieg);
         super.onCreate(savedInstanceState);
     }
 }

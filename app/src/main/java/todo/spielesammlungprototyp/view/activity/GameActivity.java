@@ -9,12 +9,17 @@ import android.view.MenuItem;
 import todo.spielesammlungprototyp.R;
 
 
-abstract class GameActivity extends AppCompatActivity {
+public abstract class GameActivity extends AppCompatActivity {
+
+    public final static String KEY_TITLE = "title";
+    public final static String KEY_LAYOUT = "layout";
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(savedInstanceState.getInt("layout"));
+        Bundle extras = getIntent().getExtras();
+        setContentView(extras.getInt(KEY_LAYOUT));
+        setTitle(extras.getString(KEY_TITLE));
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

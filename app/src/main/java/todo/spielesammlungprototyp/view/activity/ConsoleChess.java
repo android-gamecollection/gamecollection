@@ -22,8 +22,7 @@ public class ConsoleChess extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState == null) savedInstanceState = new Bundle();
-        savedInstanceState.putInt("layout", R.layout.activity_console_chess);
+        getIntent().putExtra(GameActivity.KEY_LAYOUT, R.layout.activity_console_chess);
         super.onCreate(savedInstanceState);
 
         scrollConsole = (ScrollView) findViewById(R.id.scroll_output);

@@ -26,6 +26,7 @@ import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.view.GameCardView;
 import todo.spielesammlungprototyp.view.GameCardViewAdapter;
+import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 public class GameSelection extends Fragment implements ClickListener {
 
@@ -74,8 +75,10 @@ public class GameSelection extends Fragment implements ClickListener {
     public void itemClicked(View view, int position) {
         Intent intent = new Intent();
         Context context = view.getContext();
-        String str = context.getPackageName() + ACTIVITY_PACKAGE + games.get(gameCategory).get(position).getActivity();
+        GameCardView gameCardView = games.get(gameCategory).get(position);
+        String str = context.getPackageName() + ACTIVITY_PACKAGE + gameCardView.getActivity();
         intent.setClassName(context, str);
+        intent.putExtra(GameActivity.KEY_TITLE, gameCardView.getGameTitle());
         context.startActivity(intent);
     }
 

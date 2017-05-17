@@ -23,19 +23,16 @@
         <!-- ConsoleChess -->
         <activity
             android:name=".view.activity.ConsoleChess"
-            android:label="@string/boardgames"
             android:windowSoftInputMode="stateVisible">
         </activity>
 
         <activity
-            android:name=".view.activity.Chess"
-            android:label="Schach">
+            android:name=".view.activity.Chess">
         </activity>
 
         <!-- Kartenspiele -->
         <activity
-            android:name=".view.activity.Bauernkrieg"
-            android:label="@string/bauernkrieg">
+            android:name=".view.activity.Bauernkrieg">
         </activity>
 
     </application>

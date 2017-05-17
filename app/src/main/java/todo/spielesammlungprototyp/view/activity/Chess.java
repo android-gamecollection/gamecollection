@@ -28,8 +28,7 @@ public class Chess extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState == null) savedInstanceState = new Bundle();
-        savedInstanceState.putInt("layout", R.layout.activity_chess);
+        getIntent().putExtra(GameActivity.KEY_LAYOUT, R.layout.activity_chess);
         super.onCreate(savedInstanceState);
 
         setFromFen(Board.FEN_START_POSITION);
