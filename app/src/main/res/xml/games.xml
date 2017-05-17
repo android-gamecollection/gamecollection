@@ -33,7 +33,19 @@
             title="Bauernkrieg"
             description="Trumpfkartenspiel"
             icon="@mipmap/ic_launcher"
-            activity="Bauernkrieg" />
+            activity="BauernkriegMenu" />
+
+        <game
+            title="Mau Mau"
+            description="TODO: Change"
+            icon="@mipmap/ic_launcher"
+            activity="MauMauMenu" />
+
+        <game
+            title="Schafkopf"
+            description="TODO: Change"
+            icon="@mipmap/ic_launcher"
+            activity="schafkopf" />
 
     </cardgames>
 

@@ -22,12 +22,6 @@
     <string name="game_consolechess_err_invalid_cmd">Not a valid command</string>
     <string name="game_consolechess_err_invalid_move">Invalid move</string>
 
-    <string-array name="spiele_titel_kartenspiele">
-        <item>"Bauernkrieg"</item>
-        <item>"Mau Mau"</item>
-        <item>"Schafkopf"</item>
-    </string-array>
-
     <!-- Strings für NavDrawer START -->
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
@@ -40,26 +34,9 @@
     <string name="nav_item_info">Info</string>
     <string name="nav_item_settings">Settings</string>
 
-    <string-array name="spiele_details_kartenspiele">
-        <item>"Trumpfkartenspiel"</item>
-        <item>"Mau Mau"</item>
-        <item>"Schafkopf"</item>
-    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="nav_divider_title">Other</string>
     <!-- Strings für NavDrawer ENDE -->
-
-    <string-array name="spiele_activity_brettspiele">
-        <item>"ChessActivity"</item>
-        <item>"Brettspiele"</item>
-    </string-array>
-
-    <string-array name="spiele_activity_kartenspiele">
-        <item>"Bauernkrieg.Bauernkrieg"</item>
-        <item>"MauMau.MauMau"</item>
-        <item>"offschafkopf.schafkopf"</item>
-    </string-array>
-    <!-- Arrays für CardView ENDE -->
 
     <string name="hello_blank_fragment">Spielehub Content</string>
 

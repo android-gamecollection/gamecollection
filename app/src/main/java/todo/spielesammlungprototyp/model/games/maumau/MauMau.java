@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.MauMau;
+package todo.spielesammlungprototyp.model.games.maumau;
 
 /**
  * Created by phil2 on 23.04.2017.
@@ -7,10 +7,30 @@ package todo.spielesammlungprototyp.MauMau;
 // MauMau2.java
 // For debugging, see comments // Debug
 
-        import android.graphics.Color;
-        import ch.aplu.jcardgame.*;
-        import ch.aplu.android.*;
-        import java.util.*;
+import android.graphics.Color;
+
+import java.util.ArrayList;
+
+import ch.aplu.android.Actor;
+import ch.aplu.android.GGMessageBox;
+import ch.aplu.android.GGPushButton;
+import ch.aplu.android.GGPushButtonAdapter;
+import ch.aplu.android.L;
+import ch.aplu.android.Location;
+import ch.aplu.android.ToolBar;
+import ch.aplu.android.ToolBarAdapter;
+import ch.aplu.android.ToolBarItem;
+import ch.aplu.android.ToolBarSeparator;
+import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.CardActor;
+import ch.aplu.jcardgame.CardAdapter;
+import ch.aplu.jcardgame.CardCover;
+import ch.aplu.jcardgame.CardGame;
+import ch.aplu.jcardgame.Deck;
+import ch.aplu.jcardgame.Hand;
+import ch.aplu.jcardgame.RowLayout;
+import ch.aplu.jcardgame.StackLayout;
+import ch.aplu.jcardgame.TargetArea;
 
 public class MauMau extends CardGame
 {

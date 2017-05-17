@@ -1,14 +1,16 @@
-package todo.spielesammlungprototyp.offschafkopf;
-import ch.aplu.util.Monitor;
-import todo.spielesammlungprototyp.offschafkopf.schafkopf_vergleichsmethoden;
+package todo.spielesammlungprototyp.view.activity;
 //JGameGrid DOC http://www.aplu.ch/classdoc/jgamegrid/index.html
 
 import android.graphics.Color;
-import android.widget.Toast;
 
-import ch.aplu.jcardgame.*;
-import ch.aplu.android.*;
-import java.util.*;
+import ch.aplu.android.Location;
+import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.CardAdapter;
+import ch.aplu.jcardgame.CardGame;
+import ch.aplu.jcardgame.Deck;
+import ch.aplu.jcardgame.Hand;
+import ch.aplu.jcardgame.StackLayout;
+import ch.aplu.jcardgame.TargetArea;
 
 public class schafkopf extends CardGame
 {

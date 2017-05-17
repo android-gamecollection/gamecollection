@@ -1,9 +1,7 @@
-package todo.spielesammlungprototyp.offschafkopf;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+package todo.spielesammlungprototyp.model.games.offschafkopf;
 
-import ch.aplu.jcardgame.CardGame;
 import ch.aplu.jcardgame.Hand;
+import todo.spielesammlungprototyp.view.activity.schafkopf;
 
 
 public  class schafkopf_vergleichsmethoden extends schafkopf implements vergleichsmethoden {

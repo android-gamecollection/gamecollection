@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.offschafkopf;
+package todo.spielesammlungprototyp.model.games.offschafkopf;
 
 /**
  * Created by phil2 on 03.05.2017.

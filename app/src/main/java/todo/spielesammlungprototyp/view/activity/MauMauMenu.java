@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.MauMau;
+package todo.spielesammlungprototyp.view.activity;
 
 /**
  * Created by phil2 on 23.04.2017.
@@ -6,25 +6,21 @@ package todo.spielesammlungprototyp.MauMau;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.games.maumau.MauMau;
 
+public class MauMauMenu extends GameActivity {
 
-
-public class MauMauMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getIntent().putExtra(GameActivity.KEY_LAYOUT, R.layout.activity_maumaumenu);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maumaumenu);
     }
 
     public void gotoMauMauGame(View view) {
-        Intent gotoActivity = new Intent(this, todo.spielesammlungprototyp.MauMau.MauMau.class);
+        Intent gotoActivity = new Intent(this, MauMau.class);
         startActivity(gotoActivity);
     }
-
-
-
 }

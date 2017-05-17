@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="todo.spielesammlungprototyp">
 
-    <!-- durch Definiton von Parent und Child ist der "Zurückknopf" oben links in der App möglich -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +9,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Hub -->
         <activity android:name=".view.activity.Hub">
 
             <intent-filter>
@@ -20,7 +18,6 @@
 
         </activity>
 
-        <!-- ConsoleChess -->
         <activity
             android:name=".view.activity.ConsoleChess"
             android:windowSoftInputMode="stateVisible">
@@ -30,66 +27,28 @@
             android:name=".view.activity.Chess">
         </activity>
 
-        <!-- Childactivity Bauernkrieg -->
-        <!--activity
-            android:name=".Bauernkrieg"
-            android:label="@string/bauernkrieg"
-            android:parentActivityName=".Kartenspiele_Auswahl">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Kartenspiele_Auswahl" />
-        </activity-->
-        <activity android:name=".Kartenspiele_Auswahl"
-            android:label="@string/kartenspiele"
-            android:parentActivityName="._Hub">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp._Hub" />
+        <activity
+            android:name=".view.activity.BauernkriegMenu">
         </activity>
 
-        <!-- BauernKrieg -->
-        <!-- Childactivity BauernKriegMenu von Kartenspiele -->
-        <activity android:name=".Bauernkrieg.BauernkriegMenu"
-            android:label="@string/bauernkrieg"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele_Auswahl" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
+        <activity
+            android:name=".model.games.bauernkrieg.Bauernkrieg"
+            android:label="@string/bauernkrieg">
         </activity>
-        <!-- Childactivity BauernKriegGame von BauernKriegMenu -->
-        <activity android:name=".Bauernkrieg.Bauernkrieg"
-            android:label="@string/bauernkrieg"
-            android:parentActivityName="todo.spielesammlungprototyp.Bauernkrieg.BauernkriegMenu" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Bauernkrieg.BauernkriegMenu" />
+
+        <activity
+            android:name=".view.activity.MauMauMenu">
         </activity>
-        <!-- MauMau -->
-        <!-- Childactivity MauMauMenu von Kartenspiele -->
-        <activity android:name=".MauMau.MauMauMenu"
+
+        <activity
+            android:name=".model.games.maumau.MauMau"
             android:label="@string/maumau"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele_Auswahl">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
+            android:screenOrientation="landscape">
         </activity>
-        <!-- Childactivity MauMau von MauMauMenu -->
-        <activity android:name=".MauMau.MauMau"
-            android:label="@string/maumau"
-            android:parentActivityName="todo.spielesammlungprototyp.MauMau.MauMauMenu"
-            android:screenOrientation="landscape">>
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.MauMau.MauMauMenu" />
-        </activity>
-        <!-- Childactivity Schafkopf von Kartenspiele -->
-        <activity android:name=".offschafkopf.schafkopf"
-            android:label="@string/schafkopf"
-            android:parentActivityName="todo.spielesammlungprototyp.Kartenspiele_Auswahl"
-            >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="todo.spielesammlungprototyp.Kartenspiele_Auswahl" />
+
+        <activity
+            android:name=".view.activity.schafkopf"
+            android:label="@string/schafkopf">
         </activity>
 
     </application>

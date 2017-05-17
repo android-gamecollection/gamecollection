@@ -1,8 +1,17 @@
-package todo.spielesammlungprototyp.Bauernkrieg;
+package todo.spielesammlungprototyp.model.games.bauernkrieg;
 
-import ch.aplu.android.*;
 import android.graphics.Color;
-import ch.aplu.jcardgame.*;
+
+import ch.aplu.android.Location;
+import ch.aplu.android.TextActor;
+import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.CardAdapter;
+import ch.aplu.jcardgame.CardGame;
+import ch.aplu.jcardgame.Deck;
+import ch.aplu.jcardgame.Hand;
+import ch.aplu.jcardgame.RowLayout;
+import ch.aplu.jcardgame.StackLayout;
+import ch.aplu.jcardgame.TargetArea;
 import ch.aplu.util.Monitor;
 
 public class Bauernkrieg extends CardGame
