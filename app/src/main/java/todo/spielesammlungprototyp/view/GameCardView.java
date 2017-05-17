@@ -1,6 +1,8 @@
 package todo.spielesammlungprototyp.view;
 
-public class GameCardView {
+import android.support.annotation.NonNull;
+
+public class GameCardView implements Comparable<GameCardView> {
 
     private int gameIconId;
     private String gameTitle, gameDetails, activity;
@@ -31,5 +33,10 @@ public class GameCardView {
     @Override
     public String toString() {
         return String.format("%s, %s, %s, %s", gameIconId, gameTitle, gameDetails, activity);
+    }
+
+    @Override
+    public int compareTo(@NonNull GameCardView other) {
+        return this.getGameTitle().compareTo(other.getGameTitle());
     }
 }

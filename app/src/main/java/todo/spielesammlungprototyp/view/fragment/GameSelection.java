@@ -18,6 +18,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class GameSelection extends Fragment implements ClickListener {
 
         gameCategory = getArguments().getString(EXTRA_CATEGORY);
         loadGamesFromXml();
+        sortGameList();
     }
 
     @Nullable
@@ -118,6 +120,12 @@ public class GameSelection extends Fragment implements ClickListener {
             for (GameCardView game : entry.getValue()) {
                 Log.d(TAG, game.toString());
             }
+        }
+    }
+
+    private void sortGameList() {
+        for (Map.Entry<String, List<GameCardView>> entry : games.entrySet()) {
+            Collections.sort(entry.getValue());
         }
     }
 
