@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".view.activity.Hub">
+
+    <include layout="@layout/fragment_app_bar" />
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_cardgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom_k"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorPrimary"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_cards_playing" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_boardgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom_b"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorPrimary"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_checkerboard" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/icon_plus" />
+
+</android.support.design.widget.CoordinatorLayout>

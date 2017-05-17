@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE games [
+    <!ELEMENT games (boardgames, cardgames)>
+    <!ELEMENT boardgames (game*)>
+    <!ELEMENT cardgames (game*)>
+    <!ELEMENT game EMPTY>
+    <!ATTLIST game title CDATA #REQUIRED>
+    <!ATTLIST game description CDATA #REQUIRED>
+    <!ATTLIST game icon CDATA #REQUIRED>
+    <!ATTLIST game activity CDATA #REQUIRED>
+]>
+<games>
+
+    <boardgames>
+
+        <game
+            title="Schach"
+            description="Klassisches Schach"
+            icon="@mipmap/ic_launcher"
+            activity="Chess" />
+
+        <game
+            title="Schach"
+            description="Schach mit Konsole"
+            icon="@mipmap/ic_launcher"
+            activity="ConsoleChess" />
+
+    </boardgames>
+
+    <cardgames>
+
+        <game
+            title="Bauernkrieg"
+            description="Trumpfkartenspiel"
+            icon="@mipmap/ic_launcher"
+            activity="Bauernkrieg" />
+
+    </cardgames>
+
+</games>
