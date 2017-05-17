@@ -5,12 +5,12 @@ import android.support.annotation.NonNull;
 public class GameCardView implements Comparable<GameCardView> {
 
     private int gameIconId;
-    private String gameTitle, gameDetails, activity;
+    private String gameTitle, gameDescription, activity;
 
-    public GameCardView(int gameIconId, String gameTitle, String gameDetails, String activity) {
+    public GameCardView(int gameIconId, String gameTitle, String gameDescription, String activity) {
         this.gameIconId = gameIconId;
         this.gameTitle = gameTitle;
-        this.gameDetails = gameDetails;
+        this.gameDescription = gameDescription;
         this.activity = activity;
     }
 
@@ -22,8 +22,8 @@ public class GameCardView implements Comparable<GameCardView> {
         return gameTitle;
     }
 
-    public String getGameDetails() {
-        return gameDetails;
+    public String getGameDescription() {
+        return gameDescription;
     }
 
     public String getActivity() {
@@ -32,7 +32,7 @@ public class GameCardView implements Comparable<GameCardView> {
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %s", gameIconId, gameTitle, gameDetails, activity);
+        return String.format("%s, %s, %s, %s", gameIconId, gameTitle, gameDescription, activity);
     }
 
     @Override
