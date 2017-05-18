@@ -40,4 +40,7 @@
 
     <string name="hello_blank_fragment">Spielehub Content</string>
 
+    <!-- App Bar -->
+    <string name="action_gamerules">Spielregeln</string>
+
 </resources>
