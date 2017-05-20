@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class Chessboard extends View {
-    Rect[][] feld;
+    public Rect[][] feld;
     private List<Tupel<Integer, Integer>> greenspots;
     private Paint darkfield;
     private Paint brightfield;
