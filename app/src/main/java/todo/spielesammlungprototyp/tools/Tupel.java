@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.Tools;
+package todo.spielesammlungprototyp.tools;
 
 /**
  * Created by Oliver on 20.05.2017.
