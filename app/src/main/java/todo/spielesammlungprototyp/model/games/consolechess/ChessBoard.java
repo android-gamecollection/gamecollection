@@ -52,9 +52,17 @@ public class ChessBoard {
         int move = searchEngine.getBestMove();
         String smove = Move.toString(move);
         board.doMove(move);
-        Log.d("test",smove);
+        Log.d("test",""+searchEngine);
         return smove;
 
+    }
+    public boolean isMate()
+    {
+        return board.isMate();
+    }
+    public boolean isDraw()
+    {
+        return board.isDraw();
     }
 
 }

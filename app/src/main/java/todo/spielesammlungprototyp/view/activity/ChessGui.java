@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.tools.Movetranslator;
@@ -75,16 +76,21 @@ public class ChessGui extends Activity{
     public void trymove(Tupel<Integer,Integer> tupel)
     {
 
-        if(logged == null && figuren[tupel.first][tupel.second] != null)
+        if(logged == null)
         {
-            logged = tupel;
-            chessboard.addgreen(tupel);
-            return;
+            if(figuren[tupel.first][tupel.second] != null)
+            {
+                logged = tupel;
+                chessboard.addgreen(tupel);
+
+                return;
+            }
+            if(figuren[tupel.first][tupel.second] == null)
+            {
+                return;
+            }
         }
-        if(logged == null &&  figuren[tupel.first][tupel.second] == null)
-        {
-            return;
-        }
+
         if(logged.first == tupel.first && logged.second == tupel.second)
         {
             logged = null;
@@ -94,7 +100,6 @@ public class ChessGui extends Activity{
 
         Movetranslator mt = Movetranslator.getInstance();
         String move = mt.numToString(logged)+mt.numToString(tupel);
-        Log.d("move",move);
             if(board.move(mt.numToString(logged).toLowerCase(),mt.numToString(tupel).toLowerCase())) {
                 animatefigure(logged, tupel);
                 logged = null;
@@ -108,6 +113,19 @@ public class ChessGui extends Activity{
         Movetranslator mt = Movetranslator.getInstance();
         String move = board.aimove();
         animatefigure(mt.stringToNum(move.substring(0,2)),mt.stringToNum(move.substring(2,4)));
+    }
+    public void update()
+    {
+        if(board.isDraw())
+        {
+            Toast t = Toast.makeText(this,"Patt",Toast.LENGTH_SHORT);
+            t.show();
+        }
+        if(board.isMate())
+        {
+            Toast t = Toast.makeText(this,"Schachmatt",Toast.LENGTH_SHORT);
+            t.show();
+        }
     }
     public boolean animatefigure(final Tupel<Integer,Integer> from, final Tupel<Integer,Integer> to) {
 
@@ -152,6 +170,7 @@ public class ChessGui extends Activity{
 
                 }
             });
+            update();
             return true;
         }
         return false;
