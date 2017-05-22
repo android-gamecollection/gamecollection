@@ -10,10 +10,10 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import todo.spielesammlungprototyp.tools.Tupel;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import todo.spielesammlungprototyp.tools.Tuple;
 
 
 /**
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class Chessboard extends View {
     public Rect[][] feld;
-    private List<Tupel<Integer, Integer>> greenspots;
+    private List<Tuple<Integer, Integer>> greenspots;
     private Paint darkfield;
     private Paint brightfield;
     private Paint greenfield;
@@ -78,13 +78,13 @@ public class Chessboard extends View {
 
             }
         }
-        for (Tupel<Integer, Integer> t : greenspots) {
-            canvas.drawRect(feld[t.first][t.second], greenfield);
+        for (Tuple<Integer, Integer> t : greenspots) {
+            canvas.drawRect(feld[t.first][t.last], greenfield);
         }
     }
 
-    public void addgreen(Tupel<Integer, Integer> tupel) {
-        greenspots.add(tupel);
+    public void addgreen(Tuple<Integer, Integer> tuple) {
+        greenspots.add(tuple);
         invalidate();
     }
 
@@ -116,22 +116,22 @@ public class Chessboard extends View {
         }
     }
 
-    public Tupel<Integer, Integer> getfieldfromtouch(int x, int y) {
+    public Tuple<Integer, Integer> getfieldfromtouch(int x, int y) {
         for (int i = 0; i < ANZAHL_FELDER_VERTICAL; i++) {
             for (int j = 0; j < ANZAHL_FELDER_HORIZONTAL; j++) {
                 if (feld[i][j].contains(x, y)) {
-                    return new Tupel<>(i, j);
+                    return new Tuple<>(i, j);
                 }
             }
         }
         return null;
     }
 
-    public PrintAttributes.Margins getMarginfromfield(Tupel<Integer, Integer> tupel) {
-        int left = feld[tupel.first][tupel.second].left;
-        int top = feld[tupel.first][tupel.second].top;
-        int right = feld[tupel.first][tupel.second].right;
-        int bottom = feld[tupel.first][tupel.second].bottom;
+    public PrintAttributes.Margins getMarginfromfield(Tuple<Integer, Integer> tuple) {
+        int left = feld[tuple.first][tuple.last].left;
+        int top = feld[tuple.first][tuple.last].top;
+        int right = feld[tuple.first][tuple.last].right;
+        int bottom = feld[tuple.first][tuple.last].bottom;
         return new PrintAttributes.Margins(left, top, right, bottom);
     }
 }

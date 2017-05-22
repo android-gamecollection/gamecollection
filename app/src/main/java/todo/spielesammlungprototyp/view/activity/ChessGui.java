@@ -16,7 +16,7 @@ import android.widget.Toast;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
 import todo.spielesammlungprototyp.tools.Movetranslator;
-import todo.spielesammlungprototyp.tools.Tupel;
+import todo.spielesammlungprototyp.tools.Tuple;
 import todo.spielesammlungprototyp.view.customViews.Chessboard;
 
 /**
@@ -26,7 +26,7 @@ public class ChessGui extends Activity {
 
     Chessboard chessboard;
     ImageView[][] figuren;
-    Tupel<Integer, Integer> logged;
+    Tuple<Integer, Integer> logged;
     ChessBoard board;
 
     public ChessGui(String FEN) {
@@ -59,48 +59,35 @@ public class ChessGui extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    Tupel<Integer, Integer> tupel = chessboard.getfieldfromtouch((int) event.getX(), (int) event.getY());
-                    if (tupel != null) {
-                        trymove(tupel);
+                    Tuple<Integer, Integer> tuple = chessboard.getfieldfromtouch((int) event.getX(), (int) event.getY());
+                    if (tuple != null) {
+                        trymove(tuple);
                     }
-
                 }
                 return true;
             }
         });
-
     }
 
-    public void trymove(Tupel<Integer, Integer> tupel) {
-
+    public void trymove(Tuple<Integer, Integer> tuple) {
         if (logged == null) {
-            if (figuren[tupel.first][tupel.second] != null) {
-                logged = tupel;
-                chessboard.addgreen(tupel);
-
-                return;
+            if (figuren[tuple.first][tuple.last] != null) {
+                logged = tuple;
+                chessboard.addgreen(tuple);
             }
-            if (figuren[tupel.first][tupel.second] == null) {
-                return;
-            }
-        }
-
-        if (logged.first == tupel.first && logged.second == tupel.second) {
+        } else if (logged.equals(tuple)) {
             logged = null;
             chessboard.removegreen();
-            return;
+        } else {
+            Movetranslator mt = Movetranslator.getInstance();
+            String move = mt.numToString(logged) + mt.numToString(tuple);
+            if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
+                animatefigure(logged, tuple);
+                logged = null;
+                chessboard.removegreen();
+                aimove();
+            }
         }
-
-        Movetranslator mt = Movetranslator.getInstance();
-        String move = mt.numToString(logged) + mt.numToString(tupel);
-        if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tupel).toLowerCase())) {
-            animatefigure(logged, tupel);
-            logged = null;
-            chessboard.removegreen();
-            aimove();
-        }
-
     }
 
     public void aimove() {
@@ -111,32 +98,30 @@ public class ChessGui extends Activity {
 
     public void update() {
         if (board.isDraw()) {
-            Toast t = Toast.makeText(this, "Patt", Toast.LENGTH_SHORT);
-            t.show();
+            Toast.makeText(this, "Patt", Toast.LENGTH_SHORT).show();
         }
         if (board.isMate()) {
-            Toast t = Toast.makeText(this, "Schachmatt", Toast.LENGTH_SHORT);
-            t.show();
+            Toast.makeText(this, "Schachmatt", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public boolean animatefigure(final Tupel<Integer, Integer> from, final Tupel<Integer, Integer> to) {
+    public boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
 
-        if (figuren[from.first][from.second] != null) {
+        if (figuren[from.first][from.last] != null) {
+            float fromx = chessboard.feld[from.first][from.last].left;
+            float tox = chessboard.feld[to.first][to.last].left;
+            float fromy = chessboard.feld[from.first][from.last].top;
+            float toy = chessboard.feld[to.first][to.last].top;
 
-            float fromx = chessboard.feld[from.first][from.second].left;
-            float tox = chessboard.feld[to.first][to.second].left;
-            float fromy = chessboard.feld[from.first][from.second].top;
-            float toy = chessboard.feld[to.first][to.second].top;
-
-            ObjectAnimator animX = ObjectAnimator.ofFloat(figuren[from.first][from.second], "x", fromx, tox);
-            ObjectAnimator animY = ObjectAnimator.ofFloat(figuren[from.first][from.second], "y", fromy, toy);
+            ObjectAnimator animX = ObjectAnimator.ofFloat(figuren[from.first][from.last], "x", fromx, tox);
+            ObjectAnimator animY = ObjectAnimator.ofFloat(figuren[from.first][from.last], "y", fromy, toy);
             AnimatorSet animset = new AnimatorSet();
             animset.playTogether(animX, animY);
             animset.setDuration(500);
             animset.setInterpolator(new AccelerateDecelerateInterpolator());
             animset.start();
             animset.addListener(new Animator.AnimatorListener() {
+
                 @Override
                 public void onAnimationStart(Animator animation) {
 
@@ -144,12 +129,12 @@ public class ChessGui extends Activity {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (figuren[to.first][to.second] != null) {
-                        ((ViewGroup) figuren[to.first][to.second].getParent()).removeView(figuren[to.first][to.second]);
+                    if (figuren[to.first][to.last] != null) {
+                        ((ViewGroup) figuren[to.first][to.last].getParent()).removeView(figuren[to.first][to.last]);
                     }
 
-                    figuren[to.first][to.second] = figuren[from.first][from.second];
-                    figuren[from.first][from.second] = null;
+                    figuren[to.first][to.last] = figuren[from.first][from.last];
+                    figuren[from.first][from.last] = null;
                 }
 
                 @Override

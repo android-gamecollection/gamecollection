@@ -50,11 +50,11 @@ public class Movetranslator {
         return verticalmap.get(i);
     }
 
-    public String numToString(Tupel<Integer, Integer> tupel) {
-        return getRow(tupel.first) + getLine(tupel.second);
+    public String numToString(Tuple<Integer, Integer> tuple) {
+        return getRow(tuple.first) + getLine(tuple.last);
     }
 
-    public Tupel<Integer, Integer> stringToNum(String s) {
+    public Tuple<Integer, Integer> stringToNum(String s) {
         int hoizont = 0;
         for (Map.Entry e : horizontalmap.entrySet()) {
             if (e.getValue().equals(s.substring(0, 1).toUpperCase())) {
@@ -68,6 +68,6 @@ public class Movetranslator {
                 vertical = (int) e.getKey();
             }
         }
-        return new Tupel<Integer, Integer>(hoizont, vertical);
+        return new Tuple<Integer, Integer>(hoizont, vertical);
     }
 }
