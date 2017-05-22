@@ -5,7 +5,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +14,27 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
 import todo.spielesammlungprototyp.tools.Movetranslator;
-import todo.spielesammlungprototyp.view.customViews.Chessboard;
 import todo.spielesammlungprototyp.tools.Tupel;
-import todo.spielesammlungprototyp.model.games.consolechess.*;
+import todo.spielesammlungprototyp.view.customViews.Chessboard;
 
 /**
  * Created by Oliver on 19.05.2017.
  */
-public class ChessGui extends Activity{
+public class ChessGui extends Activity {
 
     Chessboard chessboard;
     ImageView[][] figuren;
-    Tupel<Integer,Integer> logged;
+    Tupel<Integer, Integer> logged;
     ChessBoard board;
 
-    public ChessGui(String FEN)
-    {
+    public ChessGui(String FEN) {
         this();
         board.setPosition(FEN);
     }
-    public ChessGui()
-    {
+
+    public ChessGui() {
         board = new ChessBoard();
         board.setStartPosition();
     }
@@ -44,8 +42,8 @@ public class ChessGui extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         chessboard = new Chessboard(this);
-        addContentView(chessboard,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        figuren = new ImageView[chessboard.ANZAHL_FELDER_HORIZONTAL][chessboard.ANZAHL_FELDER_VERTICAL];
+        addContentView(chessboard, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        figuren = new ImageView[Chessboard.ANZAHL_FELDER_HORIZONTAL][Chessboard.ANZAHL_FELDER_VERTICAL];
         setFieldFromFEN(board.getBoard());
         final ViewTreeObserver vto = chessboard.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -60,10 +58,10 @@ public class ChessGui extends Activity{
         chessboard.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     Tupel<Integer, Integer> tupel = chessboard.getfieldfromtouch((int) event.getX(), (int) event.getY());
-                    if(tupel != null) {
+                    if (tupel != null) {
                         trymove(tupel);
                     }
 
@@ -73,63 +71,58 @@ public class ChessGui extends Activity{
         });
 
     }
-    public void trymove(Tupel<Integer,Integer> tupel)
-    {
 
-        if(logged == null)
-        {
-            if(figuren[tupel.first][tupel.second] != null)
-            {
+    public void trymove(Tupel<Integer, Integer> tupel) {
+
+        if (logged == null) {
+            if (figuren[tupel.first][tupel.second] != null) {
                 logged = tupel;
                 chessboard.addgreen(tupel);
 
                 return;
             }
-            if(figuren[tupel.first][tupel.second] == null)
-            {
+            if (figuren[tupel.first][tupel.second] == null) {
                 return;
             }
         }
 
-        if(logged.first == tupel.first && logged.second == tupel.second)
-        {
+        if (logged.first == tupel.first && logged.second == tupel.second) {
             logged = null;
             chessboard.removegreen();
             return;
         }
 
         Movetranslator mt = Movetranslator.getInstance();
-        String move = mt.numToString(logged)+mt.numToString(tupel);
-            if(board.move(mt.numToString(logged).toLowerCase(),mt.numToString(tupel).toLowerCase())) {
-                animatefigure(logged, tupel);
-                logged = null;
-                chessboard.removegreen();
-                aimove();
-            }
+        String move = mt.numToString(logged) + mt.numToString(tupel);
+        if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tupel).toLowerCase())) {
+            animatefigure(logged, tupel);
+            logged = null;
+            chessboard.removegreen();
+            aimove();
+        }
 
     }
-    public void aimove()
-    {
+
+    public void aimove() {
         Movetranslator mt = Movetranslator.getInstance();
         String move = board.aimove();
-        animatefigure(mt.stringToNum(move.substring(0,2)),mt.stringToNum(move.substring(2,4)));
+        animatefigure(mt.stringToNum(move.substring(0, 2)), mt.stringToNum(move.substring(2, 4)));
     }
-    public void update()
-    {
-        if(board.isDraw())
-        {
-            Toast t = Toast.makeText(this,"Patt",Toast.LENGTH_SHORT);
-            t.show();
-        }
-        if(board.isMate())
-        {
-            Toast t = Toast.makeText(this,"Schachmatt",Toast.LENGTH_SHORT);
-            t.show();
-        }
-    }
-    public boolean animatefigure(final Tupel<Integer,Integer> from, final Tupel<Integer,Integer> to) {
 
-        if(figuren[from.first][from.second] != null) {
+    public void update() {
+        if (board.isDraw()) {
+            Toast t = Toast.makeText(this, "Patt", Toast.LENGTH_SHORT);
+            t.show();
+        }
+        if (board.isMate()) {
+            Toast t = Toast.makeText(this, "Schachmatt", Toast.LENGTH_SHORT);
+            t.show();
+        }
+    }
+
+    public boolean animatefigure(final Tupel<Integer, Integer> from, final Tupel<Integer, Integer> to) {
+
+        if (figuren[from.first][from.second] != null) {
 
             float fromx = chessboard.feld[from.first][from.second].left;
             float tox = chessboard.feld[to.first][to.second].left;
@@ -151,9 +144,8 @@ public class ChessGui extends Activity{
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if(figuren[to.first][to.second] != null)
-                    {
-                        ((ViewGroup)figuren[to.first][to.second].getParent()).removeView( figuren[to.first][to.second]);
+                    if (figuren[to.first][to.second] != null) {
+                        ((ViewGroup) figuren[to.first][to.second].getParent()).removeView(figuren[to.first][to.second]);
                     }
 
                     figuren[to.first][to.second] = figuren[from.first][from.second];
@@ -175,36 +167,28 @@ public class ChessGui extends Activity{
         }
         return false;
     }
-    private void addImages()
-    {
 
-        for(int i = 0; i < chessboard.ANZAHL_FELDER_HORIZONTAL; i++)
-        {
-            for(int j = 0; j< chessboard.ANZAHL_FELDER_VERTICAL; j++)
-            {
-                if(figuren[i][j] != null)
-                {
+    private void addImages() {
+        for (int i = 0; i < Chessboard.ANZAHL_FELDER_HORIZONTAL; i++) {
+            for (int j = 0; j < Chessboard.ANZAHL_FELDER_VERTICAL; j++) {
+                if (figuren[i][j] != null) {
                     int top = chessboard.feld[i][j].top;
                     int left = chessboard.feld[i][j].left;
                     figuren[i][j].setX(left);
                     figuren[i][j].setY(top);
-                    addContentView(figuren[i][j],new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
+                    addContentView(figuren[i][j], new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 }
             }
         }
     }
 
-    public void setFieldFromFEN(String FEN)
-    {
+    public void setFieldFromFEN(String FEN) {
         int x = 0;
         int y = 0;
         String text = FEN;
-        for (int i = 0; i < text.length(); i++)
-        {
+        for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
-            switch (c)
-            {
+            switch (c) {
                 case 'w':
                 case ' ':
                     return;
@@ -213,13 +197,10 @@ public class ChessGui extends Activity{
                     y++;
                     break;
                 default:
-                    if(Character.isDigit(c))
-                    {
-                        int number = Integer.parseInt(text.substring(i, i+1));
+                    if (Character.isDigit(c)) {
+                        int number = Integer.parseInt(text.substring(i, i + 1));
                         x = x + number;
-                    }
-                    else
-                    {
+                    } else {
                         figuren[x][y] = new ImageView(this);
                         figuren[x][y].setImageResource(getVcsIDfromChar(c));
                         x++;
@@ -229,10 +210,8 @@ public class ChessGui extends Activity{
         }
     }
 
-    private int getVcsIDfromChar(char c)
-    {
-        switch (c)
-        {
+    private int getVcsIDfromChar(char c) {
+        switch (c) {
             case 'r':
                 return R.drawable.game_chess_rook_b;
             case 'R':

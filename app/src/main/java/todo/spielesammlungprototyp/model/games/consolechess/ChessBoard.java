@@ -23,10 +23,10 @@ public class ChessBoard {
         board = searchEngine.getBoard();
     }
 
-    public void setPosition(String FEN)
-    {
+    public void setPosition(String FEN) {
         board.setFen(FEN);
     }
+
     public void setStartPosition() {
         board.startPosition();
     }
@@ -52,17 +52,16 @@ public class ChessBoard {
         int move = searchEngine.getBestMove();
         String smove = Move.toString(move);
         board.doMove(move);
-        Log.d("test",""+searchEngine);
+        Log.d("test", "" + searchEngine);
         return smove;
 
     }
-    public boolean isMate()
-    {
+
+    public boolean isMate() {
         return board.isMate();
     }
-    public boolean isDraw()
-    {
+
+    public boolean isDraw() {
         return board.isDraw();
     }
-
 }
