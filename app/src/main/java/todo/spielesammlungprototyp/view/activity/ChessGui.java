@@ -13,8 +13,11 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.Map;
+
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
+import todo.spielesammlungprototyp.tools.MapBuilder;
 import todo.spielesammlungprototyp.tools.Movetranslator;
 import todo.spielesammlungprototyp.tools.Tuple;
 import todo.spielesammlungprototyp.view.customViews.Chessboard;
@@ -24,10 +27,24 @@ import todo.spielesammlungprototyp.view.customViews.Chessboard;
  */
 public class ChessGui extends Activity {
 
-    Chessboard chessboard;
-    ImageView[][] figuren;
-    Tuple<Integer, Integer> logged;
-    ChessBoard board;
+    private static Map<Character, Integer> chessDrawables = new MapBuilder<Character, Integer>().build(
+            'r', R.drawable.game_chess_rook_b,
+            'R', R.drawable.game_chess_rook_w,
+            'n', R.drawable.game_chess_knight_b,
+            'N', R.drawable.game_chess_knight_w,
+            'b', R.drawable.game_chess_bishop_b,
+            'B', R.drawable.game_chess_bishop_w,
+            'q', R.drawable.game_chess_queen_b,
+            'Q', R.drawable.game_chess_queen_w,
+            'k', R.drawable.game_chess_king_b,
+            'K', R.drawable.game_chess_king_w,
+            'p', R.drawable.game_chess_pawn_b,
+            'P', R.drawable.game_chess_pawn_w
+    );
+    private Chessboard chessboard;
+    private ImageView[][] figuren;
+    private Tuple<Integer, Integer> logged;
+    private ChessBoard board;
 
     public ChessGui(String FEN) {
         this();
@@ -187,42 +204,11 @@ public class ChessGui extends Activity {
                         x = x + number;
                     } else {
                         figuren[x][y] = new ImageView(this);
-                        figuren[x][y].setImageResource(getVcsIDfromChar(c));
+                        figuren[x][y].setImageResource(chessDrawables.get(c));
                         x++;
                     }
                     break;
             }
-        }
-    }
-
-    private int getVcsIDfromChar(char c) {
-        switch (c) {
-            case 'r':
-                return R.drawable.game_chess_rook_b;
-            case 'R':
-                return R.drawable.game_chess_rook_w;
-            case 'n':
-                return R.drawable.game_chess_knight_b;
-            case 'N':
-                return R.drawable.game_chess_knight_w;
-            case 'b':
-                return R.drawable.game_chess_bishop_b;
-            case 'B':
-                return R.drawable.game_chess_bishop_w;
-            case 'q':
-                return R.drawable.game_chess_queen_b;
-            case 'Q':
-                return R.drawable.game_chess_queen_w;
-            case 'k':
-                return R.drawable.game_chess_king_b;
-            case 'K':
-                return R.drawable.game_chess_king_w;
-            case 'p':
-                return R.drawable.game_chess_pawn_b;
-            case 'P':
-                return R.drawable.game_chess_pawn_w;
-            default:
-                return R.drawable.game_chess_king_b;
         }
     }
 }
