@@ -1,8 +1,8 @@
 package todo.spielesammlungprototyp.model.games.chess;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+
+import todo.spielesammlungprototyp.tools.MapBuilder;
 
 public abstract class UnicodePieces {
 
@@ -20,25 +20,19 @@ public abstract class UnicodePieces {
     public static final String QUEEN_W = "\u2655";
     public static final String NONE = "";
 
-    public static final Map<Character, String> pieces;
-
-    static {
-        Map<Character, String> map = new HashMap<>();
-
-        map.put('b', BISHOP_B);
-        map.put('k', KING_B);
-        map.put('n', KNIGHT_B);
-        map.put('p', PAWN_B);
-        map.put('r', ROOK_B);
-        map.put('q', QUEEN_B);
-        map.put('B', BISHOP_W);
-        map.put('K', KING_W);
-        map.put('N', KNIGHT_W);
-        map.put('P', PAWN_W);
-        map.put('R', ROOK_W);
-        map.put('Q', QUEEN_W);
-        map.put('_', NONE);
-
-        pieces = Collections.unmodifiableMap(map);
-    }
+    public static final Map<Character, String> pieces = new MapBuilder<Character, String>().build(
+            'b', BISHOP_B,
+            'k', KING_B,
+            'n', KNIGHT_B,
+            'p', PAWN_B,
+            'r', ROOK_B,
+            'q', QUEEN_B,
+            'B', BISHOP_W,
+            'K', KING_W,
+            'N', KNIGHT_W,
+            'P', PAWN_W,
+            'R', ROOK_W,
+            'Q', QUEEN_W,
+            '_', NONE
+    );
 }
