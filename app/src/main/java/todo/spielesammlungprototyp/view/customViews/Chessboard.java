@@ -23,9 +23,11 @@ import todo.spielesammlungprototyp.tools.Tuple;
 public class Chessboard extends View {
     public Rect[][] feld;
     private List<Tuple<Integer, Integer>> greenspots;
+    private List<Tuple<Integer, Integer>> yellowspots;
     private Paint darkfield;
     private Paint brightfield;
     private Paint greenfield;
+    private Paint yellowfield;
     int width;
     int height;
     int upperline;
@@ -51,6 +53,7 @@ public class Chessboard extends View {
 
     private void init(AttributeSet attrs, int defStyle) {
         greenspots = new ArrayList<>();
+        yellowspots = new ArrayList<>();
         darkfield = new Paint();
         darkfield.setColor(Color.GRAY);
         darkfield.setAntiAlias(true);
@@ -62,6 +65,10 @@ public class Chessboard extends View {
         greenfield = new Paint();
         greenfield.setColor(Color.GREEN);
         greenfield.setAntiAlias(true);
+
+        yellowfield = new Paint();
+        yellowfield.setColor(Color.YELLOW);
+        yellowfield.setAntiAlias(true);
 
         feld = new Rect[ANZAHL_FELDER_HORIZONTAL][ANZAHL_FELDER_VERTICAL];
     }
@@ -81,15 +88,30 @@ public class Chessboard extends View {
         for (Tuple<Integer, Integer> t : greenspots) {
             canvas.drawRect(feld[t.first][t.last], greenfield);
         }
+        for (Tuple<Integer, Integer> t : yellowspots) {
+            canvas.drawRect(feld[t.first][t.last], yellowfield);
+        }
     }
 
-    public void addgreen(Tuple<Integer, Integer> tuple) {
-        greenspots.add(tuple);
+    public void addgreen(Tuple<Integer, Integer>... tuple) {
+        for(Tuple<Integer, Integer> t: tuple) {
+            greenspots.add(t);
+        }
         invalidate();
     }
 
     public void removegreen() {
         greenspots.clear();
+        invalidate();
+    }
+    public void addyellow(Tuple<Integer, Integer>... tuple) {
+        for(Tuple<Integer, Integer> t: tuple) {
+            yellowspots.add(t);
+        }
+        invalidate();
+    }
+    public void removeyellow() {
+        yellowspots.clear();
         invalidate();
     }
 

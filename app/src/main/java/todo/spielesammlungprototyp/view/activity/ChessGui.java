@@ -90,21 +90,27 @@ public class ChessGui extends Activity {
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
-                chessboard.addgreen(tuple);
+                chessboard.addyellow(tuple);
+                chessboard.addgreen(getPossibleMoves(tuple));
             }
         } else if (logged.equals(tuple)) {
             logged = null;
             chessboard.removegreen();
+            chessboard.removeyellow();
         } else {
             Movetranslator mt = Movetranslator.getInstance();
-            String move = mt.numToString(logged) + mt.numToString(tuple);
             if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
                 animatefigure(logged, tuple);
                 logged = null;
                 chessboard.removegreen();
+                chessboard.removeyellow();
                 aimove();
             }
         }
+    }
+    public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position)
+    {
+        return board.getPossibleMoves(position,board.getBoard());
     }
 
     public void aimove() {

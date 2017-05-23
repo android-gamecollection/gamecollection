@@ -1,5 +1,6 @@
 package todo.spielesammlungprototyp.model.games.consolechess;
 
+import android.support.constraint.solver.ArrayLinkedVariables;
 import android.util.Log;
 
 import com.alonsoruibal.chess.Board;
@@ -7,6 +8,11 @@ import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.search.SearchEngine;
 import com.alonsoruibal.chess.search.SearchParameters;
+
+import java.util.ArrayList;
+
+import todo.spielesammlungprototyp.tools.Movetranslator;
+import todo.spielesammlungprototyp.tools.Tuple;
 
 public class ChessBoard {
 
@@ -17,6 +23,7 @@ public class ChessBoard {
 
     public ChessBoard() {
         config = new Config();
+        config.setTranspositionTableSize(1);
         searchParameters = new SearchParameters();
         searchEngine = new SearchEngine(config);
         searchEngine.setInitialSearchParameters(searchParameters);
@@ -63,5 +70,31 @@ public class ChessBoard {
 
     public boolean isDraw() {
         return board.isDraw();
+    }
+    public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer,Integer>from,String FEN)
+    {
+        ArrayList<Tuple<Integer, Integer>> liste = new ArrayList<>();
+        Board testboard = null;
+        Movetranslator mt = Movetranslator.getInstance();
+        for(int i = 0; i< 8;i++)
+        {
+            for(int j = 0; j< 8;j++)
+            {
+                if(testboard == null) {
+                    testboard = new Board();
+                    testboard.setFen(FEN);
+                }
+                Tuple<Integer,Integer> to = new Tuple<>(i,j);
+                String smove =  (mt.numToString(from)+ " " + mt.numToString(to)).toLowerCase();
+                int move = Move.getFromString(testboard, smove, true);
+                if(testboard.doMove(move))
+                {
+                    liste.add(to);
+                    testboard = null;
+                }
+            }
+        }
+        Tuple<Integer, Integer>[] array = new Tuple[liste.size()];
+        return liste.toArray(array);
     }
 }
