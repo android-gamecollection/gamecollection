@@ -51,7 +51,7 @@ public class InitiateGame {
                     new Location(250, 450)
             };
 
-    InitiateGame(Deck deck, schafkopf board){
+    public InitiateGame(Deck deck, schafkopf board){
         this.deck = deck;
         this.board = board;
     }

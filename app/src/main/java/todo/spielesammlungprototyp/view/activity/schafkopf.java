@@ -11,7 +11,7 @@ import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
 import ch.aplu.jcardgame.StackLayout;
 import ch.aplu.jcardgame.TargetArea;
-
+import todo.spielesammlungprototyp.model.games.schafkopf.InitiateGame; 
 public class schafkopf extends CardGame
 {
     public enum Suit
@@ -51,7 +51,7 @@ public class schafkopf extends CardGame
     public void main()
     {
         deck = new Deck(Suit.values(), Rank.values(), "cover");
-        initiateGame game = new initiateGame(deck, this);
+        InitiateGame game = new InitiateGame(deck, this);
         game.setBids();
         game.setStacks();
         game.setHand();
@@ -69,6 +69,7 @@ public class schafkopf extends CardGame
             {
                 public void longPressed(Card card)
                 {
+
                     if(bids[0].isEmpty())card.transfer(bids[0], true);
                     delay(600);//debug
                 }
@@ -451,6 +452,122 @@ public class schafkopf extends CardGame
         return false;
 
     }
+
+
+    public Hand returnNewHandWithUpperCards(int player){
+        Hand[] hsp = new Hand[16];
+        Hand h = null;
+
+        if(player == 0){
+
+        for(int i = 0; i < 8; i++){
+                h.insert(hands[i].getFirst().getCardNumber(), false);
+                if(i == 7)return h;
+        }
+
+        }
+
+        if(player == 1){
+
+            for(int i = 0; i <= 8; i ++) {
+                for(int j = 8; j < 16; i++) {
+                    hsp[i] = hands[j];
+                    for(int d = 0; d < 8; i++){
+                        h.insert(hsp[d].getFirst().getCardNumber(), false);
+                    if(d == 7)return h;
+                    }
+                }
+            }
+
+        }
+    return h;
+    }
+
+
+
+    public Hand cardsplayable(int Player, Hand hand){
+        Hand playable = null;
+        int otherPlayer = (Player + 1) % 2;
+
+    if(Player == 0) {
+        for (int i = 0; i < 8; i++) {
+
+            if (    hand.getFirst().getRank() == Rank.OBER ||
+                    hand.getFirst().getRank() == Rank.UNTER ||
+                    hand.getFirst().getRank() == Suit.HERZ
+                    && isTrumpf(otherPlayer))
+            {
+             playable.insert(hand.getFirst(), false);
+                playable.removeFirst(false);
+            }
+
+            else if (hand.getFirst().getSuitId() == bids[otherPlayer].getLast().getSuitId()){
+             playable.insert(hand.getFirst(), false);
+                playable.removeFirst(false);
+            }
+            if(i == 7)return playable;
+        }
+    }
+    if(Player == 1) {
+        for (int i = 0; i < 8; i++) {
+
+            if (    hand.getFirst().getRank() == Rank.OBER ||
+                    hand.getFirst().getRank() == Rank.UNTER ||
+                    hand.getFirst().getRank() == Suit.HERZ
+                            && isTrumpf(otherPlayer))
+                {
+                    playable.insert(hand.getFirst(), false);
+                    playable.removeFirst(false);
+
+                }
+
+                else if (hand.getFirst().getSuitId() == bids[otherPlayer].getLast().getSuitId()){
+                    playable.insert(hand.getFirst(), false);
+                    playable.removeFirst(false);
+
+            }
+                if(i == 7)return playable;
+            }
+        }
+
+    return playable;
+
+    }
+
+
+    public void blockNotPlayableCards(int Player) {
+        Hand up = returnNewHandWithUpperCards(Player);
+        delay(2000);
+        Hand playable = cardsplayable(Player, up);
+
+        if (Player == 0) {
+            for (int i = 0; i < 8; i++) {
+                if (!playable.contains(hands[i].getFirst()))
+                {
+                hands[i].setTouchEnabled(false);
+                }
+                else if(playable.contains(hands[i].getFirst()))
+                {
+                hands[i].setTouchEnabled(true);
+                }
+            }
+
+        }
+        if (Player == 1) {
+            for (int i = 8; i < 16; i++) {
+                if (!playable.contains(hands[i].getFirst()))
+                {
+                    hands[i].setTouchEnabled(false);
+                }
+                else if(playable.contains(hands[i].getFirst()))
+                {
+                    hands[i].setTouchEnabled(true);
+                }
+            }
+
+        }
+    }
+
 }
 
 

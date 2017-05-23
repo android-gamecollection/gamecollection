@@ -11,7 +11,10 @@
 
         <activity android:name=".view.activity.Hub">
 
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -46,10 +49,6 @@
         <activity
             android:name=".view.activity.schafkopf"
             android:label="@string/schafkopf">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
     </application>
