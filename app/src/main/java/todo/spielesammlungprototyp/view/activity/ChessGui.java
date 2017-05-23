@@ -15,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.Map;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
@@ -122,7 +120,7 @@ public class ChessGui extends Activity {
                 String move = board.aimove();
                 animatefigure(mt.stringToNum(move.substring(0, 2)), mt.stringToNum(move.substring(2, 4)));
             }
-        },1000);
+        }, 1000);
     }
 
     public void update() {
@@ -194,24 +192,22 @@ public class ChessGui extends Activity {
             }
         }
     }
-    public void removeFigure(Tuple<Integer,Integer> tupel)
-    {
-        if(figuren[tupel.first][tupel.last] != null)
-        {
+
+    public void removeFigure(Tuple<Integer, Integer> tupel) {
+        if (figuren[tupel.first][tupel.last] != null) {
             ((ViewGroup) figuren[tupel.first][tupel.last].getParent()).removeView(figuren[tupel.first][tupel.last]);
             figuren[tupel.first][tupel.last] = null;
         }
     }
-    public void removeAllFigures()
-    {
-        for(int i = 0; i< 8; i++)
-        {
-            for(int j = 0; j< 8; j++)
-            {
-                removeFigure(new Tuple<Integer, Integer>(i,j));
+
+    public void removeAllFigures() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                removeFigure(new Tuple<Integer, Integer>(i, j));
             }
         }
     }
+
     public void setFieldFromFEN(String FEN) {
         int x = 0;
         int y = 0;
