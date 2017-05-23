@@ -10,7 +10,7 @@ import com.alonsoruibal.chess.search.SearchParameters;
 
 import java.util.ArrayList;
 
-import todo.spielesammlungprototyp.util.Movetranslator;
+import todo.spielesammlungprototyp.util.MoveTranslator;
 import todo.spielesammlungprototyp.util.Tuple;
 
 public class ChessBoard {
@@ -74,7 +74,7 @@ public class ChessBoard {
     public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> from, String FEN) {
         ArrayList<Tuple<Integer, Integer>> liste = new ArrayList<>();
         Board testboard = null;
-        Movetranslator mt = Movetranslator.getInstance();
+        MoveTranslator mt = MoveTranslator.getInstance();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (testboard == null) {

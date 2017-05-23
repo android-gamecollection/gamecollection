@@ -18,7 +18,7 @@ import java.util.Map;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
 import todo.spielesammlungprototyp.util.MapBuilder;
-import todo.spielesammlungprototyp.util.Movetranslator;
+import todo.spielesammlungprototyp.util.MoveTranslator;
 import todo.spielesammlungprototyp.util.Tuple;
 import todo.spielesammlungprototyp.view.view.Chessboard;
 
@@ -98,7 +98,7 @@ public class ChessGui extends Activity {
             chessboard.removegreen();
             chessboard.removeyellow();
         } else {
-            Movetranslator mt = Movetranslator.getInstance();
+            MoveTranslator mt = MoveTranslator.getInstance();
             if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
                 animatefigure(logged, tuple);
                 logged = null;
@@ -114,7 +114,7 @@ public class ChessGui extends Activity {
     }
 
     public void aimove() {
-        Movetranslator mt = Movetranslator.getInstance();
+        MoveTranslator mt = MoveTranslator.getInstance();
         String move = board.aimove();
         animatefigure(mt.stringToNum(move.substring(0, 2)), mt.stringToNum(move.substring(2, 4)));
     }

@@ -7,12 +7,12 @@ import java.util.Map;
  * Created by oliver on 09.05.2017.
  */
 
-public class Movetranslator {
-    private static Movetranslator instance;
+public class MoveTranslator {
+    private static MoveTranslator instance;
     private Map<Integer, String> horizontalmap;
     private Map<Integer, String> verticalmap;
 
-    private Movetranslator() {
+    private MoveTranslator() {
         horizontalmap = new HashMap<>();
         verticalmap = new HashMap<>();
 
@@ -35,9 +35,9 @@ public class Movetranslator {
         verticalmap.put(7, "1");
     }
 
-    public static Movetranslator getInstance() {
+    public static MoveTranslator getInstance() {
         if (instance == null) {
-            instance = new Movetranslator();
+            instance = new MoveTranslator();
         }
         return instance;
     }
