@@ -58,7 +58,6 @@ public class ChessBoard {
         int move = searchEngine.getBestMove();
         String smove = Move.toString(move);
         board.doMove(move);
-        Log.d("test", "" + searchEngine);
         return smove;
 
     }

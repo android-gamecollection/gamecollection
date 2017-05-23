@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +124,8 @@ public class ChessGui extends Activity {
         if (board.isMate()) {
             Toast.makeText(this, "Schachmatt", Toast.LENGTH_SHORT).show();
         }
+        setFieldFromFEN(board.getBoard());
+        addImages();
     }
 
     public boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
@@ -149,12 +152,10 @@ public class ChessGui extends Activity {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (figuren[to.first][to.last] != null) {
-                        ((ViewGroup) figuren[to.first][to.last].getParent()).removeView(figuren[to.first][to.last]);
-                    }
-
+                    removeFigure(to);
                     figuren[to.first][to.last] = figuren[from.first][from.last];
                     figuren[from.first][from.last] = null;
+                    update();
                 }
 
                 @Override
@@ -167,7 +168,6 @@ public class ChessGui extends Activity {
 
                 }
             });
-            update();
             return true;
         }
         return false;
@@ -186,11 +186,30 @@ public class ChessGui extends Activity {
             }
         }
     }
-
+    public void removeFigure(Tuple<Integer,Integer> tupel)
+    {
+        if(figuren[tupel.first][tupel.last] != null)
+        {
+            ((ViewGroup) figuren[tupel.first][tupel.last].getParent()).removeView(figuren[tupel.first][tupel.last]);
+            figuren[tupel.first][tupel.last] = null;
+        }
+    }
+    public void removeAllFigures()
+    {
+        for(int i = 0; i< 8; i++)
+        {
+            for(int j = 0; j< 8; j++)
+            {
+                removeFigure(new Tuple<Integer, Integer>(i,j));
+            }
+        }
+    }
     public void setFieldFromFEN(String FEN) {
         int x = 0;
         int y = 0;
         String text = FEN;
+        Log.d("Fen :", FEN);
+        removeAllFigures();
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             switch (c) {
