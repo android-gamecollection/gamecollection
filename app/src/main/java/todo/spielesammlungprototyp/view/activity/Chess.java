@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.alonsoruibal.chess.Board;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +23,7 @@ public class Chess extends GameActivity {
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
-    private final String[] chessFigures = new String[64];
+    List<String> chessFigure = Arrays.asList(new String[64]);
     private GridView gridView;
     private ArrayAdapter<String> adapter;
     private Toolbar toolbar;
@@ -50,7 +52,7 @@ public class Chess extends GameActivity {
         fen = fen.replace("/", "");
 
         for (int i = 0; i < 64; i++)
-            chessFigures[i] = UnicodePieces.pieces.get(fen.charAt(i));
+            chessFigure.set(i, ucChessPiece.pieces.get(fen.charAt(i)));
     }
 
     private String replaceNumbersBySpaces(String str) {
