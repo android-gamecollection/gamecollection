@@ -20,7 +20,7 @@ import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
 import todo.spielesammlungprototyp.tools.MapBuilder;
 import todo.spielesammlungprototyp.tools.Movetranslator;
 import todo.spielesammlungprototyp.tools.Tuple;
-import todo.spielesammlungprototyp.view.customViews.Chessboard;
+import todo.spielesammlungprototyp.view.view.Chessboard;
 
 /**
  * Created by Oliver on 19.05.2017.

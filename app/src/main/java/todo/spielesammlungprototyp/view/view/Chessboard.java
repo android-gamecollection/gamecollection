@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.view.customViews;
+package todo.spielesammlungprototyp.view.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
