@@ -17,9 +17,9 @@ import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
-import todo.spielesammlungprototyp.tools.MapBuilder;
-import todo.spielesammlungprototyp.tools.Movetranslator;
-import todo.spielesammlungprototyp.tools.Tuple;
+import todo.spielesammlungprototyp.util.MapBuilder;
+import todo.spielesammlungprototyp.util.Movetranslator;
+import todo.spielesammlungprototyp.util.Tuple;
 import todo.spielesammlungprototyp.view.view.Chessboard;
 
 /**

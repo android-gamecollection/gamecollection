@@ -10,8 +10,8 @@ import com.alonsoruibal.chess.search.SearchParameters;
 
 import java.util.ArrayList;
 
-import todo.spielesammlungprototyp.tools.Movetranslator;
-import todo.spielesammlungprototyp.tools.Tuple;
+import todo.spielesammlungprototyp.util.Movetranslator;
+import todo.spielesammlungprototyp.util.Tuple;
 
 public class ChessBoard {
 

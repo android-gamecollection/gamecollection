@@ -13,7 +13,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import todo.spielesammlungprototyp.tools.Tuple;
+import todo.spielesammlungprototyp.util.Tuple;
 
 
 /**

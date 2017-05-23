@@ -2,7 +2,7 @@ package todo.spielesammlungprototyp.model.games.chess;
 
 import java.util.Map;
 
-import todo.spielesammlungprototyp.tools.MapBuilder;
+import todo.spielesammlungprototyp.util.MapBuilder;
 
 public abstract class UnicodePieces {
 
