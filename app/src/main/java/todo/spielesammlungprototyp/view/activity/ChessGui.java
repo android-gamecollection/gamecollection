@@ -108,9 +108,9 @@ public class ChessGui extends Activity {
             }
         }
     }
-    public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position)
-    {
-        return board.getPossibleMoves(position,board.getBoard());
+
+    public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position) {
+        return board.getPossibleMoves(position, board.getBoard());
     }
 
     public void aimove() {

@@ -21,20 +21,20 @@ import todo.spielesammlungprototyp.tools.Tuple;
  */
 
 public class Chessboard extends View {
+    public static final int ANZAHL_FELDER_VERTICAL = 8;
+    public static final int ANZAHL_FELDER_HORIZONTAL = 8;
     public Rect[][] feld;
+    int width;
+    int height;
+    int upperline;
+    int leftline;
+    int thickness;
     private List<Tuple<Integer, Integer>> greenspots;
     private List<Tuple<Integer, Integer>> yellowspots;
     private Paint darkfield;
     private Paint brightfield;
     private Paint greenfield;
     private Paint yellowfield;
-    int width;
-    int height;
-    int upperline;
-    int leftline;
-    int thickness;
-    public static final int ANZAHL_FELDER_VERTICAL = 8;
-    public static final int ANZAHL_FELDER_HORIZONTAL = 8;
 
     public Chessboard(Context context) {
         super(context);
@@ -94,7 +94,7 @@ public class Chessboard extends View {
     }
 
     public void addgreen(Tuple<Integer, Integer>... tuple) {
-        for(Tuple<Integer, Integer> t: tuple) {
+        for (Tuple<Integer, Integer> t : tuple) {
             greenspots.add(t);
         }
         invalidate();
@@ -104,12 +104,14 @@ public class Chessboard extends View {
         greenspots.clear();
         invalidate();
     }
+
     public void addyellow(Tuple<Integer, Integer>... tuple) {
-        for(Tuple<Integer, Integer> t: tuple) {
+        for (Tuple<Integer, Integer> t : tuple) {
             yellowspots.add(t);
         }
         invalidate();
     }
+
     public void removeyellow() {
         yellowspots.clear();
         invalidate();

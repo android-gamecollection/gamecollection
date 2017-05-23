@@ -1,6 +1,5 @@
 package todo.spielesammlungprototyp.model.games.consolechess;
 
-import android.support.constraint.solver.ArrayLinkedVariables;
 import android.util.Log;
 
 import com.alonsoruibal.chess.Board;
@@ -71,24 +70,21 @@ public class ChessBoard {
     public boolean isDraw() {
         return board.isDraw();
     }
-    public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer,Integer>from,String FEN)
-    {
+
+    public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> from, String FEN) {
         ArrayList<Tuple<Integer, Integer>> liste = new ArrayList<>();
         Board testboard = null;
         Movetranslator mt = Movetranslator.getInstance();
-        for(int i = 0; i< 8;i++)
-        {
-            for(int j = 0; j< 8;j++)
-            {
-                if(testboard == null) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (testboard == null) {
                     testboard = new Board();
                     testboard.setFen(FEN);
                 }
-                Tuple<Integer,Integer> to = new Tuple<>(i,j);
-                String smove =  (mt.numToString(from)+ " " + mt.numToString(to)).toLowerCase();
+                Tuple<Integer, Integer> to = new Tuple<>(i, j);
+                String smove = (mt.numToString(from) + " " + mt.numToString(to)).toLowerCase();
                 int move = Move.getFromString(testboard, smove, true);
-                if(testboard.doMove(move))
-                {
+                if (testboard.doMove(move)) {
                     liste.add(to);
                     testboard = null;
                 }
