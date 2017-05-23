@@ -1,7 +1,6 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,10 +22,9 @@ public class Chess extends GameActivity {
 
     // Changing this array will modify the GUI
     // call 'adapter.notifyDataSetChanged();' after
-    List<String> chessFigure = Arrays.asList(new String[64]);
+    List<String> chessFigures = Arrays.asList(new String[64]);
     private GridView gridView;
     private ArrayAdapter<String> adapter;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,7 @@ public class Chess extends GameActivity {
         fen = fen.replace("/", "");
 
         for (int i = 0; i < 64; i++)
-            chessFigure.set(i, ucChessPiece.pieces.get(fen.charAt(i)));
+            chessFigures.set(i, UnicodePieces.pieces.get(fen.charAt(i)));
     }
 
     private String replaceNumbersBySpaces(String str) {

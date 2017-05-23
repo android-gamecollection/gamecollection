@@ -10,12 +10,12 @@ import todo.spielesammlungprototyp.view.activity.ConsoleChess;
 public class CmdProcessor {
 
     private final ConsoleChess consoleChessActivity;
-    private final ChessBoard chessBoard;
+    private final ChessWrapper wrapper;
 
     public CmdProcessor(ConsoleChess consoleChessActivity) {
         this.consoleChessActivity = consoleChessActivity;
-        this.chessBoard = new ChessWrapper();
-        chessBoard.restart();
+        this.wrapper = new ChessWrapper();
+        wrapper.restart();
     }
 
     public void processInput(String input) {
