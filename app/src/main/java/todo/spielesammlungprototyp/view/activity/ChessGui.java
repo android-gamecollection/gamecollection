@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.Map;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
@@ -112,9 +114,15 @@ public class ChessGui extends Activity {
     }
 
     public void aimove() {
-        MoveTranslator mt = MoveTranslator.getInstance();
-        String move = board.aimove();
-        animatefigure(mt.stringToNum(move.substring(0, 2)), mt.stringToNum(move.substring(2, 4)));
+        android.os.Handler handler = new android.os.Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MoveTranslator mt = MoveTranslator.getInstance();
+                String move = board.aimove();
+                animatefigure(mt.stringToNum(move.substring(0, 2)), mt.stringToNum(move.substring(2, 4)));
+            }
+        },1000);
     }
 
     public void update() {
