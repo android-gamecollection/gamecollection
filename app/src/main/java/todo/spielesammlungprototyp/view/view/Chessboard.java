@@ -15,11 +15,6 @@ import java.util.List;
 
 import todo.spielesammlungprototyp.util.Tuple;
 
-
-/**
- * Created by Oliver on 06.05.2017.
- */
-
 public class Chessboard extends View {
     public static final int ANZAHL_FELDER_VERTICAL = 8;
     public static final int ANZAHL_FELDER_HORIZONTAL = 8;

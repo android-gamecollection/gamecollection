@@ -22,9 +22,6 @@ import todo.spielesammlungprototyp.util.MoveTranslator;
 import todo.spielesammlungprototyp.util.Tuple;
 import todo.spielesammlungprototyp.view.view.Chessboard;
 
-/**
- * Created by Oliver on 19.05.2017.
- */
 public class ChessGui extends Activity {
 
     private static Map<Character, Integer> chessDrawables = new MapBuilder<Character, Integer>().build(

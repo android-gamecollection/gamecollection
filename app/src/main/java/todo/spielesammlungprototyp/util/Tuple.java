@@ -1,9 +1,5 @@
 package todo.spielesammlungprototyp.util;
 
-/**
- * Created by Oliver on 20.05.2017.
- */
-
 public class Tuple<T, F> {
 
     public T first;    //X

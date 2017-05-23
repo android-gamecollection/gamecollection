@@ -5,10 +5,6 @@ import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.search.SearchEngine;
 
-/**
- * Created by Oliver on 02.05.2017.
- */
-
 public class ChessWrapper {
     private Config config;
     private SearchEngine searchengine;

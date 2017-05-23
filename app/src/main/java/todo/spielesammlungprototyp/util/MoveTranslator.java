@@ -2,10 +2,6 @@ package todo.spielesammlungprototyp.util;
 
 import java.util.Map;
 
-/**
- * Created by oliver on 09.05.2017.
- */
-
 public class MoveTranslator {
     private static MoveTranslator instance;
     private Map<Integer, String> horizontalmap;
