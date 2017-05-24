@@ -2,6 +2,7 @@ package todo.spielesammlungprototyp.view.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -86,4 +87,14 @@ public abstract class GameActivity extends AppCompatActivity {
                 });
         alertDialog.show();
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SharedPreferences pref = this.getSharedPreferences("Savegames", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("SAVE", null);
+        editor.apply();
+    }
+
 }

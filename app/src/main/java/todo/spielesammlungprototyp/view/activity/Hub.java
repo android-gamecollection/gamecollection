@@ -85,6 +85,22 @@ public class Hub extends AppCompatActivity {
             }
         });
 
+        fabNewGameB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentTag = tagBoard;
+                loadHomeFragment();
+            }
+        });
+
+        fabNewGameK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentTag = tagCards;
+                loadHomeFragment();
+            }
+        });
+
         // load nav menu header data
         loadNavHeader();
 
@@ -114,6 +130,7 @@ public class Hub extends AppCompatActivity {
             this.fabOpen = true;
         }
     }
+
 
     /***
      * Load navigation menu header information

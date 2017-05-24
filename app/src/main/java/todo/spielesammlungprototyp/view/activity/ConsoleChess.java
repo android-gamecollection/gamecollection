@@ -10,8 +10,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
+import todo.spielesammlungprototyp.tools.Savegame;
+import todo.spielesammlungprototyp.tools.SavegameObject;
 
 public class ConsoleChess extends GameActivity {
 
@@ -19,6 +23,8 @@ public class ConsoleChess extends GameActivity {
     private TextView textConsole;
     private EditText inputConsole;
     private CmdProcessor cmdProcessor;
+    Savegame savegame;
+    SavegameObject currentSGO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +35,24 @@ public class ConsoleChess extends GameActivity {
         textConsole = (TextView) findViewById(R.id.text_output);
         inputConsole = (EditText) findViewById(R.id.edittext_input);
         setKeyboardListener();
+        /*
+        savegame = new Savegame(this);
 
-        cmdProcessor = new CmdProcessor(this);
+        ArrayList<SavegameObject> listOfGames = savegame.getSavegameObjectList();
+
+        if(!listOfGames.isEmpty()) {
+            currentSGO = listOfGames.get(0);
+            cmdProcessor = new CmdProcessor(this, currentSGO.getValue());
+
+        } else { */
+            cmdProcessor = new CmdProcessor(this);
+        //}
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //savegame.updateSavegame(this, currentSGO);
     }
 
     @Override

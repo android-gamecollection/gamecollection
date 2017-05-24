@@ -17,6 +17,16 @@ public class CmdProcessor {
         chessBoard.setStartPosition();
     }
 
+    public CmdProcessor(ConsoleChess consoleChessActivity, String savegame) {
+        this.consoleChessActivity = consoleChessActivity;
+        this.chessBoard = new ChessBoard();
+        chessBoard.setStartPosition(savegame);
+    }
+
+    public String getFen() {
+        return chessBoard.getBoard();
+    }
+
     public void processInput(String input) {
         new ProcessInputTask().execute(input);
     }

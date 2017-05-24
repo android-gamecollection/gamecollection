@@ -25,6 +25,10 @@ class ChessBoard {
         board.startPosition();
     }
 
+    void setStartPosition(String savegame) {
+        board.setFen(savegame);
+    }
+
     String getBoard() {
         return board.getFen();
     }
