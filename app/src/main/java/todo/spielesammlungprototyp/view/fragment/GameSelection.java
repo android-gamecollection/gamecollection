@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.util.AndroidResources;
 import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.view.GameCardView;
 import todo.spielesammlungprototyp.view.GameCardViewAdapter;
@@ -102,9 +103,9 @@ public class GameSelection extends Fragment implements ClickListener {
                         String[] attributes = XML_ATTRIBUTES.clone();
                         for (int i = 0; i < attributes.length; i++) {
                             String attributeValue = xmlGames.getAttributeValue(null, attributes[i]);
-                            attributes[i] = dereferenceString(attributeValue);
+                            attributes[i] = AndroidResources.getResourceString(getContext(), attributeValue);
                         }
-                        int icon = getResourceIdFromString(attributes[0]);
+                        int icon = AndroidResources.getResourceIDFromString(getContext(), attributes[0]);
                         GameCardView gameCardView = new GameCardView(icon, attributes[1], attributes[2], attributes[3], attributes[4]);
                         games.get(gameCategory).add(gameCardView);
                         break;
@@ -129,23 +130,5 @@ public class GameSelection extends Fragment implements ClickListener {
         for (Map.Entry<String, List<GameCardView>> entry : games.entrySet()) {
             Collections.sort(entry.getValue());
         }
-    }
-
-    /**
-     * Converts a resource from string-form to integer-form
-     *
-     * @param resourceStr The resource as string in the form of '@mimap/ic_launcher'
-     * @return The resource in the form of R.mipmap.ic_launcher
-     */
-    private int getResourceIdFromString(String resourceStr) {
-        if (resourceStr.startsWith("@")) resourceStr = resourceStr.substring(1);
-        String[] splitString = resourceStr.split("/");
-        return getResources().getIdentifier(splitString[1], splitString[0], getContext().getPackageName());
-    }
-
-    private String dereferenceString(String resourceStr) {
-        if (!resourceStr.startsWith("@string/")) return resourceStr;
-        int identifier = getResourceIdFromString(resourceStr);
-        return getString(identifier);
     }
 }
