@@ -9,8 +9,8 @@ import com.alonsoruibal.chess.search.SearchParameters;
 
 import java.util.ArrayList;
 
-import todo.spielesammlungprototyp.util.MoveTranslator;
-import todo.spielesammlungprototyp.util.Tuple;
+import todo.spielesammlungprototyp.model.util.MoveTranslator;
+import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class ChessWrapper {
 

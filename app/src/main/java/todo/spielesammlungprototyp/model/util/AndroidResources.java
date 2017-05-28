@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.util;
+package todo.spielesammlungprototyp.model.util;
 
 import android.content.Context;
 

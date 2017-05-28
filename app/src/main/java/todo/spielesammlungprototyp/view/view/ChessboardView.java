@@ -13,7 +13,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import todo.spielesammlungprototyp.util.Tuple;
+import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class ChessboardView extends View {
     public static final int ANZAHL_FELDER_VERTICAL = 8;

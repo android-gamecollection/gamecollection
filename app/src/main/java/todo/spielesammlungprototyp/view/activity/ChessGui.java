@@ -18,9 +18,9 @@ import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessWrapper;
-import todo.spielesammlungprototyp.util.MapBuilder;
-import todo.spielesammlungprototyp.util.MoveTranslator;
-import todo.spielesammlungprototyp.util.Tuple;
+import todo.spielesammlungprototyp.model.util.MapBuilder;
+import todo.spielesammlungprototyp.model.util.MoveTranslator;
+import todo.spielesammlungprototyp.model.util.Tuple;
 import todo.spielesammlungprototyp.view.view.ChessboardView;
 
 public class ChessGui extends Activity {

@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.util;
+package todo.spielesammlungprototyp.model.util;
 
 import java.util.HashMap;
 
