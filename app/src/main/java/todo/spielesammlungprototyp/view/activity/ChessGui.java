@@ -17,11 +17,11 @@ import android.widget.Toast;
 import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.games.consolechess.ChessBoard;
+import todo.spielesammlungprototyp.model.games.consolechess.ChessWrapper;
 import todo.spielesammlungprototyp.util.MapBuilder;
 import todo.spielesammlungprototyp.util.MoveTranslator;
 import todo.spielesammlungprototyp.util.Tuple;
-import todo.spielesammlungprototyp.view.view.Chessboard;
+import todo.spielesammlungprototyp.view.view.ChessboardView;
 
 public class ChessGui extends Activity {
 
@@ -39,10 +39,10 @@ public class ChessGui extends Activity {
             'p', R.drawable.game_chess_pawn_b,
             'P', R.drawable.game_chess_pawn_w
     );
-    private Chessboard chessboard;
+    private ChessboardView chessboardView;
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
-    private ChessBoard board;
+    private ChessWrapper board;
 
     public ChessGui(String FEN) {
         this();
@@ -50,31 +50,31 @@ public class ChessGui extends Activity {
     }
 
     public ChessGui() {
-        board = new ChessBoard();
+        board = new ChessWrapper();
         board.setStartPosition();
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chessboard = new Chessboard(this);
-        addContentView(chessboard, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        figuren = new ImageView[Chessboard.ANZAHL_FELDER_HORIZONTAL][Chessboard.ANZAHL_FELDER_VERTICAL];
+        chessboardView = new ChessboardView(this);
+        addContentView(chessboardView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        figuren = new ImageView[ChessboardView.ANZAHL_FELDER_HORIZONTAL][ChessboardView.ANZAHL_FELDER_VERTICAL];
         setFieldFromFEN(board.getBoard());
-        final ViewTreeObserver vto = chessboard.getViewTreeObserver();
+        final ViewTreeObserver vto = chessboardView.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 addImages();
-                chessboard.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                chessboardView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
 
 
         });
-        chessboard.setOnTouchListener(new View.OnTouchListener() {
+        chessboardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Tuple<Integer, Integer> tuple = chessboard.getfieldfromtouch((int) event.getX(), (int) event.getY());
+                    Tuple<Integer, Integer> tuple = chessboardView.getfieldfromtouch((int) event.getX(), (int) event.getY());
                     if (tuple != null) {
                         trymove(tuple);
                     }
@@ -88,20 +88,20 @@ public class ChessGui extends Activity {
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
-                chessboard.addyellow(tuple);
-                chessboard.addgreen(getPossibleMoves(tuple));
+                chessboardView.addyellow(tuple);
+                chessboardView.addgreen(getPossibleMoves(tuple));
             }
         } else if (logged.equals(tuple)) {
             logged = null;
-            chessboard.removegreen();
-            chessboard.removeyellow();
+            chessboardView.removegreen();
+            chessboardView.removeyellow();
         } else {
             MoveTranslator mt = MoveTranslator.getInstance();
             if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
                 animatefigure(logged, tuple);
                 logged = null;
-                chessboard.removegreen();
-                chessboard.removeyellow();
+                chessboardView.removegreen();
+                chessboardView.removeyellow();
                 aimove();
             }
         }
@@ -137,10 +137,10 @@ public class ChessGui extends Activity {
     public boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
 
         if (figuren[from.first][from.last] != null) {
-            float fromx = chessboard.feld[from.first][from.last].left;
-            float tox = chessboard.feld[to.first][to.last].left;
-            float fromy = chessboard.feld[from.first][from.last].top;
-            float toy = chessboard.feld[to.first][to.last].top;
+            float fromx = chessboardView.feld[from.first][from.last].left;
+            float tox = chessboardView.feld[to.first][to.last].left;
+            float fromy = chessboardView.feld[from.first][from.last].top;
+            float toy = chessboardView.feld[to.first][to.last].top;
 
             ObjectAnimator animX = ObjectAnimator.ofFloat(figuren[from.first][from.last], "x", fromx, tox);
             ObjectAnimator animY = ObjectAnimator.ofFloat(figuren[from.first][from.last], "y", fromy, toy);
@@ -180,11 +180,11 @@ public class ChessGui extends Activity {
     }
 
     private void addImages() {
-        for (int i = 0; i < Chessboard.ANZAHL_FELDER_HORIZONTAL; i++) {
-            for (int j = 0; j < Chessboard.ANZAHL_FELDER_VERTICAL; j++) {
+        for (int i = 0; i < ChessboardView.ANZAHL_FELDER_HORIZONTAL; i++) {
+            for (int j = 0; j < ChessboardView.ANZAHL_FELDER_VERTICAL; j++) {
                 if (figuren[i][j] != null) {
-                    int top = chessboard.feld[i][j].top;
-                    int left = chessboard.feld[i][j].left;
+                    int top = chessboardView.feld[i][j].top;
+                    int left = chessboardView.feld[i][j].left;
                     figuren[i][j].setX(left);
                     figuren[i][j].setY(top);
                     addContentView(figuren[i][j], new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
