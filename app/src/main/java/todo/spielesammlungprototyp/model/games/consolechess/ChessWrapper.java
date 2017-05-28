@@ -6,7 +6,9 @@ import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.search.SearchEngine;
 import com.alonsoruibal.chess.search.SearchParameters;
+
 import java.util.ArrayList;
+
 import todo.spielesammlungprototyp.util.MoveTranslator;
 import todo.spielesammlungprototyp.util.Tuple;
 
@@ -50,13 +52,12 @@ public class ChessWrapper {
         return board.doMove(move);
     }
 
-    public String getBestMove()
-    {
+    public String getBestMove() {
         searchEngine.run();
         int move = searchEngine.getBestMove();
-        String smove = Move.toString(move);
-        return smove;
+        return Move.toString(move);
     }
+
     public String aimove() {
         searchEngine.run();
         int move = searchEngine.getBestMove();
