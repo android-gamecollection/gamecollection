@@ -3,7 +3,6 @@ package todo.spielesammlungprototyp.model.games.consolechess;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import todo.spielesammlungprototyp.Chess.ChessWrapper;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.view.activity.ConsoleChess;
 
@@ -15,7 +14,7 @@ public class CmdProcessor {
     public CmdProcessor(ConsoleChess consoleChessActivity) {
         this.consoleChessActivity = consoleChessActivity;
         this.wrapper = new ChessWrapper();
-        wrapper.restart();
+        wrapper.setStartPosition();
     }
 
     public void processInput(String input) {
@@ -32,10 +31,10 @@ public class CmdProcessor {
                 response.escapeSequence = "clear";
                 break;
             case "restart":
-                wrapper.restart();
+                wrapper.setStartPosition();
                 break;
             case "show":
-                response.output = wrapper.getFen();
+                response.output = wrapper.getOverview();
                 break;
             case "ov":
             case "overview":
@@ -46,7 +45,7 @@ public class CmdProcessor {
                 if (cmd.length < 3) {
                     response.errorMessage = getString(R.string.game_consolechess_err_invalid_cmd);
                 } else {
-                     boolean validMove = wrapper.doMove(cmd[1]+" "+cmd[2]);
+                     boolean validMove = wrapper.move(cmd[1],cmd[2]);
                     if (!validMove){
                         response.errorMessage = getString(R.string.game_consolechess_err_invalid_move);
                     }

@@ -1,26 +1,23 @@
 package todo.spielesammlungprototyp.model.games.consolechess;
 
-import android.util.Log;
 
 import com.alonsoruibal.chess.Board;
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.search.SearchEngine;
 import com.alonsoruibal.chess.search.SearchParameters;
-
 import java.util.ArrayList;
-
 import todo.spielesammlungprototyp.util.MoveTranslator;
 import todo.spielesammlungprototyp.util.Tuple;
 
-public class ChessBoard {
+public class ChessWrapper {
 
     private final Config config;
     private final SearchEngine searchEngine;
     private final Board board;
     private final SearchParameters searchParameters;
 
-    public ChessBoard() {
+    public ChessWrapper() {
         config = new Config();
         config.setTranspositionTableSize(1);
         searchParameters = new SearchParameters();
@@ -53,6 +50,13 @@ public class ChessBoard {
         return board.doMove(move);
     }
 
+    public String getBestMove()
+    {
+        searchEngine.run();
+        int move = searchEngine.getBestMove();
+        String smove = Move.toString(move);
+        return smove;
+    }
     public String aimove() {
         searchEngine.run();
         int move = searchEngine.getBestMove();
