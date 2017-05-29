@@ -74,7 +74,7 @@ public class ChessGui extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Tuple<Integer, Integer> tuple = chessboardView.getfieldfromtouch((int) event.getX(), (int) event.getY());
+                    Tuple<Integer, Integer> tuple = chessboardView.getFieldFromTouch((int) event.getX(), (int) event.getY());
                     if (tuple != null) {
                         trymove(tuple);
                     }
@@ -88,20 +88,20 @@ public class ChessGui extends Activity {
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
-                chessboardView.addyellow(tuple);
-                chessboardView.addgreen(getPossibleMoves(tuple));
+                chessboardView.addYellow(tuple);
+                chessboardView.addGreen(getPossibleMoves(tuple));
             }
         } else if (logged.equals(tuple)) {
             logged = null;
-            chessboardView.removegreen();
-            chessboardView.removeyellow();
+            chessboardView.removeGreen();
+            chessboardView.removeYellow();
         } else {
             MoveTranslator mt = MoveTranslator.getInstance();
             if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
                 animatefigure(logged, tuple);
                 logged = null;
-                chessboardView.removegreen();
-                chessboardView.removeyellow();
+                chessboardView.removeGreen();
+                chessboardView.removeYellow();
                 aimove();
             }
         }

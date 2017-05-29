@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.print.PrintAttributes;
+import android.print.PrintAttributes.Margins;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -21,8 +21,6 @@ public class ChessboardView extends View {
     public Rect[][] feld;
     int width;
     int height;
-    int upperline;
-    int leftline;
     int thickness;
     private List<Tuple<Integer, Integer>> greenspots;
     private List<Tuple<Integer, Integer>> yellowspots;
@@ -88,54 +86,53 @@ public class ChessboardView extends View {
         }
     }
 
-    public void addgreen(Tuple<Integer, Integer>... tuple) {
+    public void addGreen(Tuple<Integer, Integer>... tuple) {
         for (Tuple<Integer, Integer> t : tuple) {
             greenspots.add(t);
         }
         invalidate();
     }
 
-    public void removegreen() {
+    public void removeGreen() {
         greenspots.clear();
         invalidate();
     }
 
-    public void addyellow(Tuple<Integer, Integer>... tuple) {
+    public void addYellow(Tuple<Integer, Integer>... tuple) {
         for (Tuple<Integer, Integer> t : tuple) {
             yellowspots.add(t);
         }
         invalidate();
     }
 
-    public void removeyellow() {
+    public void removeYellow() {
         yellowspots.clear();
         invalidate();
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        width = getMeasuredWidth();
-        height = getMeasuredHeight();
-        if (width < height) {
-            thickness = width / 8;
-        } else {
-            thickness = height / 8;
-        }
-        upperline = (height - (8 * thickness)) / 2;
-        leftline = (width - (8 * thickness)) / 2;
         for (int i = 0; i < ANZAHL_FELDER_VERTICAL; i++) {
             for (int j = 0; j < ANZAHL_FELDER_HORIZONTAL; j++) {
                 feld[i][j] = new Rect();
-                feld[i][j].left = leftline + (i * thickness);
-                feld[i][j].top = upperline + (j * thickness);
-                feld[i][j].right = leftline + ((i + 1) * thickness);
-                feld[i][j].bottom = upperline + ((j + 1) * thickness);
-
+                feld[i][j].left = i * thickness;
+                feld[i][j].top = j * thickness;
+                feld[i][j].right = (i + 1) * thickness;
+                feld[i][j].bottom = (j + 1) * thickness;
             }
         }
     }
 
-    public Tuple<Integer, Integer> getfieldfromtouch(int x, int y) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        width = MeasureSpec.getSize(widthMeasureSpec);
+        height = MeasureSpec.getSize(heightMeasureSpec);
+        int size = width < height ? width : height;
+        thickness = size / 8;
+        setMeasuredDimension(size, size);
+    }
+
+    public Tuple<Integer, Integer> getFieldFromTouch(int x, int y) {
         for (int i = 0; i < ANZAHL_FELDER_VERTICAL; i++) {
             for (int j = 0; j < ANZAHL_FELDER_HORIZONTAL; j++) {
                 if (feld[i][j].contains(x, y)) {
@@ -146,11 +143,11 @@ public class ChessboardView extends View {
         return null;
     }
 
-    public PrintAttributes.Margins getMarginfromfield(Tuple<Integer, Integer> tuple) {
+    public Margins getMarginsFromField(Tuple<Integer, Integer> tuple) {
         int left = feld[tuple.first][tuple.last].left;
         int top = feld[tuple.first][tuple.last].top;
         int right = feld[tuple.first][tuple.last].right;
         int bottom = feld[tuple.first][tuple.last].bottom;
-        return new PrintAttributes.Margins(left, top, right, bottom);
+        return new Margins(left, top, right, bottom);
     }
 }
