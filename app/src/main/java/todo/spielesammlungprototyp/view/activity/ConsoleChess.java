@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
+import todo.spielesammlungprototyp.tools.SavegameStorage;
 import todo.spielesammlungprototyp.tools.Savegame;
-import todo.spielesammlungprototyp.tools.SavegameObject;
 
 public class ConsoleChess extends GameActivity {
 
@@ -23,8 +23,8 @@ public class ConsoleChess extends GameActivity {
     private TextView textConsole;
     private EditText inputConsole;
     private CmdProcessor cmdProcessor;
-    Savegame savegame;
-    SavegameObject currentSGO;
+    SavegameStorage savegameStorage;
+    Savegame currentSGO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +35,30 @@ public class ConsoleChess extends GameActivity {
         textConsole = (TextView) findViewById(R.id.text_output);
         inputConsole = (EditText) findViewById(R.id.edittext_input);
         setKeyboardListener();
-        /*
-        savegame = new Savegame(this);
 
-        ArrayList<SavegameObject> listOfGames = savegame.getSavegameObjectList();
+        savegameStorage = new SavegameStorage(this);
+
+        ArrayList<Savegame> listOfGames = savegameStorage.getSavegameList();
 
         if(!listOfGames.isEmpty()) {
-            currentSGO = listOfGames.get(0);
+            int last = listOfGames.size()-1;
+            currentSGO = listOfGames.get(last);
             cmdProcessor = new CmdProcessor(this, currentSGO.getValue());
 
-        } else { */
+        } else {
             cmdProcessor = new CmdProcessor(this);
-        //}
+        }
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        //savegame.updateSavegame(this, currentSGO);
+    public void onPause() {
+        super.onPause();
+        if(currentSGO == null) {
+            savegameStorage.addSavegame(this, cmdProcessor.getFen());
+        } else {
+            currentSGO.setValue(cmdProcessor.getFen());
+            savegameStorage.updateSavegame(this, currentSGO);
+        }
     }
 
     @Override
