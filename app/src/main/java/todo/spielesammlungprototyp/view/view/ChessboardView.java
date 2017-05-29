@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
-import android.print.PrintAttributes.Margins;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,10 +18,8 @@ import todo.spielesammlungprototyp.model.util.Tuple;
 public class ChessboardView extends View {
     public static final int ANZAHL_FELDER_VERTICAL = 8;
     public static final int ANZAHL_FELDER_HORIZONTAL = 8;
-    public Rect[][] feld;
-    int width;
-    int height;
-    int thickness;
+    private Rect[][] feld;
+    private int thickness;
     private List<Tuple<Integer, Integer>> greenspots;
     private List<Tuple<Integer, Integer>> yellowspots;
     private Paint darkfield;
@@ -125,8 +123,8 @@ public class ChessboardView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        width = MeasureSpec.getSize(widthMeasureSpec);
-        height = MeasureSpec.getSize(heightMeasureSpec);
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
         int size = width < height ? width : height;
         thickness = size / 8;
         setMeasuredDimension(size, size);
@@ -143,11 +141,10 @@ public class ChessboardView extends View {
         return null;
     }
 
-    public Margins getMarginsFromField(Tuple<Integer, Integer> tuple) {
-        int left = feld[tuple.first][tuple.last].left;
-        int top = feld[tuple.first][tuple.last].top;
-        int right = feld[tuple.first][tuple.last].right;
-        int bottom = feld[tuple.first][tuple.last].bottom;
-        return new Margins(left, top, right, bottom);
+    public Point getRectangleCoordinates(Tuple<Integer, Integer> tuple) {
+        Rect rect = feld[tuple.first][tuple.last];
+        int x = this.getLeft() + rect.left;
+        int y = this.getTop() + rect.top;
+        return new Point(x, y);
     }
 }
