@@ -205,7 +205,7 @@ public class Chess extends GameActivity {
         CharacterIterator iterator = new CharacterIterator(fen, true);
         while (iterator.hasNext()) {
             Character c = iterator.next();
-            if (c == '/') {
+            if (c.equals('/')) {
                 x = 0;
                 y += 1;
             } else if (Character.isDigit(c)) {

@@ -23,7 +23,7 @@ public class CheckeredGameboardView extends View {
     private final int COLOR_DARK = Color.GRAY;
     private final int COLOR_HIGHLIGHT = Color.YELLOW;
     private final int COLOR_SUGGESTION = Color.GREEN;
-    private Rect[][] feld;
+    private Rect[][] boardQuares;
     private int thickness;
     private List<Tuple<Integer, Integer>> highlightSquares;
     private List<Tuple<Integer, Integer>> suggestionSquares;
@@ -65,7 +65,7 @@ public class CheckeredGameboardView extends View {
         paintHightlight = new Paint(flags);
         paintHightlight.setColor(COLOR_HIGHLIGHT);
 
-        feld = new Rect[HORIZONTAL_SQUARES_COUNT][VERTICAL_SQUARES_COUNT];
+        boardQuares = new Rect[HORIZONTAL_SQUARES_COUNT][VERTICAL_SQUARES_COUNT];
     }
 
     @Override
@@ -73,14 +73,14 @@ public class CheckeredGameboardView extends View {
         for (int i = 0; i < VERTICAL_SQUARES_COUNT; i++) {
             for (int j = 0; j < HORIZONTAL_SQUARES_COUNT; j++) {
                 Paint paintSquare = ((i + j) % 2 == 0) ? paintLight : paintDark;
-                canvas.drawRect(feld[i][j], paintSquare);
+                canvas.drawRect(boardQuares[i][j], paintSquare);
             }
         }
         for (Tuple<Integer, Integer> t : highlightSquares) {
-            canvas.drawRect(feld[t.first][t.last], paintSuggestion);
+            canvas.drawRect(boardQuares[t.first][t.last], paintSuggestion);
         }
         for (Tuple<Integer, Integer> t : suggestionSquares) {
-            canvas.drawRect(feld[t.first][t.last], paintHightlight);
+            canvas.drawRect(boardQuares[t.first][t.last], paintHightlight);
         }
     }
 
@@ -106,11 +106,11 @@ public class CheckeredGameboardView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         for (int i = 0; i < VERTICAL_SQUARES_COUNT; i++) {
             for (int j = 0; j < HORIZONTAL_SQUARES_COUNT; j++) {
-                feld[i][j] = new Rect();
-                feld[i][j].left = i * thickness;
-                feld[i][j].top = j * thickness;
-                feld[i][j].right = (i + 1) * thickness;
-                feld[i][j].bottom = (j + 1) * thickness;
+                boardQuares[i][j] = new Rect();
+                boardQuares[i][j].left = i * thickness;
+                boardQuares[i][j].top = j * thickness;
+                boardQuares[i][j].right = (i + 1) * thickness;
+                boardQuares[i][j].bottom = (j + 1) * thickness;
             }
         }
     }
@@ -127,7 +127,7 @@ public class CheckeredGameboardView extends View {
     public Tuple<Integer, Integer> getFieldFromTouch(int x, int y) {
         for (int i = 0; i < VERTICAL_SQUARES_COUNT; i++) {
             for (int j = 0; j < HORIZONTAL_SQUARES_COUNT; j++) {
-                if (feld[i][j].contains(x, y)) {
+                if (boardQuares[i][j].contains(x, y)) {
                     return new Tuple<>(i, j);
                 }
             }
@@ -136,7 +136,7 @@ public class CheckeredGameboardView extends View {
     }
 
     public Point getRectangleCoordinates(Tuple<Integer, Integer> tuple) {
-        Rect rect = feld[tuple.first][tuple.last];
+        Rect rect = boardQuares[tuple.first][tuple.last];
         int x = this.getLeft() + rect.left;
         int y = this.getTop() + rect.top;
         return new Point(x, y);
