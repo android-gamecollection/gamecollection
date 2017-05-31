@@ -24,10 +24,6 @@ public class Savegame {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public String getValue() {
         return value;
     }
