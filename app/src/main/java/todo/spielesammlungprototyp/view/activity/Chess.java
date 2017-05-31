@@ -18,10 +18,11 @@ import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.ChessWrapper;
+import todo.spielesammlungprototyp.model.util.CharacterIterator;
 import todo.spielesammlungprototyp.model.util.MapBuilder;
 import todo.spielesammlungprototyp.model.util.MoveTranslator;
 import todo.spielesammlungprototyp.model.util.Tuple;
-import todo.spielesammlungprototyp.view.view.ChessboardView;
+import todo.spielesammlungprototyp.view.view.CheckeredGameboardView;
 
 public class Chess extends GameActivity {
 
@@ -39,7 +40,7 @@ public class Chess extends GameActivity {
             'p', R.drawable.game_chess_pawn_b,
             'P', R.drawable.game_chess_pawn_w
     );
-    private ChessboardView chessboardView;
+    private CheckeredGameboardView chessboardView;
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
     private ChessWrapper board;
@@ -51,8 +52,8 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
-        chessboardView = (ChessboardView) findViewById(R.id.gridview_chess);
-        figuren = new ImageView[ChessboardView.ANZAHL_FELDER_HORIZONTAL][ChessboardView.ANZAHL_FELDER_VERTICAL];
+        chessboardView = (CheckeredGameboardView) findViewById(R.id.gridview_chess);
+        figuren = new ImageView[CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT][CheckeredGameboardView.VERTICAL_SQUARES_COUNT];
         setFieldFromFEN(board.getBoard());
         final ViewTreeObserver vto = chessboardView.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -80,20 +81,18 @@ public class Chess extends GameActivity {
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
-                chessboardView.addYellow(tuple);
-                chessboardView.addGreen(getPossibleMoves(tuple));
+                chessboardView.addSuggestionColor(tuple);
+                chessboardView.addHighlightColor(getPossibleMoves(tuple));
             }
         } else if (logged.equals(tuple)) {
             logged = null;
-            chessboardView.removeGreen();
-            chessboardView.removeYellow();
+            chessboardView.clearColors();
         } else {
             MoveTranslator mt = MoveTranslator.getInstance();
             if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
                 animatefigure(logged, tuple);
                 logged = null;
-                chessboardView.removeGreen();
-                chessboardView.removeYellow();
+                chessboardView.clearColors();
                 aimove();
             }
         }
@@ -170,8 +169,8 @@ public class Chess extends GameActivity {
     }
 
     private void addImages() {
-        for (int i = 0; i < ChessboardView.ANZAHL_FELDER_HORIZONTAL; i++) {
-            for (int j = 0; j < ChessboardView.ANZAHL_FELDER_VERTICAL; j++) {
+        for (int i = 0; i < CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT; i++) {
+            for (int j = 0; j < CheckeredGameboardView.VERTICAL_SQUARES_COUNT; j++) {
                 if (figuren[i][j] != null) {
                     Point rect = chessboardView.getRectangleCoordinates(new Tuple<>(i, j));
                     figuren[i][j].setX(rect.x);
@@ -192,37 +191,30 @@ public class Chess extends GameActivity {
     private void removeAllFigures() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                removeFigure(new Tuple<Integer, Integer>(i, j));
+                removeFigure(new Tuple<>(i, j));
             }
         }
     }
 
-    public void setFieldFromFEN(String FEN) {
+    public void setFieldFromFEN(String fen) {
         int x = 0;
         int y = 0;
-        String text = FEN;
-        Log.d("Fen :", FEN);
+        Log.d("Fen :", fen);
         removeAllFigures();
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            switch (c) {
-                case 'w':
-                case ' ':
-                    return;
-                case '/':
-                    x = 0;
-                    y++;
-                    break;
-                default:
-                    if (Character.isDigit(c)) {
-                        int number = Integer.parseInt(text.substring(i, i + 1));
-                        x = x + number;
-                    } else {
-                        figuren[x][y] = new ImageView(this);
-                        figuren[x][y].setImageResource(chessDrawables.get(c));
-                        x++;
-                    }
-                    break;
+
+        CharacterIterator iterator = new CharacterIterator(fen, true);
+        while (iterator.hasNext()) {
+            Character c = iterator.next();
+            if (c == '/') {
+                x = 0;
+                y += 1;
+            } else if (Character.isDigit(c)) {
+                x += Character.getNumericValue(c);
+            } else {
+                if (figuren[x][y] == null)
+                    figuren[x][y] = new ImageView(this);
+                figuren[x][y].setImageResource(chessDrawables.get(c));
+                x += 1;
             }
         }
     }
