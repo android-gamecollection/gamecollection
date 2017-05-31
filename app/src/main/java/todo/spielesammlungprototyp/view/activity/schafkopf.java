@@ -1,7 +1,14 @@
 package todo.spielesammlungprototyp.view.activity;
 //JGameGrid DOC http://www.aplu.ch/classdoc/jgamegrid/index.html
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileOutputStream;
 
 import ch.aplu.android.Location;
 import ch.aplu.jcardgame.Card;
@@ -11,7 +18,8 @@ import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
 import ch.aplu.jcardgame.StackLayout;
 import ch.aplu.jcardgame.TargetArea;
-import todo.spielesammlungprototyp.model.games.schafkopf.InitiateGame; 
+import todo.spielesammlungprototyp.model.games.schafkopf.InitiateGame;
+
 public class schafkopf extends CardGame
 {
     public enum Suit
@@ -24,23 +32,24 @@ public class schafkopf extends CardGame
         ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
     }
 
-    private final Location[] stackLocations =
+
+    public final Location[] stackLocations =
             {
                     new Location(520, 750),
                     new Location(520, 200)
             };
 
-    private final Location[] bidLocations =
+    public final Location[] bidLocations =
             {
                     new Location(350, 450),
                     new Location(250, 450)
             };
 
-    private Deck deck;
+    public Deck deck;
     public Hand[] hands;//16 Hands ala 2 Karten
     public Hand[] bids = new Hand[2];
     public Hand[] stacks = new Hand[2];
-    private int z=0;//initialisierung cardlistener
+    public int z=0;//initialisierung cardlistener
 
 
     public schafkopf()
@@ -69,16 +78,18 @@ public class schafkopf extends CardGame
             {
                 public void longPressed(Card card)
                 {
-
                     if(bids[0].isEmpty())card.transfer(bids[0], true);
                     delay(600);//debug
                 }
 
                 public void atTarget(Card card, Location targetLocation) {
-                    //if(bids[1].isEmpty())setPlayerMove(1);//abhängig von stich
-                    //if(!bids[1].isEmpty())transferBidsTo
-                    // Stock(1);
-                    if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+
+                    /*if(bids[1].isEmpty()){
+                        showToast("block");
+
+                        blockNotPlayableCards(1);
+                    }*/
+                    /*else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
 
                             if (sticht(0) == 0)
                             {
@@ -119,10 +130,15 @@ public class schafkopf extends CardGame
                     delay(600);//debug
                 }
 
+
                 public void atTarget(Card card, Location targetLocation) {
-                    //if (bids[0].isEmpty()) setPlayerMove(0);
-                    //if(!bids[0].isEmpty())transferBidsToStock(0);
-                    if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+/*
+                    if(bids[0].isEmpty()){
+                        showToast("block");
+
+                        blockNotPlayableCards(0);
+                    }
+                    else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
                         if (sticht(1) == 1) {
 
                             showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
@@ -148,6 +164,7 @@ public class schafkopf extends CardGame
         }
     }
 
+
     private boolean isGameOver(){
         if (stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32)
             return true;
@@ -171,7 +188,7 @@ public class schafkopf extends CardGame
 
 
         //Anzahl der Karten mit Punkten pro Spieler herausfinden
-        /*
+       /*
         int ass = stacks[0].getNumberOfCardsWithRank(Rank.ASS);
         int zehn = stacks[0].getNumberOfCardsWithRank(Rank.ZEHN);
         int k = stacks[0].getNumberOfCardsWithRank(Rank.KOENIG);
@@ -400,17 +417,17 @@ public class schafkopf extends CardGame
         if(Player == 0)
         {
 
-            for (int i = 8; i < 16; i++) {
-                if (hands[i].getNumberOfCardsWithSuit(farb) > 0)
+            for (int i = 0; i < 8; i++) {
+                if (hands[i].getFirst().getSuit() == farb)
                     return true;
             }
         }
 
         if(Player == 1)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 8; i < 16; i++)
             {
-                if (hands[i].getNumberOfCardsWithSuit(farb) > 0)
+                if (hands[i].getFirst().getSuit() == farb)
                     return true;
             }
         }
@@ -455,13 +472,13 @@ public class schafkopf extends CardGame
 
 
     public Hand returnNewHandWithUpperCards(int player){
-        Hand[] hsp = new Hand[16];
-        Hand h = null;
+        Hand[] hsp = new Hand[8];
+        Hand h = new Hand(deck);
 
         if(player == 0){
 
         for(int i = 0; i < 8; i++){
-                h.insert(hands[i].getFirst().getCardNumber(), false);
+                h.insert(hands[i].getFirst(), false);
                 if(i == 7)return h;
         }
 
@@ -469,11 +486,11 @@ public class schafkopf extends CardGame
 
         if(player == 1){
 
-            for(int i = 0; i <= 8; i ++) {
+            for(int i = 0; i < 8; i ++) {
                 for(int j = 8; j < 16; i++) {
                     hsp[i] = hands[j];
                     for(int d = 0; d < 8; i++){
-                        h.insert(hsp[d].getFirst().getCardNumber(), false);
+                        h.insert(hsp[d].getFirst(), false);
                     if(d == 7)return h;
                     }
                 }
@@ -486,15 +503,14 @@ public class schafkopf extends CardGame
 
 
     public Hand cardsplayable(int Player, Hand hand){
-        Hand playable = null;
+        Hand playable = new Hand(deck);
         int otherPlayer = (Player + 1) % 2;
 
-    if(Player == 0) {
         for (int i = 0; i < 8; i++) {
 
-            if (    hand.getFirst().getRank() == Rank.OBER ||
+            if (    (hand.getFirst().getRank() == Rank.OBER ||
                     hand.getFirst().getRank() == Rank.UNTER ||
-                    hand.getFirst().getRank() == Suit.HERZ
+                    hand.getFirst().getRank() == Suit.HERZ)
                     && isTrumpf(otherPlayer))
             {
              playable.insert(hand.getFirst(), false);
@@ -505,52 +521,34 @@ public class schafkopf extends CardGame
              playable.insert(hand.getFirst(), false);
                 playable.removeFirst(false);
             }
-            if(i == 7)return playable;
+            else if(i == 7)return playable;
         }
+        return playable;
     }
-    if(Player == 1) {
-        for (int i = 0; i < 8; i++) {
 
-            if (    hand.getFirst().getRank() == Rank.OBER ||
-                    hand.getFirst().getRank() == Rank.UNTER ||
-                    hand.getFirst().getRank() == Suit.HERZ
-                            && isTrumpf(otherPlayer))
-                {
-                    playable.insert(hand.getFirst(), false);
-                    playable.removeFirst(false);
-
-                }
-
-                else if (hand.getFirst().getSuitId() == bids[otherPlayer].getLast().getSuitId()){
-                    playable.insert(hand.getFirst(), false);
-                    playable.removeFirst(false);
-
-            }
-                if(i == 7)return playable;
-            }
-        }
-
-    return playable;
-
-    }
 
 
     public void blockNotPlayableCards(int Player) {
+        showToast("BlockMethodeAufgerufen");
         Hand up = returnNewHandWithUpperCards(Player);
-        delay(2000);
+        showToast("up created");
         Hand playable = cardsplayable(Player, up);
+        showToast("cardsplayable created");
 
         if (Player == 0) {
             for (int i = 0; i < 8; i++) {
                 if (!playable.contains(hands[i].getFirst()))
                 {
                 hands[i].setTouchEnabled(false);
+                showToast("Disabled");
                 }
-                else if(playable.contains(hands[i].getFirst()))
+                else
                 {
                 hands[i].setTouchEnabled(true);
+                showToast("Enabled");
                 }
             }
+            setPlayerMove(0);
 
         }
         if (Player == 1) {
@@ -558,15 +556,20 @@ public class schafkopf extends CardGame
                 if (!playable.contains(hands[i].getFirst()))
                 {
                     hands[i].setTouchEnabled(false);
+                    showToast("Disabled");
                 }
                 else if(playable.contains(hands[i].getFirst()))
                 {
                     hands[i].setTouchEnabled(true);
+                    showToast("Enabled");
+
                 }
             }
+            setPlayerMove(1);
 
         }
     }
+
 
 }
 
