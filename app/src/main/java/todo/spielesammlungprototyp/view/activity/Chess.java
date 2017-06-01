@@ -115,20 +115,20 @@ public class Chess extends GameActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         ImageView queen = (ImageView) alertDialog.findViewById(R.id.promotion_queen);
-        queen.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'q'));
+        queen.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'q'));
         ImageView knight = (ImageView) alertDialog.findViewById(R.id.promotion_knight);
-        knight.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'k'));
+        knight.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'k'));
         ImageView rook = (ImageView) alertDialog.findViewById(R.id.promotion_rook);
-        rook.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'r'));
+        rook.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'r'));
         ImageView bishop = (ImageView) alertDialog.findViewById(R.id.promotion_bishop);
-        bishop.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'b'));
+        bishop.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'b'));
     }
 
     public void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
         MoveTranslator mt = MoveTranslator.getInstance();
         board.promotionmove(mt.numToString(from).toLowerCase(), mt.numToString(to).toLowerCase(), c);
         chessboardView.clearColors();
-        animatefigure(from,to);
+        animatefigure(from, to);
         aimove();
     }
 
@@ -150,7 +150,7 @@ public class Chess extends GameActivity {
 
     public void update() {
         int endgame = board.isEndgame();
-        if(endgame != 0) {
+        if (endgame != 0) {
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.chess_ralativelayout);
             if (endgame == 1) {
                 Snackbar bar = Snackbar.make(relativeLayout, "Schachmatt, Weiß hat gewonnen", Snackbar.LENGTH_LONG);
@@ -262,11 +262,11 @@ public class Chess extends GameActivity {
             }
         }
     }
-    private class PromotionClickListener implements View.OnClickListener
-    {
+
+    private class PromotionClickListener implements View.OnClickListener {
         private AlertDialog alertDialog;
-        private Tuple<Integer,Integer> from;
-        private Tuple<Integer,Integer> to;
+        private Tuple<Integer, Integer> from;
+        private Tuple<Integer, Integer> to;
         private char figur;
 
         public PromotionClickListener(AlertDialog alertDialog, Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char figur) {
