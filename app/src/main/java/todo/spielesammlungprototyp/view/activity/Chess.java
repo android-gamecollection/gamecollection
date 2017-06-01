@@ -4,9 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import java.util.Map;
 
@@ -55,7 +55,7 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
-        board.setPosition("rnbqkbnr/PPPPPPPP/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        board.setPosition("pppqkppp/PPPPPPPP/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         chessboardView = (CheckeredGameboardView) findViewById(R.id.gridview_chess);
         figuren = new ImageView[CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT][CheckeredGameboardView.VERTICAL_SQUARES_COUNT];
         setFieldFromFEN(board.getBoard());
@@ -112,40 +112,16 @@ public class Chess extends GameActivity {
         builder.setView(view)
                 .setTitle("Select a figure")
                 .setCancelable(false);
-        final AlertDialog alertDialog = builder.create();
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
         ImageView queen = (ImageView) alertDialog.findViewById(R.id.promotion_queen);
-        queen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.cancel();
-                promotionmove(from, to, 'c');
-            }
-        });
+        queen.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'q'));
         ImageView knight = (ImageView) alertDialog.findViewById(R.id.promotion_knight);
-        knight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.cancel();
-                promotionmove(from, to, 'k');
-            }
-        });
+        knight.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'k'));
         ImageView rook = (ImageView) alertDialog.findViewById(R.id.promotion_rook);
-        rook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.cancel();
-                promotionmove(from, to, 'r');
-            }
-        });
+        rook.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'r'));
         ImageView bishop = (ImageView) alertDialog.findViewById(R.id.promotion_bishop);
-        bishop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.cancel();
-                promotionmove(from, to, 'b');
-            }
-        });
+        bishop.setOnClickListener(new PromotionClickListener(alertDialog,from,to,'b'));
     }
 
     public void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
@@ -173,11 +149,21 @@ public class Chess extends GameActivity {
     }
 
     public void update() {
-        if (board.isDraw()) {
-            Toast.makeText(this, "Patt", Toast.LENGTH_SHORT).show();
-        }
-        if (board.isMate()) {
-            Toast.makeText(this, "Schachmatt", Toast.LENGTH_SHORT).show();
+        int endgame = board.isEndgame();
+        if(endgame != 0) {
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.chess_ralativelayout);
+            if (endgame == 1) {
+                Snackbar bar = Snackbar.make(relativeLayout, "Schachmatt, Weiß hat gewonnen", Snackbar.LENGTH_LONG);
+                bar.show();
+            }
+            if (endgame == -1) {
+                Snackbar bar = Snackbar.make(relativeLayout, "Schachmatt, Schwarz hat gewonnen", Snackbar.LENGTH_LONG);
+                bar.show();
+            }
+            if (endgame == 99) {
+                Snackbar bar = Snackbar.make(relativeLayout, "Patt", Snackbar.LENGTH_LONG);
+                bar.show();
+            }
         }
         setFieldFromFEN(board.getBoard());
         addImages();
@@ -274,6 +260,25 @@ public class Chess extends GameActivity {
                 figuren[x][y].setImageResource(chessDrawables.get(c));
                 x += 1;
             }
+        }
+    }
+    private class PromotionClickListener implements View.OnClickListener
+    {
+        private AlertDialog alertDialog;
+        private Tuple<Integer,Integer> from;
+        private Tuple<Integer,Integer> to;
+        private char figur;
+
+        public PromotionClickListener(AlertDialog alertDialog, Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char figur) {
+            this.alertDialog = alertDialog;
+            this.from = from;
+            this.to = to;
+            this.figur = figur;
+        }
+
+        public void onClick(View v) {
+            alertDialog.cancel();
+            promotionmove(from, to, figur);
         }
     }
 }
