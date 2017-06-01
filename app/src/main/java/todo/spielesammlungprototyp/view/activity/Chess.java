@@ -3,9 +3,12 @@ package todo.spielesammlungprototyp.view.activity;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +55,7 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
+        board.setPosition("rnbqkbnr/PPPPPPPP/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         chessboardView = (CheckeredGameboardView) findViewById(R.id.gridview_chess);
         figuren = new ImageView[CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT][CheckeredGameboardView.VERTICAL_SQUARES_COUNT];
         setFieldFromFEN(board.getBoard());
@@ -78,6 +82,7 @@ public class Chess extends GameActivity {
     }
 
     public void trymove(Tuple<Integer, Integer> tuple) {
+        MoveTranslator mt = MoveTranslator.getInstance();
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
@@ -87,8 +92,10 @@ public class Chess extends GameActivity {
         } else if (logged.equals(tuple)) {
             logged = null;
             chessboardView.clearColors();
+        } else if (board.isPromotion(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
+            promotionDialog(logged, tuple);
+            logged = null;
         } else {
-            MoveTranslator mt = MoveTranslator.getInstance();
             if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
                 animatefigure(logged, tuple);
                 logged = null;
@@ -96,6 +103,57 @@ public class Chess extends GameActivity {
                 aimove();
             }
         }
+    }
+
+    public void promotionDialog(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.fragment_chess_promotion_dialog, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view)
+                .setTitle("Select a figure")
+                .setCancelable(false);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        ImageView queen = (ImageView) alertDialog.findViewById(R.id.promotion_queen);
+        queen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+                promotionmove(from, to, 'c');
+            }
+        });
+        ImageView knight = (ImageView) alertDialog.findViewById(R.id.promotion_knight);
+        knight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+                promotionmove(from, to, 'k');
+            }
+        });
+        ImageView rook = (ImageView) alertDialog.findViewById(R.id.promotion_rook);
+        rook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+                promotionmove(from, to, 'r');
+            }
+        });
+        ImageView bishop = (ImageView) alertDialog.findViewById(R.id.promotion_bishop);
+        bishop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+                promotionmove(from, to, 'b');
+            }
+        });
+    }
+
+    public void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
+        MoveTranslator mt = MoveTranslator.getInstance();
+        board.promotionmove(mt.numToString(from).toLowerCase(), mt.numToString(to).toLowerCase(), c);
+        chessboardView.clearColors();
+        animatefigure(from,to);
+        aimove();
     }
 
     public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position) {

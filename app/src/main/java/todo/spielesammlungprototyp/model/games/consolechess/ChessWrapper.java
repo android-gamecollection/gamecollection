@@ -52,6 +52,43 @@ public class ChessWrapper {
         return board.doMove(move);
     }
 
+    public boolean promotionmove(String from, String to, char figure) {
+        int move = Move.getFromString(board, from + " " + to, true);
+        int fromIndex = Move.getFromIndex(move);
+        int toIndex = Move.getToIndex(move);
+        int pieceMoved = Move.getPieceMoved(move);
+        boolean capture = Move.isCapture(move);
+        boolean check = Move.isCheck(move);
+        int movetype;
+        switch (figure) {
+            case 'b':
+                movetype = Move.TYPE_PROMOTION_BISHOP;
+                break;
+            case 'k':
+                movetype = Move.TYPE_PROMOTION_KNIGHT;
+                break;
+            case 'r':
+                movetype = Move.TYPE_PROMOTION_ROOK;
+                break;
+            case 'q':
+            default:
+                movetype = Move.TYPE_PROMOTION_QUEEN;
+                break;
+
+        }
+        int promotionmove = Move.genMove(fromIndex, toIndex, pieceMoved, capture, check, movetype);
+        return board.doMove(promotionmove);
+    }
+
+    public boolean isPromotion(String from, String to) {
+        int move = Move.getFromString(board, from + " " + to, true);
+        if (Move.isPromotion(move)) {
+            return true;
+        }
+        return false;
+
+    }
+
     public String getBestMove() {
         searchEngine.run();
         int move = searchEngine.getBestMove();
