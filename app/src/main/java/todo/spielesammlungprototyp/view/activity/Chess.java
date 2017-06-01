@@ -59,8 +59,6 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
-//        board.setPosition("pppqkppp/PPPPPPPP/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        board.setPosition("7k/P1R5/8/8/8/8/8/KR6 w -- 0 96");
         chessboardView = (CheckeredGameboardView) findViewById(R.id.gridview_chess);
         figuren = new ImageView[CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT][CheckeredGameboardView.VERTICAL_SQUARES_COUNT];
         setFieldFromFEN(board.getBoard());
