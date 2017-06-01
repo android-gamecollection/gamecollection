@@ -7,7 +7,9 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Map;
@@ -58,7 +59,8 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
-        board.setPosition("pppqkppp/PPPPPPPP/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+//        board.setPosition("pppqkppp/PPPPPPPP/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        board.setPosition("7k/P1R5/8/8/8/8/8/KR6 w -- 0 96");
         chessboardView = (CheckeredGameboardView) findViewById(R.id.gridview_chess);
         figuren = new ImageView[CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT][CheckeredGameboardView.VERTICAL_SQUARES_COUNT];
         setFieldFromFEN(board.getBoard());
@@ -112,7 +114,7 @@ public class Chess extends GameActivity {
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_chess_promotion_dialog, null);
         TextView title = new TextView(this);
-        title.setText(R.string.game_consolechess_promotion_dialog_titel);
+        title.setText(R.string.game_chess_promotion_dialog_title);
         title.setBackgroundColor(Color.DKGRAY);
         title.setPadding(10, 10, 10, 10);
         title.setGravity(Gravity.CENTER);
@@ -139,7 +141,8 @@ public class Chess extends GameActivity {
         board.promotionmove(mt.numToString(from).toLowerCase(), mt.numToString(to).toLowerCase(), c);
         chessboardView.clearColors();
         animatefigure(from, to);
-        aimove();
+        if (board.isEndgame() == 0)
+            aimove();
     }
 
     public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position) {
@@ -159,21 +162,33 @@ public class Chess extends GameActivity {
     }
 
     public void update() {
+        Log.d("Chess.java", "update()");
         int endgame = board.isEndgame();
         if (endgame != 0) {
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.chess_ralativelayout);
-            if (endgame == 1) {
-                Snackbar bar = Snackbar.make(relativeLayout, "Schachmatt, Weiß hat gewonnen", Snackbar.LENGTH_LONG);
-                bar.show();
+            int gameoverReason;
+            switch (endgame) {
+                case 1:
+                    gameoverReason = R.string.game_chess_gameover_checkmate_white;
+                    break;
+                case -1:
+                    gameoverReason = R.string.game_chess_gameover_checkmate_black;
+                    break;
+                case 99:
+                    gameoverReason = R.string.game_chess_gameover_stalemate;
+                    break;
+                default:
+                    gameoverReason = R.string.game_chess_gameover_noreason;
             }
-            if (endgame == -1) {
-                Snackbar bar = Snackbar.make(relativeLayout, "Schachmatt, Schwarz hat gewonnen", Snackbar.LENGTH_LONG);
-                bar.show();
-            }
-            if (endgame == 99) {
-                Snackbar bar = Snackbar.make(relativeLayout, "Patt", Snackbar.LENGTH_LONG);
-                bar.show();
-            }
+            String snackbarText = getString(R.string.game_chess_snackbar_gameover) + getString(gameoverReason);
+            CoordinatorLayout chessLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
+            final Snackbar snackbar = Snackbar.make(chessLayout, snackbarText, Snackbar.LENGTH_INDEFINITE);
+            snackbar.setActionTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+            snackbar.setAction(R.string.ok, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+            snackbar.show();
         }
         setFieldFromFEN(board.getBoard());
         addImages();
