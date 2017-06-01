@@ -4,10 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.Map;
 
@@ -108,9 +111,16 @@ public class Chess extends GameActivity {
     public void promotionDialog(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_chess_promotion_dialog, null);
+        TextView title = new TextView(this);
+        title.setText(R.string.game_consolechess_promotion_dialog_titel);
+        title.setBackgroundColor(Color.DKGRAY);
+        title.setPadding(10, 10, 10, 10);
+        title.setGravity(Gravity.CENTER);
+        title.setTextColor(Color.WHITE);
+        title.setTextSize(20);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view)
-                .setTitle("Select a figure")
+                .setCustomTitle(title)
                 .setCancelable(false);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();

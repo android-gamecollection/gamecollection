@@ -15,12 +15,13 @@
     <string name="objErfolg">objekt erfolgreich erstellt</string>
     <string name="debug">Debugger wurde erfolgreich erreicht</string>
 
-    <!-- Console Chess -->
+    <!-- Chess -->
     <string name="game_consolechess_enter_cmd_here">Bitte Command eingeben</string>
     <string name="game_consolechess_confirm_input">desc_button_confirm</string>
     <string name="game_consolechess_cmd_help">Available commands:\nhelp, restart, show, move &lt;from&gt; &lt;to&gt;</string>
     <string name="game_consolechess_err_invalid_cmd">Not a valid command</string>
     <string name="game_consolechess_err_invalid_move">Invalid move</string>
+    <string name="game_consolechess_promotion_dialog_titel">Select a figure</string>
 
     <!-- Strings für NavDrawer START -->
     <string name="openDrawer">open_drawer</string>
