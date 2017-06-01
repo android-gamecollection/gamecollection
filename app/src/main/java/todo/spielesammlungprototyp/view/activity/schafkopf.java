@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.FileOutputStream;
 
 import ch.aplu.android.Location;
@@ -83,13 +80,12 @@ public class schafkopf extends CardGame
                 }
 
                 public void atTarget(Card card, Location targetLocation) {
-
-                    /*if(bids[1].isEmpty()){
+/*
+                    if(bids[1].isEmpty()){
                         showToast("block");
-
                         blockNotPlayableCards(1);
-                    }*/
-                    /*else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+                    }
+                    else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
 
                             if (sticht(0) == 0)
                             {
@@ -132,10 +128,9 @@ public class schafkopf extends CardGame
 
 
                 public void atTarget(Card card, Location targetLocation) {
-/*
-                    if(bids[0].isEmpty()){
-                        showToast("block");
 
+                    /*if(bids[0].isEmpty()){
+                        showToast("block");
                         blockNotPlayableCards(0);
                     }
                     else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
@@ -241,15 +236,29 @@ public class schafkopf extends CardGame
     {
         if(playerWon==0)
         {
-            for(int i=0;i<8;i++)hands[i].setTouchEnabled(true);
-            for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
-
+            /*
+            //FÜR KARTEN BLOCKEN
+            if(bids[0].isEmpty() && !bids[1].isEmpty()){
+                for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
+            }
+            else{*/
+            for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(true);
+            for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(false);
+            //}
         }
         if(playerWon==1)
         {
-            for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
-            for(int i=8;i<16;i++)hands[i].setTouchEnabled(true);
-            //showToast("Player  2");
+            /*
+            //FÜR KARTEN BLOCKEN
+            if(bids[1].isEmpty() && !bids[0].isEmpty()){
+                for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
+            }
+            else {*/
+                for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(false);
+                for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(true);
+                //showToast("Player  2");
+            //}
+
         }
     }
 
@@ -472,31 +481,28 @@ public class schafkopf extends CardGame
 
 
     public Hand returnNewHandWithUpperCards(int player){
-        Hand[] hsp = new Hand[8];
         Hand h = new Hand(deck);
+        Hand[] all = new Hand[16];
+        all = hands;
 
         if(player == 0){
 
         for(int i = 0; i < 8; i++){
-                h.insert(hands[i].getFirst(), false);
+                h.insert(all[i].getFirst(), false);
                 if(i == 7)return h;
         }
 
         }
 
-        if(player == 1){
+        else if(player == 1){
 
-            for(int i = 0; i < 8; i ++) {
-                for(int j = 8; j < 16; i++) {
-                    hsp[i] = hands[j];
-                    for(int d = 0; d < 8; i++){
-                        h.insert(hsp[d].getFirst(), false);
-                    if(d == 7)return h;
-                    }
+            for(int i = 8; i < 16; i ++) {
+                h.insert(all[i].getFirst(),false);
+                if(i == 15)return h;
+
                 }
-            }
-
         }
+
     return h;
     }
 
@@ -514,14 +520,15 @@ public class schafkopf extends CardGame
                     && isTrumpf(otherPlayer))
             {
              playable.insert(hand.getFirst(), false);
-                playable.removeFirst(false);
+                hand.removeFirst(false);
             }
 
-            else if (hand.getFirst().getSuitId() == bids[otherPlayer].getLast().getSuitId()){
+            else if (hand.getFirst().getSuit() == bids[otherPlayer].getLast().getSuit()){
              playable.insert(hand.getFirst(), false);
-                playable.removeFirst(false);
+                hand.removeFirst(false);
             }
             else if(i == 7)return playable;
+            else{hand.removeFirst(false);}
         }
         return playable;
     }
@@ -536,38 +543,40 @@ public class schafkopf extends CardGame
         showToast("cardsplayable created");
 
         if (Player == 0) {
-            for (int i = 0; i < 8; i++) {
-                if (!playable.contains(hands[i].getFirst()))
-                {
-                hands[i].setTouchEnabled(false);
-                showToast("Disabled");
-                }
-                else
-                {
-                hands[i].setTouchEnabled(true);
-                showToast("Enabled");
-                }
+            if(playable.isEmpty()){
+                for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
             }
-            setPlayerMove(0);
-
+            else{
+                    for (int i = 0; i < 8; i++) {
+                        if (!playable.contains(hands[i].getFirst())) {
+                            hands[i].setTouchEnabled(false);
+                            //showToast("Disabled");
+                        } else if (playable.contains(hands[i].getFirst())) {
+                            hands[i].setTouchEnabled(true);
+                            //showToast("Enabled");
+                        }
+                    }
+                    setPlayerMove(0);
+                }
         }
-        if (Player == 1) {
-            for (int i = 8; i < 16; i++) {
-                if (!playable.contains(hands[i].getFirst()))
-                {
-                    hands[i].setTouchEnabled(false);
-                    showToast("Disabled");
-                }
-                else if(playable.contains(hands[i].getFirst()))
-                {
-                    hands[i].setTouchEnabled(true);
-                    showToast("Enabled");
-
-                }
+        else if (Player == 1) {
+            if(playable.isEmpty()){
+                for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
             }
-            setPlayerMove(1);
+            else {
+                for (int i = 8; i < 16; i++) {
+                    if (!playable.contains(hands[i].getFirst())) {
+                        hands[i].setTouchEnabled(false);
+                        //showToast("Disabled");
+                    } else if (playable.contains(hands[i].getFirst())) {
+                        hands[i].setTouchEnabled(true);
+                        //showToast("Enabled");
 
-        }
+                    }
+                }
+                setPlayerMove(1);
+            }
+            }
     }
 
 
