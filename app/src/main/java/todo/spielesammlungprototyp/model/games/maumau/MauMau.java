@@ -1,9 +1,5 @@
 package todo.spielesammlungprototyp.model.games.maumau;
 
-/**
- * Created by phil2 on 23.04.2017.
- */
-
 // MauMau2.java
 // For debugging, see comments // Debug
 

@@ -1,9 +1,5 @@
 package todo.spielesammlungprototyp.view.activity;
 
-/**
- * Created by phil2 on 23.04.2017.
- */
-
 import android.content.Intent;
 import android.view.View;
 
