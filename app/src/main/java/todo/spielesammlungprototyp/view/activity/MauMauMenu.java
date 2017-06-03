@@ -5,7 +5,6 @@ package todo.spielesammlungprototyp.view.activity;
  */
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 
 import todo.spielesammlungprototyp.R;
@@ -14,9 +13,8 @@ import todo.spielesammlungprototyp.model.games.maumau.MauMau;
 public class MauMauMenu extends GameActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        getIntent().putExtra(GameActivity.KEY_LAYOUT, R.layout.activity_maumaumenu);
-        super.onCreate(savedInstanceState);
+    protected int onLayoutRequest() {
+        return R.layout.activity_maumaumenu;
     }
 
     public void gotoMauMauGame(View view) {
