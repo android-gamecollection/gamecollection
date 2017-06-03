@@ -89,7 +89,6 @@ public class Chess extends GameActivity {
     }
 
     public void trymove(Tuple<Integer, Integer> tuple) {
-        MoveTranslator mt = MoveTranslator.getInstance();
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
@@ -99,11 +98,11 @@ public class Chess extends GameActivity {
         } else if (logged.equals(tuple)) {
             logged = null;
             chessboardView.clearColors();
-        } else if (board.isPromotion(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
+        } else if (board.isPromotion(MoveTranslator.numToString(logged), MoveTranslator.numToString(tuple))) {
             promotionDialog(logged, tuple);
             logged = null;
         } else {
-            if (board.move(mt.numToString(logged).toLowerCase(), mt.numToString(tuple).toLowerCase())) {
+            if (board.move(MoveTranslator.numToString(logged), MoveTranslator.numToString(tuple))) {
                 animatefigure(logged, tuple);
                 logged = null;
                 chessboardView.clearColors();
@@ -139,8 +138,7 @@ public class Chess extends GameActivity {
     }
 
     public void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
-        MoveTranslator mt = MoveTranslator.getInstance();
-        board.promotionmove(mt.numToString(from).toLowerCase(), mt.numToString(to).toLowerCase(), c);
+        board.promotionmove(MoveTranslator.numToString(from), MoveTranslator.numToString(to), c);
         chessboardView.clearColors();
         animatefigure(from, to);
         if (board.isEndgame() == 0)
@@ -156,9 +154,8 @@ public class Chess extends GameActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                MoveTranslator mt = MoveTranslator.getInstance();
                 String move = board.aimove();
-                animatefigure(mt.stringToNum(move.substring(0, 2)), mt.stringToNum(move.substring(2, 4)));
+                animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
             }
         }, 1000);
     }

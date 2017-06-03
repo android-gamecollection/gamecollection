@@ -111,7 +111,6 @@ public class ChessWrapper {
     public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> from, String FEN) {
         ArrayList<Tuple<Integer, Integer>> liste = new ArrayList<>();
         Board testboard = null;
-        MoveTranslator mt = MoveTranslator.getInstance();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (testboard == null) {
@@ -119,7 +118,7 @@ public class ChessWrapper {
                     testboard.setFen(FEN);
                 }
                 Tuple<Integer, Integer> to = new Tuple<>(i, j);
-                String smove = (mt.numToString(from) + " " + mt.numToString(to)).toLowerCase();
+                String smove = MoveTranslator.numToString(from) + " " + MoveTranslator.numToString(to);
                 int move = Move.getFromString(testboard, smove, true);
                 if (testboard.doMove(move)) {
                     liste.add(to);
