@@ -34,21 +34,21 @@
 
         <game
             title="Bauernkrieg"
-            description="Trumpfkartenspiel"
+            description="Einfaches Stechen"
             icon="@mipmap/ic_launcher"
             rules="@string/bauernkrieg_regeln"
             activity="BauernkriegMenu" />
 
         <game
             title="Mau Mau"
-            description="TODO: Change"
+            description="Klassisches Trumpfkartenspiel"
             icon="@mipmap/ic_launcher"
             rules="@string/maumau_regeln"
             activity="MauMauMenu" />
 
         <game
-            title="Schafkopf"
-            description="TODO: Change"
+            title="Offiziersschafkopf"
+            description="2 Personen Schafkopf"
             icon="@mipmap/ic_launcher"
             rules="no rules"
             activity="schafkopf" />

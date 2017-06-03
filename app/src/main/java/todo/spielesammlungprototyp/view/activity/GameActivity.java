@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,7 +20,6 @@ import todo.spielesammlungprototyp.R;
 
 public abstract class GameActivity extends AppCompatActivity {
 
-    public final static String KEY_LAYOUT = "layout";
     public final static String KEY_RULES = "rules";
     public final static String KEY_TITLE = "title";
 
@@ -27,10 +27,12 @@ public abstract class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
-        setContentView(extras.getInt(KEY_LAYOUT));
+        setContentView(onLayoutRequest());
         setTitle(extras.getString(KEY_TITLE));
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -38,7 +40,7 @@ public abstract class GameActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.app_bar_items, menu);
 
-        TypedArray typedArray = obtainStyledAttributes(R.style.AppTheme_AppBarOverlay, new int[] {android.R.attr.textColorPrimary});
+        TypedArray typedArray = obtainStyledAttributes(R.style.AppTheme_AppBarOverlay, new int[]{android.R.attr.textColorPrimary});
         int themedColor = typedArray.getColor(0, Color.RED);
 
         // Change action bar icon color based on text color of current action bar theme
@@ -72,6 +74,14 @@ public abstract class GameActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Gets called when setting the content view of the activity
+     * The returned layout has to include the layout '@layout/fragment_app_bar'
+     *
+     * @return The reference to the layout
+     */
+    protected abstract int onLayoutRequest();
 
     private void showRulesDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();

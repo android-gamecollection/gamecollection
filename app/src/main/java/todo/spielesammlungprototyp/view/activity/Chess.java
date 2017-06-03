@@ -54,7 +54,6 @@ public class Chess extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getIntent().putExtra(GameActivity.KEY_LAYOUT, R.layout.activity_chess);
         super.onCreate(savedInstanceState);
 
         board = new ChessWrapper();
@@ -82,6 +81,11 @@ public class Chess extends GameActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected int onLayoutRequest() {
+        return R.layout.activity_chess;
     }
 
     public void trymove(Tuple<Integer, Integer> tuple) {
