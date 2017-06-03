@@ -51,6 +51,7 @@ public class Chess extends GameActivity {
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
     private ChessWrapper board;
+    private final int ANIMATION_SPEED = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class Chess extends GameActivity {
         return R.layout.activity_chess;
     }
 
-    public void trymove(Tuple<Integer, Integer> tuple) {
+    private void trymove(Tuple<Integer, Integer> tuple) {
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
@@ -111,7 +112,7 @@ public class Chess extends GameActivity {
         }
     }
 
-    public void promotionDialog(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
+    private void promotionDialog(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_chess_promotion_dialog, null);
         TextView title = new TextView(this);
@@ -137,7 +138,7 @@ public class Chess extends GameActivity {
         bishop.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'b'));
     }
 
-    public void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
+    private void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
         board.promotionmove(MoveTranslator.numToString(from), MoveTranslator.numToString(to), c);
         chessboardView.clearColors();
         animatefigure(from, to);
@@ -145,11 +146,11 @@ public class Chess extends GameActivity {
             aimove();
     }
 
-    public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position) {
+    private Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position) {
         return board.getPossibleMoves(position, board.getBoard());
     }
 
-    public void aimove() {
+    private void aimove() {
         android.os.Handler handler = new android.os.Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -157,10 +158,10 @@ public class Chess extends GameActivity {
                 String move = board.aimove();
                 animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
             }
-        }, 1000);
+        }, ANIMATION_SPEED + 1000);
     }
 
-    public void update() {
+    private void update() {
         Log.d("Chess.java", "update()");
         int endgame = board.isEndgame();
         if (endgame != 0) {
@@ -193,8 +194,7 @@ public class Chess extends GameActivity {
         addImages();
     }
 
-    public boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
-
+    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
         if (figuren[from.first][from.last] != null) {
             Point rectFrom = chessboardView.getRectangleCoordinates(from);
             Point rectTo = chessboardView.getRectangleCoordinates(to);
@@ -203,7 +203,7 @@ public class Chess extends GameActivity {
             ObjectAnimator animY = ObjectAnimator.ofFloat(figuren[from.first][from.last], "y", rectFrom.y, rectTo.y);
             AnimatorSet animset = new AnimatorSet();
             animset.playTogether(animX, animY);
-            animset.setDuration(500);
+            animset.setDuration(ANIMATION_SPEED);
             animset.setInterpolator(new AccelerateDecelerateInterpolator());
             animset.start();
             animset.addListener(new Animator.AnimatorListener() {
