@@ -1,14 +1,17 @@
 package todo.spielesammlungprototyp.view;
 
-public class GameCardView {
+import android.support.annotation.NonNull;
+
+public class GameCardView implements Comparable<GameCardView> {
 
     private int gameIconId;
-    private String gameTitle, gameDetails, activity;
+    private String gameTitle, gameDescription, gameRules, activity;
 
-    public GameCardView(int gameIconId, String gameTitle, String gameDetails, String activity) {
+    public GameCardView(int gameIconId, String gameTitle, String gameDescription, String gameRules, String activity) {
         this.gameIconId = gameIconId;
         this.gameTitle = gameTitle;
-        this.gameDetails = gameDetails;
+        this.gameDescription = gameDescription;
+        this.gameRules = gameRules;
         this.activity = activity;
     }
 
@@ -20,8 +23,12 @@ public class GameCardView {
         return gameTitle;
     }
 
-    public String getGameDetails() {
-        return gameDetails;
+    public String getGameDescription() {
+        return gameDescription;
+    }
+
+    public String getGameRules() {
+        return gameRules;
     }
 
     public String getActivity() {
@@ -30,6 +37,11 @@ public class GameCardView {
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %s", gameIconId, gameTitle, gameDetails, activity);
+        return String.format("%s, %s, %s, %s", gameIconId, gameTitle, gameDescription, activity);
+    }
+
+    @Override
+    public int compareTo(@NonNull GameCardView other) {
+        return this.getGameTitle().compareTo(other.getGameTitle());
     }
 }

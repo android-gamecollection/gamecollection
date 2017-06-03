@@ -33,7 +33,7 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
         GameCardView SCV = gameCardViews.get(position);
         holder.gameIcon.setImageResource(SCV.getGameIconId());
         holder.gameTitle.setText(SCV.getGameTitle());
-        holder.gameDetails.setText(SCV.getGameDetails());
+        holder.gameDescription.setText(SCV.getGameDescription());
     }
 
     @Override
@@ -50,14 +50,14 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
         final RelativeLayout card;
         final ImageView gameIcon;
         final TextView gameTitle;
-        final TextView gameDetails;
+        final TextView gameDescription;
 
         GameViewHolder(View view) {
             super(view);
             card = (RelativeLayout) view.findViewById(R.id.card);
             gameIcon = (ImageView) view.findViewById(R.id.image_game);
             gameTitle = (TextView) view.findViewById(R.id.text_game_title);
-            gameDetails = (TextView) view.findViewById(R.id.text_game_details);
+            gameDescription = (TextView) view.findViewById(R.id.text_game_description);
 
             card.setOnClickListener(new View.OnClickListener() {
                 @Override

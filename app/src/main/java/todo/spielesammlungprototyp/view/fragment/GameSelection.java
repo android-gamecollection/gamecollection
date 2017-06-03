@@ -18,6 +18,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import todo.spielesammlungprototyp.view.activity.GameActivity;
 public class GameSelection extends Fragment implements ClickListener {
 
     private final static String EXTRA_CATEGORY = "category";
-    private static final String[] XML_ATTRIBUTES = {"icon", "title", "description", "activity"};
+    private static final String[] XML_ATTRIBUTES = {"icon", "title", "description", "rules", "activity"};
     private final String ACTIVITY_PACKAGE = ".view.activity.";
     private final String TAG = getClass().getSimpleName();
     private Map<String, List<GameCardView>> games = new HashMap<>();
@@ -51,6 +52,7 @@ public class GameSelection extends Fragment implements ClickListener {
 
         gameCategory = getArguments().getString(EXTRA_CATEGORY);
         loadGamesFromXml();
+        sortGameList();
     }
 
     @Nullable
@@ -79,6 +81,7 @@ public class GameSelection extends Fragment implements ClickListener {
         String str = context.getPackageName() + ACTIVITY_PACKAGE + gameCardView.getActivity();
         intent.setClassName(context, str);
         intent.putExtra(GameActivity.KEY_TITLE, gameCardView.getGameTitle());
+        intent.putExtra(GameActivity.KEY_RULES, gameCardView.getGameRules());
         context.startActivity(intent);
     }
 
@@ -98,10 +101,11 @@ public class GameSelection extends Fragment implements ClickListener {
                     case 3:
                         String[] attributes = XML_ATTRIBUTES.clone();
                         for (int i = 0; i < attributes.length; i++) {
-                            attributes[i] = xmlGames.getAttributeValue(null, attributes[i]);
+                            String attributeValue = xmlGames.getAttributeValue(null, attributes[i]);
+                            attributes[i] = dereferenceString(attributeValue);
                         }
                         int icon = getResourceIdFromString(attributes[0]);
-                        GameCardView gameCardView = new GameCardView(icon, attributes[1], attributes[2], attributes[3]);
+                        GameCardView gameCardView = new GameCardView(icon, attributes[1], attributes[2], attributes[3], attributes[4]);
                         games.get(gameCategory).add(gameCardView);
                         break;
                 }
@@ -121,6 +125,12 @@ public class GameSelection extends Fragment implements ClickListener {
         }
     }
 
+    private void sortGameList() {
+        for (Map.Entry<String, List<GameCardView>> entry : games.entrySet()) {
+            Collections.sort(entry.getValue());
+        }
+    }
+
     /**
      * Converts a resource from string-form to integer-form
      *
@@ -131,5 +141,11 @@ public class GameSelection extends Fragment implements ClickListener {
         if (resourceStr.startsWith("@")) resourceStr = resourceStr.substring(1);
         String[] splitString = resourceStr.split("/");
         return getResources().getIdentifier(splitString[1], splitString[0], getContext().getPackageName());
+    }
+
+    private String dereferenceString(String resourceStr) {
+        if (!resourceStr.startsWith("@string/")) return resourceStr;
+        int identifier = getResourceIdFromString(resourceStr);
+        return getString(identifier);
     }
 }
