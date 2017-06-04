@@ -12,16 +12,17 @@ public class CmdProcessor {
     private final ChessBoard chessBoard;
 
     public CmdProcessor(ConsoleChess consoleChessActivity) {
-        this.consoleChessActivity = consoleChessActivity;
-        this.chessBoard = new ChessBoard();
-        chessBoard.setStartPosition();
-        processInput("ov");
+        this(consoleChessActivity, null);
     }
 
     public CmdProcessor(ConsoleChess consoleChessActivity, String savegame) {
         this.consoleChessActivity = consoleChessActivity;
         this.chessBoard = new ChessBoard();
-        chessBoard.setStartPosition(savegame);
+        if (savegame == null) {
+            chessBoard.setStartPosition();
+        } else {
+            chessBoard.setStartPosition(savegame);
+        }
         processInput("ov");
     }
 
