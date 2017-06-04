@@ -15,12 +15,14 @@ public class CmdProcessor {
         this.consoleChessActivity = consoleChessActivity;
         this.chessBoard = new ChessBoard();
         chessBoard.setStartPosition();
+        processInput("ov");
     }
 
     public CmdProcessor(ConsoleChess consoleChessActivity, String savegame) {
         this.consoleChessActivity = consoleChessActivity;
         this.chessBoard = new ChessBoard();
         chessBoard.setStartPosition(savegame);
+        processInput("ov");
     }
 
     public String getFen() {

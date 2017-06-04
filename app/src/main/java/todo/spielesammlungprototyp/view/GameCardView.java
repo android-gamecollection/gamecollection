@@ -2,10 +2,12 @@ package todo.spielesammlungprototyp.view;
 
 import android.support.annotation.NonNull;
 
+import todo.spielesammlungprototyp.view.activity.GameActivity;
+
 public class GameCardView implements Comparable<GameCardView> {
 
     private int gameIconId;
-    private String gameTitle, gameDescription, gameRules, activity;
+    private String gameTitle, gameDescription, gameRules, activity, uuid;
 
     public GameCardView(int gameIconId, String gameTitle, String gameDescription, String gameRules, String activity) {
         this.gameIconId = gameIconId;
@@ -13,6 +15,15 @@ public class GameCardView implements Comparable<GameCardView> {
         this.gameDescription = gameDescription;
         this.gameRules = gameRules;
         this.activity = activity;
+    }
+
+    public GameCardView(int gameIconId, String gameTitle, String gameDescription, String gameRules, String activityClass, String uuid) {
+        this.gameIconId = gameIconId;
+        this.gameTitle = gameTitle;
+        this.gameDescription = gameDescription;
+        this.gameRules = gameRules;
+        this.activity = activityClass;
+        this.uuid = uuid;
     }
 
     public int getGameIconId() {
@@ -33,6 +44,10 @@ public class GameCardView implements Comparable<GameCardView> {
 
     public String getActivity() {
         return activity;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     @Override

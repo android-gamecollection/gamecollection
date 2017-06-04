@@ -1,15 +1,34 @@
 package todo.spielesammlungprototyp.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.tools.Savegame;
+import todo.spielesammlungprototyp.tools.SavegameStorage;
+import todo.spielesammlungprototyp.view.ClickListener;
+import todo.spielesammlungprototyp.view.GameCardView;
+import todo.spielesammlungprototyp.view.GameCardViewAdapter;
+import todo.spielesammlungprototyp.view.activity.ConsoleChess;
+import todo.spielesammlungprototyp.view.activity.GameActivity;
+
+import static todo.spielesammlungprototyp.tools.SavegameStorage.getInstance;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +38,7 @@ import todo.spielesammlungprototyp.R;
  * Use the {@link Hub#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Hub extends Fragment {
+public class Hub extends Fragment implements ClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +49,10 @@ public class Hub extends Fragment {
     private String mParam2;
     private FloatingActionButton fab;
     private OnFragmentInteractionListener mListener;
+    private ArrayList<GameCardView> games = new ArrayList<>();
+    private SavegameStorage savegameStorage;
+    private ArrayList<Savegame> savegames;
+    private final String ACTIVITY_PACKAGE = ".view.activity.";
 
     public Hub() {
         // Required empty public constructor
@@ -56,22 +79,44 @@ public class Hub extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        loadGames();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hub_content, container, false);
+        return inflater.inflate(R.layout.fragment_game_selection, container, false);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview_game_selection);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        GameCardViewAdapter gcvAdapter = new GameCardViewAdapter(games);
+        gcvAdapter.setClickListener(this);
+        recyclerView.setAdapter(gcvAdapter);
+    }
+
+    @Override
+    public void itemClicked(View view, int position) {
+        Intent intent = new Intent();
+        Context context = view.getContext();
+        GameCardView gameCardView = games.get(position);
+        String str = context.getPackageName() + ACTIVITY_PACKAGE + gameCardView.getActivity();
+        intent.setClassName(context, str);
+        intent.putExtra("UUID", gameCardView.getUuid());
+        context.startActivity(intent);
+    }
+
+    private void loadGames() {
+        savegameStorage = getInstance(getActivity().getApplicationContext());
+        savegames = savegameStorage.getSavegameList();
+        for(Savegame s : savegames) {
+            games.add(new GameCardView(R.mipmap.ic_launcher, s.activity, s.date.toString(), "", s.activity, s.uuid)); //TODO: gameIcon, gameTitle & gameRules have to be dependent too
+        }
     }
 
     @Override

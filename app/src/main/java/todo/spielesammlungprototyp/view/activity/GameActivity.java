@@ -15,7 +15,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.tools.Savegame;
+import todo.spielesammlungprototyp.tools.SavegameStorage;
+
+import static todo.spielesammlungprototyp.tools.SavegameStorage.getInstance;
 
 
 public abstract class GameActivity extends AppCompatActivity {
@@ -23,6 +29,11 @@ public abstract class GameActivity extends AppCompatActivity {
     public final static String KEY_LAYOUT = "layout";
     public final static String KEY_RULES = "rules";
     public final static String KEY_TITLE = "title";
+    private SavegameStorage savegameStorage;
+    public Savegame currentSaveGame;
+    public String uuid;
+    public boolean isSaved;
+
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +43,54 @@ public abstract class GameActivity extends AppCompatActivity {
         setTitle(extras.getString(KEY_TITLE));
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Load Savegame if "Intent" has Extra
+        savegameStorage = getInstance(this);
+        savegameLoadChecker(savedInstanceState);
+        isSaved = false;
+    }
+
+    private void savegameLoadChecker(Bundle savedInstanceState) {
+        if(uuidInspector(savedInstanceState)) {
+            ArrayList<Savegame> listOfGames = savegameStorage.getSavegameList();
+            if (!listOfGames.isEmpty()) {
+                currentSaveGame = savegameStorage.findByUUID(uuid);
+            }
+        }
+    }
+
+    private boolean uuidInspector(Bundle savedInstanceState) {
+        boolean erg;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                erg = false;
+            } else {
+                uuid = extras.getString("UUID");
+                erg = uuid != null;
+            }
+        } else {
+            uuid = savedInstanceState.getString("UUID");
+            erg = uuid != null;
+
+        }
+        return erg;
+    }
+
+    public void saveGame(String value) {
+        if(!isSaved) {
+            Class<? extends GameActivity> clazz = this.getClass();
+            if (currentSaveGame == null) {
+                currentSaveGame = new Savegame(value, clazz);
+                savegameStorage.addSavegame(currentSaveGame);
+            } else {
+                if(!currentSaveGame.value.equals(value)) {
+                    currentSaveGame.value = value;
+                    savegameStorage.updateSavegame(currentSaveGame);
+                }
+            }
+        }
+        isSaved = true;
     }
 
     @Override
@@ -53,6 +112,18 @@ public abstract class GameActivity extends AppCompatActivity {
 
         typedArray.recycle();
         return true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("UUID", currentSaveGame.uuid);
+
     }
 
     @Override

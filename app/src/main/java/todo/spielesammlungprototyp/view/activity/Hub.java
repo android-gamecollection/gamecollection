@@ -131,7 +131,6 @@ public class Hub extends AppCompatActivity {
         }
     }
 
-
     /***
      * Load navigation menu header information
      * like background image, profile image

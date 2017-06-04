@@ -10,12 +10,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
-import todo.spielesammlungprototyp.tools.SavegameStorage;
-import todo.spielesammlungprototyp.tools.Savegame;
 
 public class ConsoleChess extends GameActivity {
 
@@ -23,8 +19,8 @@ public class ConsoleChess extends GameActivity {
     private TextView textConsole;
     private EditText inputConsole;
     private CmdProcessor cmdProcessor;
-    SavegameStorage savegameStorage;
-    Savegame currentSGO;
+    private String startValue = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,29 +32,38 @@ public class ConsoleChess extends GameActivity {
         inputConsole = (EditText) findViewById(R.id.edittext_input);
         setKeyboardListener();
 
-        savegameStorage = new SavegameStorage(this);
+        initCmdProcessor();
+    }
 
-        ArrayList<Savegame> listOfGames = savegameStorage.getSavegameList();
-
-        if(!listOfGames.isEmpty()) {
-            int last = listOfGames.size()-1;
-            currentSGO = listOfGames.get(last);
-            cmdProcessor = new CmdProcessor(this, currentSGO.getValue());
-
-        } else {
+    private void initCmdProcessor() {
+        // is this Activity started with a Savegame?
+        if(currentSaveGame == null) {
             cmdProcessor = new CmdProcessor(this);
+            startValue = cmdProcessor.getFen();
+        } else {
+            cmdProcessor = new CmdProcessor(this, currentSaveGame.value);
+        }
+    }
+
+    private void consoleChessSave() {
+        // put String value in ( saveGame(String value) ) for ConsoleChess is no serialization needed
+        String toSave = cmdProcessor.getFen();
+        // is it a unchanged new game?
+        if(!startValue.equals(toSave)) {
+            saveGame(toSave);
         }
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
-        if(currentSGO == null) {
-            savegameStorage.addSavegame(this, cmdProcessor.getFen());
-        } else {
-            currentSGO.setValue(cmdProcessor.getFen());
-            savegameStorage.updateSavegame(this, currentSGO);
-        }
+        consoleChessSave();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        consoleChessSave();
     }
 
     @Override

@@ -1,54 +1,32 @@
 package todo.spielesammlungprototyp.tools;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.UUID;
 
+import todo.spielesammlungprototyp.view.activity.GameActivity;
+
 public class Savegame {
 
-    private String uuid;
-    private String value;
-    private String activity;
-    private Date date;
+    public String uuid;
+    public String value;
+    public String activity;
+    public Date date;
 
-    // Empty constructor for deserialization (uses setter on "Savegame" object)
+    // Empty constructor for deserialization >>essential<<
     public Savegame() {}
 
-    public Savegame(String value, String activity) {
+    public Savegame(String value, final Class<? extends GameActivity> activity) {
         this.uuid = UUID.randomUUID().toString();
         this.value = value;
-        this.activity = activity;
+        this.activity = activity.getSimpleName();
         this.date = new Date();
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
+    public void update(String value) {
         this.value = value;
-    }
-
-    public String getActivity() {
-        return activity;
-    }
-
-    public void setActivity(String activity) {
-        this.activity = activity;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+        this.date = new Date();
     }
 }
