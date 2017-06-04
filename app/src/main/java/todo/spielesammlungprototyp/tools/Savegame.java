@@ -13,7 +13,8 @@ public class Savegame {
     public Date date;
 
     // Empty constructor for deserialization >>essential<<
-    public Savegame() {}
+    public Savegame() {
+    }
 
     public Savegame(String value, final Class<? extends GameActivity> activity) {
         this.uuid = UUID.randomUUID().toString();
