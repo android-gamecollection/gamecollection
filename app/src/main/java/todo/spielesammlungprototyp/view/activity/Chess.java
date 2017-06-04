@@ -28,7 +28,6 @@ public class Chess extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getIntent().putExtra(GameActivity.KEY_LAYOUT, R.layout.activity_chess);
         super.onCreate(savedInstanceState);
 
         setFromFen(Board.FEN_START_POSITION);
@@ -42,6 +41,11 @@ public class Chess extends GameActivity {
                 Toast.makeText(getApplicationContext(), "You Clicked at " + position, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected int onLayoutRequest() {
+        return R.layout.activity_chess;
     }
 
     public void setFromFen(String fen) {
