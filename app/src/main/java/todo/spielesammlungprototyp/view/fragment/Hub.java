@@ -7,17 +7,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.tools.Savegame;
@@ -25,8 +23,6 @@ import todo.spielesammlungprototyp.tools.SavegameStorage;
 import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.view.GameCardView;
 import todo.spielesammlungprototyp.view.GameCardViewAdapter;
-import todo.spielesammlungprototyp.view.activity.ConsoleChess;
-import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 import static todo.spielesammlungprototyp.tools.SavegameStorage.getInstance;
 
@@ -115,7 +111,9 @@ public class Hub extends Fragment implements ClickListener {
         savegameStorage = getInstance(getActivity().getApplicationContext());
         savegames = savegameStorage.getSavegameList();
         for(Savegame s : savegames) {
-            games.add(new GameCardView(R.mipmap.ic_launcher, s.activity, s.date.toString(), "", s.activity, s.uuid)); //TODO: gameIcon, gameTitle & gameRules have to be dependent too
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy  hh:mm:ss", Locale.GERMANY);
+            String date = simpleDateFormat.format(s.date);
+            games.add(new GameCardView(R.mipmap.ic_launcher, s.activity, date, "", s.activity, s.uuid)); //TODO: gameIcon, gameTitle & gameRules have to be dependent too
         }
     }
 
