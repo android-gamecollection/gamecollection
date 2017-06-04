@@ -18,13 +18,13 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.tools.Savegame;
-import todo.spielesammlungprototyp.tools.SavegameStorage;
+import todo.spielesammlungprototyp.model.util.Savegame;
+import todo.spielesammlungprototyp.model.util.SavegameStorage;
 import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.view.GameCardView;
 import todo.spielesammlungprototyp.view.GameCardViewAdapter;
 
-import static todo.spielesammlungprototyp.tools.SavegameStorage.getInstance;
+import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
 
 /**
  * A simple {@link Fragment} subclass.

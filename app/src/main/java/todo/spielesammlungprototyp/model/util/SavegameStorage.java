@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.tools;
+package todo.spielesammlungprototyp.model.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
