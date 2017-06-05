@@ -24,7 +24,7 @@ import android.widget.TextView;
 import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.games.consolechess.ChessWrapper;
+import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
 import todo.spielesammlungprototyp.model.util.CharacterIterator;
 import todo.spielesammlungprototyp.model.util.MapBuilder;
 import todo.spielesammlungprototyp.model.util.MoveTranslator;

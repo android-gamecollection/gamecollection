@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
 import todo.spielesammlungprototyp.view.activity.ConsoleChess;
 
 public class CmdProcessor {
