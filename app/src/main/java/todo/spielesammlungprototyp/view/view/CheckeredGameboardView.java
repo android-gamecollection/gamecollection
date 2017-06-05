@@ -62,9 +62,13 @@ public class CheckeredGameboardView extends View {
 
         paintSuggestion = new Paint(flags);
         paintSuggestion.setColor(COLOR_SUGGESTION);
+        paintSuggestion.setStyle(Paint.Style.STROKE);
+        paintSuggestion.setStrokeWidth(10);
 
         paintHightlight = new Paint(flags);
         paintHightlight.setColor(COLOR_HIGHLIGHT);
+        paintHightlight.setStyle(Paint.Style.STROKE);
+        paintHightlight.setStrokeWidth(10);
 
         boardQuares = new Rect[HORIZONTAL_SQUARES_COUNT][VERTICAL_SQUARES_COUNT];
     }
@@ -77,11 +81,11 @@ public class CheckeredGameboardView extends View {
                 canvas.drawRect(boardQuares[i][j], paintSquare);
             }
         }
-        for (Tuple<Integer, Integer> t : highlightSquares) {
-            canvas.drawRect(boardQuares[t.first][t.last], paintSuggestion);
-        }
         for (Tuple<Integer, Integer> t : suggestionSquares) {
             canvas.drawRect(boardQuares[t.first][t.last], paintHightlight);
+        }
+        for (Tuple<Integer, Integer> t : highlightSquares) {
+            canvas.drawRect(boardQuares[t.first][t.last], paintSuggestion);
         }
     }
 
