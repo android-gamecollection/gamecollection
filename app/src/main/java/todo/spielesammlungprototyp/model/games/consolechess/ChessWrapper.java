@@ -82,11 +82,7 @@ public class ChessWrapper {
 
     public boolean isPromotion(String from, String to) {
         int move = Move.getFromString(board, from + " " + to, true);
-        if (Move.isPromotion(move)) {
-            return true;
-        }
-        return false;
-
+        return Move.isPromotion(move);
     }
 
     public String getBestMove() {

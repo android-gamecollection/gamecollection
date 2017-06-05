@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
 
-    <GridLayout
+    <ImageView
+        android:id="@+id/promotion_queen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:src="@drawable/game_chess_queen_w" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/game_chess_queen_w"
-            android:id="@+id/promotion_queen"/>
+    <ImageView
+        android:id="@+id/promotion_bishop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/game_chess_bishop_w" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/game_chess_bishop_w"
-            android:id="@+id/promotion_bishop"/>
+    <ImageView
+        android:id="@+id/promotion_knight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/game_chess_knight_w" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/game_chess_knight_w"
-            android:id="@+id/promotion_knight"/>
+    <ImageView
+        android:id="@+id/promotion_rook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/game_chess_rook_w" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/game_chess_rook_w"
-            android:id="@+id/promotion_rook"/>
-    </GridLayout>
-</RelativeLayout>
+</LinearLayout>

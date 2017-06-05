@@ -11,8 +11,4 @@
 
     <color name="background">#FFFFFF</color>
 
-    <color name="chessWhite">#FFFFFF</color>
-    <color name="chessBlack">#000000</color>
-    <color name="chessPiece">#FF5722</color>
-
 </resources>
