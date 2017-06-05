@@ -21,7 +21,7 @@ import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
 import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.view.GameCardView;
+import todo.spielesammlungprototyp.view.Game;
 import todo.spielesammlungprototyp.view.GameCardViewAdapter;
 
 import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
@@ -46,7 +46,7 @@ public class Hub extends Fragment implements ClickListener {
     private String mParam2;
     private FloatingActionButton fab;
     private OnFragmentInteractionListener mListener;
-    private ArrayList<GameCardView> games = new ArrayList<>();
+    private ArrayList<Game> games = new ArrayList<>();
     private SavegameStorage savegameStorage;
     private ArrayList<Savegame> savegames;
 
@@ -100,10 +100,10 @@ public class Hub extends Fragment implements ClickListener {
     public void itemClicked(View view, int position) {
         Intent intent = new Intent();
         Context context = view.getContext();
-        GameCardView gameCardView = games.get(position);
-        String str = context.getPackageName() + ACTIVITY_PACKAGE + gameCardView.getActivity();
+        Game game = games.get(position);
+        String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
         intent.setClassName(context, str);
-        intent.putExtra("UUID", gameCardView.getUuid());
+        intent.putExtra("UUID", game.getUuid());
         context.startActivity(intent);
     }
 
@@ -113,7 +113,7 @@ public class Hub extends Fragment implements ClickListener {
         for (Savegame s : savegames) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy  hh:mm:ss", Locale.GERMANY);
             String date = simpleDateFormat.format(s.date);
-            games.add(new GameCardView(R.mipmap.ic_launcher, s.activity, date, "", s.activity, s.uuid)); //TODO: gameIcon, gameTitle & gameRules have to be dependent too
+            games.add(new Game(R.mipmap.ic_launcher, s.activity, date, "", s.activity, s.uuid)); //TODO: gameIcon, gameTitle & gameRules have to be dependent too
         }
     }
 

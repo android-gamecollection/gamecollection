@@ -17,7 +17,7 @@ import java.util.Map;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.Games;
 import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.view.GameCardView;
+import todo.spielesammlungprototyp.view.Game;
 import todo.spielesammlungprototyp.view.GameCardViewAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 
@@ -25,7 +25,7 @@ public class GameSelection extends Fragment implements ClickListener {
 
     private final static String EXTRA_CATEGORY = "category";
     private final String ACTIVITY_PACKAGE = ".view.activity.";
-    private Map<String, List<GameCardView>> games;
+    private Map<String, List<Game>> games;
     private String gameCategory;
 
     public static GameSelection newInstance(String category) {
@@ -66,11 +66,11 @@ public class GameSelection extends Fragment implements ClickListener {
     public void itemClicked(View view, int position) {
         Intent intent = new Intent();
         Context context = view.getContext();
-        GameCardView gameCardView = games.get(gameCategory).get(position);
-        String str = context.getPackageName() + ACTIVITY_PACKAGE + gameCardView.getActivity();
+        Game game = games.get(gameCategory).get(position);
+        String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
         intent.setClassName(context, str);
-        intent.putExtra(GameActivity.KEY_TITLE, gameCardView.getGameTitle());
-        intent.putExtra(GameActivity.KEY_RULES, gameCardView.getGameRules());
+        intent.putExtra(GameActivity.KEY_TITLE, game.getGameTitle());
+        intent.putExtra(GameActivity.KEY_RULES, game.getGameRules());
         context.startActivity(intent);
     }
 }

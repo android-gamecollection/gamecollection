@@ -16,13 +16,13 @@ import java.util.Map;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.view.GameCardView;
+import todo.spielesammlungprototyp.view.Game;
 
 public final class Games {
 
     private final static Games instance = new Games();
     private static final String TAG = instance.getClass().getSimpleName();
-    public final Map<String, List<GameCardView>> games = new HashMap<>();
+    public final Map<String, List<Game>> games = new HashMap<>();
     private final String[] XML_ATTRIBUTES = {"icon", "title", "description", "rules", "activity"};
 
     private Games() {
@@ -30,15 +30,15 @@ public final class Games {
         sortGameList();
     }
 
-    public synchronized static Map<String, List<GameCardView>> getGameList() {
+    public synchronized static Map<String, List<Game>> getGameList() {
         return instance.games;
     }
 
     public static void logGameList() {
-        for (Map.Entry<String, List<GameCardView>> entry : getGameList().entrySet()) {
+        for (Map.Entry<String, List<Game>> entry : getGameList().entrySet()) {
             Log.d(TAG, entry.getKey() + ":");
 
-            for (GameCardView game : entry.getValue()) {
+            for (Game game : entry.getValue()) {
                 Log.d(TAG, game.toString());
             }
         }
@@ -56,7 +56,7 @@ public final class Games {
                 switch (xmlGames.getDepth()) {
                     case 2:
                         gameCategory = xmlGames.getName();
-                        games.put(gameCategory, new ArrayList<GameCardView>());
+                        games.put(gameCategory, new ArrayList<Game>());
                         break;
                     case 3:
                         String[] attributes = XML_ATTRIBUTES.clone();
@@ -65,8 +65,8 @@ public final class Games {
                             attributes[i] = dereferenceString(attributeValue);
                         }
                         int icon = getResourceIdFromString(attributes[0]);
-                        GameCardView gameCardView = new GameCardView(icon, attributes[1], attributes[2], attributes[3], attributes[4]);
-                        games.get(gameCategory).add(gameCardView);
+                        Game game = new Game(icon, attributes[1], attributes[2], attributes[3], attributes[4]);
+                        games.get(gameCategory).add(game);
                         break;
                 }
             }
@@ -76,7 +76,7 @@ public final class Games {
     }
 
     private void sortGameList() {
-        for (Map.Entry<String, List<GameCardView>> entry : games.entrySet()) {
+        for (Map.Entry<String, List<Game>> entry : games.entrySet()) {
             Collections.sort(entry.getValue());
         }
     }
