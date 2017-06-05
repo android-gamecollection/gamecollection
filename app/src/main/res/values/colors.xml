@@ -11,4 +11,10 @@
 
     <color name="background">#FFFFFF</color>
 
+    <!-- Chess -->
+    <color name="chessSquareDark">@android:color/darker_gray</color>
+    <color name="chessSquareLight">@android:color/white</color>
+    <color name="chessSquareHighlight">#FFFF00</color>
+    <color name="chessSquareSuggestion">#00FF00</color>
+
 </resources>

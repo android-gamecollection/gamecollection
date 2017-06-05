@@ -2,11 +2,11 @@ package todo.spielesammlungprototyp.view.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -14,15 +14,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class CheckeredGameboardView extends View {
     public static final int VERTICAL_SQUARES_COUNT = 8;
     public static final int HORIZONTAL_SQUARES_COUNT = 8;
-    private final int COLOR_LIGHT = Color.WHITE;
-    private final int COLOR_DARK = Color.GRAY;
-    private final int COLOR_HIGHLIGHT = Color.YELLOW;
-    private final int COLOR_SUGGESTION = Color.GREEN;
+    private final int COLOR_LIGHT = ContextCompat.getColor(getContext(), R.color.chessSquareLight);
+    private final int COLOR_DARK = ContextCompat.getColor(getContext(), R.color.chessSquareDark);
+    private final int COLOR_HIGHLIGHT = ContextCompat.getColor(getContext(), R.color.chessSquareHighlight);
+    private final int COLOR_SUGGESTION = ContextCompat.getColor(getContext(), R.color.chessSquareSuggestion);
     private Rect[][] boardQuares;
     private int thickness;
     private List<Tuple<Integer, Integer>> highlightSquares;
