@@ -35,7 +35,7 @@ public class CmdProcessor {
                 wrapper.setStartPosition();
                 break;
             case "show":
-                response.output = wrapper.getOverview();
+                response.output = wrapper.getBoard();
                 break;
             case "ov":
             case "overview":
@@ -97,7 +97,7 @@ public class CmdProcessor {
             if (!TextUtils.isEmpty(response.errorMessage))
                 consoleChessActivity.displayError(response.errorMessage);
             if (!TextUtils.isEmpty(response.output))
-                consoleChessActivity.addOutputln(response.output);
+                consoleChessActivity.addOutput(response.output);
         }
     }
 

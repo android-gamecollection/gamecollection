@@ -8,8 +8,10 @@
 
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#757575</color>
+    <color name="textColorTernary">#CECECE</color>
 
     <color name="background">#FFFFFF</color>
+    <color name="backgroundDarker">#FAFAFA</color>
 
     <!-- Chess -->
     <color name="chessSquareDark">@android:color/darker_gray</color>
