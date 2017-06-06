@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -80,19 +81,21 @@ public abstract class GameActivity extends AppCompatActivity {
     }
 
     public void saveGame(String value) {
-        if (!isSaved) {
-            Class<? extends GameActivity> clazz = this.getClass();
-            if (currentSaveGame == null) {
-                currentSaveGame = new Savegame(value, clazz);
-                savegameStorage.addSavegame(currentSaveGame);
-            } else {
-                if (!currentSaveGame.value.equals(value)) {
-                    currentSaveGame.value = value;
-                    savegameStorage.updateSavegame(currentSaveGame);
+        if(!TextUtils.isEmpty(value)){
+            if (!isSaved) {
+                Class<? extends GameActivity> clazz = this.getClass();
+                if (currentSaveGame == null) {
+                    currentSaveGame = new Savegame(value, clazz);
+                    savegameStorage.addSavegame(currentSaveGame);
+                } else {
+                    if (!currentSaveGame.value.equals(value)) {
+                        currentSaveGame.value = value;
+                        savegameStorage.updateSavegame(currentSaveGame);
+                    }
                 }
             }
+            isSaved = true;
         }
-        isSaved = true;
     }
 
     @Override
@@ -119,19 +122,21 @@ public abstract class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        onSaveGame();
+        saveGame(onSaveGame());
     }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString("UUID", currentSaveGame.uuid);
-        onSaveGame();
+        saveGame(onSaveGame());
+        if(isSaved) {
+            savedInstanceState.putString("UUID", currentSaveGame.uuid);
+        }
     }
 
     protected abstract void onLoadGame();
 
-    protected abstract void onSaveGame();
+    protected abstract String onSaveGame();
 
     @Override
     public void onBackPressed() {

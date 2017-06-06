@@ -44,13 +44,14 @@ public class ConsoleChess extends GameActivity {
     }
 
     @Override
-    protected void onSaveGame() {
+    protected String onSaveGame() {
         // put String value in ( saveGame(String value) ) for ConsoleChess is no serialization needed
         String toSave = cmdProcessor.getFen();
         // is it a unchanged new game?
-        if(!startValue.equals(toSave)) {
-            saveGame(toSave);
+        if(startValue.equals(toSave)) {
+            toSave = null;
         }
+        return toSave;
     }
 
     @Override

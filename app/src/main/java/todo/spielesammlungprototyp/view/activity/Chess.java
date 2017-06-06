@@ -49,8 +49,8 @@ public class Chess extends GameActivity {
     }
 
     @Override
-    protected void onSaveGame() {
-
+    protected String onSaveGame() {
+        return null;
     }
 
     @Override
