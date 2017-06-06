@@ -44,6 +44,16 @@ public class Chess extends GameActivity {
     }
 
     @Override
+    protected void onLoadGame() {
+
+    }
+
+    @Override
+    protected void onSaveGame() {
+
+    }
+
+    @Override
     protected int onLayoutRequest() {
         return R.layout.activity_chess;
     }

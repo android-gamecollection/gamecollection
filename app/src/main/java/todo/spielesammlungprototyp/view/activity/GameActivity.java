@@ -48,6 +48,8 @@ public abstract class GameActivity extends AppCompatActivity {
         savegameStorage = getInstance(this);
         savegameLoadChecker(savedInstanceState);
         isSaved = false;
+
+        onLoadGame();
     }
 
     private void savegameLoadChecker(Bundle savedInstanceState) {
@@ -117,14 +119,19 @@ public abstract class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        onSaveGame();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("UUID", currentSaveGame.uuid);
-
+        onSaveGame();
     }
+
+    protected abstract void onLoadGame();
+
+    protected abstract void onSaveGame();
 
     @Override
     public void onBackPressed() {

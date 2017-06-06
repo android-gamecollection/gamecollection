@@ -30,11 +30,10 @@ public class ConsoleChess extends GameActivity {
         textConsole = (TextView) findViewById(R.id.text_output);
         inputConsole = (EditText) findViewById(R.id.edittext_input);
         setKeyboardListener();
-
-        initCmdProcessor();
     }
 
-    private void initCmdProcessor() {
+    @Override
+    protected void onLoadGame() {
         // is this Activity started with a Savegame?
         if(currentSaveGame == null) {
             cmdProcessor = new CmdProcessor(this);
@@ -44,25 +43,14 @@ public class ConsoleChess extends GameActivity {
         }
     }
 
-    private void consoleChessSave() {
+    @Override
+    protected void onSaveGame() {
         // put String value in ( saveGame(String value) ) for ConsoleChess is no serialization needed
         String toSave = cmdProcessor.getFen();
         // is it a unchanged new game?
         if(!startValue.equals(toSave)) {
             saveGame(toSave);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        consoleChessSave();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        consoleChessSave();
     }
 
     @Override
