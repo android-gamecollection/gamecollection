@@ -1,0 +1,11 @@
+\definecolor{InfBoxBorder}{rgb}{0.55,0.55,0.55}
+\definecolor{InfBoxTop}{rgb}{0.75,0.75,0.75}
+\definecolor{InfBoxBg}{rgb}{0.95,0.95,0.95}
+
+% erstellt die box mit "ACHTUNG!" ueber dem eigentlichen text
+
+% das "hint" environment fuer eine tolle box :)
+\makeatletter\newenvironment{hintbox}%
+{\fcolorbox{InfBoxBorder}{InfBoxTop}{\parbox{\textwidth}{\begin{minipage}{4.5mm}\vspace{-0.2mm}\includegraphics[height=4.5mm]{macros/hint.pdf}\end{minipage}\textbf{Hinweis}}}\vspace{-1mm}\\\begin{lrbox}{\@tempboxa}\begin{minipage}{\textwidth}}
+{\end{minipage}\end{lrbox}\fcolorbox{InfBoxBorder}{InfBoxBg}{\usebox{\@tempboxa}} }
+\makeatother
