@@ -142,8 +142,7 @@ public class Chess extends GameActivity {
         board.promotionmove(MoveTranslator.numToString(from), MoveTranslator.numToString(to), c);
         chessboardView.clearColors();
         animatefigure(from, to);
-        if (board.isEndgame() == 0)
-            aimove();
+        aimove();
     }
 
     private Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> position) {
@@ -151,6 +150,7 @@ public class Chess extends GameActivity {
     }
 
     private void aimove() {
+        if (board.isEndgame() != 0) return;
         android.os.Handler handler = new android.os.Handler();
         handler.postDelayed(new Runnable() {
             @Override
