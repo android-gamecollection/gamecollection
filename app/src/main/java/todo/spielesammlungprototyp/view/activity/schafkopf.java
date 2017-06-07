@@ -51,7 +51,7 @@ public class schafkopf extends CardGame
 
     public schafkopf()
     {
-        super(Color.rgb(0, 0, 0), Color.WHITE, BoardType.VERT_FULL, windowZoom(600));
+        super(Color.rgb(20, 80, 0), Color.WHITE, BoardType.VERT_FULL, windowZoom(600));
     }
 
     public void main()
