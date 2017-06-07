@@ -7,7 +7,7 @@ public final class MoveTranslator {
 
     private static char colToChar(int i) {
         if ((i >= 0) && (i <= 7)) {
-            return (char) ((8 - i) + '0');
+            return (char) (i + 'a');
         } else {
             throw new IllegalArgumentException();
         }
@@ -15,7 +15,7 @@ public final class MoveTranslator {
 
     private static char rowToChar(int i) {
         if ((i >= 0) && (i <= 7)) {
-            return (char) (i + 'a');
+            return (char) ((8 - i) + '0');
         } else {
             throw new IllegalArgumentException();
         }
@@ -39,7 +39,7 @@ public final class MoveTranslator {
     }
 
     public static String numToString(Tuple<Integer, Integer> tuple) {
-        return "" + rowToChar(tuple.first) + colToChar(tuple.last);
+        return "" + colToChar(tuple.first) + rowToChar(tuple.last);
     }
 
     public static Tuple<Integer, Integer> stringToNum(String s) {
