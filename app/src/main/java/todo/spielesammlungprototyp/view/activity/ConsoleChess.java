@@ -35,7 +35,7 @@ public class ConsoleChess extends GameActivity {
     @Override
     protected void onLoadGame() {
         // is this Activity started with a Savegame?
-        if(currentSaveGame == null) {
+        if (currentSaveGame == null) {
             cmdProcessor = new CmdProcessor(this);
             startValue = cmdProcessor.getFen();
         } else {
@@ -48,7 +48,7 @@ public class ConsoleChess extends GameActivity {
         // put String value in ( saveGame(String value) ) for ConsoleChess is no serialization needed
         String toSave = cmdProcessor.getFen();
         // is it a unchanged new game?
-        if(startValue.equals(toSave)) {
+        if (startValue.equals(toSave)) {
             toSave = null;
         }
         return toSave;

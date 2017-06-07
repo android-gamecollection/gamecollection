@@ -81,7 +81,7 @@ public abstract class GameActivity extends AppCompatActivity {
     }
 
     public void saveGame(String value) {
-        if(!TextUtils.isEmpty(value)){
+        if (!TextUtils.isEmpty(value)) {
             if (!isSaved) {
                 Class<? extends GameActivity> clazz = this.getClass();
                 if (currentSaveGame == null) {
@@ -129,7 +129,7 @@ public abstract class GameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         saveGame(onSaveGame());
-        if(isSaved) {
+        if (isSaved) {
             savedInstanceState.putString("UUID", currentSaveGame.uuid);
         }
     }
