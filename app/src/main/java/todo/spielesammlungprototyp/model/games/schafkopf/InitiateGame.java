@@ -1,9 +1,5 @@
 package todo.spielesammlungprototyp.model.games.schafkopf;
 
-/**
- * Created by Julian Gierl on 18.05.2017. :>
- */
-
 import ch.aplu.android.Location;
 import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;

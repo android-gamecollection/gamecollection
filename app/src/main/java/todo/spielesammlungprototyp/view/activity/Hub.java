@@ -24,14 +24,10 @@ import todo.spielesammlungprototyp.view.fragment.GameSelection;
 
 public class Hub extends AppCompatActivity {
 
-    // tags used to attach the fragments
-    private static final String TAG_HUB = "hub";
-    private static final String TAG_KARTENSPIELE = "kartenspiele_auswahl";
-    private static final String TAG_BRETTSPIELE = "brettspiele_auswahl";
-    public static String currentTag = TAG_HUB;
+    private final char tagHub = '0', tagCards = '1', tagBoard = '2', tagInfo = '3', tagSettings = '4';
 
     // index to identify current nav menu item
-    private static int navItemIndex = 0;
+    public char currentTag = tagHub;
 
     // flag to load home fragment when user presses back key
     private final boolean shouldLoadHomeFragOnBackPress = true;
@@ -96,8 +92,7 @@ public class Hub extends AppCompatActivity {
         setUpNavigationView();
 
         if (savedInstanceState == null) {
-            navItemIndex = 0;
-            currentTag = TAG_HUB;
+            currentTag = tagHub;
             loadHomeFragment();
         }
     }
@@ -144,7 +139,7 @@ public class Hub extends AppCompatActivity {
 
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
-        if (getSupportFragmentManager().findFragmentByTag(currentTag) != null) {
+        if (getSupportFragmentManager().findFragmentByTag(Character.toString(currentTag)) != null) {
             drawer.closeDrawers();
 
             // show or hide the fab_new_game button
@@ -163,7 +158,7 @@ public class Hub extends AppCompatActivity {
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, currentTag);
+                fragmentTransaction.replace(R.id.frame, fragment, Character.toString(currentTag));
                 fragmentTransaction.commitAllowingStateLoss();
             }
         };
@@ -184,14 +179,14 @@ public class Hub extends AppCompatActivity {
     }
 
     private Fragment getHomeFragment() {
-        switch (navItemIndex) {
-            case 0:
+        switch (currentTag) {
+            case tagHub:
                 // Hub
                 return new todo.spielesammlungprototyp.view.fragment.Hub();
-            case 1:
+            case tagCards:
                 // Kartenspiele
                 return GameSelection.newInstance("cardgames");
-            case 2:
+            case tagBoard:
                 // Brettspiele
                 return GameSelection.newInstance("boardgames");
             default:
@@ -200,11 +195,15 @@ public class Hub extends AppCompatActivity {
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(navigationView.getMenu().getItem(navItemIndex).getTitle());
+        getSupportActionBar().setTitle(navigationView.getMenu().getItem(toIndex(currentTag)).getTitle());
     }
 
     private void selectNavMenu() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+        navigationView.getMenu().getItem(toIndex(currentTag)).setChecked(true);
+    }
+
+    private int toIndex(char currentTag) {
+        return currentTag - 48;
     }
 
     public void setUpNavigationView() {
@@ -216,31 +215,28 @@ public class Hub extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_item_hub:
-                        navItemIndex = 0;
-                        currentTag = TAG_HUB;
+                switch (menuItem.getNumericShortcut()) {
+                    case tagHub:
+                        currentTag = tagHub;
                         break;
-                    case R.id.nav_item_cardgames:
-                        navItemIndex = 1;
-                        currentTag = TAG_KARTENSPIELE;
+                    case tagCards:
+                        currentTag = tagCards;
                         break;
-                    case R.id.nav_item_boardgames:
-                        navItemIndex = 2;
-                        currentTag = TAG_BRETTSPIELE;
+                    case tagBoard:
+                        currentTag = tagBoard;
                         break;
-                    case R.id.nav_item_settings:
+                    case tagInfo:
                         // launch new intent instead of loading fragment
                         //startActivity(new Intent(Hub.this, ));
                         //drawer.closeDrawers();
                         return true;
-                    case R.id.nav_item_information:
+                    case tagSettings:
                         // launch new intent instead of loading fragment
                         //startActivity(new Intent(Hub.this, ));
                         //drawer.closeDrawers();
                         return true;
                     default:
-                        navItemIndex = 0;
+                        currentTag = tagHub;
                 }
 
                 //Checking if the item is in checked state or not, if not make it in checked state
@@ -291,9 +287,8 @@ public class Hub extends AppCompatActivity {
         if (shouldLoadHomeFragOnBackPress) {
             // checking if user is on other navigation menu
             // rather than home
-            if (navItemIndex != 0) {
-                navItemIndex = 0;
-                currentTag = TAG_HUB;
+            if (currentTag != tagHub) {
+                currentTag = tagHub;
                 loadHomeFragment();
             }
         }
@@ -303,7 +298,7 @@ public class Hub extends AppCompatActivity {
 
     // show or hide the fab_new_game
     private void toggleFab() {
-        if (navItemIndex == 0) {
+        if (currentTag == tagHub) {
             fabNewGame.show();
             fabNewGame.setClickable(true);
             fragHome = true;

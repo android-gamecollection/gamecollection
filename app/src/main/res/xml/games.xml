@@ -7,6 +7,7 @@
     <!ATTLIST game title CDATA #REQUIRED>
     <!ATTLIST game description CDATA #REQUIRED>
     <!ATTLIST game icon CDATA #REQUIRED>
+    <!ATTLIST game rules CDATA #REQUIRED>
     <!ATTLIST game activity CDATA #REQUIRED>
 ]>
 <games>
@@ -17,12 +18,14 @@
             title="Schach"
             description="Klassisches Schach"
             icon="@mipmap/ic_launcher"
+            rules="no rules"
             activity="Chess" />
 
         <game
             title="Schach"
             description="Schach mit Konsole"
             icon="@mipmap/ic_launcher"
+            rules="no rules"
             activity="ConsoleChess" />
 
     </boardgames>
@@ -33,18 +36,21 @@
             title="Bauernkrieg"
             description="Einfaches Stechen"
             icon="@mipmap/ic_launcher"
+            rules="@string/bauernkrieg_regeln"
             activity="BauernkriegMenu" />
 
         <game
             title="Mau Mau"
             description="Klassisches Trumpfkartenspiel"
             icon="@mipmap/ic_launcher"
+            rules="@string/maumau_regeln"
             activity="MauMauMenu" />
 
         <game
             title="Offiziersschafkopf"
             description="2 Personen Schafkopf"
             icon="@mipmap/ic_launcher"
+            rules="no rules"
             activity="schafkopf" />
 
     </cardgames>
