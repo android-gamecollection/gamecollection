@@ -134,6 +134,10 @@ public class CheckeredGameboardView extends View {
         setMeasuredDimension(size, size);
     }
 
+   public int getThickness() {
+        return thickness;
+    }
+
     public Tuple<Integer, Integer> getFieldFromTouch(int x, int y) {
         for (int i = 0; i < VERTICAL_SQUARES_COUNT; i++) {
             for (int j = 0; j < HORIZONTAL_SQUARES_COUNT; j++) {

@@ -47,11 +47,11 @@ public class Chess extends GameActivity {
             'p', R.drawable.game_chess_pawn_b,
             'P', R.drawable.game_chess_pawn_w
     );
+    private final int ANIMATION_SPEED = 1000;
     private CheckeredGameboardView chessboardView;
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
     private ChessWrapper board;
-    private final int ANIMATION_SPEED = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +237,7 @@ public class Chess extends GameActivity {
     }
 
     private void addImages() {
+        int imageSize = chessboardView.getThickness();
         for (int i = 0; i < CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT; i++) {
             for (int j = 0; j < CheckeredGameboardView.VERTICAL_SQUARES_COUNT; j++) {
                 if (figuren[i][j] != null) {
@@ -244,6 +245,8 @@ public class Chess extends GameActivity {
                     figuren[i][j].setX(rect.x);
                     figuren[i][j].setY(rect.y);
                     addContentView(figuren[i][j], new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    figuren[i][j].getLayoutParams().width = imageSize;
+                    figuren[i][j].getLayoutParams().height = imageSize;
                 }
             }
         }
