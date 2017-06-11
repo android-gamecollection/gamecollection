@@ -24,6 +24,7 @@ public class CheckeredGameboardView extends View {
     private final int COLOR_DARK = ContextCompat.getColor(getContext(), R.color.chessSquareDark);
     private final int COLOR_HIGHLIGHT = ContextCompat.getColor(getContext(), R.color.chessSquareHighlight);
     private final int COLOR_SUGGESTION = ContextCompat.getColor(getContext(), R.color.chessSquareSuggestion);
+    private final int STROKE_WIDTH = 10;
     private Rect[][] boardQuares;
     private int thickness;
     private List<Tuple<Integer, Integer>> highlightSquares;
@@ -63,12 +64,12 @@ public class CheckeredGameboardView extends View {
         paintSuggestion = new Paint(flags);
         paintSuggestion.setColor(COLOR_SUGGESTION);
         paintSuggestion.setStyle(Paint.Style.STROKE);
-        paintSuggestion.setStrokeWidth(10);
+        paintSuggestion.setStrokeWidth(STROKE_WIDTH);
 
         paintHightlight = new Paint(flags);
         paintHightlight.setColor(COLOR_HIGHLIGHT);
         paintHightlight.setStyle(Paint.Style.STROKE);
-        paintHightlight.setStrokeWidth(10);
+        paintHightlight.setStrokeWidth(STROKE_WIDTH);
 
         boardQuares = new Rect[HORIZONTAL_SQUARES_COUNT][VERTICAL_SQUARES_COUNT];
     }
@@ -81,11 +82,15 @@ public class CheckeredGameboardView extends View {
                 canvas.drawRect(boardQuares[i][j], paintSquare);
             }
         }
-        for (Tuple<Integer, Integer> t : suggestionSquares) {
-            canvas.drawRect(boardQuares[t.first][t.last], paintHightlight);
-        }
-        for (Tuple<Integer, Integer> t : highlightSquares) {
-            canvas.drawRect(boardQuares[t.first][t.last], paintSuggestion);
+        paintSquares(canvas, suggestionSquares, paintSuggestion);
+        paintSquares(canvas, highlightSquares, paintHightlight);
+    }
+
+    private void paintSquares(Canvas canvas, List<Tuple<Integer, Integer>> squares, Paint paint) {
+        int offset = STROKE_WIDTH / 2;
+        for (Tuple<Integer, Integer> t : squares) {
+            Rect rect = boardQuares[t.first][t.last];
+            canvas.drawRect(rect.left + offset, rect.top + offset, rect.right - offset, rect.bottom - offset, paint);
         }
     }
 

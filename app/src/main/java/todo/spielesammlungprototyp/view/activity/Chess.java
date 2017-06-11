@@ -93,8 +93,8 @@ public class Chess extends GameActivity {
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
-                chessboardView.addSuggestionColor(tuple);
-                chessboardView.addHighlightColor(getPossibleMoves(tuple));
+                chessboardView.addHighlightColor(tuple);
+                chessboardView.addSuggestionColor(getPossibleMoves(tuple));
             }
         } else if (logged.equals(tuple)) {
             logged = null;
