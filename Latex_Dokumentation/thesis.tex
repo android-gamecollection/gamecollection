@@ -1,0 +1,339 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%    Basierend auf der Vorlage von Prof. Braun, FHWS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt,oneside,numbers=noenddot,a4paper,parskip]{scrbook}
+\usepackage[utf8]{inputenc}
+\usepackage{xargs}
+\usepackage{wrapfig}
+\usepackage{csquotes}
+\usepackage[ngerman]{babel}
+\usepackage{subfigure}
+\usepackage[pdftex]{graphicx}
+\usepackage{pgfgantt}
+\usepackage[hidelinks]{hyperref}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage{pdfpages}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{everypage}
+\usepackage{lipsum}
+\usepackage{lscape}
+\usepackage{subfigure}
+\usepackage{pdfpages}  
+\usepackage[verbose]{placeins} 
+\usepackage[nouppercase,headsepline,plainfootsepline]{scrpage2}
+\usepackage{listings}		
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{color}			
+\usepackage[hypcap]{caption}
+\usepackage{subfigure}			
+\usepackage{epstopdf}		
+\usepackage{tabularx}  
+\usepackage{setspace}
+\usepackage{booktabs}
+\setcounter{secnumdepth}{2}
+\usepackage[style=numeric,backend=bibtex,sorting=none]{biblatex}
+\setcounter{tocdepth}{2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Literatur File           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliography{literatur}            
+
+%%%%%%%%%%%%%%%%%%%
+%% definitions
+%%%%%%%%%%%%%%%%%%%
+\def\BaAuthor{Frank Rügamer \& Co.}
+\def\BaTitle{\includegraphics[width= 0.6\textwidth]{resources/SM_logo_start}}
+\def\BaSupervisorTwo{Prof.\ Dr.\ Steffen Heinzl}
+\def\BaSupervisorOne{Vitaliy Schreibmann}
+\def\BaDeadline{\today}
+
+\hypersetup{
+pdfauthor={\BaAuthor},
+pdftitle={\BaTitle},
+pdfsubject={Subject},
+pdfkeywords={Keywords}
+}
+
+%%%%%%%%%%%%%%%%%%%
+%% macros to include
+%%%%%%%%%%%%%%%%%%%
+\input{macros/author}
+\input{macros/todo}
+\input{macros/boxes}
+
+%%%%%%%%%%%%%%%%%%%
+%% configs to include
+%%%%%%%%%%%%%%%%%%%
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\usepackage{calc} 
+
+\newlength\tdima 
+\newlength\tdimb 
+\newlength\offset
+\setlength\offset{6pt}
+\setlength\tdima{ \fboxsep+\fboxrule} 
+\setlength\tdimb{-\fboxsep+\fboxrule+\offset} 
+
+
+\definecolor{listinggray}{gray}{0.6}
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{%
+  \parbox{\textwidth}{\colorbox{listinggray}{\parbox{\textwidth-\offset}{#1#2#3}}\vskip+3pt}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{
+frame = tlbr, %
+columns=fullflexible, %
+ basicstyle=\scriptsize\ttfamily,
+ xleftmargin = \tdima, %
+ xrightmargin = \tdimb, %
+ tabsize=4, %
+ language=Java, %
+ upquote=false, %
+ numberfirstline=true, %
+ numberblanklines=false, %
+ numbers=left,%
+ numberstyle=\tiny, % 
+ stepnumber=1, %
+ numbersep = 10pt, %
+ float=tp, %
+ breakautoindent = true,%
+ %This tells latex to keep more distance to the element above
+ %aboveskip={1.5\baselineskip}, 
+ showstringspaces=false, %
+ extendedchars=true,%
+ prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}}, %
+ showtabs=false, %
+ showspaces=false,%
+ linewidth=\textwidth,%
+ showstringspaces=false, %
+ identifierstyle=\ttfamily, %
+ keywordstyle=\color[rgb]{0,0,1}, %
+ commentstyle=\color{gray}\upshape
+ stringstyle=\color{black}, %
+ breaklines=true, %
+ breakatwhitespace=true, %
+ columns=fullflexible, % 
+ xleftmargin=8.9mm,%                 % code einrücken (rückt nummern mit ein!)
+ framexleftmargin=22pt,%                % box so schieben, dass nummern mit drin sind
+ framexrightmargin = 0pt, %
+ escapechar=\&,						% char to escape out of listings and back to LaTeX
+ literate={«}{{\flqq{}}}1 {»}{{\frqq{}}}1 %
+} 
+\lstdefinelanguage{JavaScript}{
+	basicstyle=\scriptsize\ttfamily,
+	keywords={typeof, new, true, false, catch, function, null, catch, switch, var, if, in, while, do, else, case, break, this},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, return},
+	ndkeywordstyle=\color{red}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+\lstdefinelanguage{json}{
+	basicstyle=\scriptsize\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+
+\lstdefinelanguage{CSharp}{
+	basicstyle=\scriptsize\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    backgroundcolor=\color{background},
+	morecomment = [l]{//}, 
+	morecomment = [l]{///},
+	morecomment = [s]{/*}{*/},
+	morestring=[b]", 
+	sensitive = true,
+	morekeywords = {abstract,  event,  new,  struct,
+		as,  explicit,  null,  switch,
+		base,  extern,  object,  this,
+		bool,  false,  operator,  throw,
+		break,  finally,  out,  true,
+		byte,  fixed,  override,  try,
+		case,  float,  params,  typeof,
+		catch,  for,  private,  uint,
+		char,  foreach,  protected,  ulong,
+		checked,  goto,  public,  unchecked,
+		class,  if,  readonly,  unsafe,
+		const,  implicit,  ref,  ushort,
+		continue,  in,  return,  using,
+		decimal,  int,  sbyte,  virtual,
+		default,  interface,  sealed,  volatile,
+		delegate,  internal,  short,  void,
+		do,  is,  sizeof,  while,
+		double,  lock,  stackalloc,   
+		else,  long,  static,   
+		enum,  namespace,  string, get, set}
+}
+
+\lstset{language=xml,
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  numbersep=8pt,
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  backgroundcolor=\color{background},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  tabsize=4,
+  breaklines=true,
+  keepspaces=true,      
+  numbers=left,
+  numberstyle=\scriptsize,
+  stepnumber=1,
+  numbersep=8pt,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\scriptsize\ttfamily,
+  backgroundcolor=\color{background},
+%  moredelim=[il][\textcolor{pgrey}]{$$},
+%  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\geometry{a4paper, top=28mm, left=28mm, right=28mm, bottom=28mm, footskip=18mm}
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%
+%% Titelseite
+%%%%%%%%%%%%%%%%%%%
+
+
+\frontmatter
+\titlehead{%  {\centering Seitenkopf}
+  {Hochschule für angewandte Wissenschaften Würzburg-Schweinfurt\\
+   Fakultät Informatik und Wirtschaftsinformatik}}
+\subject{Dokumentation Programmierprojekt}
+\title{\BaTitle\\[15mm]}
+\author{\BaAuthor}
+\date{\normalsize{Eingereicht am: \today}}
+\publishers{
+  \normalsize{Betreuer: \BaSupervisorOne}\\
+  \normalsize{Zweitpr\"{u}fer: \BaSupervisorTwo}\\
+}
+
+%\uppertitleback{ }
+%\lowertitleback{ }
+
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%%
+%% abstract
+%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%
+%% Inhaltsverzeichnis
+%%%%%%%%%%%%%%%%%%%
+\tableofcontents										
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%% Main part of the thesis
+%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+\input{sections/10_Einleitung}
+\input{sections/20_Grundlagen}
+\input{sections/30_Architektur}
+\input{sections/40_Implementierung}
+\input{sections/50_Evaluierung}
+\input{sections/60_Ausblick}
+\input{sections/70_Fazit}
+\input{sections/80_Tutorial}
+\input{sections/99_Anhang}
+
+\backmatter
+
+%%%%%%%%%%%%%%%%%%%
+%% create figure list
+%%%%%%%%%%%%%%%%%%%
+
+
+\listoffigures
+\addcontentsline{toc}{chapter}{Verzeichnisse}			
+
+%%%%%%%%%%%%%%%%%%%
+%% create tables list
+%%%%%%%%%%%%%%%%%%%
+\listoftables
+
+%%%%%%%%%%%%%%%%%%%
+%% create listings list
+%%%%%%%%%%%%%%%%%%%
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{Listings}				
+
+
+\printbibliography
+\addcontentsline{toc}{chapter}{Literatur}				
+\end{document}
+
+
