@@ -3,6 +3,7 @@ package todo.spielesammlungprototyp.view.activity;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -52,6 +53,7 @@ public class Chess extends GameActivity {
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
     private ChessWrapper board;
+    private int gridSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,8 @@ public class Chess extends GameActivity {
         board = new ChessWrapper();
         board.setStartPosition();
         chessboardView = (CheckeredGameboardView) findViewById(R.id.gridview_chess);
-        figuren = new ImageView[CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT][CheckeredGameboardView.VERTICAL_SQUARES_COUNT];
+        gridSize = chessboardView.getGridSize();
+        figuren = new ImageView[gridSize][gridSize];
         setFieldFromFEN(board.getBoard());
         final ViewTreeObserver vto = chessboardView.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -93,8 +96,12 @@ public class Chess extends GameActivity {
         if (logged == null) {
             if (figuren[tuple.first][tuple.last] != null) {
                 logged = tuple;
-                chessboardView.addHighlightColor(tuple);
-                chessboardView.addSuggestionColor(getPossibleMoves(tuple));
+                if (chessboardView.isHighlightEnabled()) {
+                    chessboardView.addHighlightColor(tuple);
+                    if (chessboardView.areSuggestionsEnabled()) {
+                        chessboardView.addSuggestionColor(getPossibleMoves(tuple));
+                    }
+                }
             }
         } else if (logged.equals(tuple)) {
             logged = null;
@@ -114,6 +121,7 @@ public class Chess extends GameActivity {
 
     private void promotionDialog(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
         LayoutInflater inflater = getLayoutInflater();
+        @SuppressLint("InflateParams")
         View view = inflater.inflate(R.layout.fragment_chess_promotion_dialog, null);
         TextView title = new TextView(this);
         title.setText(R.string.game_chess_promotion_dialog_title);
@@ -186,6 +194,7 @@ public class Chess extends GameActivity {
             snackbar.setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                 }
             });
             snackbar.show();
@@ -238,12 +247,12 @@ public class Chess extends GameActivity {
 
     private void addImages() {
         int imageSize = chessboardView.getThickness();
-        for (int i = 0; i < CheckeredGameboardView.HORIZONTAL_SQUARES_COUNT; i++) {
-            for (int j = 0; j < CheckeredGameboardView.VERTICAL_SQUARES_COUNT; j++) {
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
                 if (figuren[i][j] != null) {
-                    Point rect = chessboardView.getRectangleCoordinates(new Tuple<>(i, j));
-                    figuren[i][j].setX(rect.x);
-                    figuren[i][j].setY(rect.y);
+                    Point point = chessboardView.getRectangleCoordinates(new Tuple<>(i, j));
+                    figuren[i][j].setX(point.x);
+                    figuren[i][j].setY(point.y);
                     addContentView(figuren[i][j], new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     figuren[i][j].getLayoutParams().width = imageSize;
                     figuren[i][j].getLayoutParams().height = imageSize;
@@ -296,7 +305,7 @@ public class Chess extends GameActivity {
         private Tuple<Integer, Integer> to;
         private char figur;
 
-        public PromotionClickListener(AlertDialog alertDialog, Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char figur) {
+        PromotionClickListener(AlertDialog alertDialog, Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char figur) {
             this.alertDialog = alertDialog;
             this.from = from;
             this.to = to;
@@ -304,7 +313,7 @@ public class Chess extends GameActivity {
         }
 
         public void onClick(View v) {
-            alertDialog.cancel();
+            alertDialog.dismiss();
             promotionmove(from, to, figur);
         }
     }

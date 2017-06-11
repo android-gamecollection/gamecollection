@@ -1,12 +1,13 @@
 package todo.spielesammlungprototyp.view.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -18,79 +19,125 @@ import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class CheckeredGameboardView extends View {
-    public static final int VERTICAL_SQUARES_COUNT = 8;
-    public static final int HORIZONTAL_SQUARES_COUNT = 8;
-    private final int COLOR_LIGHT = ContextCompat.getColor(getContext(), R.color.chessSquareLight);
-    private final int COLOR_DARK = ContextCompat.getColor(getContext(), R.color.chessSquareDark);
-    private final int COLOR_HIGHLIGHT = ContextCompat.getColor(getContext(), R.color.chessSquareHighlight);
-    private final int COLOR_SUGGESTION = ContextCompat.getColor(getContext(), R.color.chessSquareSuggestion);
-    private final int STROKE_WIDTH = 10;
-    private Rect[][] boardQuares;
-    private int thickness;
-    private List<Tuple<Integer, Integer>> highlightSquares;
-    private List<Tuple<Integer, Integer>> suggestionSquares;
-    private Paint paintDark;
-    private Paint paintLight;
-    private Paint paintSuggestion;
-    private Paint paintHightlight;
-
-    public CheckeredGameboardView(Context context) {
-        super(context);
-        init(null, 0);
-    }
+    private int gridSize, thickness, strokeWidth, borderStrokeWidth, highlightStrokeStyle, borderSize;
+    private Rect[][] boardSquares;
+    private List<Tuple<Integer, Integer>> highlightSquares, suggestionSquares;
+    private Paint paintDark, paintLight, paintSuggestion, paintHightlight, paintBorder;
+    private boolean disableSuggestions;
 
     public CheckeredGameboardView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(null, 0);
+        init(context.getTheme().obtainStyledAttributes(attrs, R.styleable.CheckeredGameboardView, 0, 0));
     }
 
-    public CheckeredGameboardView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(null, 0);
-    }
-
-    private void init(AttributeSet attrs, int defStyle) {
+    private void init(TypedArray attrs) {
         highlightSquares = new ArrayList<>();
         suggestionSquares = new ArrayList<>();
 
         int flags = Paint.ANTI_ALIAS_FLAG;
 
         paintDark = new Paint(flags);
-        paintDark.setColor(COLOR_DARK);
-
         paintLight = new Paint(flags);
-        paintLight.setColor(COLOR_LIGHT);
-
+        paintBorder = new Paint(flags);
         paintSuggestion = new Paint(flags);
-        paintSuggestion.setColor(COLOR_SUGGESTION);
-        paintSuggestion.setStyle(Paint.Style.STROKE);
-        paintSuggestion.setStrokeWidth(STROKE_WIDTH);
-
         paintHightlight = new Paint(flags);
-        paintHightlight.setColor(COLOR_HIGHLIGHT);
-        paintHightlight.setStyle(Paint.Style.STROKE);
-        paintHightlight.setStrokeWidth(STROKE_WIDTH);
 
-        boardQuares = new Rect[HORIZONTAL_SQUARES_COUNT][VERTICAL_SQUARES_COUNT];
+        paintBorder.setStyle(Paint.Style.STROKE);
+        paintSuggestion.setStyle(Paint.Style.STROKE);
+        paintHightlight.setStyle(Paint.Style.STROKE);
+
+        paintLight.setColor(attrs.getColor(R.styleable.CheckeredGameboardView_colorLight, Color.WHITE));
+        paintDark.setColor(attrs.getColor(R.styleable.CheckeredGameboardView_colorDark, Color.GRAY));
+        paintBorder.setColor(attrs.getColor(R.styleable.CheckeredGameboardView_colorBorder, Color.GRAY));
+        paintSuggestion.setColor(attrs.getColor(R.styleable.CheckeredGameboardView_colorSuggestion, Color.GREEN));
+        paintHightlight.setColor(attrs.getColor(R.styleable.CheckeredGameboardView_colorHighlight, Color.YELLOW));
+
+        highlightStrokeStyle = attrs.getInteger(R.styleable.CheckeredGameboardView_highlightStrokeStyle, 0);
+        borderSize = attrs.getInteger(R.styleable.CheckeredGameboardView_borderSize, 0);
+
+        disableSuggestions = attrs.getBoolean(R.styleable.CheckeredGameboardView_disableSuggestions, false);
+
+        this.gridSize = attrs.getInteger(R.styleable.CheckeredGameboardView_gridSize, 8);
+        boardSquares = new Rect[gridSize][gridSize];
+
+        attrs.recycle();
     }
 
     @Override
     public void onDraw(Canvas canvas) {
-        for (int i = 0; i < VERTICAL_SQUARES_COUNT; i++) {
-            for (int j = 0; j < HORIZONTAL_SQUARES_COUNT; j++) {
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
                 Paint paintSquare = ((i + j) % 2 == 0) ? paintLight : paintDark;
-                canvas.drawRect(boardQuares[i][j], paintSquare);
+                canvas.drawRect(boardSquares[i][j], paintSquare);
             }
         }
-        paintSquares(canvas, suggestionSquares, paintSuggestion);
-        paintSquares(canvas, highlightSquares, paintHightlight);
+        Rect firstSquare = boardSquares[0][0];
+        Rect[] lastRow = boardSquares[boardSquares.length - 1];
+        Rect lastSquare = lastRow[lastRow.length - 1];
+        if (borderStrokeWidth > 0) {
+            canvas.drawRect(outerStroke(borderStrokeWidth, firstSquare.left, firstSquare.top, lastSquare.right, lastSquare.bottom), paintBorder);
+        }
+        if (strokeWidth > 0) {
+            if (!disableSuggestions) {
+                paintSquares(canvas, suggestionSquares, paintSuggestion);
+            }
+            paintSquares(canvas, highlightSquares, paintHightlight);
+        }
     }
 
-    private void paintSquares(Canvas canvas, List<Tuple<Integer, Integer>> squares, Paint paint) {
-        int offset = STROKE_WIDTH / 2;
-        for (Tuple<Integer, Integer> t : squares) {
-            Rect rect = boardQuares[t.first][t.last];
-            canvas.drawRect(rect.left + offset, rect.top + offset, rect.right - offset, rect.bottom - offset, paint);
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+        int size = width < height ? width : height;
+        int factor;
+        HighlightStrokeStyle highlightStrokeStyle = HighlightStrokeStyle.values()[this.highlightStrokeStyle];
+        switch (highlightStrokeStyle) {
+            case THIN:
+                factor = 200;
+                break;
+            case FILL:
+                factor = 10;
+                break;
+            case NONE:
+                factor = 0;
+                break;
+            default:
+                factor = 100;
+        }
+        strokeWidth = factor != 0 ? size / factor : 0;
+
+        BorderSize borderSize = BorderSize.values()[this.borderSize];
+        switch (borderSize) {
+            case SMALL:
+                factor = 200;
+                break;
+            case BIG:
+                factor = 20;
+                break;
+            case NONE:
+                factor = 0;
+                break;
+            default:
+                factor = 100;
+        }
+        borderStrokeWidth = factor != 0 ? size / factor : 0;
+        thickness = (size - borderStrokeWidth * 2) / gridSize;
+        applyStrokes();
+        setMeasuredDimension(size, size);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                boardSquares[i][j] = new Rect();
+                boardSquares[i][j].left = i * thickness;
+                boardSquares[i][j].top = j * thickness;
+                boardSquares[i][j].right = (i + 1) * thickness;
+                boardSquares[i][j].bottom = (j + 1) * thickness;
+                boardSquares[i][j].offset(borderStrokeWidth, borderStrokeWidth);
+            }
         }
     }
 
@@ -112,36 +159,26 @@ public class CheckeredGameboardView extends View {
         invalidate();
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        for (int i = 0; i < VERTICAL_SQUARES_COUNT; i++) {
-            for (int j = 0; j < HORIZONTAL_SQUARES_COUNT; j++) {
-                boardQuares[i][j] = new Rect();
-                boardQuares[i][j].left = i * thickness;
-                boardQuares[i][j].top = j * thickness;
-                boardQuares[i][j].right = (i + 1) * thickness;
-                boardQuares[i][j].bottom = (j + 1) * thickness;
-            }
-        }
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        int size = width < height ? width : height;
-        thickness = size / 8;
-        setMeasuredDimension(size, size);
-    }
-
-   public int getThickness() {
+    public int getThickness() {
         return thickness;
     }
 
+    public int getGridSize() {
+        return gridSize;
+    }
+
+    public boolean isHighlightEnabled() {
+        return HighlightStrokeStyle.values()[highlightStrokeStyle] != HighlightStrokeStyle.NONE;
+    }
+
+    public boolean areSuggestionsEnabled() {
+        return !disableSuggestions;
+    }
+
     public Tuple<Integer, Integer> getFieldFromTouch(int x, int y) {
-        for (int i = 0; i < VERTICAL_SQUARES_COUNT; i++) {
-            for (int j = 0; j < HORIZONTAL_SQUARES_COUNT; j++) {
-                if (boardQuares[i][j].contains(x, y)) {
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                if (boardSquares[i][j].contains(x, y)) {
                     return new Tuple<>(i, j);
                 }
             }
@@ -150,9 +187,43 @@ public class CheckeredGameboardView extends View {
     }
 
     public Point getRectangleCoordinates(Tuple<Integer, Integer> tuple) {
-        Rect rect = boardQuares[tuple.first][tuple.last];
+        Rect rect = boardSquares[tuple.first][tuple.last];
         int x = this.getLeft() + rect.left;
         int y = this.getTop() + rect.top;
         return new Point(x, y);
+    }
+
+    private void paintSquares(Canvas canvas, List<Tuple<Integer, Integer>> squares, Paint paint) {
+        for (Tuple<Integer, Integer> t : squares) {
+            canvas.drawRect(innerStroke(strokeWidth, boardSquares[t.first][t.last]), paint);
+        }
+    }
+
+    private Rect innerStroke(int strokeWidth, Rect rect) {
+        int offset = strokeWidth / 2;
+        Rect newRect = new Rect(rect);
+        newRect.inset(offset, offset);
+        return newRect;
+    }
+
+    private Rect outerStroke(int strokeWidth, int left, int top, int right, int bottom) {
+        int offset = strokeWidth / 2;
+        Rect newRect = new Rect(left, top, right, bottom);
+        newRect.inset(-offset, -offset);
+        return newRect;
+    }
+
+    private void applyStrokes() {
+        paintBorder.setStrokeWidth(borderStrokeWidth);
+        paintSuggestion.setStrokeWidth(strokeWidth);
+        paintHightlight.setStrokeWidth(strokeWidth);
+    }
+
+    private enum HighlightStrokeStyle {
+        REGULAR, THIN, FILL, NONE
+    }
+
+    private enum BorderSize {
+        NORMAL, SMALL, BIG, NONE
     }
 }
