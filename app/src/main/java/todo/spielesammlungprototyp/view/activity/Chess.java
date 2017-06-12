@@ -276,7 +276,7 @@ public class Chess extends GameActivity {
         }
     }
 
-    public void setFieldFromFEN(String fen) {
+    private void setFieldFromFEN(String fen) {
         int x = 0;
         int y = 0;
         Log.d("Fen :", fen);
