@@ -8,6 +8,7 @@ import android.graphics.Color;
 import java.io.FileOutputStream;
 
 import ch.aplu.android.Location;
+import ch.aplu.android.TextActor;
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.CardGame;
@@ -141,7 +142,7 @@ public class schafkopf extends CardGame
                             transferBidsToStock(1);
                             delay(1500);
                             if(isGameOver())
-                                calculateResult();;
+                                calculateResult();
                             setPlayerMove(1);
                         } else {
                             showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
@@ -170,6 +171,8 @@ public class schafkopf extends CardGame
 
     private void calculateResult(){
         int[] points = new int[2];
+        int winnerp;
+        int looserp;
 
         for(int i=0;i<2;i++){
             points[i]= stacks[i].getNumberOfCardsWithRank(Rank.ASS) * 11
@@ -179,32 +182,41 @@ public class schafkopf extends CardGame
                     + stacks[i].getNumberOfCardsWithRank(Rank.UNTER) * 2;
         }
 
-        printResult(points);
+        if(points[0] > points[1]) {
+            winnerp = points[0];
+            looserp = points[1];
+        }
+        else {
+            winnerp = points[1];
+            looserp = points[0];
+        }
+
+        TextActor winnerLabel = new TextActor("Gewonnen!!", YELLOW,
+                TRANSPARENT, 16);
+        TextActor looserlabel = new TextActor("Verloren!!", YELLOW,
+                TRANSPARENT, 16);
 
 
-        //Anzahl der Karten mit Punkten pro Spieler herausfinden
-       /*
-        int ass = stacks[0].getNumberOfCardsWithRank(Rank.ASS);
-        int zehn = stacks[0].getNumberOfCardsWithRank(Rank.ZEHN);
-        int k = stacks[0].getNumberOfCardsWithRank(Rank.KOENIG);
-        int o = stacks[0].getNumberOfCardsWithRank(Rank.OBER);
-        int u = stacks[0].getNumberOfCardsWithRank(Rank.UNTER);
+        TextActor win = new TextActor("GEWONNEN!!", YELLOW, 16, 40);
+        TextActor loose = new TextActor("VERLOREN!!", YELLOW, 16, 40);
 
-        int ass2 = stacks[1].getNumberOfCardsWithRank(Rank.ASS);
-        int zehn2 = stacks[1].getNumberOfCardsWithRank(Rank.ZEHN);
-        int k2 = stacks[1].getNumberOfCardsWithRank(Rank.KOENIG);
-        int o2 = stacks[1].getNumberOfCardsWithRank(Rank.OBER);
-        int u2 = stacks[1].getNumberOfCardsWithRank(Rank.UNTER);
+        if (points[0] > points[1]) {
+            addActor(win, new Location(400, 850).toReal());
+            addActor(new TextActor(winnerp + "Punkte"), new Location(400, 835).toReal());
+            addActor(loose, new Location(400, 100).toReal());
+            addActor(new TextActor(looserp + "Punkte"), new Location(400, 85).toReal());
+        }
+        else if (points[0] < points[1]) {
+            addActor(win, new Location(400, 100).toReal());
+            addActor(new TextActor(winnerp + "Punkte"), new Location(400, 85).toReal());
+            addActor(loose, new Location(400, 850).toReal());
+            addActor(new TextActor(looserp + "Punkte"), new Location(400, 835).toReal());
+        }
+        else {
+            addActor(new TextActor("Unentschieden!", YELLOW, 16, 40), new Location(280, 450).toReal());
+        }
+        addActor(new TextActor("Game Over", YELLOW, 20, 40), new Location(280, 460).toReal());
 
-        //Punkte zusammen rechnen
-        ASS = 11 , ZEHN = 10, KOENIG = 4, OBER = 3, UNTER = 2, Alles andere = 0
-
-        int pointsp1 = ass * 11 + zehn * 10 + k * 4 + o * 3 + u * 2;
-        int pointsp2 = ass2 * 11 + zehn2 * 10 + k2 * 4 + o2 * 3 + u2 * 2;
-
-        //Gewinner herausfinden und ausgeben
-
-        */
 
     }
 
@@ -242,6 +254,9 @@ public class schafkopf extends CardGame
                 for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
             }
             else{*/
+            if(isGameOver())
+                calculateResult();
+
             for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(true);
             for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(false);
             //}
@@ -254,6 +269,9 @@ public class schafkopf extends CardGame
                 for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
             }
             else {*/
+            if(isGameOver())
+                calculateResult();
+
                 for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(false);
                 for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(true);
                 //showToast("Player  2");
