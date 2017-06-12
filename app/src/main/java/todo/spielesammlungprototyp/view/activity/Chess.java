@@ -109,13 +109,11 @@ public class Chess extends GameActivity {
         } else if (board.isPromotion(MoveTranslator.numToString(logged), MoveTranslator.numToString(tuple))) {
             promotionDialog(logged, tuple);
             logged = null;
-        } else {
-            if (board.move(MoveTranslator.numToString(logged), MoveTranslator.numToString(tuple))) {
-                animatefigure(logged, tuple);
-                logged = null;
-                chessboardView.clearColors();
-                aimove();
-            }
+        } else if (board.move(MoveTranslator.numToString(logged), MoveTranslator.numToString(tuple))) {
+            animatefigure(logged, tuple);
+            logged = null;
+            chessboardView.clearColors();
+            aimove();
         }
     }
 
