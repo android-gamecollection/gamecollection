@@ -10,9 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/action_bar"
-            layout="@layout/fragment_app_bar" />
+        <include layout="@layout/fragment_app_bar" />
 
         <todo.spielesammlungprototyp.view.view.CheckeredGameboardView
             android:id="@+id/gridview_chess"
