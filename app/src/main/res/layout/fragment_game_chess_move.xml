@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     android:padding="4dp">
 
     <LinearLayout
@@ -12,7 +14,8 @@
         android:divider="@drawable/shape_linear_layout_divider"
         android:dividerPadding="4dp"
         android:orientation="horizontal"
-        android:showDividers="middle">
+        android:showDividers="middle"
+        tools:ignore="UselessParent">
 
         <include layout="@layout/fragment_game_chess_halfmove" />
 

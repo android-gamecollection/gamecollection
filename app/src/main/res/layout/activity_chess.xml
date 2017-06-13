@@ -16,7 +16,9 @@
             android:id="@+id/gridview_chess"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             app:borderSize="normal"
             app:colorBorder="@color/chessSquareDark"
             app:colorDark="@color/chessSquareDark"
@@ -25,6 +27,12 @@
             app:colorSuggestion="@color/chessSquareSuggestion"
             app:gridSize="8"
             app:highlightStrokeStyle="regular" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundDarker" />
 
     </LinearLayout>
 

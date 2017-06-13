@@ -7,13 +7,19 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +31,7 @@ import android.widget.TextView;
 import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.games.chess.ChessHistoryAdapter;
 import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
 import todo.spielesammlungprototyp.model.util.CharacterIterator;
 import todo.spielesammlungprototyp.model.util.MapBuilder;
@@ -54,6 +61,8 @@ public class Chess extends GameActivity {
     private Tuple<Integer, Integer> logged;
     private ChessWrapper board;
     private int gridSize;
+    private LinearLayoutManager recyclerManager;
+    private ChessHistoryAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +94,37 @@ public class Chess extends GameActivity {
                 return true;
             }
         });
+        setupRecyclerView();
+    }
+
+    private void setupRecyclerView() {
+        RecyclerView recyclerHistory = (RecyclerView) findViewById(R.id.recyclerview_history);
+        recyclerManager = new LinearLayoutManager(this);
+        recyclerHistory.setLayoutManager(recyclerManager);
+        recyclerAdapter = new ChessHistoryAdapter();
+        recyclerHistory.setAdapter(recyclerAdapter);
+        DividerItemDecoration recyclerDecoration = new DividerItemDecoration(recyclerHistory.getContext(), recyclerManager.getOrientation());
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.shape_recyclerview_divider);
+        recyclerDecoration.setDrawable(drawable);
+        recyclerHistory.addItemDecoration(recyclerDecoration);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ChessHistoryCallback());
+        itemTouchHelper.attachToRecyclerView(recyclerHistory);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                testAddItem();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void testAddItem() {
+        recyclerAdapter.addItem();
+        recyclerManager.scrollToPosition(0);
     }
 
     @Override
@@ -313,6 +353,23 @@ public class Chess extends GameActivity {
         public void onClick(View v) {
             alertDialog.dismiss();
             promotionmove(from, to, figur);
+        }
+    }
+
+    private class ChessHistoryCallback extends ItemTouchHelper.SimpleCallback {
+
+        ChessHistoryCallback() {
+            super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
         }
     }
 }
