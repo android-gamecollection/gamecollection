@@ -14,8 +14,6 @@ public class InitiateGame {
     private Deck deck;
     schafkopf board;
 
-
-
     private final Location[] handLocations =
             {
                     new Location(100, 850),//player1

@@ -30,6 +30,25 @@ public class schafkopf extends CardGame
         ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
     }
 
+    public Location l1 = new Location(100, 750);
+    public Location l2 = new Location(200, 750);
+    public Location l3 = new Location(300, 750);
+    public Location l4 = new Location(400, 750);
+    public Location l5 = new Location(100, 550);
+    public Location l6 = new Location(200, 550);
+    public Location l7 = new Location(300, 550);
+    public Location l8 = new Location(400, 550);
+
+
+    public Location l9 = new Location(100, 200);
+    public Location l10 = new Location(200, 200);
+    public Location l11 = new Location(300, 200);
+    public Location l12 = new Location(400, 200);
+    public Location l13 = new Location(100, 400);
+    public Location l14 = new Location(200, 400);
+    public Location l15 = new Location(300, 400);
+    public Location l16 = new Location(400, 400);
+
 
     public final Location[] stackLocations =
             {
@@ -86,7 +105,8 @@ public class schafkopf extends CardGame
                         showToast("block");
                         blockNotPlayableCards(1);
                     }
-                    else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+                    else*/
+                    if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
 
                             if (sticht(0) == 0)
                             {
@@ -97,6 +117,8 @@ public class schafkopf extends CardGame
                                 delay(1500);
                                 if(isGameOver())
                                     calculateResult();
+
+                                UpdateCardNumber();
                                 setPlayerMove(0);
                             }
 
@@ -107,6 +129,8 @@ public class schafkopf extends CardGame
                                 delay(1500);
                                 if(isGameOver())
                                     calculateResult();
+
+                                UpdateCardNumber();
                                 setPlayerMove(1);
                             }
                         }
@@ -134,7 +158,9 @@ public class schafkopf extends CardGame
                         showToast("block");
                         blockNotPlayableCards(0);
                     }
-                    else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+                    else*/
+
+                    if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
                         if (sticht(1) == 1) {
 
                             showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
@@ -143,6 +169,8 @@ public class schafkopf extends CardGame
                             delay(1500);
                             if(isGameOver())
                                 calculateResult();
+
+                            UpdateCardNumber();
                             setPlayerMove(1);
                         } else {
                             showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
@@ -151,6 +179,8 @@ public class schafkopf extends CardGame
                             delay(1500);
                             if(isGameOver())
                                 calculateResult();
+
+                            UpdateCardNumber();
                             setPlayerMove(0);
                         }
                     }
@@ -498,6 +528,68 @@ public class schafkopf extends CardGame
     }
 
 
+    public void UpdateCardNumber(){
+
+        TextActor t1 = new TextActor(hands[0].getNumberOfCards() + "");
+        TextActor t2 = new TextActor(hands[1].getNumberOfCards() + "");
+        TextActor t3 = new TextActor(hands[2].getNumberOfCards() + "");
+        TextActor t4 = new TextActor(hands[3].getNumberOfCards() + "");
+
+        TextActor t5 = new TextActor(hands[4].getNumberOfCards() + "");
+        TextActor t6 = new TextActor(hands[5].getNumberOfCards() + "");
+        TextActor t7 = new TextActor(hands[6].getNumberOfCards() + "");
+        TextActor t8 = new TextActor(hands[7].getNumberOfCards() + "");
+
+        TextActor t9 = new TextActor(hands[8].getNumberOfCards() + "");
+        TextActor t10 = new TextActor(hands[9].getNumberOfCards() + "");
+        TextActor t11 = new TextActor(hands[10].getNumberOfCards() + "");
+        TextActor t12 = new TextActor(hands[11].getNumberOfCards() + "");
+
+        TextActor t13 = new TextActor(hands[12].getNumberOfCards() + "");
+        TextActor t14 = new TextActor(hands[13].getNumberOfCards() + "");
+        TextActor t15 = new TextActor(hands[14].getNumberOfCards() + "");
+        TextActor t16 = new TextActor(hands[15].getNumberOfCards() + "");
+
+        addActor(t1, l1.toReal());
+        addActor(t2, l2.toReal());
+        addActor(t3, l3.toReal());
+        addActor(t4, l4.toReal());
+        addActor(t5, l5.toReal());
+        addActor(t6, l6.toReal());
+        addActor(t7, l7.toReal());
+        addActor(t8, l8.toReal());
+
+        addActor(t9, l9.toReal());
+        addActor(t10, l10.toReal());
+        addActor(t11, l11.toReal());
+        addActor(t12, l12.toReal());
+        addActor(t13, l13.toReal());
+        addActor(t14, l14.toReal());
+        addActor(t15, l15.toReal());
+        addActor(t16, l16.toReal());
+
+        delay(7500);
+
+        removeActor(t1);
+        removeActor(t2);
+        removeActor(t3);
+        removeActor(t4);
+        removeActor(t5);
+        removeActor(t6);
+        removeActor(t7);
+        removeActor(t8);
+        removeActor(t9);
+        removeActor(t10);
+        removeActor(t11);
+        removeActor(t12);
+        removeActor(t13);
+        removeActor(t14);
+        removeActor(t15);
+        removeActor(t16);
+    }
+
+
+
     public Hand returnNewHandWithUpperCards(int player){
         Hand h = new Hand(deck);
         Hand[] all = new Hand[16];
@@ -596,6 +688,7 @@ public class schafkopf extends CardGame
             }
             }
     }
+
 
 
 }
