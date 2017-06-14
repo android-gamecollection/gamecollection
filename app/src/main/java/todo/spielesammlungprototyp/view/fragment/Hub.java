@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,8 @@ public class Hub extends Fragment implements ClickListener {
         GameCardViewAdapter gcvAdapter = new GameCardViewAdapter(games);
         gcvAdapter.setClickListener(this);
         recyclerView.setAdapter(gcvAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new GameSelectionCallback());
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -155,5 +158,22 @@ public class Hub extends Fragment implements ClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class GameSelectionCallback extends ItemTouchHelper.SimpleCallback {
+
+        GameSelectionCallback() {
+            super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            // TODO: method call
+        }
     }
 }
