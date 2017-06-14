@@ -123,6 +123,8 @@ public class CheckeredGameboardView extends View {
         }
         borderStrokeWidth = factor != 0 ? size / factor : 0;
         thickness = (size - borderStrokeWidth * 2) / gridSize;
+        // Calculate size again because of rounding errors when dividing
+        size = thickness * 8 + borderStrokeWidth * 2;
         applyStrokes();
         setMeasuredDimension(size, size);
     }
