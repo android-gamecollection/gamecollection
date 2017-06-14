@@ -1,0 +1,41 @@
+% Author hint for chapters
+\makeatletter
+\newcommand{\chapterauthor}[1]{%
+	{\parindent0pt\vspace*{-40pt}%
+		\linespread{1.1}\hspace*{29pt}\large\scshape#1%
+		\par\nobreak\vspace*{5pt}}
+	\@afterheading%
+}
+\makeatother
+
+
+% Author hint for sections
+\makeatletter
+\newcommand{\sectionauthor}[1]{%
+	{\parindent0pt\vspace*{-30pt}%
+		\linespread{1.1}\hspace*{33pt}\large\scshape#1%
+		\par\nobreak}
+	\@afterheading%
+}
+\makeatother
+
+
+% Author hint for subsections
+\makeatletter
+\newcommand{\subsectionauthor}[1]{%
+	{\parindent0pt\vspace*{-26pt}%
+		\linespread{1.1}\hspace*{41pt}\large\scshape#1%
+		\par\nobreak\vspace*{5pt}}
+	\@afterheading%
+}
+\makeatother
+
+% Author hint for subsections
+\makeatletter
+\newcommand{\subsubsectionauthor}[1]{%
+	{\parindent0pt\vspace*{-26pt}%
+		\linespread{1.1}\large\scshape#1%
+		\par\nobreak\vspace*{5pt}}
+	\@afterheading%
+}
+\makeatother
