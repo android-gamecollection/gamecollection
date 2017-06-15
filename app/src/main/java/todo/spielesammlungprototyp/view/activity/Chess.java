@@ -7,12 +7,10 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -70,7 +68,7 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
-        chessboardView = (CheckeredGameboardView) findViewById(R.id.gridview_chess);
+        chessboardView = (CheckeredGameboardView) findViewById(R.id.boardgameview_chess);
         gridSize = chessboardView.getGridSize();
         figuren = new ImageView[gridSize][gridSize];
         setFieldFromFEN(board.getBoard());
@@ -103,10 +101,6 @@ public class Chess extends GameActivity {
         recyclerHistory.setLayoutManager(recyclerManager);
         recyclerAdapter = new ChessHistoryAdapter();
         recyclerHistory.setAdapter(recyclerAdapter);
-        DividerItemDecoration recyclerDecoration = new DividerItemDecoration(recyclerHistory.getContext(), recyclerManager.getOrientation());
-        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.shape_recyclerview_divider);
-        recyclerDecoration.setDrawable(drawable);
-        recyclerHistory.addItemDecoration(recyclerDecoration);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ChessHistoryCallback());
         itemTouchHelper.attachToRecyclerView(recyclerHistory);
     }

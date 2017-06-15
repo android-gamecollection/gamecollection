@@ -190,8 +190,17 @@ public class CheckeredGameboardView extends View {
 
     public Point getRectangleCoordinates(Tuple<Integer, Integer> tuple) {
         Rect rect = boardSquares[tuple.first][tuple.last];
-        int x = this.getLeft() + rect.left;
-        int y = this.getTop() + rect.top;
+        View rootLayout = getRootView().findViewById(android.R.id.content);
+
+        int[] viewLocation = new int[2];
+        int[] rootLocation = new int[2];
+        getLocationInWindow(viewLocation);
+        rootLayout.getLocationInWindow(rootLocation);
+
+        int relativeLeft = viewLocation[0] - rootLocation[0];
+        int relativeTop = viewLocation[1] - rootLocation[1];
+        int x = relativeLeft + rect.left;
+        int y = relativeTop + rect.top;
         return new Point(x, y);
     }
 
