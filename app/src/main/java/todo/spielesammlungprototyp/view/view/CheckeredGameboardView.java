@@ -177,7 +177,7 @@ public class CheckeredGameboardView extends View {
         return !disableSuggestions;
     }
 
-    public Tuple<Integer, Integer> getFieldFromTouch(int x, int y) {
+    public Tuple<Integer, Integer> getSquareFromTouch(int x, int y) {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 if (boardSquares[i][j].contains(x, y)) {

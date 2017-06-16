@@ -1,13 +1,12 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -23,6 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,6 +64,8 @@ public class Chess extends GameActivity {
     private int gridSize;
     private LinearLayoutManager recyclerManager;
     private ChessHistoryAdapter recyclerAdapter;
+    private boolean aiGame = false, stateAllowClick = true;
+    private FrameLayout chessBoardFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,7 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
+        chessBoardFrame = (FrameLayout) findViewById(R.id.frame_layout);
         chessboardView = (CheckeredGameboardView) findViewById(R.id.boardgameview_chess);
         gridSize = chessboardView.getGridSize();
         figuren = new ImageView[gridSize][gridSize];
@@ -84,9 +90,9 @@ public class Chess extends GameActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Tuple<Integer, Integer> tuple = chessboardView.getFieldFromTouch((int) event.getX(), (int) event.getY());
+                    Tuple<Integer, Integer> tuple = chessboardView.getSquareFromTouch((int) event.getX(), (int) event.getY());
                     if (tuple != null) {
-                        trymove(tuple);
+                        onSquareClicked(tuple);
                     }
                 }
                 return true;
@@ -117,8 +123,23 @@ public class Chess extends GameActivity {
     }
 
     private void testAddItem() {
-        recyclerAdapter.addItem();
-        recyclerManager.scrollToPosition(0);
+        final Runnable addItem = new Runnable() {
+            @Override
+            public void run() {
+                recyclerAdapter.addItem();
+                recyclerManager.scrollToPosition(0);
+            }
+        };
+        if (chessBoardFrame.getZ() <= 0) {
+            chessBoardFrame.animate().z(8).setListener(new AnimatorEndListener() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    addItem.run();
+                }
+            });
+        } else {
+            addItem.run();
+        }
     }
 
     @Override
@@ -126,9 +147,17 @@ public class Chess extends GameActivity {
         return R.layout.activity_chess;
     }
 
-    private void trymove(Tuple<Integer, Integer> tuple) {
-        if (logged == null) {
-            if (figuren[tuple.first][tuple.last] != null) {
+    private void onSquareClicked(Tuple<Integer, Integer> tuple) {
+        if (board.isEndgame() != 0 || !stateAllowClick) return;
+        boolean hasPiece = figuren[tuple.first][tuple.last] != null;
+        boolean wTurn = board.isWhitesTurn();
+        boolean wPiece = board.isWhitePiece(tuple);
+        boolean allowSelect = hasPiece && (!aiGame && !wTurn && !wPiece || wTurn && wPiece);
+        if (allowSelect) {
+            chessboardView.clearColors();
+            if (tuple.equals(logged)) {
+                logged = null;
+            } else {
                 logged = tuple;
                 if (chessboardView.isHighlightEnabled()) {
                     chessboardView.addHighlightColor(tuple);
@@ -137,17 +166,24 @@ public class Chess extends GameActivity {
                     }
                 }
             }
-        } else if (logged.equals(tuple)) {
-            logged = null;
-            chessboardView.clearColors();
-        } else if (board.isPromotion(MoveTranslator.numToString(logged), MoveTranslator.numToString(tuple))) {
-            promotionDialog(logged, tuple);
-            logged = null;
-        } else if (board.move(MoveTranslator.numToString(logged), MoveTranslator.numToString(tuple))) {
-            animatefigure(logged, tuple);
-            logged = null;
-            chessboardView.clearColors();
-            aimove();
+        } else if (logged != null) {
+            String from = MoveTranslator.numToString(logged);
+            String to = MoveTranslator.numToString(tuple);
+            boolean valid = false;
+            if (board.isPromotion(from, to)) {
+                valid = true;
+                promotionDialog(logged, tuple);
+                logged = null;
+            } else if (board.move(from, to)) {
+                valid = true;
+                animatefigure(logged, tuple);
+                logged = null;
+                chessboardView.clearColors();
+                aimove();
+            }
+            if (!aiGame && valid) {
+                stateAllowClick = false;
+            }
         }
     }
 
@@ -162,11 +198,11 @@ public class Chess extends GameActivity {
         title.setGravity(Gravity.CENTER);
         title.setTextColor(Color.WHITE);
         title.setTextSize(20);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(view)
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setView(view)
                 .setCustomTitle(title)
-                .setCancelable(false);
-        AlertDialog alertDialog = builder.create();
+                .setCancelable(false)
+                .create();
         alertDialog.show();
         ImageView queen = (ImageView) alertDialog.findViewById(R.id.promotion_queen);
         queen.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'q'));
@@ -176,6 +212,13 @@ public class Chess extends GameActivity {
         rook.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'r'));
         ImageView bishop = (ImageView) alertDialog.findViewById(R.id.promotion_bishop);
         bishop.setOnClickListener(new PromotionClickListener(alertDialog, from, to, 'b'));
+        boolean isBlack = !board.isWhitePiece(from);
+        if (isBlack) {
+            queen.setImageDrawable(getDrawable(R.drawable.game_chess_queen_b));
+            knight.setImageDrawable(getDrawable(R.drawable.game_chess_knight_b));
+            rook.setImageDrawable(getDrawable(R.drawable.game_chess_rook_b));
+            bishop.setImageDrawable(getDrawable(R.drawable.game_chess_bishop_b));
+        }
     }
 
     private void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
@@ -190,8 +233,8 @@ public class Chess extends GameActivity {
     }
 
     private void aimove() {
-        if (board.isEndgame() != 0) return;
-        android.os.Handler handler = new android.os.Handler();
+        if (!aiGame || board.isEndgame() != 0) return;
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -202,7 +245,6 @@ public class Chess extends GameActivity {
     }
 
     private void update() {
-        Log.d("Chess.java", "update()");
         int endgame = board.isEndgame();
         if (endgame != 0) {
             int gameoverReason;
@@ -222,7 +264,7 @@ public class Chess extends GameActivity {
             String snackbarText = getString(R.string.game_chess_snackbar_gameover) + getString(gameoverReason);
             CoordinatorLayout chessLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
             final Snackbar snackbar = Snackbar.make(chessLayout, snackbarText, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setActionTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+            snackbar.setActionTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
             snackbar.setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -239,39 +281,21 @@ public class Chess extends GameActivity {
         if (figuren[from.first][from.last] != null) {
             Point rectFrom = chessboardView.getRectangleCoordinates(from);
             Point rectTo = chessboardView.getRectangleCoordinates(to);
-
-            ObjectAnimator animX = ObjectAnimator.ofFloat(figuren[from.first][from.last], "x", rectFrom.x, rectTo.x);
-            ObjectAnimator animY = ObjectAnimator.ofFloat(figuren[from.first][from.last], "y", rectFrom.y, rectTo.y);
-            AnimatorSet animset = new AnimatorSet();
-            animset.playTogether(animX, animY);
-            animset.setDuration(ANIMATION_SPEED);
-            animset.setInterpolator(new AccelerateDecelerateInterpolator());
-            animset.start();
-            animset.addListener(new Animator.AnimatorListener() {
-
+            int deltaX = rectTo.x - rectFrom.x;
+            int deltaY = rectTo.y - rectFrom.y;
+            TranslateAnimation translateAnimation = new TranslateAnimation(0, deltaX, 0, deltaY);
+            translateAnimation.setDuration(ANIMATION_SPEED);
+            translateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            translateAnimation.setAnimationListener(new AnimationEndListener() {
                 @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
+                public void onAnimationEnd(Animation animation) {
                     removeFigure(to);
                     figuren[to.first][to.last] = figuren[from.first][from.last];
                     figuren[from.first][from.last] = null;
                     update();
                 }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
             });
+            figuren[from.first][from.last].startAnimation(translateAnimation);
             return true;
         }
         return false;
@@ -288,6 +312,25 @@ public class Chess extends GameActivity {
                     addContentView(figuren[i][j], new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     figuren[i][j].getLayoutParams().width = imageSize;
                     figuren[i][j].getLayoutParams().height = imageSize;
+                    if (!aiGame && board.getMoveNumber() > 0) {
+                        int pivotX = point.x + imageSize / 2;
+                        int pivotY = point.y + imageSize / 2;
+                        RotateAnimation rotateAnimation = new RotateAnimation(180, 0, pivotX, pivotY);
+                        rotateAnimation.setDuration(ANIMATION_SPEED / 2);
+                        rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                        rotateAnimation.setAnimationListener(new AnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                stateAllowClick = true;
+                            }
+                        });
+                        figuren[i][j].startAnimation(rotateAnimation);
+                        if (board.isWhitesTurn()) {
+                            figuren[i][j].setRotation(0);
+                        } else {
+                            figuren[i][j].setRotation(180);
+                        }
+                    }
                 }
             }
         }
@@ -364,6 +407,43 @@ public class Chess extends GameActivity {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
+        }
+    }
+
+    private abstract class AnimationEndListener implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public abstract void onAnimationEnd(Animation animation);
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    }
+
+    private abstract class AnimatorEndListener implements Animator.AnimatorListener {
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+
+        }
+
+        @Override
+        abstract public void onAnimationEnd(Animator animation);
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
         }
     }
 }

@@ -15,10 +15,10 @@
         <include layout="@layout/fragment_app_bar" />
 
         <FrameLayout
+            android:id="@+id/frame_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundDarker"
-            android:elevation="2dp">
+            android:background="@color/backgroundDarker">
 
             <todo.spielesammlungprototyp.view.view.CheckeredGameboardView
                 android:id="@+id/boardgameview_chess"

@@ -4,6 +4,7 @@ package todo.spielesammlungprototyp.model.games.chess;
 import com.alonsoruibal.chess.Board;
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
+import com.alonsoruibal.chess.bitboard.BitboardUtils;
 import com.alonsoruibal.chess.search.SearchEngine;
 import com.alonsoruibal.chess.search.SearchParameters;
 
@@ -91,6 +92,10 @@ public class ChessWrapper {
         return Move.toString(move);
     }
 
+    public int getMoveNumber() {
+        return board.getMoveNumber();
+    }
+
     public String aimove() {
         searchEngine.run();
         int move = searchEngine.getBestMove();
@@ -98,6 +103,17 @@ public class ChessWrapper {
         board.doMove(move);
         return smove;
 
+    }
+
+    public boolean isWhitesTurn() {
+        return board.getTurn();
+    }
+
+    public boolean isWhitePiece(Tuple<Integer, Integer> pos) {
+        String s2 = MoveTranslator.numToString(pos);
+        long square = BitboardUtils.algebraic2Square(s2);
+        char pieceAt = board.getPieceAt(square);
+        return Character.isUpperCase(pieceAt);
     }
 
     public int isEndgame() {
