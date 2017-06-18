@@ -20,7 +20,7 @@ import todo.spielesammlungprototyp.view.Game;
 
 public final class Games {
 
-    private final static Games instance = new Games();
+    private static final Games instance = new Games();
     private static final String TAG = instance.getClass().getSimpleName();
     public final Map<String, List<Game>> games = new HashMap<>();
     private final String[] XML_ATTRIBUTES = {"icon", "title", "description", "rules", "activity"};
@@ -32,6 +32,17 @@ public final class Games {
 
     public synchronized static Map<String, List<Game>> getGameList() {
         return instance.games;
+    }
+
+    public static Game getFromUuid(String uuid) {
+        for (Map.Entry<String, List<Game>> entry : getGameList().entrySet()) {
+            for (Game game : entry.getValue()) {
+                if (game.getUuid().equals(uuid)) {
+                    return game;
+                }
+            }
+        }
+        return null;
     }
 
     public static void logGameList() {

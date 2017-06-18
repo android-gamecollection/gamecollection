@@ -9,6 +9,8 @@ import com.owlike.genson.GensonBuilder;
 
 import java.util.ArrayList;
 
+import todo.spielesammlungprototyp.App;
+
 public class SavegameStorage {
 
     private static SavegameStorage instance = null;
@@ -30,11 +32,11 @@ public class SavegameStorage {
         }
     }
 
-    public static SavegameStorage getInstance(final Context context) {
+    public static SavegameStorage getInstance() {
         if (instance == null) {
             synchronized (SavegameStorage.class) {
                 if (instance == null) {
-                    instance = new SavegameStorage(context);
+                    instance = new SavegameStorage(App.getContext());
                 }
             }
         }
@@ -58,7 +60,7 @@ public class SavegameStorage {
     }
 
     private synchronized boolean modifySavegame(Savegame savegameMODIFIED, Boolean delete) {
-        Savegame toUpdate = findByUUID(savegameMODIFIED.uuid);
+        Savegame toUpdate = getFromUuid(savegameMODIFIED.uuid);
         // UUID found
         if (toUpdate != null) {
             SharedPreferences.Editor editor = savegamesSharedP.edit();
@@ -86,7 +88,7 @@ public class SavegameStorage {
         return this.saveGameList;
     }
 
-    public synchronized Savegame findByUUID(String uuid) {
+    public synchronized Savegame getFromUuid(String uuid) {
         for (Savegame e : saveGameList) {
             if (e.uuid.equals(uuid)) {
                 return e;
