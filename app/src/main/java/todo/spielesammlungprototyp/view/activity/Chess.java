@@ -1,6 +1,7 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -68,6 +69,7 @@ public class Chess extends GameActivity {
     private ChessHistoryAdapter recyclerAdapter;
     private boolean aiGame = false, stateAllowClick = true;
     private FrameLayout chessBoardFrame;
+    private RecyclerView recyclerHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +106,7 @@ public class Chess extends GameActivity {
     }
 
     private void setupRecyclerView() {
-        RecyclerView recyclerHistory = (RecyclerView) findViewById(R.id.recyclerview_history);
+        recyclerHistory = (RecyclerView) findViewById(R.id.recyclerview_history);
         recyclerManager = new LinearLayoutManager(this);
         recyclerHistory.setLayoutManager(recyclerManager);
         recyclerAdapter = new ChessHistoryAdapter();
@@ -133,12 +135,8 @@ public class Chess extends GameActivity {
             }
         };
         if (chessBoardFrame.getZ() <= 0) {
-            chessBoardFrame.animate().z(8).setListener(new AnimatorEndListener() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    addItem.run();
-                }
-            });
+            setRecyclerVisibility(true);
+            chessBoardFrame.animate().translationZ(8).withEndAction(addItem);
         } else {
             addItem.run();
         }
@@ -147,6 +145,31 @@ public class Chess extends GameActivity {
     @Override
     protected int onLayoutRequest() {
         return R.layout.activity_chess;
+    }
+
+    private void setRecyclerVisibility(final boolean visible) {
+        int colorStart = ContextCompat.getColor(this, R.color.background);
+        int colorEnd = ContextCompat.getColor(this, R.color.backgroundDarker);
+        ValueAnimator colorAnimator = ValueAnimator.ofArgb(colorStart, colorEnd);
+        colorAnimator.setDuration(ANIMATION_SPEED / 2);
+        colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                recyclerHistory.setBackgroundColor((int) animation.getAnimatedValue());
+            }
+        });
+        if (visible) {
+            recyclerHistory.setVisibility(View.VISIBLE);
+            colorAnimator.start();
+        } else {
+            colorAnimator.addListener(new AnimatorEndListener() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    recyclerHistory.setVisibility(View.GONE);
+                }
+            });
+            colorAnimator.reverse();
+        }
     }
 
     private void onSquareClicked(Tuple<Integer, Integer> tuple) {
@@ -409,6 +432,10 @@ public class Chess extends GameActivity {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
+            if (recyclerAdapter.getItemCount() <= 0) {
+                setRecyclerVisibility(false);
+                chessBoardFrame.animate().translationZ(0);
+            }
         }
     }
 }

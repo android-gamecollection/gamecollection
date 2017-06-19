@@ -37,9 +37,9 @@ public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapte
     }
 
     public void removeItem(int position) {
-        for (; position >= 0; position--) {
-            mItems.remove(position);
-            notifyItemRemoved(position);
+        for (int i = 0; i <= position; i++) {
+            mItems.remove(0);
+            notifyItemRemoved(0);
         }
     }
 

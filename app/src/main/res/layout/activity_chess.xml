@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundDarker"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -18,7 +17,7 @@
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundDarker">
+            android:background="@color/background">
 
             <todo.spielesammlungprototyp.view.view.CheckeredGameboardView
                 android:id="@+id/boardgameview_chess"
@@ -41,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 
