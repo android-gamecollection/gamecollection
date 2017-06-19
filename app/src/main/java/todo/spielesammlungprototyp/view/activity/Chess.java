@@ -34,6 +34,8 @@ import java.util.Map;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.chess.ChessHistoryAdapter;
 import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
+import todo.spielesammlungprototyp.model.util.AnimationEndListener;
+import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
 import todo.spielesammlungprototyp.model.util.CharacterIterator;
 import todo.spielesammlungprototyp.model.util.MapBuilder;
 import todo.spielesammlungprototyp.model.util.MoveTranslator;
@@ -407,43 +409,6 @@ public class Chess extends GameActivity {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
-        }
-    }
-
-    private abstract class AnimationEndListener implements Animation.AnimationListener {
-
-        @Override
-        public void onAnimationStart(Animation animation) {
-
-        }
-
-        @Override
-        public abstract void onAnimationEnd(Animation animation);
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-
-        }
-    }
-
-    private abstract class AnimatorEndListener implements Animator.AnimatorListener {
-
-        @Override
-        public void onAnimationStart(Animator animation) {
-
-        }
-
-        @Override
-        abstract public void onAnimationEnd(Animator animation);
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-
         }
     }
 }
