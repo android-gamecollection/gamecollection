@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/bauernkrieg"
+        android:key="settings_key_cardgames_bauernkrieg_settings">
+
+        <Preference
+            android:title="@string/bauernkrieg">
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/maumau"
+        android:key="settings_key_cardgames_maumau">
+
+        <Preference
+            android:title="@string/bauernkrieg">
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/schafkopf"
+        android:key="settings_key_cardgames_schafkopf">
+
+        <Preference
+            android:title="@string/bauernkrieg">
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

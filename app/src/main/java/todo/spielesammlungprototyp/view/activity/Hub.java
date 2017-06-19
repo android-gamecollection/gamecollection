@@ -1,7 +1,11 @@
 package todo.spielesammlungprototyp.view.activity;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -54,6 +58,9 @@ public class Hub extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // for settings_general, set default for first time
+        setDefaultValuesOfSettings();
+
         mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -61,6 +68,7 @@ public class Hub extends AppCompatActivity {
         fabNewGame = (FloatingActionButton) findViewById(R.id.fab_new_game);
         fabNewGameK = (FloatingActionButton) findViewById(R.id.fab_new_cardgame);
         fabNewGameB = (FloatingActionButton) findViewById(R.id.fab_new_boardgame);
+        tintFabs();
         fabOpenUpper = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open_upper);
         fabCloseUpper = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close_upper);
         fabOpenLower = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open_lower);
@@ -108,6 +116,22 @@ public class Hub extends AppCompatActivity {
             currentTag = tagHub;
             loadHomeFragment();
         }
+    }
+
+    private void tintFabs() {
+        ColorStateList csl = ColorStateList
+                .valueOf(Color.parseColor(PreferenceManager
+                        .getDefaultSharedPreferences(this)
+                        .getString("settings_key_general_accent_color", "#795548")));
+        fabNewGame.setBackgroundTintList(csl);
+        fabNewGameK.setBackgroundTintList(csl);
+        fabNewGameB.setBackgroundTintList(csl);
+    }
+
+    private void setDefaultValuesOfSettings() {
+        PreferenceManager.setDefaultValues(this, R.xml.settings_general, false);
+        PreferenceManager.setDefaultValues(this, R.xml.settings_cardgames, false);
+        PreferenceManager.setDefaultValues(this, R.xml.settings_boardgames, false);
     }
 
     private void animateFab(boolean isFabOpen) {
@@ -245,8 +269,8 @@ public class Hub extends AppCompatActivity {
                         return true;
                     case tagSettings:
                         // launch new intent instead of loading fragment
-                        //startActivity(new Intent(Hub.this, ));
-                        //drawer.closeDrawers();
+                        startActivity(new Intent(Hub.this, Settings.class));
+                        drawer.closeDrawers();
                         return true;
                     default:
                         currentTag = tagHub;

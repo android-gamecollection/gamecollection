@@ -11,7 +11,7 @@
     <string name="rules">Regeln</string>
     <string name="maumau_regeln">Platzhalter für die Mau Mau regeln</string>
     <string name="maumau">Mau Mau</string>
-    <string name="schafkopf">schafkopf</string>
+    <string name="schafkopf">Schafkopf</string>
     <string name="objErfolg">objekt erfolgreich erstellt</string>
     <string name="debug">Debugger wurde erfolgreich erreicht</string>
 
@@ -22,7 +22,7 @@
     <string name="game_consolechess_err_invalid_cmd">Not a valid command</string>
     <string name="game_consolechess_err_invalid_move">Invalid move</string>
 
-    <!-- Strings für NavDrawer START -->
+    <!-- Strings for NavDrawer START -->
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
     <string name="subTextHeader">Spiel, Spaß und Spannung</string>
@@ -36,11 +36,55 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="nav_divider_title">Other</string>
-    <!-- Strings für NavDrawer ENDE -->
+    <!-- Strings for NavDrawer END -->
 
     <string name="hello_blank_fragment">Spielehub Content</string>
 
     <!-- App Bar -->
     <string name="action_gamerules">Spielregeln</string>
+
+    <!-- Settings START -->
+    <string name="settings_general_title">Allgemein</string>
+    <string name="settings_general_sound_summary">App Sound anschalten</string>
+    <string name="settings_general_sound">Audio</string>
+    <string name="settings_general_description">Audio, Akzentfarbe etc.</string>
+    <string name="settings_general_accent_color_title">Akzentfarbe</string>
+    <string name="settings_general_accent_color_description">Farbe des Floating Action Buttons</string>
+    <string-array name="settings_general_accent_color_alias">
+        <item>Grün</item>
+        <item>Braun</item>
+        <item>Orange</item>
+    </string-array>
+    <string-array name="settings_general_accent_color">
+        <item>#388E3C</item>
+        <item>#795548</item>
+        <item>#FF5722</item>
+    </string-array>
+
+    <string name="settings_boardgames_title">Brettspiele</string>
+    <string name="settings_boardgames_description">Schach, Konsolenschach</string>
+    <string name="settings_cardgames_title">Kartenspiele</string>
+    <string name="settings_cardgames_description">Bauernkrieg, MauMau, Offiziersschafkopf</string>
+
+    <!-- Settings Boardgames -->
+    <string name="settings_chess_title">Schach</string>
+    <string name="settings_chess_difficulty_title">Schwierigkeit</string>
+    <string name="settings_chess_difficulty_description">Intelligenz der KI</string>
+    <string-array name="AI_difficulty_alias">
+        <item>Einfach</item>
+        <item>Normal</item>
+        <item>Schwer</item>
+    </string-array>
+    <string-array name="AI_difficulty">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <!-- Settings Cardgames -->
+
+
+    <string name="title_activity_settings">Settings</string>
+    <!-- Settings END -->
 
 </resources>
