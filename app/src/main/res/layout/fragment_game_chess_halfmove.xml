@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center_vertical">
 
     <ImageView
+        android:id="@+id/image_piece"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="4dp"
-        android:src="@drawable/game_chess_queen_w" />
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/icon_checkerboard" />
 
     <TextView
+        android:id="@+id/text_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GG"
+        android:text="@string/game_chess_not_available"
         android:textColor="@color/textColorPrimary"
-        android:textSize="28sp" />
+        android:textSize="24sp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -23,11 +28,13 @@
         android:src="@drawable/icon_arrow_right" />
 
     <TextView
+        android:id="@+id/text_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EZ"
+        android:layout_marginEnd="2dp"
+        android:text="@string/game_chess_not_available"
         android:textColor="@color/textColorPrimary"
-        android:textSize="28sp" />
+        android:textSize="24sp" />
 
 
 </LinearLayout>

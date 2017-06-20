@@ -30,6 +30,7 @@
     <string name="game_chess_gameover_checkmate_white">Schachmatt, Weiß hat gewonnen</string>
     <string name="game_chess_gameover_checkmate_black">Schachmatt, Schwarz hat gewonnen</string>
     <string name="game_chess_gameover_noreason">Einfach so, keinen bestimmten Grund</string>
+    <string name="game_chess_not_available">NO</string>
 
     <!-- Strings für NavDrawer START -->
     <string name="openDrawer">open_drawer</string>
