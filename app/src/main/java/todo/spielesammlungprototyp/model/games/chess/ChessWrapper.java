@@ -1,6 +1,8 @@
 package todo.spielesammlungprototyp.model.games.chess;
 
 
+import android.util.Log;
+
 import com.alonsoruibal.chess.Board;
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
@@ -51,6 +53,20 @@ public class ChessWrapper {
     public boolean move(String from, String to) {
         int move = Move.getFromString(board, from + " " + to, true);
         return board.doMove(move);
+    }
+
+    public String getMoves()
+    {
+        return board.getMoves();
+    }
+
+    public void doMoves(String moves)
+    {
+        board.doMoves(moves);
+    }
+    public void undoMove()
+    {
+        board.undoMove();
     }
 
     public boolean promotionmove(String from, String to, char figure) {

@@ -302,21 +302,22 @@ public class Chess extends GameActivity {
         addImages();
     }
 
-    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
+    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to)
+    {
+        return animatefigure(from,to,ANIMATION_SPEED);
+    }
+    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to,int speed) {
         if (figuren[from.first][from.last] != null) {
             Point rectFrom = chessboardView.getRectangleCoordinates(from);
             Point rectTo = chessboardView.getRectangleCoordinates(to);
             int deltaX = rectTo.x - rectFrom.x;
             int deltaY = rectTo.y - rectFrom.y;
             TranslateAnimation translateAnimation = new TranslateAnimation(0, deltaX, 0, deltaY);
-            translateAnimation.setDuration(ANIMATION_SPEED);
+            translateAnimation.setDuration(speed);
             translateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
             translateAnimation.setAnimationListener(new AnimationEndListener() {
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    removeFigure(to);
-                    figuren[to.first][to.last] = figuren[from.first][from.last];
-                    figuren[from.first][from.last] = null;
                     update();
                 }
             });
