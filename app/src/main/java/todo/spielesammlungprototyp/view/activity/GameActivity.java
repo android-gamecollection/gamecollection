@@ -31,9 +31,9 @@ public abstract class GameActivity extends AppCompatActivity {
 
     public static final String KEY_GAME_UUID = "gameUuid";
     public static final String KEY_SAVEGAME_UUID = "UUID";
-    public Savegame currentSaveGame;
-    public String gameUuid;
-    public boolean isSaved;
+    protected Savegame currentSaveGame;
+    private String gameUuid;
+    private boolean isSaved;
     private Game game;
     private SavegameStorage savegameStorage;
 
@@ -90,7 +90,7 @@ public abstract class GameActivity extends AppCompatActivity {
         return erg;
     }
 
-    public void saveGame(String value) {
+    private void saveGame(String value) {
         if (!TextUtils.isEmpty(value)) {
             if (!isSaved) {
                 if (currentSaveGame == null) {
