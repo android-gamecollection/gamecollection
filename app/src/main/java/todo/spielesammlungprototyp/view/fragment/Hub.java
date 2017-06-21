@@ -8,7 +8,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +20,7 @@ import android.view.animation.Animation;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.Games;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
@@ -161,7 +161,7 @@ public class Hub extends Fragment implements ClickListener {
                     savegameAdapter.addItem(savegame);
                 }
             });
-            snackbar.setActionTextColor(ContextCompat.getColor(App.getContext(), R.color.snackbarActionColor));
+            snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
             snackbar.show();
         }
     }

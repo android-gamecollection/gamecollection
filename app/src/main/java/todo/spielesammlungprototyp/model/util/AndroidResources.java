@@ -1,6 +1,7 @@
 package todo.spielesammlungprototyp.model.util;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 
 import todo.spielesammlungprototyp.App;
 
@@ -33,5 +34,9 @@ public final class AndroidResources {
         if (!resourceStr.startsWith("@string/")) return resourceStr;
         int identifier = getResourceIDFromString(resourceStr);
         return context.getString(identifier);
+    }
+
+    public static int getColor(int color) {
+        return ContextCompat.getColor(App.getContext(), color);
     }
 }
