@@ -1,70 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/fragment_app_bar" />
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/fragment_app_bar" />
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/chess_coordinatorlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize"
-        tools:context=".view.activity.ConsoleChess">
+        android:layout_above="@+id/input"
+        android:layout_below="@id/action_bar"
+        android:background="@color/backgroundDarker">
 
         <ScrollView
             android:id="@+id/scroll_output"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/shape_rect_border"
-            app:layout_constraintBottom_toTopOf="@+id/edittext_input"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior=".view.view.MoveUpwardBehavior">
 
             <TextView
                 android:id="@+id/text_output"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:padding="6dp" />
+                android:padding="12dp" />
 
         </ScrollView>
 
+    </android.support.design.widget.CoordinatorLayout>
+
+    <RelativeLayout
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background"
+        android:elevation="4dp"
+        android:padding="4dp">
+
         <EditText
             android:id="@+id/edittext_input"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_toStartOf="@+id/button_confirm"
+            android:backgroundTint="@android:color/transparent"
             android:hint="@string/game_consolechess_enter_cmd_here"
             android:imeOptions="actionGo"
             android:inputType="textVisiblePassword"
             android:maxLines="1"
             android:selectAllOnFocus="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/button_confirm" />
+            android:textColorHint="@color/textColorTernary" />
 
         <ImageButton
             android:id="@+id/button_confirm"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="2dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="-4dp"
+            android:layout_marginStart="-4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/game_consolechess_confirm_input"
-            android:elevation="1dp"
             android:onClick="processInput"
-            android:src="@android:drawable/ic_menu_send"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edittext_input" />
+            android:paddingEnd="16dp"
+            android:paddingStart="20dp"
+            android:src="@drawable/icon_send"
+            android:tint="?android:colorControlActivated" />
 
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

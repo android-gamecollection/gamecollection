@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.Games;
 import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.view.Game;
