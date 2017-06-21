@@ -114,7 +114,7 @@ public class schafkopf extends CardGame
                             saveLast();
                             if (sticht(0) == 0)
                             {
-                                showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
+                                //showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(0);
                                 delay(1500);
@@ -127,7 +127,7 @@ public class schafkopf extends CardGame
                             }
 
                             else {
-                                showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
+                                //showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(1);
                                 delay(1500);
@@ -168,7 +168,7 @@ public class schafkopf extends CardGame
                     if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
                         saveLast();
                         if (sticht(1) == 1) {
-                            showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
+                            //showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                             delay(2000);
                             transferBidsToStock(1);
                             delay(1500);
@@ -179,7 +179,7 @@ public class schafkopf extends CardGame
                             picknext();
                             setPlayerMove(1);
                         } else {
-                            showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
+                            //showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                             delay(2000);
                             transferBidsToStock(0);
                             delay(1500);
@@ -255,21 +255,6 @@ public class schafkopf extends CardGame
         addActor(new TextActor("Game Over", YELLOW, 20, 40), new Location(280, 460).toReal());
 
 
-    }
-
-    private void printResult(int[] p){
-        if(p[0] > p[1]){
-            showToast("Spieler 1:" + p[0] + "Spieler 2:" + p[1]);
-            showToast("Spieler 1 gewinnt!");
-        }
-        if(p[0] == p[1]){
-            showToast("Spieler 1:" + p[0] + "Spieler 2:" + p[1]);
-            showToast("Unentschieden!");
-        }
-        if(p[0] < p[1]){
-            showToast("Spieler 1:" + p[0] + "Spieler 2:" + p[1]);
-            showToast("Spieler 2 gewinnt!");
-        }
     }
 
 
@@ -466,74 +451,6 @@ public class schafkopf extends CardGame
         return false;
     }
 
-    public boolean sameRank(){
-
-            if(bids[1].getLast().getRank() == bids[0].getLast().getRank())
-                return true;
-            return false;
-    }
-
-
-    public boolean isColorOnHand(int Player, Suit farb)
-    {
-
-
-        if(Player == 0)
-        {
-
-            for (int i = 0; i < 8; i++) {
-                if (hands[i].getFirst().getSuit() == farb)
-                    return true;
-            }
-        }
-
-        if(Player == 1)
-        {
-            for (int i = 8; i < 16; i++)
-            {
-                if (hands[i].getFirst().getSuit() == farb)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-
-
-    public boolean TrumpfOnHand(int player) {
-//int player = Spieler der ausspielt
-        if(player == 0) {
-            for(int i = 8; i < 16; i++) {
-                if(hands[i].getNumberOfCardsWithSuit(Suit.HERZ) > 0) {
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.OBER) > 0){
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.UNTER) > 0) {
-                    return true;
-                }
-                else{return false;}
-            }
-        }
-        else if(player == 0) {
-            for(int i = 0; i < 8; i++) {
-                if(hands[i].getNumberOfCardsWithSuit(Suit.HERZ) > 0) {
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.OBER) > 0){
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.UNTER) > 0) {
-                    return true;
-                }
-                else{return false;}
-            }
-        }
-        return false;
-
-    }
-
 
     public void UpdateCardNumber(){
 
@@ -599,7 +516,7 @@ public class schafkopf extends CardGame
 
     public Hand returnNewHandWithUpperCards(int player){
         Hand h = new Hand(deck);
-        Hand[] all = new Hand[16];
+        Hand[] all;
         all = hands;
 
         if(player == 0){
@@ -710,7 +627,7 @@ public class schafkopf extends CardGame
 
             //addActor(tl2, new Location(520, 470).toReal());
 
-            delay(3000);
+            delay(1000);
 
             removeActor(nm);
             //removeActor(tl1);
