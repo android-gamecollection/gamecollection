@@ -22,13 +22,13 @@ public class CmdProcessor {
         if (savegame == null) {
             wrapper.setStartPosition();
         } else {
-            wrapper.setStartPosition(savegame);
+            wrapper.setPosition(savegame);
         }
         processInput("ov");
     }
 
     public String getFen() {
-        return chessBoard.getBoard();
+        return wrapper.getBoard();
     }
 
     public void processInput(String input) {
