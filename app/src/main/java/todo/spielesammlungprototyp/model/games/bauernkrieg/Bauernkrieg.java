@@ -17,7 +17,7 @@ public class Bauernkrieg extends CardGame
 {
     public enum Suit
     {
-        KREUZ, HERZ, KARO, PIK
+        CLUBS, HEARTS, DIAMONDS, SPADES
     }
 
     public enum Rank

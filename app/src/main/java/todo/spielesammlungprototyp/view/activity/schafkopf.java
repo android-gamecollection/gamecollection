@@ -18,6 +18,8 @@ import ch.aplu.jcardgame.StackLayout;
 import ch.aplu.jcardgame.TargetArea;
 import todo.spielesammlungprototyp.model.games.schafkopf.InitiateGame;
 
+import static todo.spielesammlungprototyp.R.id.card;
+
 public class schafkopf extends CardGame
 {
     public enum Suit
@@ -30,6 +32,7 @@ public class schafkopf extends CardGame
         ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
     }
 
+    //Locations für die Anzeige der übrigen Karten
     public Location l1 = new Location(100, 750);
     public Location l2 = new Location(200, 750);
     public Location l3 = new Location(300, 750);
@@ -68,6 +71,7 @@ public class schafkopf extends CardGame
     public Hand[] stacks = new Hand[2];
     public int z=0;//initialisierung cardlistener
 
+    public Hand[] last = new Hand[2];
 
     public schafkopf()
     {
@@ -88,9 +92,9 @@ public class schafkopf extends CardGame
 
     private void initPlayers()
     {
-
         for(z=0; z<8;z++)
         {
+
             hands[z].addCardListener(new CardAdapter()  // Player 1 plays card
             {
                 public void longPressed(Card card)
@@ -107,10 +111,9 @@ public class schafkopf extends CardGame
                     }
                     else*/
                     if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
-
+                            saveLast();
                             if (sticht(0) == 0)
                             {
-
                                 showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(0);
@@ -119,6 +122,7 @@ public class schafkopf extends CardGame
                                     calculateResult();
 
                                 UpdateCardNumber();
+                                picknext();
                                 setPlayerMove(0);
                             }
 
@@ -131,6 +135,7 @@ public class schafkopf extends CardGame
                                     calculateResult();
 
                                 UpdateCardNumber();
+                                picknext();
                                 setPlayerMove(1);
                             }
                         }
@@ -161,8 +166,8 @@ public class schafkopf extends CardGame
                     else*/
 
                     if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+                        saveLast();
                         if (sticht(1) == 1) {
-
                             showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                             delay(2000);
                             transferBidsToStock(1);
@@ -171,6 +176,7 @@ public class schafkopf extends CardGame
                                 calculateResult();
 
                             UpdateCardNumber();
+                            picknext();
                             setPlayerMove(1);
                         } else {
                             showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
@@ -181,6 +187,7 @@ public class schafkopf extends CardGame
                                 calculateResult();
 
                             UpdateCardNumber();
+                            picknext();
                             setPlayerMove(0);
                         }
                     }
@@ -568,7 +575,7 @@ public class schafkopf extends CardGame
         addActor(t15, l15.toReal());
         addActor(t16, l16.toReal());
 
-        delay(7500);
+        delay(2500);
 
         removeActor(t1);
         removeActor(t2);
@@ -689,6 +696,26 @@ public class schafkopf extends CardGame
             }
     }
 
+    public void saveLast(){
+        last[0] = bids[0];
+        last[1] = bids[1];
+    }
+    public void picknext() {
+
+            //TextActor tl1 = new TextActor(last[0].toString());
+            //TextActor tl2 = new TextActor(last[1].toString());
+
+            TextActor nm = new TextActor("Gewinner, wähle die nächste Karte!", YELLOW, 16, 40);
+            addActor(nm, new Location(200, 475).toReal());
+
+            //addActor(tl2, new Location(520, 470).toReal());
+
+            delay(3000);
+
+            removeActor(nm);
+            //removeActor(tl1);
+            //removeActor(tl2);
+        }
 
 
 }
