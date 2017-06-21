@@ -19,12 +19,10 @@ public class SavegameStorage {
     private ArrayList<Savegame> saveGameList;
     private Genson genson = new GensonBuilder().useClassMetadata(true).useRuntimeType(true).create();
     private SharedPreferences savegamesSharedP;
-    private Context context;
 
-    private SavegameStorage(final Context context) {
-        this.context = context;
+    private SavegameStorage() {
         saveGameList = new ArrayList<>();
-        savegamesSharedP = this.context.getSharedPreferences(SAVE_DATA_NAME, Context.MODE_PRIVATE);
+        savegamesSharedP = App.getContext().getSharedPreferences(SAVE_DATA_NAME, Context.MODE_PRIVATE);
         String saveGameListAsString = savegamesSharedP.getString(SAVE_DATA_KEY, "");
         if (!saveGameListAsString.isEmpty()) {
             saveGameList = genson.deserialize(saveGameListAsString, new GenericType<ArrayList<Savegame>>() {
@@ -36,7 +34,7 @@ public class SavegameStorage {
         if (instance == null) {
             synchronized (SavegameStorage.class) {
                 if (instance == null) {
-                    instance = new SavegameStorage(App.getContext());
+                    instance = new SavegameStorage();
                 }
             }
         }
