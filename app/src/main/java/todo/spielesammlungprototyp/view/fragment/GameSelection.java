@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.Games;
 import todo.spielesammlungprototyp.view.ClickListener;
 import todo.spielesammlungprototyp.view.Game;
@@ -23,7 +24,7 @@ import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 public class GameSelection extends Fragment implements ClickListener {
 
-    private final static String EXTRA_CATEGORY = "category";
+    private static final String EXTRA_CATEGORY = "category";
     private final String ACTIVITY_PACKAGE = ".view.activity.";
     private Map<String, List<Game>> games;
     private String gameCategory;
@@ -69,8 +70,7 @@ public class GameSelection extends Fragment implements ClickListener {
         Game game = games.get(gameCategory).get(position);
         String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
         intent.setClassName(context, str);
-        intent.putExtra(GameActivity.KEY_TITLE, game.getGameTitle());
-        intent.putExtra(GameActivity.KEY_RULES, game.getGameRules());
+        intent.putExtra(GameActivity.KEY_GAME_UUID, game.getUuid());
         context.startActivity(intent);
     }
 }

@@ -19,34 +19,44 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.util.Games;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
+import todo.spielesammlungprototyp.view.Game;
 
 import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
 
 
 public abstract class GameActivity extends AppCompatActivity {
 
-    public final static String KEY_RULES = "rules";
-    public final static String KEY_TITLE = "title";
+    public static final String KEY_GAME_UUID = "gameUuid";
+    public static final String KEY_SAVEGAME_UUID = "UUID";
     public Savegame currentSaveGame;
-    public String uuid;
+    public String gameUuid;
     public boolean isSaved;
+    private Game game;
     private SavegameStorage savegameStorage;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        savegameStorage = getInstance();
 
         Bundle extras = getIntent().getExtras();
+        String savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
+        if (savegameUuid != null) {
+            gameUuid = savegameStorage.getFromUuid(savegameUuid).gameUuid;
+        } else {
+            gameUuid = extras.getString(KEY_GAME_UUID);
+        }
+        game = Games.getFromUuid(gameUuid);
         setContentView(onLayoutRequest());
-        setTitle(extras.getString(KEY_TITLE));
+        setTitle(game.getGameTitle());
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Load Savegame if "Intent" has Extra
-        savegameStorage = getInstance(this);
         savegameLoadChecker(savedInstanceState);
         isSaved = false;
 
@@ -57,7 +67,7 @@ public abstract class GameActivity extends AppCompatActivity {
         if (uuidInspector(savedInstanceState)) {
             ArrayList<Savegame> listOfGames = savegameStorage.getSavegameList();
             if (!listOfGames.isEmpty()) {
-                currentSaveGame = savegameStorage.findByUUID(uuid);
+                currentSaveGame = savegameStorage.getFromUuid(gameUuid);
             }
         }
     }
@@ -69,12 +79,12 @@ public abstract class GameActivity extends AppCompatActivity {
             if (extras == null) {
                 erg = false;
             } else {
-                uuid = extras.getString("UUID");
-                erg = uuid != null;
+                gameUuid = extras.getString(KEY_SAVEGAME_UUID);
+                erg = gameUuid != null;
             }
         } else {
-            uuid = savedInstanceState.getString("UUID");
-            erg = uuid != null;
+            gameUuid = savedInstanceState.getString(KEY_SAVEGAME_UUID);
+            erg = gameUuid != null;
 
         }
         return erg;
@@ -83,9 +93,8 @@ public abstract class GameActivity extends AppCompatActivity {
     public void saveGame(String value) {
         if (!TextUtils.isEmpty(value)) {
             if (!isSaved) {
-                Class<? extends GameActivity> clazz = this.getClass();
                 if (currentSaveGame == null) {
-                    currentSaveGame = new Savegame(value, clazz);
+                    currentSaveGame = new Savegame(game.getUuid(), value);
                     savegameStorage.addSavegame(currentSaveGame);
                 } else {
                     if (!currentSaveGame.value.equals(value)) {
@@ -130,7 +139,7 @@ public abstract class GameActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         saveGame(onSaveGame());
         if (isSaved) {
-            savedInstanceState.putString("UUID", currentSaveGame.uuid);
+            savedInstanceState.putString(KEY_SAVEGAME_UUID, currentSaveGame.uuid);
         }
     }
 
@@ -149,12 +158,13 @@ public abstract class GameActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                break;
+                return true;
             case R.id.action_info:
                 showRulesDialog();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -168,7 +178,7 @@ public abstract class GameActivity extends AppCompatActivity {
     private void showRulesDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getString(R.string.action_gamerules));
-        alertDialog.setMessage(getIntent().getExtras().getString(KEY_RULES, "empty"));
+        alertDialog.setMessage(game.getGameRules());
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 new DialogInterface.OnClickListener() {
                     @Override

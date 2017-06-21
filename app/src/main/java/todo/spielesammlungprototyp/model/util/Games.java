@@ -20,7 +20,7 @@ import todo.spielesammlungprototyp.view.Game;
 
 public final class Games {
 
-    private final static Games instance = new Games();
+    private static final Games instance = new Games();
     private static final String TAG = instance.getClass().getSimpleName();
     public final Map<String, List<Game>> games = new HashMap<>();
     private final String[] XML_ATTRIBUTES = {"icon", "title", "description", "rules", "activity"};
@@ -32,6 +32,17 @@ public final class Games {
 
     public synchronized static Map<String, List<Game>> getGameList() {
         return instance.games;
+    }
+
+    public static Game getFromUuid(String uuid) {
+        for (Map.Entry<String, List<Game>> entry : getGameList().entrySet()) {
+            for (Game game : entry.getValue()) {
+                if (game.getUuid().equals(uuid)) {
+                    return game;
+                }
+            }
+        }
+        return null;
     }
 
     public static void logGameList() {
@@ -62,9 +73,9 @@ public final class Games {
                         String[] attributes = XML_ATTRIBUTES.clone();
                         for (int i = 0; i < attributes.length; i++) {
                             String attributeValue = xmlGames.getAttributeValue(null, attributes[i]);
-                            attributes[i] = dereferenceString(attributeValue);
+                            attributes[i] = AndroidResources.getResourceString(attributeValue);
                         }
-                        int icon = getResourceIdFromString(attributes[0]);
+                        int icon = AndroidResources.getResourceIDFromString(attributes[0]);
                         Game game = new Game(icon, attributes[1], attributes[2], attributes[3], attributes[4]);
                         games.get(gameCategory).add(game);
                         break;
@@ -79,25 +90,5 @@ public final class Games {
         for (Map.Entry<String, List<Game>> entry : games.entrySet()) {
             Collections.sort(entry.getValue());
         }
-    }
-
-    /**
-     * Converts a resource from string-form to integer-form
-     *
-     * @param resourceStr The resource as string in the form of '@mimap/ic_launcher'
-     * @return The resource in the form of R.mipmap.ic_launcher
-     */
-    private int getResourceIdFromString(String resourceStr) {
-        Context mContext = App.getContext();
-        if (resourceStr.startsWith("@")) resourceStr = resourceStr.substring(1);
-        String[] splitString = resourceStr.split("/");
-        return mContext.getResources().getIdentifier(splitString[1], splitString[0], mContext.getPackageName());
-    }
-
-    private String dereferenceString(String resourceStr) {
-        Context mContext = App.getContext();
-        if (!resourceStr.startsWith("@string/")) return resourceStr;
-        int identifier = getResourceIdFromString(resourceStr);
-        return mContext.getString(identifier);
     }
 }

@@ -1,26 +1,33 @@
 package todo.spielesammlungprototyp.view.activity;
 
+import android.graphics.ColorFilter;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
 
 public class ConsoleChess extends GameActivity {
 
+    ColorFilter buttonColorEnabled;
     private ScrollView scrollConsole;
     private TextView textConsole;
     private EditText inputConsole;
+    private ImageButton buttonConfirm;
     private CmdProcessor cmdProcessor;
+    private CoordinatorLayout coordinatorLayout;
     private String startValue = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,13 @@ public class ConsoleChess extends GameActivity {
         scrollConsole = (ScrollView) findViewById(R.id.scroll_output);
         textConsole = (TextView) findViewById(R.id.text_output);
         inputConsole = (EditText) findViewById(R.id.edittext_input);
+        buttonConfirm = (ImageButton) findViewById(R.id.button_confirm);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
+
+        buttonColorEnabled = buttonConfirm.getColorFilter();
+        enableButton(false);
+        inputConsole.addTextChangedListener(new ConsoleInputWatcher());
+
         setKeyboardListener();
     }
 
@@ -66,13 +80,9 @@ public class ConsoleChess extends GameActivity {
 
     public void addOutput(String str) {
         if (!isOutputEmtpy())
-            str = "\n" + str;
+            str = "\n\n" + str;
         textConsole.append(str);
         scrollToBottom();
-    }
-
-    public void addOutputln(String str) {
-        addOutput(str + "\n");
     }
 
     public void clearOutput() {
@@ -88,7 +98,7 @@ public class ConsoleChess extends GameActivity {
 
     public void displayError(String errMessage) {
         errMessage = "Error: " + errMessage;
-        Toast.makeText(getApplicationContext(), errMessage, Toast.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, errMessage, Snackbar.LENGTH_SHORT).show();
     }
 
     private void clearInput() {
@@ -115,6 +125,16 @@ public class ConsoleChess extends GameActivity {
                 return processOnEnter(actionId == EditorInfo.IME_ACTION_GO);
             }
         });
+        inputConsole.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private boolean processOnEnter(boolean condition) {
@@ -123,6 +143,35 @@ public class ConsoleChess extends GameActivity {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void enableButton(boolean enable) {
+        buttonConfirm.setEnabled(enable);
+        buttonConfirm.setClickable(enable);
+        if (enable) {
+            buttonConfirm.setColorFilter(buttonColorEnabled);
+        } else {
+            buttonConfirm.setColorFilter(android.R.color.black);
+        }
+        buttonConfirm.setAlpha(enable ? 1 : 0.2f);
+    }
+
+    private class ConsoleInputWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            enableButton(s.length() > 0);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 }
