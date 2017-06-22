@@ -302,11 +302,11 @@ public class Chess extends GameActivity {
         addImages();
     }
 
-    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to)
-    {
-        return animatefigure(from,to,ANIMATION_SPEED);
+    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
+        return animatefigure(from, to, ANIMATION_SPEED);
     }
-    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to,int speed) {
+
+    private boolean animatefigure(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to, int speed) {
         if (figuren[from.first][from.last] != null) {
             Point rectFrom = chessboardView.getRectangleCoordinates(from);
             Point rectTo = chessboardView.getRectangleCoordinates(to);
