@@ -8,6 +8,7 @@
     <!ATTLIST game description CDATA #REQUIRED>
     <!ATTLIST game icon CDATA #REQUIRED>
     <!ATTLIST game rules CDATA #REQUIRED>
+    <!ATTLIST game tag CDATA #IMPLIED>
     <!ATTLIST game activity CDATA #REQUIRED>
 ]>
 <games>
@@ -16,9 +17,17 @@
 
         <game
             title="Schach"
-            description="Klassisches Schach"
+            description="Spieler vs Spieler"
             icon="@mipmap/ic_launcher"
             rules="no rules"
+            activity="Chess" />
+
+        <game
+            title="Schach"
+            description="Spieler vs Computer"
+            icon="@mipmap/ic_launcher"
+            rules="no rules"
+            tag="aiGame"
             activity="Chess" />
 
         <game

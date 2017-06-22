@@ -67,7 +67,7 @@ public class Chess extends GameActivity {
     private int gridSize;
     private LinearLayoutManager recyclerManager;
     private ChessHistoryAdapter recyclerAdapter;
-    private boolean aiGame = false, stateAllowClick = true;
+    private boolean aiGame, stateAllowClick = true;
     private FrameLayout chessBoardFrame;
     private RecyclerView recyclerHistory;
 
@@ -77,6 +77,7 @@ public class Chess extends GameActivity {
 
         board = new ChessWrapper();
         board.setStartPosition();
+        aiGame = game.isTagged("aiGame");
         chessBoardFrame = (FrameLayout) findViewById(R.id.frame_layout);
         chessboardView = (CheckeredGameboardView) findViewById(R.id.boardgameview_chess);
         gridSize = chessboardView.getGridSize();

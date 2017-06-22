@@ -31,10 +31,10 @@ public abstract class GameActivity extends AppCompatActivity {
 
     public static final String KEY_GAME_UUID = "gameUuid";
     public static final String KEY_SAVEGAME_UUID = "UUID";
+    protected Game game;
     protected Savegame currentSaveGame;
     private String gameUuid;
     private boolean isSaved;
-    private Game game;
     private SavegameStorage savegameStorage;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {

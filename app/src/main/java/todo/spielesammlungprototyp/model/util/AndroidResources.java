@@ -1,6 +1,7 @@
 package todo.spielesammlungprototyp.model.util;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
 import todo.spielesammlungprototyp.App;
@@ -29,9 +30,9 @@ public final class AndroidResources {
      * @param resourceStr The string in form of '@string/text'
      * @return The dereferenced string
      */
-    public static String getResourceString(String resourceStr) {
+    public static String getResourceString(@Nullable String resourceStr) {
+        if (resourceStr == null || !resourceStr.startsWith("@string/")) return resourceStr;
         Context context = App.getContext();
-        if (!resourceStr.startsWith("@string/")) return resourceStr;
         int identifier = getResourceIDFromString(resourceStr);
         return context.getString(identifier);
     }

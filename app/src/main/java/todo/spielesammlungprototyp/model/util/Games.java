@@ -23,7 +23,7 @@ public final class Games {
     private static final Games instance = new Games();
     private static final String TAG = instance.getClass().getSimpleName();
     public final Map<String, List<Game>> games = new HashMap<>();
-    private final String[] XML_ATTRIBUTES = {"icon", "title", "description", "rules", "activity"};
+    private final String[] XML_ATTRIBUTES = {"icon", "title", "description", "rules", "activity", "tag"};
 
     private Games() {
         loadGamesFromXml();
@@ -76,7 +76,7 @@ public final class Games {
                             attributes[i] = AndroidResources.getResourceString(attributeValue);
                         }
                         int icon = AndroidResources.getResourceIDFromString(attributes[0]);
-                        Game game = new Game(icon, attributes[1], attributes[2], attributes[3], attributes[4]);
+                        Game game = new Game(icon, attributes[1], attributes[2], attributes[3], attributes[4], attributes[5]);
                         games.get(gameCategory).add(game);
                         break;
                 }
