@@ -59,9 +59,6 @@
 
     <!-- Settings START -->
     <string name="settings_general_title">Allgemein</string>
-    <string name="settings_general_sound_summary">App Sound anschalten</string>
-    <string name="settings_general_sound">Audio</string>
-    <string name="settings_general_description">Audio, Akzentfarbe etc.</string>
     <string name="settings_general_accent_color_title">Akzentfarbe</string>
     <string name="settings_general_accent_color_description">Farbe des Floating Action Buttons</string>
     <string-array name="settings_general_accent_color_alias">
@@ -70,18 +67,17 @@
         <item>Orange</item>
     </string-array>
     <string-array name="settings_general_accent_color">
-        <item>#388E3C</item>
-        <item>#795548</item>
-        <item>#FF5722</item>
+        <!--item name="colorAccentFab1">@color/colorAccentFab1</item>
+        <item name="colorAccentFab2">@color/colorAccentFab2</item>
+        <item name="colorAccentFab3">@color/colorAccentFab3</item-->
+        <item name="colorAccentFab1">#4CAF50</item>
+        <item name="colorAccentFab2">#795548</item>
+        <item name="colorAccentFab3">#FF5722</item>
     </string-array>
-
-    <string name="settings_boardgames_title">Brettspiele</string>
-    <string name="settings_boardgames_description">Schach, Konsolenschach</string>
-    <string name="settings_cardgames_title">Kartenspiele</string>
-    <string name="settings_cardgames_description">Bauernkrieg, MauMau, Offiziersschafkopf</string>
 
     <!-- Settings Boardgames -->
     <string name="settings_chess_title">Schach</string>
+    <string name="settings_chess_description_computer">Schach - Spieler vs Computer</string>
     <string name="settings_chess_difficulty_title">Schwierigkeit</string>
     <string name="settings_chess_difficulty_description">Intelligenz der KI</string>
     <string-array name="AI_difficulty_alias">

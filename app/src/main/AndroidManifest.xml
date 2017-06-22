@@ -33,7 +33,7 @@
             android:name=".view.activity.schafkopf"
             android:label="@string/schafkopf"></activity>
         <activity
-            android:name=".view.activity.Settings"
+            android:name=".view.activity.SettingsTemp"
             android:label="@string/title_activity_settings"></activity>
     </application>
 

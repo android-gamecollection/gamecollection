@@ -24,11 +24,10 @@
         android:layout_marginBottom="@dimen/fab_margin_bottom_k"
         android:layout_marginEnd="@dimen/fab_margin"
         android:elevation="6dp"
-        android:tint="?attr/colorPrimary"
         android:visibility="invisible"
         app:backgroundTint="@color/colorAccent"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/icon_cards_playing" />
+        app:srcCompat="@drawable/icon_cards_playing"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_boardgame"
@@ -38,7 +37,6 @@
         android:layout_marginBottom="@dimen/fab_margin_bottom_b"
         android:layout_marginEnd="@dimen/fab_margin"
         android:elevation="6dp"
-        android:tint="?attr/colorPrimary"
         android:visibility="invisible"
         app:backgroundTint="@color/colorAccent"
         app:pressedTranslationZ="12dp"
@@ -52,7 +50,6 @@
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginEnd="@dimen/fab_margin"
         android:elevation="6dp"
-        android:tint="?attr/colorPrimary"
         app:backgroundTint="@color/colorAccent"
         app:srcCompat="@drawable/icon_plus" />
 

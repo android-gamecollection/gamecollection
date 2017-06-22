@@ -119,19 +119,15 @@ public class Hub extends AppCompatActivity {
     }
 
     private void tintFabs() {
-        ColorStateList csl = ColorStateList
-                .valueOf(Color.parseColor(PreferenceManager
-                        .getDefaultSharedPreferences(this)
-                        .getString("settings_key_general_accent_color", "#795548")));
+        String colorStr = PreferenceManager.getDefaultSharedPreferences(this).getString("settings_key_general_accent_color", "@color/colorAccentFab2");
+        ColorStateList csl = ColorStateList.valueOf(Color.parseColor(colorStr));
         fabNewGame.setBackgroundTintList(csl);
         fabNewGameK.setBackgroundTintList(csl);
         fabNewGameB.setBackgroundTintList(csl);
     }
 
     private void setDefaultValuesOfSettings() {
-        PreferenceManager.setDefaultValues(this, R.xml.settings_general, false);
-        PreferenceManager.setDefaultValues(this, R.xml.settings_cardgames, false);
-        PreferenceManager.setDefaultValues(this, R.xml.settings_boardgames, false);
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
     }
 
     private void animateFab(boolean isFabOpen) {
@@ -269,7 +265,7 @@ public class Hub extends AppCompatActivity {
                         return true;
                     case tagSettings:
                         // launch new intent instead of loading fragment
-                        startActivity(new Intent(Hub.this, Settings.class));
+                        startActivity(new Intent(Hub.this, SettingsTemp.class));
                         drawer.closeDrawers();
                         return true;
                     default:

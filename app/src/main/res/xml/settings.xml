@@ -3,12 +3,8 @@
 
     <PreferenceCategory
         android:title="@string/settings_general_title"
-        android:key="settings_key_general_settings">
-        <SwitchPreference
-            android:key="settings_key_general_sound"
-            android:summary="@string/settings_general_sound_summary"
-            android:title="@string/settings_general_sound"
-            android:defaultValue="true"/>
+        android:key="settings_key_general">
+
         <ListPreference
             android:key="settings_key_general_accent_color"
             android:summary="@string/settings_general_accent_color_description"
@@ -16,6 +12,23 @@
             android:entryValues="@array/settings_general_accent_color"
             android:title="@string/settings_general_accent_color_title"
             android:defaultValue="#795548"/>
+
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_chess_description_computer"
+        android:key="settings_key_chess_vs_computer">
+
+            <ListPreference
+                android:defaultValue="2"
+                android:entries="@array/AI_difficulty_alias"
+                android:entryValues="@array/AI_difficulty"
+                android:key="settings_key_chess_vs_computer_difficulty"
+                android:summary="@string/settings_chess_difficulty_description"
+                android:title="@string/settings_chess_difficulty_title" />
+
+    </PreferenceCategory>
+
+
 
 </PreferenceScreen>
