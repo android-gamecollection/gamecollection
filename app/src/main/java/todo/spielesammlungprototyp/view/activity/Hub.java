@@ -25,13 +25,10 @@ import todo.spielesammlungprototyp.view.fragment.GameSelection;
 public class Hub extends AppCompatActivity {
 
     private final char tagHub = '0', tagCards = '1', tagBoard = '2', tagInfo = '3', tagSettings = '4';
-
-    // index to identify current nav menu item
-    public char currentTag = tagHub;
-
     // flag to load home fragment when user presses back key
     private final boolean shouldLoadHomeFragOnBackPress = true;
-
+    // index to identify current nav menu item
+    public char currentTag = tagHub;
     //views
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -82,6 +79,22 @@ public class Hub extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 animateFab(fabOpen);
+            }
+        });
+
+        fabNewGameB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentTag = tagBoard;
+                loadHomeFragment();
+            }
+        });
+
+        fabNewGameK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentTag = tagCards;
+                loadHomeFragment();
             }
         });
 

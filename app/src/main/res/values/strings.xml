@@ -48,9 +48,11 @@
     <string name="nav_divider_title">Other</string>
     <!-- Strings für NavDrawer ENDE -->
 
-    <string name="hello_blank_fragment">Spielehub Content</string>
-
     <!-- App Bar -->
     <string name="action_gamerules">Spielregeln</string>
+
+    <!-- Savegames -->
+    <string name="yesterday">gestern</string>
+    <string name="savegame_deleted">Spielstand gelöscht</string>
 
 </resources>

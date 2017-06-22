@@ -9,6 +9,16 @@ import todo.spielesammlungprototyp.model.games.bauernkrieg.Bauernkrieg;
 public class BauernkriegMenu extends GameActivity {
 
     @Override
+    protected void onLoadGame() {
+
+    }
+
+    @Override
+    protected String onSaveGame() {
+        return null;
+    }
+
+    @Override
     protected int onLayoutRequest() {
         return R.layout.activity_bauernkriegmenu;
     }

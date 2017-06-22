@@ -27,6 +27,7 @@ public class ConsoleChess extends GameActivity {
     private ImageButton buttonConfirm;
     private CmdProcessor cmdProcessor;
     private CoordinatorLayout coordinatorLayout;
+    private String startValue = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,28 @@ public class ConsoleChess extends GameActivity {
         inputConsole.addTextChangedListener(new ConsoleInputWatcher());
 
         setKeyboardListener();
-        cmdProcessor = new CmdProcessor(this);
+    }
+
+    @Override
+    protected void onLoadGame() {
+        // is this Activity started with a Savegame?
+        if (currentSaveGame == null) {
+            cmdProcessor = new CmdProcessor(this);
+            startValue = cmdProcessor.getFen();
+        } else {
+            cmdProcessor = new CmdProcessor(this, currentSaveGame.value);
+        }
+    }
+
+    @Override
+    protected String onSaveGame() {
+        // put String value in ( saveGame(String value) ) for ConsoleChess is no serialization needed
+        String toSave = cmdProcessor.getFen();
+        // is it a unchanged new game?
+        if (startValue.equals(toSave)) {
+            toSave = null;
+        }
+        return toSave;
     }
 
     @Override

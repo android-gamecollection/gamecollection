@@ -13,9 +13,22 @@ public class CmdProcessor {
     private final ChessWrapper wrapper;
 
     public CmdProcessor(ConsoleChess consoleChessActivity) {
+        this(consoleChessActivity, null);
+    }
+
+    public CmdProcessor(ConsoleChess consoleChessActivity, String savegame) {
         this.consoleChessActivity = consoleChessActivity;
         this.wrapper = new ChessWrapper();
-        wrapper.setStartPosition();
+        if (savegame == null) {
+            wrapper.setStartPosition();
+        } else {
+            wrapper.setPosition(savegame);
+        }
+        processInput("ov");
+    }
+
+    public String getFen() {
+        return wrapper.getBoard();
     }
 
     public void processInput(String input) {
@@ -46,8 +59,8 @@ public class CmdProcessor {
                 if (cmd.length < 3) {
                     response.errorMessage = getString(R.string.game_consolechess_err_invalid_cmd);
                 } else {
-                     boolean validMove = wrapper.move(cmd[1],cmd[2]);
-                    if (!validMove){
+                    boolean validMove = wrapper.move(cmd[1],cmd[2]);
+                    if (!validMove) {
                         response.errorMessage = getString(R.string.game_consolechess_err_invalid_move);
                     }
                 }

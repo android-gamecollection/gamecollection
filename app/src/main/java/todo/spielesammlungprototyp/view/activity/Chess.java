@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -35,6 +34,7 @@ import java.util.Map;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.chess.ChessHistoryAdapter;
 import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
 import todo.spielesammlungprototyp.model.util.CharacterIterator;
@@ -143,13 +143,23 @@ public class Chess extends GameActivity {
     }
 
     @Override
+    protected void onLoadGame() {
+
+    }
+
+    @Override
+    protected String onSaveGame() {
+        return null;
+    }
+
+    @Override
     protected int onLayoutRequest() {
         return R.layout.activity_chess;
     }
 
     private void setRecyclerVisibility(final boolean visible) {
-        int colorStart = ContextCompat.getColor(this, R.color.background);
-        int colorEnd = ContextCompat.getColor(this, R.color.backgroundDarker);
+        int colorStart = AndroidResources.getColor(R.color.background);
+        int colorEnd = AndroidResources.getColor(R.color.backgroundDarker);
         ValueAnimator colorAnimator = ValueAnimator.ofArgb(colorStart, colorEnd);
         colorAnimator.setDuration(ANIMATION_SPEED / 2);
         colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -289,7 +299,7 @@ public class Chess extends GameActivity {
             String snackbarText = getString(R.string.game_chess_snackbar_gameover) + getString(gameoverReason);
             CoordinatorLayout chessLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
             final Snackbar snackbar = Snackbar.make(chessLayout, snackbarText, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setActionTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+            snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
             snackbar.setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -9,6 +9,16 @@ import todo.spielesammlungprototyp.model.games.maumau.MauMau;
 public class MauMauMenu extends GameActivity {
 
     @Override
+    protected void onLoadGame() {
+
+    }
+
+    @Override
+    protected String onSaveGame() {
+        return null;
+    }
+
+    @Override
     protected int onLayoutRequest() {
         return R.layout.activity_maumaumenu;
     }
