@@ -1,5 +1,6 @@
 package todo.spielesammlungprototyp.model.util;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
@@ -15,22 +16,22 @@ public class Savegame implements Comparable<Savegame> {
 
     public String uuid;
     public String gameUuid;
-    public String value;
+    public Bundle bundle;
     public Date date;
 
     // Empty constructor for deserialization >>essential<<
     public Savegame() {
     }
 
-    public Savegame(String gameUuid, String value) {
+    public Savegame(String gameUuid, Bundle bundle) {
         this.uuid = UUID.randomUUID().toString();
         this.gameUuid = gameUuid;
-        this.value = value;
+        this.bundle = bundle;
         this.date = new Date();
     }
 
-    void update(String value) {
-        this.value = value;
+    public void update(Bundle bundle) {
+        this.bundle = bundle;
         this.date = new Date();
     }
 
@@ -44,9 +45,9 @@ public class Savegame implements Comparable<Savegame> {
         } else if (DateUtils.isLastWeek(date)) {
             str = DateUtils.dateToCalendar(date).getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, locale);
         } else {
-            return SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, locale).format(date);
+            str = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, locale).format(date);
         }
-        return str.toUpperCase();
+        return str;
     }
 
     @Override
