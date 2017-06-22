@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import todo.spielesammlungprototyp.R;
 
-public class SettingsTemp extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
 
     private Toolbar toolbar;
 

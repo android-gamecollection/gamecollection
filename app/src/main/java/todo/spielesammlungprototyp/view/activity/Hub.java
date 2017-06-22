@@ -265,7 +265,7 @@ public class Hub extends AppCompatActivity {
                         return true;
                     case tagSettings:
                         // launch new intent instead of loading fragment
-                        startActivity(new Intent(Hub.this, SettingsTemp.class));
+                        startActivity(new Intent(Hub.this, Settings.class));
                         drawer.closeDrawers();
                         return true;
                     default:
