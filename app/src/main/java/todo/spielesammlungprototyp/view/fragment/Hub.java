@@ -21,11 +21,11 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
+import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.Games;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
@@ -86,14 +86,14 @@ public class Hub extends Fragment implements ClickListener {
         fabNewGameB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((todo.spielesammlungprototyp.view.activity.Hub)getActivity()).switchFragment('2');
+                ((todo.spielesammlungprototyp.view.activity.Hub) getActivity()).switchFragment('2');
             }
         });
 
         fabNewGameK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((todo.spielesammlungprototyp.view.activity.Hub)getActivity()).switchFragment('1');
+                ((todo.spielesammlungprototyp.view.activity.Hub) getActivity()).switchFragment('1');
             }
         });
     }
@@ -153,22 +153,12 @@ public class Hub extends Fragment implements ClickListener {
                 final int duration = 250;
                 alphaOut.setDuration(duration);
                 alphaIn.setDuration(duration);
-                alphaOut.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
+                alphaOut.setAnimationListener(new AnimationEndListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         setupAdapter();
                         recyclerView.startAnimation(alphaIn);
                         refreshComplete();
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
                     }
                 });
                 recyclerView.startAnimation(alphaOut);
