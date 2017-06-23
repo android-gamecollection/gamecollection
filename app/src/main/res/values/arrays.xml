@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <array name="settings_general_fab_color">
-        <item>@color/colorAccentFab1</item>
-        <item>@color/colorAccentFab2</item>
-        <item>@color/colorAccentFab3</item>
-    </array>
-</resources>

@@ -8,7 +8,7 @@
         <ListPreference
             android:defaultValue="#795548"
             android:entries="@array/settings_general_accent_color_alias"
-            android:entryValues="@array/settings_general_accent_color"
+            android:entryValues="@array/settings_general_fab_color"
             android:key="settings_key_general_accent_color"
             android:summary="@string/settings_general_accent_color_description"
             android:title="@string/settings_general_accent_color_title" />

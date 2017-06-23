@@ -11,8 +11,6 @@ import todo.spielesammlungprototyp.R;
 
 public class Settings extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -66,14 +66,6 @@
         <item>Braun</item>
         <item>Orange</item>
     </string-array>
-    <string-array name="settings_general_accent_color">
-        <!--item name="colorAccentFab1">@color/colorAccentFab1</item>
-        <item name="colorAccentFab2">@color/colorAccentFab2</item>
-        <item name="colorAccentFab3">@color/colorAccentFab3</item-->
-        <item name="colorAccentFab1">#4CAF50</item>
-        <item name="colorAccentFab2">#795548</item>
-        <item name="colorAccentFab3">#FF5722</item>
-    </string-array>
 
     <!-- Settings Boardgames -->
     <string name="settings_chess_title">Schach</string>

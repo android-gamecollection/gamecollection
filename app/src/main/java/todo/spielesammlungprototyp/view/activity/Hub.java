@@ -119,7 +119,7 @@ public class Hub extends AppCompatActivity {
     }
 
     private void tintFabs() {
-        String colorStr = PreferenceManager.getDefaultSharedPreferences(this).getString("settings_key_general_accent_color", "@color/colorAccentFab2");
+        String colorStr = PreferenceManager.getDefaultSharedPreferences(this).getString("settings_key_general_accent_color", "#795548");
         ColorStateList csl = ColorStateList.valueOf(Color.parseColor(colorStr));
         fabNewGame.setBackgroundTintList(csl);
         fabNewGameK.setBackgroundTintList(csl);

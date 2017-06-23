@@ -21,9 +21,10 @@
     <color name="chessSquareHighlight">#FFFF00</color>
     <color name="chessSquareSuggestion">#00FF00</color>
 
-    <color name="colorAccentFab1">#4CAF50</color>
-    <color name="colorAccentFab2">#795548</color>
-    <color name="colorAccentFab3">#FF5722</color>
-
+    <string-array name="settings_general_fab_color">
+        <item name="colorAccentFab1">#4CAF50</item>
+        <item name="colorAccentFab2">#795548</item>
+        <item name="colorAccentFab3">#FF5722</item>
+    </string-array>
 
 </resources>
