@@ -2,33 +2,31 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/settings_general_title"
-        android:key="settings_key_general">
+        android:key="settings_key_general"
+        android:title="@string/settings_general_title">
 
         <ListPreference
-            android:key="settings_key_general_accent_color"
-            android:summary="@string/settings_general_accent_color_description"
+            android:defaultValue="#795548"
             android:entries="@array/settings_general_accent_color_alias"
             android:entryValues="@array/settings_general_accent_color"
-            android:title="@string/settings_general_accent_color_title"
-            android:defaultValue="#795548"/>
+            android:key="settings_key_general_accent_color"
+            android:summary="@string/settings_general_accent_color_description"
+            android:title="@string/settings_general_accent_color_title" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/settings_chess_description_computer"
-        android:key="settings_key_chess_vs_computer">
+        android:key="settings_key_chess_vs_computer"
+        android:title="@string/settings_chess_description_computer">
 
-            <ListPreference
-                android:defaultValue="2"
-                android:entries="@array/AI_difficulty_alias"
-                android:entryValues="@array/AI_difficulty"
-                android:key="settings_key_chess_vs_computer_difficulty"
-                android:summary="@string/settings_chess_difficulty_description"
-                android:title="@string/settings_chess_difficulty_title" />
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/AI_difficulty_alias"
+            android:entryValues="@array/AI_difficulty"
+            android:key="settings_key_chess_vs_computer_difficulty"
+            android:summary="@string/settings_chess_difficulty_description"
+            android:title="@string/settings_chess_difficulty_title" />
 
     </PreferenceCategory>
-
-
 
 </PreferenceScreen>
