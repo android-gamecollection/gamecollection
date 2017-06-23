@@ -11,12 +11,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.Games;
@@ -31,22 +28,25 @@ public abstract class GameActivity extends AppCompatActivity {
 
     public static final String KEY_GAME_UUID = "gameUuid";
     public static final String KEY_SAVEGAME_UUID = "UUID";
-    public Savegame currentSaveGame;
-    public String gameUuid;
-    public boolean isSaved;
     private Game game;
     private SavegameStorage savegameStorage;
+    private String savegameUuid;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        savegameStorage = getInstance();
 
+        savegameStorage = getInstance();
         Bundle extras = getIntent().getExtras();
-        String savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
-        if (savegameUuid != null) {
-            gameUuid = savegameStorage.getFromUuid(savegameUuid).gameUuid;
+
+        savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
+        Savegame savegame = savegameStorage.getFromUuid(savegameUuid);
+        String gameUuid;
+        if (savegame != null) {
+            gameUuid = savegame.gameUuid;
+            onLoadGame(savegame.bundle);
         } else {
             gameUuid = extras.getString(KEY_GAME_UUID);
+            onLoadGame(null);
         }
         game = Games.getFromUuid(gameUuid);
         setContentView(onLayoutRequest());
@@ -55,56 +55,23 @@ public abstract class GameActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
-
-        //Load Savegame if "Intent" has Extra
-        savegameLoadChecker(savedInstanceState);
-        isSaved = false;
-
-        onLoadGame();
     }
 
-    private void savegameLoadChecker(Bundle savedInstanceState) {
-        if (uuidInspector(savedInstanceState)) {
-            ArrayList<Savegame> listOfGames = savegameStorage.getSavegameList();
-            if (!listOfGames.isEmpty()) {
-                currentSaveGame = savegameStorage.getFromUuid(gameUuid);
-            }
-        }
-    }
-
-    private boolean uuidInspector(Bundle savedInstanceState) {
-        boolean erg;
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                erg = false;
+    private boolean saveGame() {
+        Bundle bundle = new Bundle();
+        onSaveGame(bundle);
+        if (!bundle.isEmpty()) {
+            Savegame savegame;
+            if (savegameUuid == null) {
+                savegame = new Savegame(game.getUuid(), bundle);
             } else {
-                gameUuid = extras.getString(KEY_SAVEGAME_UUID);
-                erg = gameUuid != null;
+                savegame = savegameStorage.getFromUuid(savegameUuid);
+                savegame.update(bundle);
             }
-        } else {
-            gameUuid = savedInstanceState.getString(KEY_SAVEGAME_UUID);
-            erg = gameUuid != null;
-
+            savegameStorage.modifySavegame(savegame, false);
+            return true;
         }
-        return erg;
-    }
-
-    public void saveGame(String value) {
-        if (!TextUtils.isEmpty(value)) {
-            if (!isSaved) {
-                if (currentSaveGame == null) {
-                    currentSaveGame = new Savegame(game.getUuid(), value);
-                    savegameStorage.addSavegame(currentSaveGame);
-                } else {
-                    if (!currentSaveGame.value.equals(value)) {
-                        currentSaveGame.value = value;
-                        savegameStorage.updateSavegame(currentSaveGame);
-                    }
-                }
-            }
-            isSaved = true;
-        }
+        return false;
     }
 
     @Override
@@ -131,21 +98,18 @@ public abstract class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        saveGame(onSaveGame());
+        saveGame();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        saveGame(onSaveGame());
-        if (isSaved) {
-            savedInstanceState.putString(KEY_SAVEGAME_UUID, currentSaveGame.uuid);
-        }
+        saveGame();
     }
 
-    protected abstract void onLoadGame();
+    protected abstract void onLoadGame(Bundle savegame);
 
-    protected abstract String onSaveGame();
+    protected abstract void onSaveGame(Bundle savegame);
 
     @Override
     public void onBackPressed() {

@@ -41,7 +41,7 @@ public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.Savega
             holder.gameTitle.setText(game.getGameTitle());
             holder.gameSubtitle.setText(game.getGameDescription());
             holder.gameIcon.setImageDrawable(App.getContext().getDrawable(game.getGameIconId()));
-            holder.gameDate.setText(savegame.getDateString());
+            holder.gameDate.setText(savegame.getDateString().toUpperCase());
         }
     }
 
@@ -104,7 +104,7 @@ public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.Savega
         @Override
         public boolean areContentsTheSame(Savegame oldItem, Savegame newItem) {
             return oldItem.gameUuid.equals(newItem.gameUuid)
-                    && oldItem.value.equals(newItem.value);
+                    && oldItem.bundle.equals(newItem.bundle);
         }
 
         @Override
