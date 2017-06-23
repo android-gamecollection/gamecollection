@@ -2,7 +2,10 @@ package todo.spielesammlungprototyp.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
@@ -34,7 +39,11 @@ public class Hub extends Fragment implements ClickListener {
     private final String ACTIVITY_PACKAGE = ".view.activity.";
     private SavegameAdapter savegameAdapter;
     private CoordinatorLayout coordinatorLayout;
-    private FloatingActionButton floatingActionButton;
+
+    private FloatingActionButton fabNewGame, fabNewGameK, fabNewGameB;
+    private Animation fabOpenUpper, fabCloseUpper, fabCloseLower, fabOpenLower, fabRotateClockwise, fabRotateAnticlockwise;
+    private boolean isFabOpen = false;
+
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
 
@@ -53,9 +62,66 @@ public class Hub extends Fragment implements ClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View rootView = getView().getRootView();
+        Context context = App.getContext();
         coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinator_layout);
-        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab_new_game);
         setupRecyclerView();
+
+        fabNewGame = (FloatingActionButton) rootView.findViewById(R.id.fab_new_game);
+        fabNewGameK = (FloatingActionButton) rootView.findViewById(R.id.fab_new_cardgame);
+        fabNewGameB = (FloatingActionButton) rootView.findViewById(R.id.fab_new_boardgame);
+        fabOpenUpper = AnimationUtils.loadAnimation(context, R.anim.fab_open_upper);
+        fabCloseUpper = AnimationUtils.loadAnimation(context, R.anim.fab_close_upper);
+        fabOpenLower = AnimationUtils.loadAnimation(context, R.anim.fab_open_lower);
+        fabCloseLower = AnimationUtils.loadAnimation(context, R.anim.fab_close_lower);
+        fabRotateClockwise = AnimationUtils.loadAnimation(context, R.anim.fab_rotate_clockwise);
+        fabRotateAnticlockwise = AnimationUtils.loadAnimation(context, R.anim.fab_rotate_anticlockwise);
+
+        fabNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animateFab();
+            }
+        });
+
+        fabNewGameB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((todo.spielesammlungprototyp.view.activity.Hub)getActivity()).switchFragment('2');
+            }
+        });
+
+        fabNewGameK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((todo.spielesammlungprototyp.view.activity.Hub)getActivity()).switchFragment('1');
+            }
+        });
+    }
+
+    private void animateFab() {
+        if (isFabOpen) {
+            fabNewGameB.startAnimation(fabCloseLower);
+            fabNewGameK.startAnimation(fabCloseUpper);
+            fabNewGame.startAnimation(fabRotateAnticlockwise);
+            fabNewGameB.setClickable(false);
+            fabNewGameK.setClickable(false);
+            this.isFabOpen = false;
+        } else {
+            fabNewGameB.startAnimation(fabOpenLower);
+            fabNewGameK.startAnimation(fabOpenUpper);
+            fabNewGame.startAnimation(fabRotateClockwise);
+            fabNewGameB.setClickable(true);
+            fabNewGameK.setClickable(true);
+            this.isFabOpen = true;
+        }
+    }
+
+    private void tintFabs() {
+        String colorStr = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("settings_key_general_accent_color", "#795548");
+        ColorStateList csl = ColorStateList.valueOf(Color.parseColor(colorStr));
+        fabNewGame.setBackgroundTintList(csl);
+        fabNewGameK.setBackgroundTintList(csl);
+        fabNewGameB.setBackgroundTintList(csl);
     }
 
     private void setupRecyclerView() {
@@ -73,9 +139,9 @@ public class Hub extends Fragment implements ClickListener {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
-                    floatingActionButton.hide();
+                    fabNewGame.hide();
                 } else {
-                    floatingActionButton.show();
+                    fabNewGame.show();
                 }
             }
         });
@@ -108,6 +174,17 @@ public class Hub extends Fragment implements ClickListener {
                 recyclerView.startAnimation(alphaOut);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tintFabs();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     private void setupAdapter() {

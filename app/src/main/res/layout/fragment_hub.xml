@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_cardgame"
         android:layout_width="wrap_content"
@@ -55,5 +56,6 @@
         android:tint="?attr/colorPrimary"
         app:backgroundTint="@color/colorAccent"
         app:srcCompat="@drawable/icon_plus" />
+        -->
 
 </android.support.design.widget.CoordinatorLayout>
