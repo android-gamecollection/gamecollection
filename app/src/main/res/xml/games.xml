@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE games [
-    <!ELEMENT games (boardgames, cardgames)>
-    <!ELEMENT boardgames (game*)>
-    <!ELEMENT cardgames (game*)>
+    <!ELEMENT games (category*)>
+    <!ELEMENT category (game*)>
+    <!ATTLIST category id ID #REQUIRED>
+    <!ATTLIST category title CDATA #REQUIRED>
+    <!ATTLIST category icon CDATA #REQUIRED>
     <!ELEMENT game EMPTY>
     <!ATTLIST game title CDATA #REQUIRED>
     <!ATTLIST game description CDATA #REQUIRED>
@@ -13,7 +15,10 @@
 ]>
 <games>
 
-    <boardgames>
+    <category
+        id="boardgames"
+        title="@string/boardgames"
+        icon="@drawable/icon_checkerboard">
 
         <game
             title="Schach"
@@ -37,9 +42,12 @@
             rules="no rules"
             activity="ConsoleChess" />
 
-    </boardgames>
+    </category>
 
-    <cardgames>
+    <category
+        id="cardgames"
+        title="@string/cardgames"
+        icon="@drawable/icon_cards_playing">
 
         <game
             title="Bauernkrieg"
@@ -62,6 +70,6 @@
             rules="no rules"
             activity="schafkopf" />
 
-    </cardgames>
+    </category>
 
 </games>

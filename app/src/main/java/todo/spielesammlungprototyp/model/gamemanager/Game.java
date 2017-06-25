@@ -8,11 +8,7 @@ public class Game implements Comparable<Game> {
     private int gameIconId;
     private String gameTitle, gameDescription, gameRules, activity, uuid, tag;
 
-    private Game() {
-
-    }
-
-    public Game(int gameIconId, String gameTitle, String gameDescription, String gameRules, String activity, @Nullable String tag) {
+    Game(int gameIconId, String gameTitle, String gameDescription, String gameRules, String activity, @Nullable String tag) {
         this.gameIconId = gameIconId;
         this.gameTitle = gameTitle;
         this.gameDescription = gameDescription;
@@ -60,7 +56,7 @@ public class Game implements Comparable<Game> {
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %s", gameIconId, gameTitle, gameDescription, activity);
+        return String.format("%s, %s, %s", gameTitle, tag, activity);
     }
 
     @Override

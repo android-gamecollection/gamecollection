@@ -22,16 +22,26 @@ public final class Games {
 
     private static final Games instance = new Games();
     private static final String TAG = instance.getClass().getSimpleName();
-    public final Map<String, List<Game>> games = new HashMap<>();
-    private final String[] XML_ATTRIBUTES = {"icon", "title", "description", "rules", "activity", "tag"};
+    private final String[] CATEGORY_ATTRIBUTES = {"icon", "id", "title"};
+    private final String[] GAME_ATTRIBUTES = {"icon", "title", "description", "rules", "activity", "tag"};
+    private final Map<String, List<Game>> games = new HashMap<>();
+    private final List<GameCategory> categories = new ArrayList<>();
 
     private Games() {
         loadGamesFromXml();
         sortGameList();
     }
 
-    public synchronized static Map<String, List<Game>> getGameList() {
-        return instance.games;
+    public static synchronized Map<String, List<Game>> getGameList() {
+        return Collections.unmodifiableMap(instance.games);
+    }
+
+    public static synchronized List<Game> getGameList(String category) {
+        return Collections.unmodifiableList(instance.games.get(category));
+    }
+
+    public static synchronized List<GameCategory> getCategoryList() {
+        return Collections.unmodifiableList(instance.categories);
     }
 
     public static Game getFromUuid(String uuid) {
@@ -57,27 +67,27 @@ public final class Games {
 
     private void loadGamesFromXml() {
         Context mContext = App.getContext();
-        try (XmlResourceParser xmlGames = mContext.getResources().getXml(R.xml.games)) {
-            String gameCategory = null;
+        try (XmlResourceParser xmlParser = mContext.getResources().getXml(R.xml.games)) {
+            String stateGameCategory = null;
 
-            int eventType = xmlGames.getEventType();
-            for (; eventType != XmlPullParser.END_DOCUMENT; eventType = xmlGames.next()) {
+            int eventType = xmlParser.getEventType();
+            for (; eventType != XmlPullParser.END_DOCUMENT; eventType = xmlParser.next()) {
                 if (eventType != XmlPullParser.START_TAG) continue;
 
-                switch (xmlGames.getDepth()) {
+                switch (xmlParser.getDepth()) {
                     case 2:
-                        gameCategory = xmlGames.getName();
-                        games.put(gameCategory, new ArrayList<Game>());
+                        String[] categoryAttributes = getAttributes(xmlParser, CATEGORY_ATTRIBUTES);
+                        int categoryIcon = AndroidResources.getResourceIDFromString(categoryAttributes[0]);
+                        GameCategory category = new GameCategory(categoryIcon, categoryAttributes[1], categoryAttributes[2]);
+                        stateGameCategory = category.getCategoryId();
+                        categories.add(category);
+                        games.put(stateGameCategory, new ArrayList<Game>());
                         break;
                     case 3:
-                        String[] attributes = XML_ATTRIBUTES.clone();
-                        for (int i = 0; i < attributes.length; i++) {
-                            String attributeValue = xmlGames.getAttributeValue(null, attributes[i]);
-                            attributes[i] = AndroidResources.getResourceString(attributeValue);
-                        }
-                        int icon = AndroidResources.getResourceIDFromString(attributes[0]);
-                        Game game = new Game(icon, attributes[1], attributes[2], attributes[3], attributes[4], attributes[5]);
-                        games.get(gameCategory).add(game);
+                        String[] gameAttributes = getAttributes(xmlParser, GAME_ATTRIBUTES);
+                        int gameIcon = AndroidResources.getResourceIDFromString(gameAttributes[0]);
+                        Game game = new Game(gameIcon, gameAttributes[1], gameAttributes[2], gameAttributes[3], gameAttributes[4], gameAttributes[5]);
+                        games.get(stateGameCategory).add(game);
                         break;
                 }
             }
@@ -86,9 +96,20 @@ public final class Games {
         }
     }
 
+    private String[] getAttributes(XmlResourceParser xmlParser, String[] attributesList) {
+        int length = attributesList.length;
+        String[] attributes = new String[length];
+        for (int i = 0; i < length; i++) {
+            String attributeValue = xmlParser.getAttributeValue(null, attributesList[i]);
+            attributes[i] = AndroidResources.getResourceString(attributeValue);
+        }
+        return attributes;
+    }
+
     private void sortGameList() {
         for (Map.Entry<String, List<Game>> entry : games.entrySet()) {
             Collections.sort(entry.getValue());
         }
+        Collections.sort(categories);
     }
 }
