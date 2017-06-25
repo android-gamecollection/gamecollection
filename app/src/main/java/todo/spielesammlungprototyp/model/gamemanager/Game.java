@@ -46,7 +46,7 @@ public class Game implements Comparable<Game> {
         return uuid;
     }
 
-    public boolean isTagged(String tag) {
+    public boolean isTaggedWith(String tag) {
         if (this.tag != null && tag != null) {
             String[] splitTag = this.tag.split("\\|");
             for (String t : splitTag) {
