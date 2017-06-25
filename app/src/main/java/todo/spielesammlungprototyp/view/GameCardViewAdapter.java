@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.gamemanager.Game;
 
 public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapter.GameViewHolder> {
 

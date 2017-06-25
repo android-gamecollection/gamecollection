@@ -19,10 +19,10 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.util.Games;
+import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
-import todo.spielesammlungprototyp.view.Game;
+import todo.spielesammlungprototyp.model.gamemanager.Game;
 
 import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
 

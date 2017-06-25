@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.util.Games;
+import todo.spielesammlungprototyp.model.gamemanager.Game;
+import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
 

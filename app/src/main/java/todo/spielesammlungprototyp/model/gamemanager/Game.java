@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.view;
+package todo.spielesammlungprototyp.model.gamemanager;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

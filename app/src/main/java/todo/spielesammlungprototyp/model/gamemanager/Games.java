@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.model.util;
+package todo.spielesammlungprototyp.model.gamemanager;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.view.Game;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 
 public final class Games {
 
