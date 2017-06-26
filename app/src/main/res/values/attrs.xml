@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CheckeredGameboardView">
+
+        <attr name="gridSize" format="integer" />
+        <attr name="colorBorder" format="color" />
+        <attr name="colorDark" format="color" />
+        <attr name="colorHighlight" format="color" />
+        <attr name="colorLight" format="color" />
+        <attr name="colorSuggestion" format="color" />
+        <attr name="highlightStrokeStyle" format="enum">
+            <enum name="regular" value="0" />
+            <enum name="thin" value="1" />
+            <enum name="fill" value="2" />
+            <enum name="none" value="3" />
+        </attr>
+        <attr name="borderSize" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="small" value="1" />
+            <enum name="big" value="2" />
+            <enum name="none" value="3" />
+        </attr>
+        <attr name="disableSuggestions" format="boolean" />
+
+    </declare-styleable>
+
+</resources>

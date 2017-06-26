@@ -16,23 +16,65 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.gamemanager.Games;
+import todo.spielesammlungprototyp.model.util.Savegame;
+import todo.spielesammlungprototyp.model.util.SavegameStorage;
+import todo.spielesammlungprototyp.model.gamemanager.Game;
+
+import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
 
 
 public abstract class GameActivity extends AppCompatActivity {
 
-    public final static String KEY_RULES = "rules";
-    public final static String KEY_TITLE = "title";
+    public static final String KEY_GAME_UUID = "gameUuid";
+    public static final String KEY_SAVEGAME_UUID = "UUID";
+    protected Game game;
+    protected Savegame currentSaveGame;
+    private String gameUuid;
+    private boolean isSaved;
+    private SavegameStorage savegameStorage;
+    private String savegameUuid;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        savegameStorage = getInstance();
         Bundle extras = getIntent().getExtras();
+
+        savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
+        Savegame savegame = savegameStorage.getFromUuid(savegameUuid);
+        String gameUuid;
+        if (savegame != null) {
+            gameUuid = savegame.gameUuid;
+            onLoadGame(savegame.bundle);
+        } else {
+            gameUuid = extras.getString(KEY_GAME_UUID);
+            onLoadGame(null);
+        }
+        game = Games.getFromUuid(gameUuid);
         setContentView(onLayoutRequest());
-        setTitle(extras.getString(KEY_TITLE));
+        setTitle(game.getGameTitle());
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private boolean saveGame() {
+        Bundle bundle = new Bundle();
+        onSaveGame(bundle);
+        if (!bundle.isEmpty()) {
+            Savegame savegame;
+            if (savegameUuid == null) {
+                savegame = new Savegame(game.getUuid(), bundle);
+            } else {
+                savegame = savegameStorage.getFromUuid(savegameUuid);
+                savegame.update(bundle);
+            }
+            savegameStorage.modifySavegame(savegame, false);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -57,6 +99,22 @@ public abstract class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        saveGame();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        saveGame();
+    }
+
+    protected abstract void onLoadGame(Bundle savegame);
+
+    protected abstract void onSaveGame(Bundle savegame);
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
@@ -67,12 +125,13 @@ public abstract class GameActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                break;
+                return true;
             case R.id.action_info:
                 showRulesDialog();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -86,7 +145,7 @@ public abstract class GameActivity extends AppCompatActivity {
     private void showRulesDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getString(R.string.action_gamerules));
-        alertDialog.setMessage(getIntent().getExtras().getString(KEY_RULES, "empty"));
+        alertDialog.setMessage(game.getGameRules());
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -96,4 +155,5 @@ public abstract class GameActivity extends AppCompatActivity {
                 });
         alertDialog.show();
     }
+
 }

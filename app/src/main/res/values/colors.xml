@@ -6,13 +6,25 @@
     <color name="colorPrimaryLight">#C8E6C9</color>
     <color name="colorAccent">#795548</color>
 
+    <color name="snackbarActionColor">@color/colorPrimary</color>
+
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#757575</color>
+    <color name="textColorTernary">#CECECE</color>
 
     <color name="background">#FFFFFF</color>
+    <color name="backgroundDarker">#FAFAFA</color>
 
-    <color name="chessWhite">#FFFFFF</color>
-    <color name="chessBlack">#000000</color>
-    <color name="chessPiece">#FF5722</color>
+    <!-- Chess -->
+    <color name="chessSquareDark">@android:color/darker_gray</color>
+    <color name="chessSquareLight">@android:color/white</color>
+    <color name="chessSquareHighlight">#FFFF00</color>
+    <color name="chessSquareSuggestion">#00FF00</color>
+
+    <string-array name="settings_general_fab_color">
+        <item name="colorAccentFab1">#4CAF50</item>
+        <item name="colorAccentFab2">#795548</item>
+        <item name="colorAccentFab3">#FF5722</item>
+    </string-array>
 
 </resources>

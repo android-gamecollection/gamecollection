@@ -4,17 +4,31 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
 import todo.spielesammlungprototyp.view.activity.ConsoleChess;
 
 public class CmdProcessor {
 
     private final ConsoleChess consoleChessActivity;
-    private final ChessBoard chessBoard;
+    private final ChessWrapper wrapper;
 
     public CmdProcessor(ConsoleChess consoleChessActivity) {
+        this(consoleChessActivity, null);
+    }
+
+    public CmdProcessor(ConsoleChess consoleChessActivity, String savegame) {
         this.consoleChessActivity = consoleChessActivity;
-        this.chessBoard = new ChessBoard();
-        chessBoard.setStartPosition();
+        this.wrapper = new ChessWrapper();
+        if (savegame == null) {
+            wrapper.setStartPosition();
+        } else {
+            wrapper.setPosition(savegame);
+        }
+        processInput("ov");
+    }
+
+    public String getFen() {
+        return wrapper.getBoard();
     }
 
     public void processInput(String input) {
@@ -31,21 +45,21 @@ public class CmdProcessor {
                 response.escapeSequence = "clear";
                 break;
             case "restart":
-                chessBoard.setStartPosition();
+                wrapper.setStartPosition();
                 break;
             case "show":
-                response.output = chessBoard.getBoard();
+                response.output = wrapper.getBoard();
                 break;
             case "ov":
             case "overview":
-                response.output = chessBoard.getOverview();
+                response.output = wrapper.getOverview();
                 break;
             case "mv":
             case "move":
                 if (cmd.length < 3) {
                     response.errorMessage = getString(R.string.game_consolechess_err_invalid_cmd);
                 } else {
-                    boolean validMove = chessBoard.move(cmd[1], cmd[2]);
+                    boolean validMove = wrapper.move(cmd[1],cmd[2]);
                     if (!validMove) {
                         response.errorMessage = getString(R.string.game_consolechess_err_invalid_move);
                     }
@@ -56,7 +70,11 @@ public class CmdProcessor {
                 break;
             case "ai":
             case "aimove":
-                chessBoard.aimove();
+                wrapper.aimove();
+                break;
+            case "hint":
+                String zug = wrapper.getBestMove();
+                response.output = "Ein möglicher Zug wäre: " + zug;
                 break;
             default:
                 response.errorMessage = getString(R.string.game_consolechess_err_invalid_cmd);
@@ -92,7 +110,7 @@ public class CmdProcessor {
             if (!TextUtils.isEmpty(response.errorMessage))
                 consoleChessActivity.displayError(response.errorMessage);
             if (!TextUtils.isEmpty(response.output))
-                consoleChessActivity.addOutputln(response.output);
+                consoleChessActivity.addOutput(response.output);
         }
     }
 
