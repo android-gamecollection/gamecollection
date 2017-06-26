@@ -136,7 +136,7 @@ public class Hub extends AppCompatActivity {
     }
 
     private int toIndex(char currentTag) {
-        return currentTag - 48;
+        return currentTag - '0';
     }
 
     public void setUpNavigationView() {
