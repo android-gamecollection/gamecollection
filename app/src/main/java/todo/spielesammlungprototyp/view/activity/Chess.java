@@ -34,6 +34,7 @@ import java.util.Map;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.chess.ChessHistoryAdapter;
 import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
+import todo.spielesammlungprototyp.model.games.chess.Doublemove;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
@@ -63,6 +64,8 @@ public class Chess extends GameActivity {
     private CheckeredGameboardView chessboardView;
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
+    private Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> whitemove = null;
+    private int whiteid;
     private ChessWrapper board;
     private int gridSize;
     private LinearLayoutManager recyclerManager;
@@ -120,18 +123,18 @@ public class Chess extends GameActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                testAddItem();
+                testAddItem(null);  // TODO:remove
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void testAddItem() {
+    private void testAddItem(final Doublemove doublemove) {
         final Runnable addItem = new Runnable() {
             @Override
             public void run() {
-                recyclerAdapter.addItem();
+                recyclerAdapter.addItem(doublemove);
                 recyclerManager.scrollToPosition(0);
             }
         };
@@ -332,6 +335,16 @@ public class Chess extends GameActivity {
                     update();
                 }
             });
+            Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> thismove =  new Tuple(from,to);
+            int id = (int)figuren[from.first][from.last].getTag();
+            if(whitemove == null) {
+                whitemove = thismove;
+                whiteid = id;
+            }
+            else {
+                testAddItem(new Doublemove(whitemove,thismove,whiteid,id));
+                whitemove = null;
+            }
             figuren[from.first][from.last].startAnimation(translateAnimation);
             return true;
         }
@@ -406,6 +419,7 @@ public class Chess extends GameActivity {
                 if (figuren[x][y] == null)
                     figuren[x][y] = new ImageView(this);
                 figuren[x][y].setImageResource(chessDrawables.get(c));
+                figuren[x][y].setTag(chessDrawables.get(c));
                 x += 1;
             }
         }
