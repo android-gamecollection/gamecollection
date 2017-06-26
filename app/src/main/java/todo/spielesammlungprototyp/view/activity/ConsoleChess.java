@@ -20,6 +20,7 @@ import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
 
 public class ConsoleChess extends GameActivity {
 
+    private static final String KEY_FEN = "fen";
     ColorFilter buttonColorEnabled;
     private ScrollView scrollConsole;
     private TextView textConsole;
@@ -47,25 +48,19 @@ public class ConsoleChess extends GameActivity {
     }
 
     @Override
-    protected void onLoadGame() {
-        // is this Activity started with a Savegame?
-        if (currentSaveGame == null) {
-            cmdProcessor = new CmdProcessor(this);
-            startValue = cmdProcessor.getFen();
-        } else {
-            cmdProcessor = new CmdProcessor(this, currentSaveGame.value);
-        }
+    protected void onLoadGame(Bundle savegame) {
+        final String fen = savegame == null ? null : savegame.getString(KEY_FEN);
+        cmdProcessor = new CmdProcessor(this, fen);
+        startValue = cmdProcessor.getFen();
     }
 
     @Override
-    protected String onSaveGame() {
-        // put String value in ( saveGame(String value) ) for ConsoleChess is no serialization needed
-        String toSave = cmdProcessor.getFen();
-        // is it a unchanged new game?
-        if (startValue.equals(toSave)) {
-            toSave = null;
+    protected void onSaveGame(Bundle savegame) {
+        final String fen = cmdProcessor.getFen();
+        // Only save when something has changed
+        if (!startValue.equals(fen)) {
+            savegame.putString(KEY_FEN, fen);
         }
-        return toSave;
     }
 
     @Override

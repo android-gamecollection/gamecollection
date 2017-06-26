@@ -52,6 +52,11 @@
             android:label="@string/schafkopf">
         </activity>
 
+        <activity
+            android:name=".view.activity.Settings"
+            android:label="@string/title_activity_settings">
+        </activity>
+
     </application>
 
 </manifest>

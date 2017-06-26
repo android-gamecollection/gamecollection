@@ -1,6 +1,48 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_cardgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom_k"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        android:tint="?attr/colorPrimary"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorAccent"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_cards_playing" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_boardgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom_b"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        android:tint="?attr/colorPrimary"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorAccent"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/icon_checkerboard" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:elevation="6dp"
+        android:tint="?attr/colorPrimary"
+        app:backgroundTint="@color/colorAccent"
+        app:srcCompat="@drawable/icon_plus" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
@@ -17,4 +59,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

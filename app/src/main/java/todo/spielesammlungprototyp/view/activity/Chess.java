@@ -144,13 +144,13 @@ public class Chess extends GameActivity {
     }
 
     @Override
-    protected void onLoadGame() {
+    protected void onLoadGame(Bundle savegame) {
 
     }
 
     @Override
-    protected String onSaveGame() {
-        return null;
+    protected void onSaveGame(Bundle savegame) {
+
     }
 
     @Override

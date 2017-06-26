@@ -3,21 +3,23 @@ package todo.spielesammlungprototyp.model.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.owlike.genson.GenericType;
-import com.owlike.genson.Genson;
-import com.owlike.genson.GensonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import todo.spielesammlungprototyp.App;
 
 public class SavegameStorage {
 
+    private static final String SAVE_DATA_NAME = "Test.Savegames";
+    private static final String SAVE_DATA_KEY = "TESTKEY0";
+    private static final Type gsonType = new TypeToken<ArrayList<Savegame>>() {
+    }.getType();
     private static SavegameStorage instance = null;
-    private final String SAVE_DATA_NAME = "Test.Savegames";
-    private final String SAVE_DATA_KEY = "TESTKEY0";
     private ArrayList<Savegame> saveGameList;
-    private Genson genson = new GensonBuilder().useClassMetadata(true).useRuntimeType(true).create();
+    private Gson gson = new Gson();
     private SharedPreferences savegamesSharedP;
 
     private SavegameStorage() {
@@ -25,8 +27,7 @@ public class SavegameStorage {
         savegamesSharedP = App.getContext().getSharedPreferences(SAVE_DATA_NAME, Context.MODE_PRIVATE);
         String saveGameListAsString = savegamesSharedP.getString(SAVE_DATA_KEY, "");
         if (!saveGameListAsString.isEmpty()) {
-            saveGameList = genson.deserialize(saveGameListAsString, new GenericType<ArrayList<Savegame>>() {
-            });
+            saveGameList = gson.fromJson(saveGameListAsString, gsonType);
         }
     }
 
@@ -43,41 +44,40 @@ public class SavegameStorage {
 
     public synchronized void addSavegame(Savegame savegame) {
         if (savegame != null) {
-            SharedPreferences.Editor editor = savegamesSharedP.edit();
             saveGameList.add(savegame);
-            putStringToEditor(editor);
+            putStringToEditor();
         }
     }
 
-    public synchronized boolean updateSavegame(Savegame savegame) {
-        return modifySavegame(savegame, false);
+    public synchronized void updateSavegame(Savegame savegame) {
+        modifySavegame(savegame, false);
     }
 
-    public synchronized boolean deleteSavegame(Savegame savegame) {
-        return modifySavegame(savegame, true);
+    public synchronized void deleteSavegame(Savegame savegame) {
+        modifySavegame(savegame, true);
     }
 
-    private synchronized boolean modifySavegame(Savegame savegameMODIFIED, Boolean delete) {
-        Savegame toUpdate = getFromUuid(savegameMODIFIED.uuid);
-        // UUID found
-        if (toUpdate != null) {
-            SharedPreferences.Editor editor = savegamesSharedP.edit();
-            // delete == true -> delete value ... delete == false -> update value
-            if (!delete) {
-                toUpdate.update(savegameMODIFIED.value);
-            } else {
-                saveGameList.remove(toUpdate);
-            }
-            putStringToEditor(editor);
-            return true;
+    public synchronized void modifySavegame(Savegame savegameMODIFIED, Boolean delete) {
+        Savegame foundSavegame = getFromUuid(savegameMODIFIED.uuid);
+        if (foundSavegame == null) {
+            addSavegame(savegameMODIFIED);
         } else {
-            return false;
+            // delete == true -> delete value ... delete == false -> update value
+            if (delete) {
+                saveGameList.remove(foundSavegame);
+            } else {
+                foundSavegame.update(savegameMODIFIED.bundle);
+            }
+            putStringToEditor();
         }
     }
 
-    private synchronized void putStringToEditor(SharedPreferences.Editor editor) {
-        String saveGameListToString = genson.serialize(saveGameList, new GenericType<ArrayList<Savegame>>() {
-        });
+    private synchronized void putStringToEditor() {
+        for (Savegame savegame : saveGameList) {
+            savegame.bundle.setClassLoader(null);
+        }
+        String saveGameListToString = gson.toJson(saveGameList, gsonType);
+        SharedPreferences.Editor editor = savegamesSharedP.edit();
         editor.putString(SAVE_DATA_KEY, saveGameListToString);
         editor.apply();
     }
@@ -87,12 +87,12 @@ public class SavegameStorage {
     }
 
     public synchronized Savegame getFromUuid(String uuid) {
-        for (Savegame e : saveGameList) {
-            if (e.uuid.equals(uuid)) {
-                return e;
+        if (uuid == null) return null;
+        for (Savegame savegame : saveGameList) {
+            if (savegame.uuid.equals(uuid)) {
+                return savegame;
             }
         }
         return null;
     }
-
 }

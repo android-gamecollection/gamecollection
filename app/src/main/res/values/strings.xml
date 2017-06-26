@@ -14,7 +14,7 @@
     <string name="rules">Regeln</string>
     <string name="maumau_regeln">Platzhalter für die Mau Mau regeln</string>
     <string name="maumau">Mau Mau</string>
-    <string name="schafkopf">schafkopf</string>
+    <string name="schafkopf">Schafkopf</string>
     <string name="objErfolg">objekt erfolgreich erstellt</string>
     <string name="debug">Debugger wurde erfolgreich erreicht</string>
 
@@ -32,7 +32,7 @@
     <string name="game_chess_gameover_noreason">Einfach so, keinen bestimmten Grund</string>
     <string name="game_chess_not_available">NO</string>
 
-    <!-- Strings für NavDrawer START -->
+    <!-- Strings for NavDrawer START -->
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
     <string name="subTextHeader">Spiel, Spaß und Spannung</string>
@@ -46,7 +46,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="nav_divider_title">Other</string>
-    <!-- Strings für NavDrawer ENDE -->
+    <!-- Strings for NavDrawer END -->
+
+    <string name="hello_blank_fragment">Spielehub Content</string>
 
     <!-- App Bar -->
     <string name="action_gamerules">Spielregeln</string>
@@ -54,5 +56,37 @@
     <!-- Savegames -->
     <string name="yesterday">gestern</string>
     <string name="savegame_deleted">Spielstand gelöscht</string>
+
+    <!-- Settings START -->
+    <string name="settings_general_title">Allgemein</string>
+    <string name="settings_general_accent_color_title">Akzentfarbe</string>
+    <string name="settings_general_accent_color_description">Farbe des Floating Action Buttons</string>
+    <string-array name="settings_general_accent_color_alias">
+        <item>Grün</item>
+        <item>Braun</item>
+        <item>Orange</item>
+    </string-array>
+
+    <!-- Settings Boardgames -->
+    <string name="settings_chess_title">Schach</string>
+    <string name="settings_chess_description_computer">Schach - Spieler vs Computer</string>
+    <string name="settings_chess_difficulty_title">Schwierigkeit</string>
+    <string name="settings_chess_difficulty_description">Intelligenz der KI</string>
+    <string-array name="AI_difficulty_alias">
+        <item>Einfach</item>
+        <item>Normal</item>
+        <item>Schwer</item>
+    </string-array>
+    <string-array name="AI_difficulty">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <!-- Settings Cardgames -->
+
+
+    <string name="title_activity_settings">Settings</string>
+    <!-- Settings END -->
 
 </resources>
