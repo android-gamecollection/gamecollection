@@ -53,7 +53,7 @@
         </activity>
 
         <activity
-            android:name=".view.activity.Settings"
+            android:name=".view.activity.SettingsAndInfo"
             android:label="@string/title_activity_settings">
         </activity>
 

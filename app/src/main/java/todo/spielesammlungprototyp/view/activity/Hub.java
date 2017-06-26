@@ -140,9 +140,15 @@ public class Hub extends AppCompatActivity {
                         currentTag = tagBoard;
                         break;
                     case tagInfo:
+                        Intent info = new Intent(Hub.this, SettingsAndInfo.class);
+                        info.putExtra("xmlToLoad", R.xml.info);
+                        startActivity(info);
+                        drawer.closeDrawers();
                         return true;
                     case tagSettings:
-                        startActivity(new Intent(Hub.this, Settings.class));
+                        Intent settings = new Intent(Hub.this, SettingsAndInfo.class);
+                        settings.putExtra("xmlToLoad", R.xml.settings);
+                        startActivity(settings);
                         drawer.closeDrawers();
                         return true;
                     default:
