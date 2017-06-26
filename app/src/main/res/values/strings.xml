@@ -42,7 +42,7 @@
     <string name="nav_item_cardgames">Kartenspiele</string>
     <string name="nav_item_boardgames">Brettspiele</string>
     <string name="nav_item_info">Info</string>
-    <string name="nav_item_settings">Settings</string>
+    <string name="nav_item_settings">Einstellungen</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="nav_divider_title">Other</string>
@@ -57,8 +57,7 @@
     <string name="yesterday">gestern</string>
     <string name="savegame_deleted">Spielstand gelöscht</string>
 
-    <!-- SettingsAndInfo START -->
-    <string name="title_activity_settings">Settings</string>
+    <!-- SettingsActivity START -->
     <string name="settings_general_title">Allgemein</string>
     <string name="settings_general_accent_color_title">Akzentfarbe</string>
     <string name="settings_general_accent_color_description">Farbe des Floating Action Buttons</string>
@@ -68,7 +67,7 @@
         <item>Orange</item>
     </string-array>
 
-    <!-- SettingsAndInfo Boardgames -->
+    <!-- SettingsActivity Boardgames -->
     <string name="settings_chess_title">Schach</string>
     <string name="settings_chess_description_computer">Schach - Spieler vs Computer</string>
     <string name="settings_chess_difficulty_title">Schwierigkeit</string>
@@ -84,15 +83,11 @@
         <item>3</item>
     </string-array>
 
-    <!-- SettingsAndInfo Cardgames -->
-
-    <!-- SettingsAndInfo END -->
-
     <!-- Info -->
     <string name="info_libraries_title">Bibliotheken</string>
     <string name="library_carballo_title">Carballo Chess Engine</string>
-    <string name="library_carballo_text">Version 1.7\n\nAuthors:\n\nAlberto Alonso Ruibal (http://www.alonsoruibal.com)\n\nLukas Laag, Entwickler der großartigen GWT SVG library (http://www.vectomatic.org) und dem Carballo GWT Interface\n\nLizensiert unter der GPLv3 (https://www.gnu.org/licenses/gpl-3.0.de.html)\nDen Sourcecode gibt es auf (https://github.com/albertoruibal/carballo).</string>
+    <string name="library_carballo_text">Version 1.7\n\nAutor: <a href="http://www.alonsoruibal.com">Alberto Alonso Ruibal</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>\n\n<a href="https://github.com/albertoruibal/carballo">Github</a></string>
     <string name="library_jdroidlib_title">JDroidLib</string>
-    <string name="library_jdroidlib_text">Authors:\n\nAegidius Plüss (www.aplu.ch)</string>
+    <string name="library_jdroidlib_text">Version 1.51\n\nAutor: <a href="http://www.aplu.ch">Aegidius Plüss</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/lgpl-3.0.html">LGPLv3</a></string>
 
 </resources>

@@ -1,52 +1,55 @@
 package todo.spielesammlungprototyp.view.fragment;
 
-
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
+
+import java.io.Serializable;
 
 import todo.spielesammlungprototyp.R;
 
-public class InfoFragment extends PreferenceFragment {
-
-    private final String carballoPref = "info_libraries_carballo";
-    private final String jdroidlibPref = "info_libraries_jdroidlib";
-
-    public static AlertDialog createAlertDialog(Context context, int titleID, int messageID) {
-        return new AlertDialog.Builder(context)
-                .setTitle(titleID)
-                .setMessage(messageID)
-                .setCancelable(true)
-                .setPositiveButton(R.string.ok, null)
-                .create();
-    }
+public class InfoFragment extends PreferenceFragment implements Serializable {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.info);
-        onClickDialog();
+
+        addOnClickListeners();
     }
 
-    private void onClickDialog() {
-        Preference carballoPreference = findPreference(carballoPref);
-        Preference jDroidLibPreference = findPreference(jdroidlibPref);
-
+    private void addOnClickListeners() {
+        Preference carballoPreference = findPreference("info_libraries_carballo");
         carballoPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(getActivity(), R.string.library_carballo_title, R.string.library_carballo_text).show();
+                createAlertDialog(R.string.library_carballo_title, R.string.library_carballo_text);
                 return true;
             }
         });
 
+        Preference jDroidLibPreference = findPreference("info_libraries_jdroidlib");
         jDroidLibPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(getActivity(), R.string.library_jdroidlib_title, R.string.library_jdroidlib_text).show();
+                createAlertDialog(R.string.library_jdroidlib_title, R.string.library_jdroidlib_text);
                 return true;
             }
         });
     }
 
+    private void createAlertDialog(int titleID, int messageID) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setTitle(titleID)
+                .setMessage(messageID)
+                .setCancelable(true)
+                .setPositiveButton(R.string.ok, null)
+                .create();
+        alertDialog.show();
+        TextView message = (TextView) alertDialog.findViewById(android.R.id.message);
+        assert message != null;
+        // Clickable links in TextView
+        message.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 }
