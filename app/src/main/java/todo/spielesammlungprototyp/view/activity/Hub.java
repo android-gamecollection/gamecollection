@@ -26,15 +26,9 @@ public class Hub extends AppCompatActivity {
     private final char tagHub = '0', tagCards = '1', tagBoard = '2', tagInfo = '3', tagSettings = '4';
     // index to identify current nav menu item
     public char currentTag = tagHub;
-    //views
     private NavigationView navigationView;
     private DrawerLayout drawer;
-    private View navHeader;
     private Toolbar toolbar;
-    private TextView navDrawerTitle, navDrawerSubTitle;
-    private ImageView navDrawerBackground, navDrawerIcon;
-
-    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +41,20 @@ public class Hub extends AppCompatActivity {
 
         setDefaultValuesOfSettingsFirstTime();
 
-        mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         // Navigation view header
-        navHeader = navigationView.getHeaderView(0);
-        navDrawerTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_title);
-        navDrawerSubTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_subtext);
-        navDrawerBackground = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_background);
-        navDrawerIcon = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_icon);
+        View navHeader = navigationView.getHeaderView(0);
+        TextView navDrawerTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_title);
+        TextView navDrawerSubTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_subtext);
+        ImageView navDrawerBackground = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_background);
+        ImageView navDrawerIcon = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_icon);
 
-        loadNavHeader();
+        navDrawerTitle.setText(R.string.app_name);
+        navDrawerSubTitle.setText(R.string.subTextHeader);
+
         setUpNavigationView();
 
         if (savedInstanceState == null) {
@@ -77,12 +72,6 @@ public class Hub extends AppCompatActivity {
         loadHomeFragment();
     }
 
-    private void loadNavHeader() {
-
-        navDrawerTitle.setText(R.string.app_name);
-        navDrawerSubTitle.setText(R.string.subTextHeader);
-    }
-
     private void loadHomeFragment() {
         selectNavMenu();
         setToolbarTitle();
@@ -92,7 +81,8 @@ public class Hub extends AppCompatActivity {
             return;
         }
 
-        Runnable mPendingRunnable = new Runnable() {
+        // add to the message queue
+        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 Fragment fragment = getHomeFragment();
@@ -101,16 +91,10 @@ public class Hub extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.frame, fragment, Character.toString(currentTag));
                 fragmentTransaction.commitAllowingStateLoss();
             }
-        };
-
-        // If mPendingRunnable is not null, then add to the message queue
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
+        });
 
         drawer.closeDrawers();
 
-        // refresh toolbar menu
         invalidateOptionsMenu();
     }
 
@@ -179,18 +163,7 @@ public class Hub extends AppCompatActivity {
         });
 
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
-
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer);
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
     }
