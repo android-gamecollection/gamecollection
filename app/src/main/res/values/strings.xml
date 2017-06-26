@@ -61,11 +61,7 @@
     <string name="settings_general_title">Allgemein</string>
     <string name="settings_general_accent_color_title">Akzentfarbe</string>
     <string name="settings_general_accent_color_description">Farbe des Floating Action Buttons</string>
-    <string-array name="settings_general_accent_color_alias">
-        <item>Grün</item>
-        <item>Braun</item>
-        <item>Orange</item>
-    </string-array>
+    <string name="settings_color_select_title">Wähle eine Farbe</string>
 
     <!-- SettingsActivity Boardgames -->
     <string name="settings_chess_title">Schach</string>

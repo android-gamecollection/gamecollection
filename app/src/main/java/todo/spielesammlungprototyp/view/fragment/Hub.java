@@ -2,8 +2,8 @@ package todo.spielesammlungprototyp.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -24,13 +24,13 @@ import android.view.animation.AnimationUtils;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.util.AndroidResources;
+import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
 import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.view.SavegameAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 
@@ -117,8 +117,9 @@ public class Hub extends Fragment implements ClickListener {
     }
 
     private void tintFabs() {
-        String colorStr = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("settings_key_general_accent_color", "#795548");
-        ColorStateList csl = ColorStateList.valueOf(Color.parseColor(colorStr));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int colorStr = prefs.getInt("settings_key_general_accent_color", AndroidResources.getColor(R.color.colorAccent));
+        ColorStateList csl = ColorStateList.valueOf(colorStr);
         fabNewGame.setBackgroundTintList(csl);
         fabNewGameK.setBackgroundTintList(csl);
         fabNewGameB.setBackgroundTintList(csl);
