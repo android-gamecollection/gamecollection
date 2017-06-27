@@ -1,7 +1,6 @@
 package todo.spielesammlungprototyp.model.games.bauernkrieg;
 
 import android.graphics.Color;
-
 import ch.aplu.android.Location;
 import ch.aplu.android.TextActor;
 import ch.aplu.jcardgame.Card;
@@ -18,7 +17,7 @@ public class Bauernkrieg extends CardGame
 {
     public enum Suit
     {
-        KREUZ, HERZ, KARO, PIK
+        CLUBS, HEARTS, DIAMONDS, SPADES
     }
 
     public enum Rank
@@ -55,16 +54,16 @@ public class Bauernkrieg extends CardGame
 
     public Bauernkrieg()
     {
-        super(Color.rgb(20, 80, 0), Color.WHITE, BoardType.FIXED_SQUARE, windowZoom(600));
+        super(Color.rgb(20, 80, 0), Color.WHITE, BoardType.VERT_FULL, windowZoom(600));
     }
-
     public void main()
     {
+
         deck = new Deck(Suit.values(), Rank.values(), "cover");
         initBids();
         initStocks();
         initHands();
-        showToast("Berühre den Stapel um eine Karte zu spielen. \nSpieler: links ", true);
+        //showToast("Berühre den Stapel um eine Karte zu spielen. \nSpieler: links ", true);
         setTouchEnabled(true);
         hands[0].setTouchEnabled(true);
 
@@ -98,13 +97,13 @@ public class Bauernkrieg extends CardGame
                     return;
                 isBlindRound = false;
                 changeCurrentPlayer();
-                showToast("Aktueller Spieler: " + ((currentPlayer == 0) ? "links" : "rechts"), true);
+                //showToast("Aktueller Spieler: " + ((currentPlayer == 0) ? "links" : "rechts"), true);
                 hands[currentPlayer].setTouchEnabled(true);
                 nbCardsAtTarget = 0;
                 continue;
             }
 
-            showToast("Runde auswerten...");
+            //showToast("Runde auswerten...");
             delay(2000);
             Hand eval = new Hand(deck);
             for (int i = 0; i < nbPlayers; i++)
@@ -117,7 +116,7 @@ public class Bauernkrieg extends CardGame
             if (isGameOver())
                 return;
 
-            showToast("Aktueller Spieler: " + ((currentPlayer == 0) ? "links" : "rechts"), true);
+            //showToast("Aktueller Spieler: " + ((currentPlayer == 0) ? "links" : "rechts"), true);
             hands[nbWinner].setTouchEnabled(true);
             nbCardsAtTarget = 0;
         }
