@@ -10,13 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.Serializable;
 
@@ -38,31 +36,30 @@ public class Hub extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_hub);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         setDefaultValuesOfSettingsFirstTime();
+
+        setContentView(R.layout.activity_hub);
+        setupActionBar();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        // Navigation view header
-        View navHeader = navigationView.getHeaderView(0);
-        TextView navDrawerTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_title);
-        TextView navDrawerSubTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_subtext);
-        ImageView navDrawerBackground = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_background);
-        ImageView navDrawerIcon = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_icon);
-
-        navDrawerTitle.setText(R.string.app_name);
-        navDrawerSubTitle.setText(R.string.subTextHeader);
 
         setUpNavigationView();
 
         if (savedInstanceState == null) {
             currentTag = tagHub;
             loadHomeFragment();
+        } else {
+            setToolbarTitle();
+        }
+    }
+
+    private void setupActionBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 

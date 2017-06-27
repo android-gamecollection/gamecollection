@@ -16,10 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.model.util.Savegame;
 import todo.spielesammlungprototyp.model.util.SavegameStorage;
-import todo.spielesammlungprototyp.model.gamemanager.Game;
 
 import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
 
@@ -29,9 +29,7 @@ public abstract class GameActivity extends AppCompatActivity {
     public static final String KEY_GAME_UUID = "gameUuid";
     public static final String KEY_SAVEGAME_UUID = "UUID";
     protected Game game;
-    protected Savegame currentSaveGame;
     private String gameUuid;
-    private boolean isSaved;
     private SavegameStorage savegameStorage;
     private String savegameUuid;
 
@@ -39,8 +37,16 @@ public abstract class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         savegameStorage = getInstance();
-        Bundle extras = getIntent().getExtras();
 
+        onCreateExistingGame();
+
+        setContentView(onLayoutRequest());
+        setTitle(game.getGameTitle());
+        setupActionBar();
+    }
+
+    private void onCreateExistingGame() { //TODO: "I don't like my name, please help me!" - sad Method 2017
+        Bundle extras = getIntent().getExtras();
         savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
         Savegame savegame = savegameStorage.getFromUuid(savegameUuid);
         String gameUuid;
@@ -52,12 +58,14 @@ public abstract class GameActivity extends AppCompatActivity {
             onLoadGame(null);
         }
         game = Games.getFromUuid(gameUuid);
-        setContentView(onLayoutRequest());
-        setTitle(game.getGameTitle());
+    }
+
+    private void setupActionBar() {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private boolean saveGame() {
