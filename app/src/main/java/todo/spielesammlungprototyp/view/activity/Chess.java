@@ -425,6 +425,14 @@ public class Chess extends GameActivity {
         }
     }
 
+    private void undoMoves(int howmany){
+        for (int i = 0; i <howmany; i++) {
+            board.undoMove();
+            board.undoMove();
+            update();
+        }
+    }
+
     private class PromotionClickListener implements View.OnClickListener {
         private AlertDialog alertDialog;
         private Tuple<Integer, Integer> from;
@@ -457,11 +465,13 @@ public class Chess extends GameActivity {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            int bevore = recyclerAdapter.getItemCount();
             recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
             if (recyclerAdapter.getItemCount() <= 0) {
                 setRecyclerVisibility(false);
                 chessBoardFrame.animate().translationZ(0);
             }
+            undoMoves(bevore-recyclerManager.getItemCount());
         }
     }
 }
