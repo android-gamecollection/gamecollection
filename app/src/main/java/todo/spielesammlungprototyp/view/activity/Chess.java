@@ -16,7 +16,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,17 +116,6 @@ public class Chess extends GameActivity {
         recyclerHistory.setAdapter(recyclerAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ChessHistoryCallback());
         itemTouchHelper.attachToRecyclerView(recyclerHistory);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                testAddItem(null);  // TODO:remove
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void testAddItem(final Doublemove doublemove) {
