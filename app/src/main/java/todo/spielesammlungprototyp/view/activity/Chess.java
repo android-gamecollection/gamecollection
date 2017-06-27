@@ -39,7 +39,7 @@ import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
 import todo.spielesammlungprototyp.model.util.CharacterIterator;
 import todo.spielesammlungprototyp.model.util.MapBuilder;
-import todo.spielesammlungprototyp.model.util.MoveTranslator;
+import todo.spielesammlungprototyp.model.games.chess.MoveTranslator;
 import todo.spielesammlungprototyp.model.util.Tuple;
 import todo.spielesammlungprototyp.view.view.CheckeredGameboardView;
 

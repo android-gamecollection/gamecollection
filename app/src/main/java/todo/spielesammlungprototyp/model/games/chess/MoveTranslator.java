@@ -1,4 +1,6 @@
-package todo.spielesammlungprototyp.model.util;
+package todo.spielesammlungprototyp.model.games.chess;
+
+import todo.spielesammlungprototyp.model.util.Tuple;
 
 public final class MoveTranslator {
 

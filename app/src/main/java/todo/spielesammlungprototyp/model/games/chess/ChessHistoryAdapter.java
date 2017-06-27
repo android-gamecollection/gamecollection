@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.util.MoveTranslator;
 
 public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapter.ItemViewHolder> {
 
