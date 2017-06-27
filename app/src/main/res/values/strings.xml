@@ -31,7 +31,7 @@
     <string name="game_chess_gameover_checkmate_white">Schachmatt, Weiß hat gewonnen</string>
     <string name="game_chess_gameover_checkmate_black">Schachmatt, Schwarz hat gewonnen</string>
     <string name="game_chess_gameover_noreason">Einfach so, keinen bestimmten Grund</string>
-    <string name="game_chess_rules">Es gelten die normalen &lt;a href=&quot;https://de.wikipedia.org/wiki/Schach&quot;&gt;Regeln&lt;/a&gt;</string>
+    <string name="game_chess_rules">Es gelten die normalen &lt;a href=&quot;https://de.wikipedia.org/wiki/Schach#Spielregeln&quot;&gt;Spielregeln&lt;/a&gt;</string>
     <string name="game_chess_not_available">NO</string>
 
     <!-- Strings for NavDrawer START -->
