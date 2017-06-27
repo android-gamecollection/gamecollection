@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.view;
+package todo.spielesammlungprototyp.model.savegamestorage;
 
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +15,7 @@ import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.model.util.Savegame;
-import todo.spielesammlungprototyp.model.util.SavegameStorage;
+import todo.spielesammlungprototyp.view.ClickListener;
 
 public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.SavegameViewHolder> {
 

@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.model.util;
+package todo.spielesammlungprototyp.model.savegamestorage;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.util.DateUtils;
 
 public class Savegame implements Comparable<Savegame> {
 

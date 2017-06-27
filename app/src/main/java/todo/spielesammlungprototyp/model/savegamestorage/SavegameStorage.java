@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.model.util;
+package todo.spielesammlungprototyp.model.savegamestorage;
 
 import android.content.Context;
 import android.content.SharedPreferences;

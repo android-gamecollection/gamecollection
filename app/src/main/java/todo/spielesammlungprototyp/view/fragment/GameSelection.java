@@ -19,7 +19,7 @@ import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.GameCategory;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.view.GameCardViewAdapter;
+import todo.spielesammlungprototyp.model.gamemanager.GameCardViewAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 public class GameSelection extends Fragment implements ClickListener {

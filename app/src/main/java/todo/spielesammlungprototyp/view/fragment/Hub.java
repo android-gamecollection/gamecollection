@@ -28,10 +28,10 @@ import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
-import todo.spielesammlungprototyp.model.util.Savegame;
-import todo.spielesammlungprototyp.model.util.SavegameStorage;
+import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
 import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.view.SavegameAdapter;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 public class Hub extends Fragment implements ClickListener {

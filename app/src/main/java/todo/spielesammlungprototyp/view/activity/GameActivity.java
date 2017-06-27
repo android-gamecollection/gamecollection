@@ -18,10 +18,10 @@ import android.view.MenuItem;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.model.util.Savegame;
-import todo.spielesammlungprototyp.model.util.SavegameStorage;
+import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
 
-import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
+import static todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage.getInstance;
 
 
 public abstract class GameActivity extends AppCompatActivity {
