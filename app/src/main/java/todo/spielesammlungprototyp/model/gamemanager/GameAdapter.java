@@ -14,12 +14,12 @@ import java.util.List;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.view.ClickListener;
 
-public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapter.GameViewHolder> {
+public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
 
     private List<Game> games = new ArrayList<>();
-    private ClickListener clickListener = null;
+    private ClickListener clickListener;
 
-    public GameCardViewAdapter(List<Game> games) {
+    public GameAdapter(List<Game> games) {
         this.games = games;
     }
 
@@ -31,10 +31,10 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
 
     @Override
     public void onBindViewHolder(final GameViewHolder holder, final int position) {
-        Game SCV = games.get(position);
-        holder.gameIcon.setImageResource(SCV.getGameIconId());
-        holder.gameTitle.setText(SCV.getGameTitle());
-        holder.gameDescription.setText(SCV.getGameDescription());
+        Game game = games.get(position);
+        holder.gameIcon.setImageResource(game.getGameIconId());
+        holder.gameTitle.setText(game.getGameTitle());
+        holder.gameDescription.setText(game.getGameDescription());
     }
 
     @Override

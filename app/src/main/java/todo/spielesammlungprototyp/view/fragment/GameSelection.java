@@ -19,7 +19,7 @@ import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.GameCategory;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.model.gamemanager.GameCardViewAdapter;
+import todo.spielesammlungprototyp.model.gamemanager.GameAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 public class GameSelection extends Fragment implements ClickListener {
@@ -65,9 +65,9 @@ public class GameSelection extends Fragment implements ClickListener {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        GameCardViewAdapter gcvAdapter = new GameCardViewAdapter(games);
-        gcvAdapter.setClickListener(this);
-        recyclerView.setAdapter(gcvAdapter);
+        GameAdapter gameAdapter = new GameAdapter(games);
+        gameAdapter.setClickListener(this);
+        recyclerView.setAdapter(gameAdapter);
     }
 
     @Override
