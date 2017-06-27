@@ -16,7 +16,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import java.util.Map;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.chess.ChessHistoryAdapter;
 import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
+import todo.spielesammlungprototyp.model.games.chess.Doublemove;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
@@ -63,6 +63,8 @@ public class Chess extends GameActivity {
     private CheckeredGameboardView chessboardView;
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
+    private Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> whitemove = null;
+    private int whiteid;
     private ChessWrapper board;
     private int gridSize;
     private LinearLayoutManager recyclerManager;
@@ -116,22 +118,11 @@ public class Chess extends GameActivity {
         itemTouchHelper.attachToRecyclerView(recyclerHistory);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                testAddItem();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void testAddItem() {
+    private void addItem(final Doublemove doublemove) {
         final Runnable addItem = new Runnable() {
             @Override
             public void run() {
-                recyclerAdapter.addItem();
+                recyclerAdapter.addItem(doublemove);
                 recyclerManager.scrollToPosition(0);
             }
         };
@@ -332,6 +323,15 @@ public class Chess extends GameActivity {
                     update();
                 }
             });
+            Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> thismove = new Tuple(from, to);
+            int id = (int) figuren[from.first][from.last].getTag();
+            if (whitemove == null) {
+                whitemove = thismove;
+                whiteid = id;
+            } else {
+                addItem(new Doublemove(whitemove, thismove, whiteid, id));
+                whitemove = null;
+            }
             figuren[from.first][from.last].startAnimation(translateAnimation);
             return true;
         }
@@ -406,8 +406,17 @@ public class Chess extends GameActivity {
                 if (figuren[x][y] == null)
                     figuren[x][y] = new ImageView(this);
                 figuren[x][y].setImageResource(chessDrawables.get(c));
+                figuren[x][y].setTag(chessDrawables.get(c));
                 x += 1;
             }
+        }
+    }
+
+    private void undoMoves(int howmany) {
+        for (int i = 0; i < howmany; i++) {
+            board.undoMove();
+            board.undoMove();
+            update();
         }
     }
 
@@ -443,11 +452,13 @@ public class Chess extends GameActivity {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            int before = recyclerAdapter.getItemCount();
             recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
             if (recyclerAdapter.getItemCount() <= 0) {
                 setRecyclerVisibility(false);
                 chessBoardFrame.animate().translationZ(0);
             }
+            undoMoves(before - recyclerManager.getItemCount());
         }
     }
 }

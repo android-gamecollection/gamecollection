@@ -14,12 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.util.MoveTranslator;
 
 public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapter.ItemViewHolder> {
 
-    // Temp item list, will hold moves
-    // TODO: Change to a list of move(tuple)s
-    private List<String> mItems = new ArrayList<>();
+    private List<Doublemove> mItems = new ArrayList<>();
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,12 +28,11 @@ public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapte
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        String move = mItems.get(position);
-        // TODO: Move to Text
-//        holder.setContent(
-//                R.drawable.game_chess_king_b, "H9", "DD",
-//                R.drawable.game_chess_pawn_b, "H2", "CU"
-//        );
+        Doublemove doublemove = mItems.get(position);
+        holder.setContent(
+                doublemove.getWhiteID(), MoveTranslator.numToString(doublemove.getWhitemove().first), MoveTranslator.numToString(doublemove.getWhitemove().last),
+                doublemove.getBlackID(), MoveTranslator.numToString(doublemove.getBlackmove().first), MoveTranslator.numToString(doublemove.getBlackmove().last)
+        );
     }
 
     @Override
@@ -42,8 +40,8 @@ public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapte
         return mItems.size();
     }
 
-    public void addItem() {
-        mItems.add(0, "");
+    public void addItem(Doublemove doppelzug) {
+        mItems.add(0, doppelzug);
         notifyItemInserted(0);
     }
 
