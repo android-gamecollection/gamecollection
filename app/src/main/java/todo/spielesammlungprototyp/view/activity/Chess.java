@@ -4,10 +4,13 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,12 +37,12 @@ import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.chess.ChessHistoryAdapter;
 import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
 import todo.spielesammlungprototyp.model.games.chess.Doublemove;
+import todo.spielesammlungprototyp.model.games.chess.MoveTranslator;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
 import todo.spielesammlungprototyp.model.util.CharacterIterator;
 import todo.spielesammlungprototyp.model.util.MapBuilder;
-import todo.spielesammlungprototyp.model.games.chess.MoveTranslator;
 import todo.spielesammlungprototyp.model.util.Tuple;
 import todo.spielesammlungprototyp.view.view.CheckeredGameboardView;
 
@@ -132,6 +135,20 @@ public class Chess extends GameActivity {
         } else {
             addItem.run();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Context context = getApplicationContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        chessboardView.setColors(
+                prefs.getInt(context.getString(R.string.settings_chess_color_light_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_dark_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_border_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_suggestion_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_highlight_key), 0)
+        );
     }
 
     @Override

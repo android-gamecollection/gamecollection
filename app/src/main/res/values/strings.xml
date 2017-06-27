@@ -62,13 +62,14 @@
     <string name="settings_general_title">Allgemein</string>
     <string name="settings_general_accent_color_title">Akzentfarbe</string>
     <string name="settings_general_accent_color_description">Farbe des Floating Action Buttons</string>
+    <string name="settings_general_accent_color_key">settings_key_general_accent_color</string>
     <string name="settings_color_select_title">Wähle eine Farbe</string>
 
     <!-- SettingsActivity Boardgames -->
     <string name="settings_chess_title">Schach</string>
-    <string name="settings_chess_description_computer">Schach - Spieler vs Computer</string>
     <string name="settings_chess_difficulty_title">Schwierigkeit</string>
     <string name="settings_chess_difficulty_description">Intelligenz der KI</string>
+    <string name="settings_chess_difficulty_key">settings_key_chess_vs_computer_difficulty</string>
     <string-array name="AI_difficulty_alias">
         <item>Einfach</item>
         <item>Normal</item>
@@ -79,6 +80,21 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string name="settings_chess_color_light">Helle Felder</string>
+    <string name="settings_chess_color_light_description">Farbe der hellen Felder</string>
+    <string name="settings_chess_color_light_key">settings_key_chess_color_light</string>
+    <string name="settings_chess_color_dark">Dunkle Felder</string>
+    <string name="settings_chess_color_dark_description">Farbe der dunklen Felder</string>
+    <string name="settings_chess_color_dark_key">settings_key_chess_color_dark</string>
+    <string name="settings_chess_color_border">Randfarbe</string>
+    <string name="settings_chess_color_border_description">Farbe des Randes</string>
+    <string name="settings_chess_color_border_key">settings_key_chess_color_border</string>
+    <string name="settings_chess_color_suggestion">Vorgeschlagene Felder</string>
+    <string name="settings_chess_color_suggestion_description">Farbe der vorgeschlagenen Felder</string>
+    <string name="settings_chess_color_suggestion_key">settings_key_chess_color_suggestion</string>
+    <string name="settings_chess_color_highlight">Ausgewählte Felder</string>
+    <string name="settings_chess_color_highlight_description">Farbe der ausgewählten Felder</string>
+    <string name="settings_chess_color_highlight_key">settings_key_chess_color_highlight</string>
 
     <!-- Info -->
     <string name="info_libraries_title">Bibliotheken</string>

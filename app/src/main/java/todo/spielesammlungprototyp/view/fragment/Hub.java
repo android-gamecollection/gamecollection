@@ -26,12 +26,12 @@ import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
+import todo.spielesammlungprototyp.model.interfaces.ClickListener;
+import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameAdapter;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
-import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
-import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
-import todo.spielesammlungprototyp.model.interfaces.ClickListener;
-import todo.spielesammlungprototyp.model.savegamestorage.SavegameAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 public class Hub extends Fragment implements ClickListener {
@@ -118,7 +118,10 @@ public class Hub extends Fragment implements ClickListener {
 
     private void tintFabs() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int colorStr = prefs.getInt("settings_key_general_accent_color", AndroidResources.getColor(R.color.colorAccent));
+        int colorStr = prefs.getInt(
+                getString(R.string.settings_general_accent_color_key),
+                AndroidResources.getColor(R.color.colorAccent)
+        );
         ColorStateList csl = ColorStateList.valueOf(colorStr);
         fabNewGame.setBackgroundTintList(csl);
         fabNewGameK.setBackgroundTintList(csl);
