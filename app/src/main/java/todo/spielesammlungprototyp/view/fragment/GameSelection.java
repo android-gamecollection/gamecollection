@@ -18,7 +18,7 @@ import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.GameCategory;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.view.ClickListener;
+import todo.spielesammlungprototyp.model.interfaces.ClickListener;
 import todo.spielesammlungprototyp.model.gamemanager.GameAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 

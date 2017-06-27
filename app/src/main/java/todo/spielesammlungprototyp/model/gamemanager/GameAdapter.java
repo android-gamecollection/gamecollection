@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.view.ClickListener;
+import todo.spielesammlungprototyp.model.interfaces.ClickListener;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
 

@@ -30,7 +30,7 @@ import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
 import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
-import todo.spielesammlungprototyp.view.ClickListener;
+import todo.spielesammlungprototyp.model.interfaces.ClickListener;
 import todo.spielesammlungprototyp.model.savegamestorage.SavegameAdapter;
 import todo.spielesammlungprototyp.view.activity.GameActivity;
 

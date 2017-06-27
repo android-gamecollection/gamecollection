@@ -15,7 +15,7 @@ import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.view.ClickListener;
+import todo.spielesammlungprototyp.model.interfaces.ClickListener;
 
 public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.SavegameViewHolder> {
 

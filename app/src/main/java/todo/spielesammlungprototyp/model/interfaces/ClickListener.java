@@ -1,4 +1,4 @@
-package todo.spielesammlungprototyp.view;
+package todo.spielesammlungprototyp.model.interfaces;
 
 import android.view.View;
 
