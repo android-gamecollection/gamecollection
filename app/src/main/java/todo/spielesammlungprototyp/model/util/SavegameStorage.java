@@ -57,16 +57,16 @@ public class SavegameStorage {
         modifySavegame(savegame, true);
     }
 
-    public synchronized void modifySavegame(Savegame savegameMODIFIED, Boolean delete) {
-        Savegame foundSavegame = getFromUuid(savegameMODIFIED.uuid);
+    private synchronized void modifySavegame(Savegame savegame, Boolean delete) {
+        Savegame foundSavegame = getFromUuid(savegame.uuid);
         if (foundSavegame == null) {
-            addSavegame(savegameMODIFIED);
+            addSavegame(savegame);
         } else {
             // delete == true -> delete value ... delete == false -> update value
             if (delete) {
                 saveGameList.remove(foundSavegame);
             } else {
-                foundSavegame.update(savegameMODIFIED.bundle);
+                foundSavegame.update(savegame.bundle);
             }
             putStringToEditor();
         }
