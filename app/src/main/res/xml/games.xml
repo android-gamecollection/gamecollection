@@ -24,14 +24,14 @@
             title="Schach"
             description="Spieler vs Spieler"
             icon="@mipmap/ic_launcher"
-            rules="no rules"
+            rules="@string/game_chess_rules"
             activity="Chess" />
 
         <game
             title="Schach"
             description="Spieler vs Computer"
             icon="@mipmap/ic_launcher"
-            rules="no rules"
+            rules="@string/game_chess_rules"
             tag="aiGame"
             activity="Chess" />
 

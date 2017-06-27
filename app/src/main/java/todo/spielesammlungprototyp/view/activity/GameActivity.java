@@ -10,17 +10,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
 import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
+import todo.spielesammlungprototyp.model.util.TextUtils;
 
 import static todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage.getInstance;
 
@@ -30,7 +29,6 @@ public abstract class GameActivity extends AppCompatActivity {
     public static final String KEY_GAME_UUID = "gameUuid";
     public static final String KEY_SAVEGAME_UUID = "UUID";
     protected Game game;
-    private String gameUuid;
     private SavegameStorage savegameStorage;
     private String savegameUuid;
 
@@ -162,15 +160,9 @@ public abstract class GameActivity extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.action_gamerules))
                 .setMessage(game.getGameRules())
-                .setCancelable(true)
                 .setPositiveButton(R.string.ok, null)
                 .create();
         alertDialog.show();
-        //TODO: Clickable Links like in InfoFragment aren't working
-        TextView message = (TextView) alertDialog.findViewById(android.R.id.message);
-        assert message != null;
-        // Clickable links in TextView
-        message.setMovementMethod(LinkMovementMethod.getInstance());
+        TextUtils.setClickableLinks(alertDialog);
     }
-
 }

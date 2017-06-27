@@ -1,15 +1,14 @@
 package todo.spielesammlungprototyp.view.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.AlertDialog;
-import android.text.method.LinkMovementMethod;
-import android.widget.TextView;
 
 import java.io.Serializable;
 
 import todo.spielesammlungprototyp.R;
+import todo.spielesammlungprototyp.model.util.TextUtils;
 
 public class InfoFragment extends PreferenceFragment implements Serializable {
 
@@ -43,13 +42,9 @@ public class InfoFragment extends PreferenceFragment implements Serializable {
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                 .setTitle(titleID)
                 .setMessage(messageID)
-                .setCancelable(true)
                 .setPositiveButton(R.string.ok, null)
                 .create();
         alertDialog.show();
-        TextView message = (TextView) alertDialog.findViewById(android.R.id.message);
-        assert message != null;
-        // Clickable links in TextView
-        message.setMovementMethod(LinkMovementMethod.getInstance());
+        TextUtils.setClickableLinks(alertDialog);
     }
 }
