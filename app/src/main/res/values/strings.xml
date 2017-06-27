@@ -24,6 +24,7 @@
     <string name="game_consolechess_cmd_help">Available commands:\nhelp, restart, show, move &lt;from&gt; &lt;to&gt;</string>
     <string name="game_consolechess_err_invalid_cmd">Not a valid command</string>
     <string name="game_consolechess_err_invalid_move">Invalid move</string>
+    <string name="game_consolechess_rules">Es gelten die normalen <a href="https://de.wikipedia.org/wiki/Schach#Spielregeln">Regeln</a>\n\n&gt;&gt; move (mv) &lt;von&gt; &lt;zu&gt; \n\t\t\tbewege die Figur\n\n&gt;&gt; overview (ov)\n\t\t\tzeigt momentanes Spiel\n\n&gt;&gt; show \n\t\t\tzeigt momentane FEN-Notation\n\n&gt;&gt; restart \n\t\t\tstarte das Spiel neu\n\n&gt;&gt; clear \n\t\t\tlösche das Textfeld\n\n&gt;&gt; aimove (ai) \n\t\t\tlass die KI einen Zug machen\n\n&gt;&gt; hint \n\t\t\tbekomme einen Tipp</string>
     <string name="game_chess_promotion_dialog_title">Wähle eine Figur</string>
     <string name="game_chess_snackbar_gameover">Spielende:\u0020</string>
     <string name="game_chess_gameover_stalemate">Patt</string>
@@ -44,7 +45,6 @@
     <string name="nav_item_info">Info</string>
     <string name="nav_item_settings">Einstellungen</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="nav_divider_title">Other</string>
     <!-- Strings for NavDrawer END -->
 

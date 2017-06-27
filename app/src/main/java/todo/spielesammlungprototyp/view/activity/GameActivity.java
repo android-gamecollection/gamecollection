@@ -1,7 +1,6 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -11,9 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
@@ -75,11 +76,12 @@ public abstract class GameActivity extends AppCompatActivity {
             Savegame savegame;
             if (savegameUuid == null) {
                 savegame = new Savegame(game.getUuid(), bundle);
+                savegameUuid = savegame.uuid;
             } else {
                 savegame = savegameStorage.getFromUuid(savegameUuid);
                 savegame.update(bundle);
             }
-            savegameStorage.modifySavegame(savegame, false);
+            savegameStorage.updateSavegame(savegame);
             return true;
         }
         return false;
@@ -157,17 +159,18 @@ public abstract class GameActivity extends AppCompatActivity {
     protected abstract int onLayoutRequest();
 
     private void showRulesDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getString(R.string.action_gamerules));
-        alertDialog.setMessage(game.getGameRules());
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.action_gamerules))
+                .setMessage(game.getGameRules())
+                .setCancelable(true)
+                .setPositiveButton(R.string.ok, null)
+                .create();
         alertDialog.show();
+        //TODO: Clickable Links like in InfoFragment aren't working
+        TextView message = (TextView) alertDialog.findViewById(android.R.id.message);
+        assert message != null;
+        // Clickable links in TextView
+        message.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 }

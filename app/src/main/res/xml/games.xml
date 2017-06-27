@@ -39,7 +39,7 @@
             title="Schach"
             description="Schach mit Konsole"
             icon="@mipmap/ic_launcher"
-            rules="no rules"
+            rules="@string/game_consolechess_rules"
             activity="ConsoleChess" />
 
     </category>
