@@ -340,7 +340,7 @@ public class Chess extends GameActivity {
                     update();
                 }
             });
-            Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> thismove = new Tuple(from, to);
+            Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> thismove = new Tuple<>(from, to);
             int id = (int) figuren[from.first][from.last].getTag();
             if (whitemove == null) {
                 whitemove = thismove;
