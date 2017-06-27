@@ -3,8 +3,8 @@ package todo.spielesammlungprototyp.model.games.chess;
 import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class Doublemove {
-    private Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> whitemove;
-    private Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> blackmove;
+    private Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> whitemove;
+    private Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> blackmove;
     private int whiteID;
     private int blackID;
 

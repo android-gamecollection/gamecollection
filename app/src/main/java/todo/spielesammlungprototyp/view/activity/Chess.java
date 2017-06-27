@@ -63,7 +63,7 @@ public class Chess extends GameActivity {
     private CheckeredGameboardView chessboardView;
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
-    private Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> whitemove = null;
+    private Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> whitemove = null;
     private int whiteid;
     private ChessWrapper board;
     private int gridSize;
@@ -118,7 +118,7 @@ public class Chess extends GameActivity {
         itemTouchHelper.attachToRecyclerView(recyclerHistory);
     }
 
-    private void testAddItem(final Doublemove doublemove) {
+    private void addItem(final Doublemove doublemove) {
         final Runnable addItem = new Runnable() {
             @Override
             public void run() {
@@ -323,14 +323,13 @@ public class Chess extends GameActivity {
                     update();
                 }
             });
-            Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> thismove =  new Tuple(from,to);
-            int id = (int)figuren[from.first][from.last].getTag();
-            if(whitemove == null) {
+            Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> thismove = new Tuple(from, to);
+            int id = (int) figuren[from.first][from.last].getTag();
+            if (whitemove == null) {
                 whitemove = thismove;
                 whiteid = id;
-            }
-            else {
-                testAddItem(new Doublemove(whitemove,thismove,whiteid,id));
+            } else {
+                addItem(new Doublemove(whitemove, thismove, whiteid, id));
                 whitemove = null;
             }
             figuren[from.first][from.last].startAnimation(translateAnimation);
@@ -413,8 +412,8 @@ public class Chess extends GameActivity {
         }
     }
 
-    private void undoMoves(int howmany){
-        for (int i = 0; i <howmany; i++) {
+    private void undoMoves(int howmany) {
+        for (int i = 0; i < howmany; i++) {
             board.undoMove();
             board.undoMove();
             update();
@@ -453,13 +452,13 @@ public class Chess extends GameActivity {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            int bevore = recyclerAdapter.getItemCount();
+            int before = recyclerAdapter.getItemCount();
             recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
             if (recyclerAdapter.getItemCount() <= 0) {
                 setRecyclerVisibility(false);
                 chessBoardFrame.animate().translationZ(0);
             }
-            undoMoves(bevore-recyclerManager.getItemCount());
+            undoMoves(before - recyclerManager.getItemCount());
         }
     }
 }

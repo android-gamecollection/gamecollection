@@ -23,6 +23,7 @@ public class ChessWrapper {
     public ChessWrapper() {
         this(false);
     }
+
     public ChessWrapper(boolean isChess960) {
         config = new Config();
         config.setUciChess960(isChess960);
