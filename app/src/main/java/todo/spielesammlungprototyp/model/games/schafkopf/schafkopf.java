@@ -1,11 +1,8 @@
-package todo.spielesammlungprototyp.view.activity;
+package todo.spielesammlungprototyp.model.games.schafkopf;
 //JGameGrid DOC http://www.aplu.ch/classdoc/jgamegrid/index.html
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import ch.aplu.android.Location;
@@ -15,11 +12,7 @@ import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.CardGame;
 import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
-import ch.aplu.jcardgame.StackLayout;
 import ch.aplu.jcardgame.TargetArea;
-import todo.spielesammlungprototyp.model.games.schafkopf.InitiateGame;
-
-import static todo.spielesammlungprototyp.R.id.card;
 
 public class schafkopf extends CardGame
 {
@@ -32,27 +25,6 @@ public class schafkopf extends CardGame
     {
         ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
     }
-
-    //Locations für die Anzeige der übrigen Karten
-    public Location l1 = new Location(100, 750);
-    public Location l2 = new Location(200, 750);
-    public Location l3 = new Location(300, 750);
-    public Location l4 = new Location(400, 750);
-    public Location l5 = new Location(100, 550);
-    public Location l6 = new Location(200, 550);
-    public Location l7 = new Location(300, 550);
-    public Location l8 = new Location(400, 550);
-
-
-    public Location l9 = new Location(100, 200);
-    public Location l10 = new Location(200, 200);
-    public Location l11 = new Location(300, 200);
-    public Location l12 = new Location(400, 200);
-    public Location l13 = new Location(100, 400);
-    public Location l14 = new Location(200, 400);
-    public Location l15 = new Location(300, 400);
-    public Location l16 = new Location(400, 400);
-
 
     public final Location[] stackLocations =
             {

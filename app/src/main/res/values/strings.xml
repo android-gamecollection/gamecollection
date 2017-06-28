@@ -10,13 +10,14 @@
     <!-- Cardgames -->
     <string name="bauernkrieg">"Bauernkrieg"</string>
     <string name="bauernkrieg_regeln">Zu Beginn des Spieles werden alle Karten verteilt und verdeckt bei jedem Spieler auf einen Stapel aufgelegt. Dann spielen die beiden Spieler die oberste Karte und die beiden vergleichen die Ränge. Wer den höhere Rang hat, nimmt beide Karten zu sich. Gewinner ist, wer mehr Karten erspielt hat. Haben die zwei Karten denselben Rang, so spielt jeder Spieler die nächste Karte verdeckt. Dann spielen sie eine nächste Karte auf. Wer jetzt den höheren Rang hat, nimmt danach alle sechs Karten. Besteht wieder Kartengleichheit, so wird das Verfahren wiederholt. Das Spiel dauert solange, bis die beiden Stapel aufgebraucht sind (Besteht zu dieser Zeit Kartengleichheit, bleiben die Karten in der Mitte liegen).</string>
-    <string name="start">Start</string>
+    <string name="start">Klicke um zu Starten</string>
     <string name="rules">Regeln</string>
-    <string name="maumau_regeln">Platzhalter für die Mau Mau regeln</string>
+    <string name="maumau_regeln">Ziel des Spieles ist es, die Karten aus der Hand möglichst schnell abzulegen. Der Reihe nach legen die Spieler je eine Karten offen auf die nebenliegende Karte - wenn dies möglich ist. Möglich ist dies, wenn die abzulegende Karte in Kartenwert oder Kartenfarbe mit der obersten offen liegenden Karte übereinstimmt. Kann ein Spieler keine Karte ablegen, so muss er eine Karte vom Talon ziehen. Je nach Regel darf er anschliessend diese Karte, wenn sie den angegebenen Bedingungen genügt, ablegen, oder muss warten, bis er erneut an der Reihe ist. Ist der Talon irgendwann aufgebraucht, so werden die abgelegten Karten, ausser der obersten sichtbaren, erneut als Talon ausgelegt.</string>
     <string name="maumau">Mau Mau</string>
     <string name="schafkopf">Schafkopf</string>
     <string name="objErfolg">objekt erfolgreich erstellt</string>
     <string name="debug">Debugger wurde erfolgreich erreicht</string>
+    <string name="schafkopf_regeln">Beim Offiziersschafkopf oder auch aufgedecktem schafkopf bekommt jeder 16 karten, jeweils 8 2er stapel. Der untere Spieler beginnt, es gelten die Standard schafkopf bekenn und stech regeln. Der Spieler mit den meisten Punkten am ende gewinnt!</string>
 
     <!-- Chess -->
     <string name="game_consolechess_enter_cmd_here">Bitte Command eingeben</string>

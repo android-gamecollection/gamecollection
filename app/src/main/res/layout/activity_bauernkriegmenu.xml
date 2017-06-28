@@ -9,16 +9,11 @@
     <Button
         android:id="@+id/bkm_2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:onClick="gotoBauernkrieggame"
-        android:text="@string/start" />
+        android:text="@string/start"
+        android:background="@drawable/ober_background"
+        />
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        android:textOff="@string/rules"
-        android:textOn="@string/bauernkrieg_regeln" />
 
 </LinearLayout>

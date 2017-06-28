@@ -58,7 +58,7 @@
 
         <game
             title="Mau Mau"
-            description="Klassisches Trumpfkartenspiel"
+            description="Klassisches Trumpfkartenspiel gegen die KI"
             icon="@mipmap/ic_launcher"
             rules="@string/maumau_regeln"
             activity="MauMauMenu" />
@@ -67,8 +67,8 @@
             title="Offiziersschafkopf"
             description="2 Personen Schafkopf"
             icon="@mipmap/ic_launcher"
-            rules="no rules"
-            activity="schafkopf" />
+            rules="@string/schafkopf_regeln"
+            activity="schafkopfMenu" />
 
     </category>
 

@@ -46,9 +46,11 @@
             android:label="@string/maumau"
             android:screenOrientation="landscape">
         </activity>
-
         <activity
-            android:name=".view.activity.schafkopf"
+            android:name=".view.activity.schafkopfMenu">
+        </activity>
+        <activity
+            android:name=".model.games.schafkopf.schafkopf"
             android:label="@string/schafkopf">
         </activity>
 
