@@ -136,6 +136,10 @@ public class ChessWrapper {
         return board.isEndGame();
     }
 
+    public boolean isCheck() {
+        return board.getCheck();
+    }
+
     public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> from, String FEN) {
         ArrayList<Tuple<Integer, Integer>> liste = new ArrayList<>();
         Board testboard = null;

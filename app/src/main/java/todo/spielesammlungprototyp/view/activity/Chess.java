@@ -289,6 +289,7 @@ public class Chess extends GameActivity {
     }
 
     private void update() {
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
         int endgame = board.isEndgame();
         if (endgame != 0) {
             int gameoverReason;
@@ -306,16 +307,18 @@ public class Chess extends GameActivity {
                     gameoverReason = R.string.game_chess_gameover_noreason;
             }
             String snackbarText = getString(R.string.game_chess_snackbar_gameover) + getString(gameoverReason);
-            CoordinatorLayout chessLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
-            final Snackbar snackbar = Snackbar.make(chessLayout, snackbarText, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
-            snackbar.setAction(R.string.ok, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            Snackbar.make(coordinatorLayout, snackbarText, Snackbar.LENGTH_INDEFINITE)
+                    .setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor))
+                    .setAction(R.string.ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                }
-            });
-            snackbar.show();
+                        }
+                    })
+                    .show();
+        } else if (board.isCheck()) {
+            Snackbar.make(coordinatorLayout, getString(R.string.game_chess_mate), Snackbar.LENGTH_SHORT)
+                    .show();
         }
         setFieldFromFEN(board.getBoard());
         addImages();
