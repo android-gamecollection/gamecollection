@@ -27,6 +27,7 @@
     <string name="game_consolechess_rules">Es gelten die normalen &lt;a href=&quot;https://de.wikipedia.org/wiki/Schach#Spielregeln&quot;&gt;Regeln&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&gt;&gt; move (mv) &lt;von&gt; &lt;zu&gt; &lt;br/&gt;   bewege die Figur&lt;br/&gt;&lt;br/&gt;&gt;&gt; overview (ov)&lt;br/&gt;   zeigt momentanes Spiel&lt;br/&gt;&lt;br/&gt;&gt;&gt; show &lt;br/&gt;   zeigt momentane FEN-Notation&lt;br/&gt;&lt;br/&gt;&gt;&gt; restart &lt;br/&gt;   starte das Spiel neu&lt;br/&gt;&lt;br/&gt;&gt;&gt; clear &lt;br/&gt;   lösche das Textfeld&lt;br/&gt;&lt;br/&gt;&gt;&gt; aimove (ai) &lt;br/&gt;   lass die KI einen Zug machen&lt;br/&gt;&lt;br/&gt;&gt;&gt; hint &lt;br/&gt;   bekomme einen Tipp</string>
     <string name="game_chess_promotion_dialog_title">Wähle eine Figur</string>
     <string name="game_chess_snackbar_gameover">Spielende:\u0020</string>
+    <string name="game_chess_mate">Schach</string>
     <string name="game_chess_gameover_stalemate">Patt</string>
     <string name="game_chess_gameover_checkmate_white">Schachmatt, Weiß hat gewonnen</string>
     <string name="game_chess_gameover_checkmate_black">Schachmatt, Schwarz hat gewonnen</string>
@@ -101,6 +102,6 @@
     <string name="library_carballo_title">Carballo Chess Engine</string>
     <string name="library_carballo_text">Version 1.7\n\nAutor: <a href="http://www.alonsoruibal.com">Alberto Alonso Ruibal</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>\n\n<a href="https://github.com/albertoruibal/carballo">Github</a></string>
     <string name="library_jdroidlib_title">JDroidLib</string>
-    <string name="library_jdroidlib_text">Version 1.51\n\nAutor: <a href="http://www.aplu.ch">Aegidius Plüss</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/lgpl-3.0.html">LGPLv3</a></string>
+    <string name="library_jdroidlib_text">Version 1.51\n\nAutor: <a href="http://www.aplu.ch">Aegidius Plüss</a>\n\nLizensiert als <a href="http://www.aplu.ch/home/viewthread.jsp?mid=1519">\&quot;Open Source Free Software\&quot;</a> </string>
 
 </resources>
