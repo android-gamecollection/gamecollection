@@ -50,6 +50,10 @@ public class Game implements Comparable<Game> {
         return uuid;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
     public boolean isTaggedWith(String tag) {
         if (this.tag != null && tag != null) {
             this.tag = this.tag.toLowerCase();

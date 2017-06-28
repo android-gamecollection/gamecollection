@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name=".view.activity.BauernkriegMenu">
+            android:name=".view.activity.CardgameMenu">
         </activity>
 
         <activity
@@ -38,17 +38,9 @@
         </activity>
 
         <activity
-            android:name=".view.activity.MauMauMenu">
-        </activity>
-
-        <activity
             android:name=".model.games.maumau.MauMau"
             android:label="@string/maumau"
             android:screenOrientation="landscape">
-        </activity>
-
-        <activity
-            android:name=".view.activity.schafkopfMenu">
         </activity>
 
         <activity

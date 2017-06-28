@@ -1,13 +1,15 @@
 package todo.spielesammlungprototyp.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.games.schafkopf.schafkopf;
 
-public class schafkopfMenu extends GameActivity {
+public class CardgameMenu extends GameActivity {
+
+    private static final String GAME_PACKAGE = ".model.games.";
 
     @Override
     protected void onLoadGame(Bundle savegame) {
@@ -25,7 +27,10 @@ public class schafkopfMenu extends GameActivity {
     }
 
     public void gotoGame(View view) {
-        Intent gotoActivity = new Intent(this, schafkopf.class);
-        startActivity(gotoActivity);
+        Context context = getApplicationContext();
+        String classname = context.getPackageName() + GAME_PACKAGE + game.getTag();
+        Intent intent = new Intent();
+        intent.setClassName(context, classname);
+        startActivity(intent);
     }
 }

@@ -70,21 +70,24 @@
             description="Einfaches Stechen"
             icon="@mipmap/ic_launcher"
             rules="@string/bauernkrieg_regeln"
-            activity="BauernkriegMenu" />
+            tag="bauernkrieg.Bauernkrieg"
+            activity="CardgameMenu" />
 
         <game
             title="Mau Mau"
             description="Klassisches Trumpfkartenspiel gegen die KI"
             icon="@mipmap/ic_launcher"
             rules="@string/maumau_regeln"
-            activity="MauMauMenu" />
+            tag="maumau.MauMau"
+            activity="CardgameMenu" />
 
         <game
             title="Offiziersschafkopf"
             description="2 Personen Schafkopf"
             icon="@mipmap/ic_launcher"
             rules="@string/schafkopf_regeln"
-            activity="schafkopfMenu" />
+            tag="schafkopf.schafkopf"
+            activity="CardgameMenu" />
 
     </category>
 
