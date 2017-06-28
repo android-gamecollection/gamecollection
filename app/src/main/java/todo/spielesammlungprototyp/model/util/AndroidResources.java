@@ -1,10 +1,16 @@
 package todo.spielesammlungprototyp.model.util;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.view.Menu;
 
 import todo.spielesammlungprototyp.App;
+import todo.spielesammlungprototyp.R;
 
 public final class AndroidResources {
 
@@ -37,7 +43,34 @@ public final class AndroidResources {
         return context.getString(identifier);
     }
 
+    /**
+     * Provides access to getColor without worrying about the context
+     *
+     * @param color The id of the color
+     * @return The color
+     */
     public static int getColor(int color) {
         return ContextCompat.getColor(App.getContext(), color);
+    }
+
+    /**
+     * Change action bar icon color based on text color of current action bar theme
+     *
+     * @param menu The menu
+     */
+    public static void colorMenuItems(Menu menu) {
+        TypedArray typedArray = App.getContext().obtainStyledAttributes(
+                R.style.AppTheme_AppBarOverlay, new int[]{android.R.attr.textColorPrimary});
+        int themedColor = typedArray.getColor(0, Color.RED);
+
+        for (int i = 0; i < menu.size(); i++) {
+            Drawable icon = menu.getItem(i).getIcon();
+            if (icon != null) {
+                icon.mutate();
+                icon.setColorFilter(themedColor, PorterDuff.Mode.SRC_ATOP);
+            }
+        }
+
+        typedArray.recycle();
     }
 }

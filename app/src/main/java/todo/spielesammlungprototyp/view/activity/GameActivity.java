@@ -1,10 +1,6 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.app.AlertDialog;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -19,6 +15,7 @@ import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
 import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
 import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.TextUtils;
 
 import static todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage.getInstance;
@@ -89,20 +86,7 @@ public abstract class GameActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.app_bar_items, menu);
-
-        TypedArray typedArray = obtainStyledAttributes(R.style.AppTheme_AppBarOverlay, new int[]{android.R.attr.textColorPrimary});
-        int themedColor = typedArray.getColor(0, Color.RED);
-
-        // Change action bar icon color based on text color of current action bar theme
-        for (int i = 0; i < menu.size(); i++) {
-            Drawable icon = menu.getItem(i).getIcon();
-            if (icon != null) {
-                icon.mutate();
-                icon.setColorFilter(themedColor, PorterDuff.Mode.SRC_ATOP);
-            }
-        }
-
-        typedArray.recycle();
+        AndroidResources.colorMenuItems(menu);
         return true;
     }
 

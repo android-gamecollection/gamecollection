@@ -226,7 +226,7 @@ public class Hub extends Fragment implements ClickListener {
             String gameTitle = Games.getFromUuid(savegame.gameUuid).getGameTitle();
             String snackbarText = String.format("%s: %s - %s", deleteText, gameTitle, savegame.getDateString());
             Snackbar snackbar = Snackbar.make(coordinatorLayout, snackbarText, Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+            snackbar.setAction(R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     savegameAdapter.addItem(savegame);

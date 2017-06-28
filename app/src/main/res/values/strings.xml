@@ -6,6 +6,7 @@
 
     <!-- General -->
     <string name="ok">OK</string>
+    <string name="undo">UNDO</string>
 
     <!-- Cardgames -->
     <string name="bauernkrieg">"Bauernkrieg"</string>
@@ -61,6 +62,7 @@
 
     <!-- App Bar -->
     <string name="action_gamerules">Spielregeln</string>
+    <string name="action_restore">Standardeinstellungen wiederherstellen</string>
 
     <!-- Savegames -->
     <string name="yesterday">gestern</string>
