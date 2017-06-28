@@ -70,7 +70,7 @@ public class schafkopf extends CardGame
 
                 public void atTarget(Card card, Location targetLocation) {
 
-                    if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+                    if (isBidFull()) {
                             if (sticht(0) == 0)
                             {
                                 delay(2000);
@@ -114,7 +114,7 @@ public class schafkopf extends CardGame
 
                 public void atTarget(Card card, Location targetLocation) {
 
-                    if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+                    if (isBidFull()) {
                         if (sticht(1) == 1) {
                             delay(2000);
                             transferBidsToStock(1);
@@ -141,7 +141,12 @@ public class schafkopf extends CardGame
         }
     }
 
-
+    private boolean isBidFull() {
+        if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+            return true;
+        }
+        else return false;
+    }
     private boolean isGameOver(){
         if (stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32)
             return true;
