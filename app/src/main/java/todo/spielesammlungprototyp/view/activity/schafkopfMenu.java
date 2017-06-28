@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.games.maumau.MauMau;
+import todo.spielesammlungprototyp.model.games.schafkopf.schafkopf;
 
-/**
- * Created by phil2 on 28.06.2017.
- */
-
-public class schafkopfMenu extends GameActivity{
+public class schafkopfMenu extends GameActivity {
 
     @Override
     protected void onLoadGame(Bundle savegame) {
@@ -25,11 +21,11 @@ public class schafkopfMenu extends GameActivity{
 
     @Override
     protected int onLayoutRequest() {
-        return R.layout.activity_schafkopfmenu;
+        return R.layout.activity_cardgame_menu;
     }
 
-    public void gotoschafkopfGame(View view) {
-        Intent gotoActivity = new Intent(this, todo.spielesammlungprototyp.model.games.schafkopf.schafkopf.class);
+    public void gotoGame(View view) {
+        Intent gotoActivity = new Intent(this, schafkopf.class);
         startActivity(gotoActivity);
     }
 }

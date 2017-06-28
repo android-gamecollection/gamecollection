@@ -21,10 +21,10 @@ public class MauMauMenu extends GameActivity {
 
     @Override
     protected int onLayoutRequest() {
-        return R.layout.activity_maumaumenu;
+        return R.layout.activity_cardgame_menu;
     }
 
-    public void gotoMauMauGame(View view) {
+    public void gotoGame(View view) {
         Intent gotoActivity = new Intent(this, MauMau.class);
         startActivity(gotoActivity);
     }

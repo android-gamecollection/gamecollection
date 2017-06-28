@@ -21,10 +21,10 @@ public class BauernkriegMenu extends GameActivity {
 
     @Override
     protected int onLayoutRequest() {
-        return R.layout.activity_bauernkriegmenu;
+        return R.layout.activity_cardgame_menu;
     }
 
-    public void gotoBauernkrieggame(View view) {
+    public void gotoGame(View view) {
         Intent gotoActivity = new Intent(this, Bauernkrieg.class);
         startActivity(gotoActivity);
     }
