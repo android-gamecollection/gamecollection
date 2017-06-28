@@ -52,6 +52,8 @@ public class Game implements Comparable<Game> {
 
     public boolean isTaggedWith(String tag) {
         if (this.tag != null && tag != null) {
+            this.tag = this.tag.toLowerCase();
+            tag = tag.toLowerCase();
             String[] splitTag = this.tag.split("\\|");
             for (String t : splitTag) {
                 if (t.equals(tag)) {

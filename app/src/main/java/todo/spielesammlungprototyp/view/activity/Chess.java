@@ -80,7 +80,7 @@ public class Chess extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        board = new ChessWrapper();
+        board = new ChessWrapper(game.isTaggedWith("chess960"));
         board.setStartPosition();
         aiGame = game.isTaggedWith("aiGame");
         chessBoardFrame = (FrameLayout) findViewById(R.id.frame_layout);

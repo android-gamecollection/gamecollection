@@ -25,6 +25,7 @@
     <string name="game_consolechess_cmd_help">Available commands:\nhelp, restart, show, move &lt;from&gt; &lt;to&gt;</string>
     <string name="game_consolechess_err_invalid_cmd">Not a valid command</string>
     <string name="game_consolechess_err_invalid_move">Invalid move</string>
+    <string name="game_consolechess_description">Schach mit Konsole</string>
     <string name="game_consolechess_rules">Es gelten die normalen &lt;a href=&quot;https://de.wikipedia.org/wiki/Schach#Spielregeln&quot;&gt;Regeln&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&gt;&gt; move (mv) &lt;von&gt; &lt;zu&gt; &lt;br/&gt;   bewege die Figur&lt;br/&gt;&lt;br/&gt;&gt;&gt; overview (ov)&lt;br/&gt;   zeigt momentanes Spiel&lt;br/&gt;&lt;br/&gt;&gt;&gt; show &lt;br/&gt;   zeigt momentane FEN-Notation&lt;br/&gt;&lt;br/&gt;&gt;&gt; restart &lt;br/&gt;   starte das Spiel neu&lt;br/&gt;&lt;br/&gt;&gt;&gt; clear &lt;br/&gt;   lösche das Textfeld&lt;br/&gt;&lt;br/&gt;&gt;&gt; aimove (ai) &lt;br/&gt;   lass die KI einen Zug machen&lt;br/&gt;&lt;br/&gt;&gt;&gt; hint &lt;br/&gt;   bekomme einen Tipp</string>
     <string name="game_chess_promotion_dialog_title">Wähle eine Figur</string>
     <string name="game_chess_snackbar_gameover">Spielende:\u0020</string>
@@ -33,7 +34,12 @@
     <string name="game_chess_gameover_checkmate_white">Schachmatt, Weiß hat gewonnen</string>
     <string name="game_chess_gameover_checkmate_black">Schachmatt, Schwarz hat gewonnen</string>
     <string name="game_chess_gameover_noreason">Einfach so, keinen bestimmten Grund</string>
+    <string name="game_chess_title">Schach</string>
+    <string name="game_chess_960_title">Schach-960</string>
+    <string name="game_chess_player_vs_player">Spieler vs Spieler</string>
+    <string name="game_chess_player_vs_ai">Spieler vs Computer</string>
     <string name="game_chess_rules">Es gelten die normalen &lt;a href=&quot;https://de.wikipedia.org/wiki/Schach#Spielregeln&quot;&gt;Spielregeln&lt;/a&gt;</string>
+    <string name="game_chess_960_rules">Es gelten die Regeln des &lt;a href=&quot;https://de.wikipedia.org/wiki/Chess960&quot;&gt;Schach-960&lt;/a&gt;</string>
     <string name="game_chess_not_available">NO</string>
 
     <!-- Strings for NavDrawer START -->
