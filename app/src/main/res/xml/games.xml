@@ -21,23 +21,39 @@
         icon="@drawable/icon_checkerboard">
 
         <game
-            title="Schach"
-            description="Spieler vs Spieler"
+            title="@string/game_chess_title"
+            description="@string/game_chess_player_vs_player"
             icon="@mipmap/ic_launcher"
             rules="@string/game_chess_rules"
             activity="Chess" />
 
         <game
-            title="Schach"
-            description="Spieler vs Computer"
+            title="@string/game_chess_title"
+            description="@string/game_chess_player_vs_ai"
             icon="@mipmap/ic_launcher"
             rules="@string/game_chess_rules"
             tag="aiGame"
             activity="Chess" />
 
         <game
-            title="Schach"
-            description="Schach mit Konsole"
+            title="@string/game_chess_960_title"
+            description="@string/game_chess_player_vs_player"
+            icon="@mipmap/ic_launcher"
+            rules="@string/game_chess_960_rules"
+            tag="chess960"
+            activity="Chess" />
+
+        <game
+            title="@string/game_chess_960_title"
+            description="@string/game_chess_player_vs_ai"
+            icon="@mipmap/ic_launcher"
+            rules="@string/game_chess_960_rules"
+            tag="aiGame|chess960"
+            activity="Chess" />
+
+        <game
+            title="@string/game_chess_title"
+            description="@string/game_consolechess_description"
             icon="@mipmap/ic_launcher"
             rules="@string/game_consolechess_rules"
             activity="ConsoleChess" />
