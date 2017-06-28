@@ -102,6 +102,6 @@
     <string name="library_carballo_title">Carballo Chess Engine</string>
     <string name="library_carballo_text">Version 1.7\n\nAutor: <a href="http://www.alonsoruibal.com">Alberto Alonso Ruibal</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>\n\n<a href="https://github.com/albertoruibal/carballo">Github</a></string>
     <string name="library_jdroidlib_title">JDroidLib</string>
-    <string name="library_jdroidlib_text">Version 1.51\n\nAutor: <a href="http://www.aplu.ch">Aegidius Plüss</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/lgpl-3.0.html">LGPLv3</a></string>
+    <string name="library_jdroidlib_text">Version 1.51\n\nAutor: <a href="http://www.aplu.ch">Aegidius Plüss</a>\n\nLizensiert als <a href="http://www.aplu.ch/home/viewthread.jsp?mid=1519">\&quot;Open Source Free Software\&quot;</a> </string>
 
 </resources>
