@@ -6,6 +6,8 @@
 
     <!-- General -->
     <string name="ok">OK</string>
+    <string name="yes">JA</string>
+    <string name="no">NEIN</string>
     <string name="undo">UNDO</string>
 
     <!-- Cardgames -->
@@ -74,6 +76,8 @@
     <string name="settings_general_accent_color_description">Farbe des Floating Action Buttons</string>
     <string name="settings_general_accent_color_key">settings_key_general_accent_color</string>
     <string name="settings_color_select_title">Wähle eine Farbe</string>
+    <string name="settings_restore_preferences_title">Einstellung zurück setzen</string>
+    <string name="settings_restore_preferences_message">Wollen Sie die Einstellungen komplett zurück setzen?</string>
 
     <!-- SettingsActivity Boardgames -->
     <string name="settings_chess_title">Schach</string>
