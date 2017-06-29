@@ -83,7 +83,6 @@ public class Chess extends GameActivity {
         super.onCreate(savedInstanceState);
 
         board = new ChessWrapper(game.isTaggedWith("chess960"));
-        board.setStartPosition();
         aiGame = game.isTaggedWith("aiGame");
         chessBoardFrame = (FrameLayout) findViewById(R.id.frame_layout);
         chessboardView = (CheckeredGameboardView) findViewById(R.id.boardgameview_chess);

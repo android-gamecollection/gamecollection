@@ -13,6 +13,7 @@ import com.alonsoruibal.chess.search.SearchEngine;
 import com.alonsoruibal.chess.search.SearchParameters;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
@@ -31,13 +32,16 @@ public class ChessWrapper {
 
     public ChessWrapper(boolean isChess960) {
         config = new Config();
-        // TODO: chess 960 fix
         config.setUciChess960(isChess960);
         searchParameters = new SearchParameters();
         setDifficulty();
         searchEngine = new SearchEngine(config);
         searchEngine.setInitialSearchParameters(searchParameters);
         board = searchEngine.getBoard();
+        if (isChess960) {
+            int start = new Random().nextInt(960);
+            board.startPosition(start);
+        }
     }
 
     public void setPosition(String FEN) {
