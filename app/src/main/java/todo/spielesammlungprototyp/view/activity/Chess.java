@@ -43,7 +43,6 @@ import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
 import todo.spielesammlungprototyp.model.util.CharacterIterator;
 import todo.spielesammlungprototyp.model.util.MapBuilder;
-import todo.spielesammlungprototyp.model.util.MoveTranslator;
 import todo.spielesammlungprototyp.model.util.Tuple;
 import todo.spielesammlungprototyp.view.view.CheckeredGameboardView;
 
@@ -240,7 +239,7 @@ public class Chess extends GameActivity {
             whiteid = id;
         }
         else {
-            testAddItem(new Doublemove(whitemove,thismove,whiteid,id));
+            addItem(new Doublemove(whitemove,thismove,whiteid,id));
             whitemove = null;
         }
         animatefigure(from,to);
