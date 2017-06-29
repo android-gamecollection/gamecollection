@@ -1,5 +1,7 @@
-package todo.spielesammlungprototyp.view;
+package todo.spielesammlungprototyp.model.savegamestorage;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.util.SortedListAdapterCallback;
@@ -15,14 +17,12 @@ import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.model.util.Savegame;
-import todo.spielesammlungprototyp.model.util.SavegameStorage;
+import todo.spielesammlungprototyp.view.activity.GameActivity;
 
 public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.SavegameViewHolder> {
 
     private SortedList<Savegame> mSavegames = new SortedList<>(Savegame.class, new SavegameAdapterCallback(this));
     private SavegameStorage savegameStorage = SavegameStorage.getInstance();
-    private ClickListener clickListener;
 
     public SavegameAdapter(ArrayList<Savegame> savegames) {
         this.mSavegames.addAll(savegames);
@@ -65,12 +65,9 @@ public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.Savega
         return mSavegames.get(position);
     }
 
-    public void setClickListener(ClickListener clicklistener) {
-        this.clickListener = clicklistener;
-    }
+    class SavegameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    class SavegameViewHolder extends RecyclerView.ViewHolder {
-
+        private final String ACTIVITY_PACKAGE = ".view.activity.";
         private final ImageView gameIcon;
         private final TextView gameTitle, gameSubtitle, gameDate;
 
@@ -80,14 +77,22 @@ public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.Savega
             gameTitle = (TextView) itemView.findViewById(R.id.text_game_title);
             gameSubtitle = (TextView) itemView.findViewById(R.id.text_game_subtitle);
             gameDate = (TextView) itemView.findViewById(R.id.text_date);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (clickListener != null) {
-                        clickListener.itemClicked(v, getAdapterPosition());
-                    }
-                }
-            });
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Context context = v.getContext();
+            Intent intent = new Intent();
+            Savegame savegame = get(getAdapterPosition());
+            Game game = Games.getFromUuid(savegame.gameUuid);
+            if (game == null) {
+                throw new NullPointerException();
+            }
+            String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
+            intent.setClassName(context, str);
+            intent.putExtra(GameActivity.KEY_SAVEGAME_UUID, savegame.uuid);
+            context.startActivity(intent);
         }
     }
 

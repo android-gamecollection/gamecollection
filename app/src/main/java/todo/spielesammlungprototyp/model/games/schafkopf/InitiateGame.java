@@ -5,7 +5,7 @@ import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
 import ch.aplu.jcardgame.StackLayout;
 import ch.aplu.jcardgame.TargetArea;
-import todo.spielesammlungprototyp.view.activity.schafkopf;
+import todo.spielesammlungprototyp.model.games.schafkopf.schafkopf;
 
 public class InitiateGame {
     public Hand[] hands;
@@ -13,8 +13,6 @@ public class InitiateGame {
     public Hand[] stacks = new Hand[2];
     private Deck deck;
     schafkopf board;
-
-
 
     private final Location[] handLocations =
             {

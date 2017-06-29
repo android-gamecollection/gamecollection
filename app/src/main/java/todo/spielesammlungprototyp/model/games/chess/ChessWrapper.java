@@ -10,7 +10,6 @@ import com.alonsoruibal.chess.search.SearchParameters;
 
 import java.util.ArrayList;
 
-import todo.spielesammlungprototyp.model.util.MoveTranslator;
 import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class ChessWrapper {
@@ -23,6 +22,7 @@ public class ChessWrapper {
     public ChessWrapper() {
         this(false);
     }
+
     public ChessWrapper(boolean isChess960) {
         config = new Config();
         config.setUciChess960(isChess960);
@@ -139,6 +139,10 @@ public class ChessWrapper {
 
     public int isEndgame() {
         return board.isEndGame();
+    }
+
+    public boolean isCheck() {
+        return board.getCheck();
     }
 
     public Tuple<Integer, Integer>[] getPossibleMoves(Tuple<Integer, Integer> from, String FEN) {

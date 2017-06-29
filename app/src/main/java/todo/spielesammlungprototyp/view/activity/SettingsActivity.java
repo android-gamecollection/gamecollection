@@ -1,7 +1,7 @@
 package todo.spielesammlungprototyp.view.activity;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,13 +9,19 @@ import android.view.MenuItem;
 
 import todo.spielesammlungprototyp.R;
 
-public class Settings extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
+
+    public static final String KEY_PREFERENCE_ITEMS = "xmlToLoad";
+    public static final String KEY_TITLE = "title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        getFragmentManager().beginTransaction().replace(R.id.settings_frame_layout, new SettingsFragment()).commit();
+        Bundle extras = getIntent().getExtras();
+        setTitle(extras.getString(KEY_TITLE));
+        Fragment fragment = (Fragment) extras.getSerializable(KEY_PREFERENCE_ITEMS);
+        getFragmentManager().beginTransaction().replace(R.id.settings_frame_layout, fragment).commit();
         setupActionBar();
     }
 
@@ -28,9 +34,20 @@ public class Settings extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onBackPressed();
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -38,13 +55,4 @@ public class Settings extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
     }
-
-    public static class SettingsFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.settings);
-        }
-    }
-
 }

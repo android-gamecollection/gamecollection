@@ -10,16 +10,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.io.Serializable;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.view.fragment.GameSelection;
+import todo.spielesammlungprototyp.view.fragment.InfoFragment;
+import todo.spielesammlungprototyp.view.fragment.SettingsFragment;
 
 public class Hub extends AppCompatActivity {
 
@@ -34,32 +36,30 @@ public class Hub extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_hub);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         setDefaultValuesOfSettingsFirstTime();
 
+        setContentView(R.layout.activity_hub);
+        setupActionBar();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        // Navigation view header
-        View navHeader = navigationView.getHeaderView(0);
-        TextView navDrawerTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_title);
-        TextView navDrawerSubTitle = (TextView) navHeader.findViewById(R.id.nav_drawer_subtext);
-        ImageView navDrawerBackground = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_background);
-        ImageView navDrawerIcon = (ImageView) navHeader.findViewById(R.id.nav_drawer_top_icon);
-
-        navDrawerTitle.setText(R.string.app_name);
-        navDrawerSubTitle.setText(R.string.subTextHeader);
 
         setUpNavigationView();
 
         if (savedInstanceState == null) {
             currentTag = tagHub;
             loadHomeFragment();
+        } else {
+            setToolbarTitle();
+        }
+    }
+
+    private void setupActionBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -94,8 +94,6 @@ public class Hub extends AppCompatActivity {
         });
 
         drawer.closeDrawers();
-
-        invalidateOptionsMenu();
     }
 
     private Fragment getHomeFragment() {
@@ -112,7 +110,7 @@ public class Hub extends AppCompatActivity {
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(navigationView.getMenu().getItem(toIndex(currentTag)).getTitle());
+        setTitle(navigationView.getMenu().getItem(toIndex(currentTag)).getTitle());
     }
 
     private void selectNavMenu() {
@@ -128,33 +126,22 @@ public class Hub extends AppCompatActivity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getNumericShortcut()) {
+                char numericShortcut = menuItem.getNumericShortcut();
+                switch (numericShortcut) {
                     case tagHub:
-                        currentTag = tagHub;
-                        break;
                     case tagCards:
-                        currentTag = tagCards;
-                        break;
                     case tagBoard:
-                        currentTag = tagBoard;
+                        currentTag = numericShortcut;
                         break;
                     case tagInfo:
-                        return true;
+                        openPreferenceScreen(getString(R.string.nav_item_info), new InfoFragment());
+                        break;
                     case tagSettings:
-                        startActivity(new Intent(Hub.this, Settings.class));
-                        drawer.closeDrawers();
-                        return true;
+                        openPreferenceScreen(getString(R.string.nav_item_settings), new SettingsFragment());
+                        break;
                     default:
                         currentTag = tagHub;
                 }
-
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
-                }
-                menuItem.setChecked(true);
 
                 loadHomeFragment();
 
@@ -162,12 +149,18 @@ public class Hub extends AppCompatActivity {
             }
         });
 
-
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer);
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
     }
 
+    private void openPreferenceScreen(String toolbarTitle, Serializable fragment) {
+        Intent intent = new Intent(Hub.this, SettingsActivity.class);
+        intent.putExtra(SettingsActivity.KEY_TITLE, toolbarTitle);
+        intent.putExtra(SettingsActivity.KEY_PREFERENCE_ITEMS, fragment);
+        startActivity(intent);
+        drawer.closeDrawers();
+    }
 
     @Override
     public void onBackPressed() {
@@ -178,5 +171,4 @@ public class Hub extends AppCompatActivity {
             loadHomeFragment();
         }
     }
-
 }

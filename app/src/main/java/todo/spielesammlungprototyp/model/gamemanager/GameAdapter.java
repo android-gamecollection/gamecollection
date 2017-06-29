@@ -1,5 +1,7 @@
-package todo.spielesammlungprototyp.view;
+package todo.spielesammlungprototyp.model.gamemanager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.gamemanager.Game;
+import todo.spielesammlungprototyp.view.activity.GameActivity;
 
-public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapter.GameViewHolder> {
+public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
 
     private List<Game> games = new ArrayList<>();
-    private ClickListener clickListener = null;
 
-    public GameCardViewAdapter(List<Game> games) {
+    public GameAdapter(List<Game> games) {
         this.games = games;
     }
 
@@ -31,10 +32,10 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
 
     @Override
     public void onBindViewHolder(final GameViewHolder holder, final int position) {
-        Game SCV = games.get(position);
-        holder.gameIcon.setImageResource(SCV.getGameIconId());
-        holder.gameTitle.setText(SCV.getGameTitle());
-        holder.gameDescription.setText(SCV.getGameDescription());
+        Game game = games.get(position);
+        holder.gameIcon.setImageResource(game.getGameIconId());
+        holder.gameTitle.setText(game.getGameTitle());
+        holder.gameDescription.setText(game.getGameDescription());
     }
 
     @Override
@@ -42,12 +43,9 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
         return games.size();
     }
 
-    public void setClickListener(ClickListener clicklistener) {
-        this.clickListener = clicklistener;
-    }
+    class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    class GameViewHolder extends RecyclerView.ViewHolder {
-
+        private static final String ACTIVITY_PACKAGE = ".view.activity.";
         final RelativeLayout card;
         final ImageView gameIcon;
         final TextView gameTitle;
@@ -59,15 +57,18 @@ public class GameCardViewAdapter extends RecyclerView.Adapter<GameCardViewAdapte
             gameIcon = (ImageView) view.findViewById(R.id.image_game);
             gameTitle = (TextView) view.findViewById(R.id.text_game_title);
             gameDescription = (TextView) view.findViewById(R.id.text_game_description);
+            card.setOnClickListener(this);
+        }
 
-            card.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (clickListener != null) {
-                        clickListener.itemClicked(v, getAdapterPosition());
-                    }
-                }
-            });
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent();
+            Context context = v.getContext();
+            Game game = games.get(getAdapterPosition());
+            String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
+            intent.setClassName(context, str);
+            intent.putExtra(GameActivity.KEY_GAME_UUID, game.getUuid());
+            context.startActivity(intent);
         }
     }
 }

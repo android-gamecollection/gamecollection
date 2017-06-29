@@ -11,13 +11,12 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:colorControlActivated">@color/colorAccent</item>
+        <item name="android:listDivider">@null</item>
     </style>
 
     <!-- Actionbarstyle -->
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

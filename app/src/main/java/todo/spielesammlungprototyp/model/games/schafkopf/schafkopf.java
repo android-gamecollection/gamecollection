@@ -1,21 +1,18 @@
-package todo.spielesammlungprototyp.view.activity;
+package todo.spielesammlungprototyp.model.games.schafkopf;
 //JGameGrid DOC http://www.aplu.ch/classdoc/jgamegrid/index.html
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 
-import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import ch.aplu.android.Location;
+import ch.aplu.android.TextActor;
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.CardGame;
 import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
-import ch.aplu.jcardgame.StackLayout;
 import ch.aplu.jcardgame.TargetArea;
-import todo.spielesammlungprototyp.model.games.schafkopf.InitiateGame;
 
 public class schafkopf extends CardGame
 {
@@ -29,17 +26,10 @@ public class schafkopf extends CardGame
         ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
     }
 
-
     public final Location[] stackLocations =
             {
                     new Location(520, 750),
                     new Location(520, 200)
-            };
-
-    public final Location[] bidLocations =
-            {
-                    new Location(350, 450),
-                    new Location(250, 450)
             };
 
     public Deck deck;
@@ -48,10 +38,9 @@ public class schafkopf extends CardGame
     public Hand[] stacks = new Hand[2];
     public int z=0;//initialisierung cardlistener
 
-
     public schafkopf()
     {
-        super(Color.rgb(0, 0, 0), Color.WHITE, BoardType.VERT_FULL, windowZoom(600));
+        super(Color.rgb(20, 80, 0), Color.WHITE, BoardType.VERT_FULL, windowZoom(600));
     }
 
     public void main()
@@ -68,9 +57,9 @@ public class schafkopf extends CardGame
 
     private void initPlayers()
     {
-
         for(z=0; z<8;z++)
         {
+
             hands[z].addCardListener(new CardAdapter()  // Player 1 plays card
             {
                 public void longPressed(Card card)
@@ -80,32 +69,28 @@ public class schafkopf extends CardGame
                 }
 
                 public void atTarget(Card card, Location targetLocation) {
-/*
-                    if(bids[1].isEmpty()){
-                        showToast("block");
-                        blockNotPlayableCards(1);
-                    }
-                    else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
 
+                    if (isBidFull()) {
                             if (sticht(0) == 0)
                             {
-
-                                showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(0);
                                 delay(1500);
                                 if(isGameOver())
                                     calculateResult();
+
+                                UpdateCardNumber();
                                 setPlayerMove(0);
                             }
 
                             else {
-                                showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                                 delay(2000);
                                 transferBidsToStock(1);
                                 delay(1500);
                                 if(isGameOver())
                                     calculateResult();
+
+                                UpdateCardNumber();
                                 setPlayerMove(1);
                             }
                         }
@@ -129,27 +114,24 @@ public class schafkopf extends CardGame
 
                 public void atTarget(Card card, Location targetLocation) {
 
-                    /*if(bids[0].isEmpty()){
-                        showToast("block");
-                        blockNotPlayableCards(0);
-                    }
-                    else*/ if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+                    if (isBidFull()) {
                         if (sticht(1) == 1) {
-
-                            showToast("P2:"+ bids[1].getLast().toString() +" sticht " + bids[0].getLast().toString());
                             delay(2000);
                             transferBidsToStock(1);
                             delay(1500);
                             if(isGameOver())
-                                calculateResult();;
+                                calculateResult();
+
+                            UpdateCardNumber();
                             setPlayerMove(1);
                         } else {
-                            showToast("P1:"+ bids[0].getLast().toString() +" sticht " + bids[1].getLast().toString());
                             delay(2000);
                             transferBidsToStock(0);
                             delay(1500);
                             if(isGameOver())
                                 calculateResult();
+
+                            UpdateCardNumber();
                             setPlayerMove(0);
                         }
                     }
@@ -159,18 +141,22 @@ public class schafkopf extends CardGame
         }
     }
 
-
+    private boolean isBidFull() {
+        if (!bids[0].isEmpty() && !bids[1].isEmpty()) {
+            return true;
+        }
+        else return false;
+    }
     private boolean isGameOver(){
         if (stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32)
             return true;
         return false;
-        //showToast("anzahl" + (stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards()));
         //Wenn alle karten auf den stacks sind ist das spiel vorbei
     }
 
     private void calculateResult(){
         int[] points = new int[2];
-
+        //Berechne Punkte nach Schafkopfregeln
         for(int i=0;i<2;i++){
             points[i]= stacks[i].getNumberOfCardsWithRank(Rank.ASS) * 11
                     + stacks[i].getNumberOfCardsWithRank(Rank.ZEHN) * 10
@@ -179,50 +165,33 @@ public class schafkopf extends CardGame
                     + stacks[i].getNumberOfCardsWithRank(Rank.UNTER) * 2;
         }
 
-        printResult(points);
-
-
-        //Anzahl der Karten mit Punkten pro Spieler herausfinden
-       /*
-        int ass = stacks[0].getNumberOfCardsWithRank(Rank.ASS);
-        int zehn = stacks[0].getNumberOfCardsWithRank(Rank.ZEHN);
-        int k = stacks[0].getNumberOfCardsWithRank(Rank.KOENIG);
-        int o = stacks[0].getNumberOfCardsWithRank(Rank.OBER);
-        int u = stacks[0].getNumberOfCardsWithRank(Rank.UNTER);
-
-        int ass2 = stacks[1].getNumberOfCardsWithRank(Rank.ASS);
-        int zehn2 = stacks[1].getNumberOfCardsWithRank(Rank.ZEHN);
-        int k2 = stacks[1].getNumberOfCardsWithRank(Rank.KOENIG);
-        int o2 = stacks[1].getNumberOfCardsWithRank(Rank.OBER);
-        int u2 = stacks[1].getNumberOfCardsWithRank(Rank.UNTER);
-
-        //Punkte zusammen rechnen
-        ASS = 11 , ZEHN = 10, KOENIG = 4, OBER = 3, UNTER = 2, Alles andere = 0
-
-        int pointsp1 = ass * 11 + zehn * 10 + k * 4 + o * 3 + u * 2;
-        int pointsp2 = ass2 * 11 + zehn2 * 10 + k2 * 4 + o2 * 3 + u2 * 2;
-
-        //Gewinner herausfinden und ausgeben
-
-        */
-
+        winLabel(points);
     }
+    private void winLabel(int[] points){
+        //Textanzeige gewonnen verloren
 
-    private void printResult(int[] p){
-        if(p[0] > p[1]){
-            showToast("Spieler 1:" + p[0] + "Spieler 2:" + p[1]);
-            showToast("Spieler 1 gewinnt!");
+        TextActor win = new TextActor("GEWONNEN!!", YELLOW, 16, 40);
+        TextActor loose = new TextActor("VERLOREN!!", YELLOW, 16, 40);
+
+        //Je nachdem wer gewonnen hat wird das win label für player 1 oder 2 angezeigt
+
+        if (points[0] > points[1]) {
+            addActor(win, new Location(400, 850).toReal());
+            addActor(new TextActor(points[0] + "Punkte"), new Location(400, 835).toReal());
+            addActor(loose, new Location(400, 100).toReal());
+            addActor(new TextActor(points[1] + "Punkte"), new Location(400, 85).toReal());
         }
-        if(p[0] == p[1]){
-            showToast("Spieler 1:" + p[0] + "Spieler 2:" + p[1]);
-            showToast("Unentschieden!");
+        else if (points[0] < points[1]) {
+            addActor(win, new Location(400, 100).toReal());
+            addActor(new TextActor(points[1] + "Punkte"), new Location(400, 85).toReal());
+            addActor(loose, new Location(400, 850).toReal());
+            addActor(new TextActor(points[0] + "Punkte"), new Location(400, 835).toReal());
         }
-        if(p[0] < p[1]){
-            showToast("Spieler 1:" + p[0] + "Spieler 2:" + p[1]);
-            showToast("Spieler 2 gewinnt!");
+        else {
+            addActor(new TextActor("Unentschieden!", YELLOW, 16, 40), new Location(280, 450).toReal());
         }
+        addActor(new TextActor("Game Over", YELLOW, 20, 40), new Location(280, 460).toReal());
     }
-
 
     private void transferBidsToStock(int playerWon)
     {
@@ -236,37 +205,21 @@ public class schafkopf extends CardGame
     {
         if(playerWon==0)
         {
-            /*
-            //FÜR KARTEN BLOCKEN
-            if(bids[0].isEmpty() && !bids[1].isEmpty()){
-                for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
-            }
-            else{*/
+            if(isGameOver())
+                calculateResult();
+
             for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(true);
             for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(false);
-            //}
         }
         if(playerWon==1)
         {
-            /*
-            //FÜR KARTEN BLOCKEN
-            if(bids[1].isEmpty() && !bids[0].isEmpty()){
-                for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
-            }
-            else {*/
+            if(isGameOver())
+                calculateResult();
+
                 for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(false);
                 for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(true);
-                //showToast("Player  2");
-            //}
-
         }
     }
-
-    private void disableInputs()
-    {
-        for(int i=0;i<16;i++)hands[i].setTouchEnabled(false);
-    }
-
 
     public int sticht(int Player)
     {
@@ -366,11 +319,16 @@ public class schafkopf extends CardGame
 
     public boolean isRankHigher(int Player) {
         int otherPlayer = (Player + 1) % 2;
+
+        //RANKS sind nach id geordnet, sowie sie im enum angeordnet sind
+        //Also Ass (0) -> ober (1) -> usw...
+
         if (bids[Player].getLast().getRankId() < bids[otherPlayer].getLast().getRankId())
             return true;
         else if(bids[otherPlayer].getLast().getRankId() < bids[Player].getLast().getRankId())
             return false;
 
+        //Ass ist der höchste rank bei einem normalen Farbstich -> instant sieg
 
         else if (bids[Player].getLast().getRank() == Rank.ASS)
             return true;
@@ -411,175 +369,76 @@ public class schafkopf extends CardGame
         return false;
     }
 
-    public boolean sameRank(){
+    public ArrayList<TextActor> getTextActorList(){
 
-            if(bids[1].getLast().getRank() == bids[0].getLast().getRank())
-                return true;
-            return false;
+        ArrayList<TextActor> actors = new ArrayList<>();
+
+        TextActor t1 = new TextActor(hands[0].getNumberOfCards() + "");actors.add(t1);
+        TextActor t2 = new TextActor(hands[1].getNumberOfCards() + "");actors.add(t2);
+        TextActor t3 = new TextActor(hands[2].getNumberOfCards() + "");actors.add(t3);
+        TextActor t4 = new TextActor(hands[3].getNumberOfCards() + "");actors.add(t4);
+
+        TextActor t5 = new TextActor(hands[4].getNumberOfCards() + "");actors.add(t5);
+        TextActor t6 = new TextActor(hands[5].getNumberOfCards() + "");actors.add(t6);
+        TextActor t7 = new TextActor(hands[6].getNumberOfCards() + "");actors.add(t7);
+        TextActor t8 = new TextActor(hands[7].getNumberOfCards() + "");actors.add(t8);
+
+        TextActor t9 = new TextActor(hands[8].getNumberOfCards() + "");actors.add(t9);
+        TextActor t10 = new TextActor(hands[9].getNumberOfCards() + "");actors.add(t10);
+        TextActor t11 = new TextActor(hands[10].getNumberOfCards() + "");actors.add(t11);
+        TextActor t12 = new TextActor(hands[11].getNumberOfCards() + "");actors.add(t12);
+
+        TextActor t13 = new TextActor(hands[12].getNumberOfCards() + "");actors.add(t13);
+        TextActor t14 = new TextActor(hands[13].getNumberOfCards() + "");actors.add(t14);
+        TextActor t15 = new TextActor(hands[14].getNumberOfCards() + "");actors.add(t15);
+        TextActor t16 = new TextActor(hands[15].getNumberOfCards() + "");actors.add(t16);
+
+        return actors;
+    }
+    public ArrayList<Location> getLocationsList(){
+
+        ArrayList<Location> locations = new ArrayList<>();
+
+        Location l1 = new Location(100, 750);locations.add(l1);
+        Location l2 = new Location(200, 750);locations.add(l2);
+        Location l3 = new Location(300, 750);locations.add(l3);
+        Location l4 = new Location(400, 750);locations.add(l4);
+        Location l5 = new Location(100, 550);locations.add(l5);
+        Location l6 = new Location(200, 550);locations.add(l6);
+        Location l7 = new Location(300, 550);locations.add(l7);
+        Location l8 = new Location(400, 550);locations.add(l8);
+
+
+        Location l9 = new Location(100, 200);locations.add(l9);
+        Location l10 = new Location(200, 200);locations.add(l10);
+        Location l11 = new Location(300, 200);locations.add(l11);
+        Location l12 = new Location(400, 200);locations.add(l12);
+        Location l13 = new Location(100, 400);locations.add(l13);
+        Location l14 = new Location(200, 400);locations.add(l14);
+        Location l15 = new Location(300, 400);locations.add(l15);
+        Location l16 = new Location(400, 400);locations.add(l16);
+
+        return locations;
     }
 
+    public void UpdateCardNumber(){
 
-    public boolean isColorOnHand(int Player, Suit farb)
-    {
+        ArrayList<TextActor> actors;
+        ArrayList<Location> locations;
 
+        actors = getTextActorList();
+        locations = getLocationsList();
 
-        if(Player == 0)
-        {
-
-            for (int i = 0; i < 8; i++) {
-                if (hands[i].getFirst().getSuit() == farb)
-                    return true;
-            }
+        for(int i = 0; i < 16; i++){
+            addActor(actors.get(i), locations.get(i).toReal());
+        }
+        delay(1000);
+        for(int i = 0; i < 16; i++){
+            removeActor(actors.get(i));
         }
 
-        if(Player == 1)
-        {
-            for (int i = 8; i < 16; i++)
-            {
-                if (hands[i].getFirst().getSuit() == farb)
-                    return true;
-            }
-        }
-        return false;
+        actors.clear();
     }
-
-
-
-    public boolean TrumpfOnHand(int player) {
-//int player = Spieler der ausspielt
-        if(player == 0) {
-            for(int i = 8; i < 16; i++) {
-                if(hands[i].getNumberOfCardsWithSuit(Suit.HERZ) > 0) {
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.OBER) > 0){
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.UNTER) > 0) {
-                    return true;
-                }
-                else{return false;}
-            }
-        }
-        else if(player == 0) {
-            for(int i = 0; i < 8; i++) {
-                if(hands[i].getNumberOfCardsWithSuit(Suit.HERZ) > 0) {
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.OBER) > 0){
-                    return true;
-                }
-                else if(hands[i].getNumberOfCardsWithRank(Rank.UNTER) > 0) {
-                    return true;
-                }
-                else{return false;}
-            }
-        }
-        return false;
-
-    }
-
-
-    public Hand returnNewHandWithUpperCards(int player){
-        Hand h = new Hand(deck);
-        Hand[] all = new Hand[16];
-        all = hands;
-
-        if(player == 0){
-
-        for(int i = 0; i < 8; i++){
-                h.insert(all[i].getFirst(), false);
-                if(i == 7)return h;
-        }
-
-        }
-
-        else if(player == 1){
-
-            for(int i = 8; i < 16; i ++) {
-                h.insert(all[i].getFirst(),false);
-                if(i == 15)return h;
-
-                }
-        }
-
-    return h;
-    }
-
-
-
-    public Hand cardsplayable(int Player, Hand hand){
-        Hand playable = new Hand(deck);
-        int otherPlayer = (Player + 1) % 2;
-
-        for (int i = 0; i < 8; i++) {
-
-            if (    (hand.getFirst().getRank() == Rank.OBER ||
-                    hand.getFirst().getRank() == Rank.UNTER ||
-                    hand.getFirst().getRank() == Suit.HERZ)
-                    && isTrumpf(otherPlayer))
-            {
-             playable.insert(hand.getFirst(), false);
-                hand.removeFirst(false);
-            }
-
-            else if (hand.getFirst().getSuit() == bids[otherPlayer].getLast().getSuit()){
-             playable.insert(hand.getFirst(), false);
-                hand.removeFirst(false);
-            }
-            else if(i == 7)return playable;
-            else{hand.removeFirst(false);}
-        }
-        return playable;
-    }
-
-
-
-    public void blockNotPlayableCards(int Player) {
-        showToast("BlockMethodeAufgerufen");
-        Hand up = returnNewHandWithUpperCards(Player);
-        showToast("up created");
-        Hand playable = cardsplayable(Player, up);
-        showToast("cardsplayable created");
-
-        if (Player == 0) {
-            if(playable.isEmpty()){
-                for(int i=0;i<8;i++)hands[i].setTouchEnabled(false);
-            }
-            else{
-                    for (int i = 0; i < 8; i++) {
-                        if (!playable.contains(hands[i].getFirst())) {
-                            hands[i].setTouchEnabled(false);
-                            //showToast("Disabled");
-                        } else if (playable.contains(hands[i].getFirst())) {
-                            hands[i].setTouchEnabled(true);
-                            //showToast("Enabled");
-                        }
-                    }
-                    setPlayerMove(0);
-                }
-        }
-        else if (Player == 1) {
-            if(playable.isEmpty()){
-                for(int i=8;i<16;i++)hands[i].setTouchEnabled(false);
-            }
-            else {
-                for (int i = 8; i < 16; i++) {
-                    if (!playable.contains(hands[i].getFirst())) {
-                        hands[i].setTouchEnabled(false);
-                        //showToast("Disabled");
-                    } else if (playable.contains(hands[i].getFirst())) {
-                        hands[i].setTouchEnabled(true);
-                        //showToast("Enabled");
-
-                    }
-                }
-                setPlayerMove(1);
-            }
-            }
-    }
-
-
 }
 
 

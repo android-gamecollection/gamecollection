@@ -11,6 +11,7 @@ import ch.aplu.android.Actor;
 import ch.aplu.android.GGMessageBox;
 import ch.aplu.android.GGPushButton;
 import ch.aplu.android.GGPushButtonAdapter;
+import ch.aplu.android.GameGrid;
 import ch.aplu.android.L;
 import ch.aplu.android.Location;
 import ch.aplu.android.ToolBar;
@@ -83,14 +84,14 @@ public class MauMau extends CardGame
 
     public MauMau()
     {
-        super(Color.rgb(20, 80, 0), Color.WHITE, BoardType.HORZ_SQUARE, windowZoom(600));
+        super(Color.rgb(20, 80, 0), Color.WHITE, BoardType.HORZ_FULL, windowZoom(600));
     }
 
     public void main()
     {
         deck = new Deck(Suit.values(), Rank.values(), "cover");
         //   Card.noVerso = true;    // Debug
-        showToast(version);
+        //showToast(version);
         initHands();
         initToolBar();
         double z = getZoomFactor();
@@ -117,7 +118,7 @@ public class MauMau extends CardGame
                 isPartnerMoves = false;
                 for (int i = 1; i < nbPlayers; i++)
                 {
-                    showToast("Player " + i + " thinking...");
+                    //showToast("Player " + i + " thinking...");
                     delay(thinkingTime);
 
                     if (!simulateMove(i))  // Error: no cards available talon
@@ -221,8 +222,8 @@ public class MauMau extends CardGame
                         okBtn.setLocation(hideLocation.toReal());
                         card.transfer(pile, true);
                     }
-                    else
-                        showToast("Selected " + card + " forbidden.");
+                    //else
+                        //showToast("Selected " + card + " forbidden.");
                 }
                 else  // Got trump
                 {
@@ -234,8 +235,8 @@ public class MauMau extends CardGame
                         card.transfer(pile, true);
                         removeTrumpActor();
                     }
-                    else
-                        showToast("Selected " + card + " forbidden.");
+                    //else
+                        //showToast("Selected " + card + " forbidden.");
 
                 }
             }
@@ -301,7 +302,7 @@ public class MauMau extends CardGame
     {
         if (show)
         {
-            showToast("Select a trump suit");
+           //showToast("Select a trump suit");
             toolBar.setLocation(toolBarLocation);  // Virtual loc
             toolBar.setOnTop(CardActor.class);
         }
@@ -318,13 +319,13 @@ public class MauMau extends CardGame
     private void setMyMove()
     {
         setMyTouchEnabled(true);
-        showToast(info);
+        //showToast(info);
     }
 
     private void waitOk()
     {
         setMyTouchEnabled(true);
-        showToast("Press 'Done'\nor a card to move it");
+        //showToast("Press 'Done'\nor a card to move it");
         setPaintOrder(GGPushButton.class);
         okBtn.setLocation(btnLocation.toReal());
     }
@@ -409,7 +410,7 @@ public class MauMau extends CardGame
         {
             if (pile.getNumberOfCards() < 2)
             {
-                showToast("Fatal error: No cards available for talon");
+                //showToast("Fatal error: No cards available for talon");
                 doPause();
                 setTouchEnabled(false);
                 return false;

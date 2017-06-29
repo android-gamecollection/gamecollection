@@ -230,6 +230,15 @@ public class CheckeredGameboardView extends View {
         paintHightlight.setStrokeWidth(strokeWidth);
     }
 
+    public void setColors(int colorLight, int colorDark, int colorBorder, int colorSuggestion, int colorHighlight) {
+        if (colorLight != 0) paintLight.setColor(colorLight);
+        if (colorDark != 0) paintDark.setColor(colorDark);
+        if (colorBorder != 0) paintBorder.setColor(colorBorder);
+        if (colorSuggestion != 0) paintSuggestion.setColor(colorSuggestion);
+        if (colorHighlight != 0) paintHightlight.setColor(colorHighlight);
+        invalidate();
+    }
+
     private enum HighlightStrokeStyle {
         REGULAR, THIN, FILL, NONE
     }

@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import todo.spielesammlungprototyp.model.games.chess.MoveTranslator;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 

@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.util.MoveTranslator;
-import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapter.ItemViewHolder> {
 
@@ -31,8 +29,8 @@ public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapte
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Doublemove doublemove = mItems.get(position);
         holder.setContent(
-                doublemove.getWhiteID(),MoveTranslator.numToString(doublemove.getWhitemove().first), MoveTranslator.numToString(doublemove.getWhitemove().last),
-                doublemove.getBlackID(),MoveTranslator.numToString(doublemove.getBlackmove().first), MoveTranslator.numToString(doublemove.getBlackmove().last)
+                doublemove.getWhiteID(), MoveTranslator.numToString(doublemove.getWhitemove().first), MoveTranslator.numToString(doublemove.getWhitemove().last),
+                doublemove.getBlackID(), MoveTranslator.numToString(doublemove.getBlackmove().first), MoveTranslator.numToString(doublemove.getBlackmove().last)
         );
     }
 

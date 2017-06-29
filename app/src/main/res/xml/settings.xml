@@ -1,31 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="settings_key_general"
         android:title="@string/settings_general_title">
 
-        <ListPreference
-            android:defaultValue="#795548"
-            android:entries="@array/settings_general_accent_color_alias"
-            android:entryValues="@array/settings_general_fab_color"
-            android:key="settings_key_general_accent_color"
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/colorAccent"
+            android:key="@string/settings_general_accent_color_key"
             android:summary="@string/settings_general_accent_color_description"
-            android:title="@string/settings_general_accent_color_title" />
+            android:title="@string/settings_general_accent_color_title"
+            app:cpv_dialogTitle="@string/settings_color_select_title" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="settings_key_chess_vs_computer"
-        android:title="@string/settings_chess_description_computer">
+        android:key="settings_key_chess"
+        android:title="@string/settings_chess_title">
 
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/AI_difficulty_alias"
             android:entryValues="@array/AI_difficulty"
-            android:key="settings_key_chess_vs_computer_difficulty"
+            android:key="@string/settings_chess_difficulty_key"
             android:summary="@string/settings_chess_difficulty_description"
             android:title="@string/settings_chess_difficulty_title" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/chessSquareDark"
+            android:key="@string/settings_chess_color_dark_key"
+            android:summary="@string/settings_chess_color_dark_description"
+            android:title="@string/settings_chess_color_dark"
+            app:cpv_dialogTitle="@string/settings_color_select_title" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/chessSquareLight"
+            android:key="@string/settings_chess_color_light_key"
+            android:summary="@string/settings_chess_color_light_description"
+            android:title="@string/settings_chess_color_light"
+            app:cpv_dialogTitle="@string/settings_color_select_title" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/chessSquareDark"
+            android:key="@string/settings_chess_color_border_key"
+            android:summary="@string/settings_chess_color_border_description"
+            android:title="@string/settings_chess_color_border"
+            app:cpv_dialogTitle="@string/settings_color_select_title" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/chessSquareHighlight"
+            android:key="@string/settings_chess_color_highlight_key"
+            android:summary="@string/settings_chess_color_highlight_description"
+            android:title="@string/settings_chess_color_highlight"
+            app:cpv_dialogTitle="@string/settings_color_select_title" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/chessSquareSuggestion"
+            android:key="@string/settings_chess_color_suggestion_key"
+            android:summary="@string/settings_chess_color_suggestion_description"
+            android:title="@string/settings_chess_color_suggestion"
+            app:cpv_dialogTitle="@string/settings_color_select_title" />
 
     </PreferenceCategory>
 

@@ -1,9 +1,10 @@
 package todo.spielesammlungprototyp.view.fragment;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -21,31 +22,28 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
+import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameAdapter;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
-import todo.spielesammlungprototyp.model.util.Savegame;
-import todo.spielesammlungprototyp.model.util.SavegameStorage;
-import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.model.gamemanager.Game;
-import todo.spielesammlungprototyp.view.SavegameAdapter;
-import todo.spielesammlungprototyp.view.activity.GameActivity;
 
-public class Hub extends Fragment implements ClickListener {
+public class Hub extends Fragment {
 
-    private final String ACTIVITY_PACKAGE = ".view.activity.";
     private SavegameAdapter savegameAdapter;
     private CoordinatorLayout coordinatorLayout;
-
-    private FloatingActionButton fabNewGame, fabNewGameK, fabNewGameB;
+    private FloatingActionButton fabNewGame, fabNewGameC, fabNewGameB;
     private Animation fabOpenUpper, fabCloseUpper, fabCloseLower, fabOpenLower, fabRotateClockwise, fabRotateAnticlockwise;
     private boolean isFabOpen = false;
-
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
+    private TextView emptyText;
+    private AlphaAnimation alphaOut, alphaIn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,11 +61,14 @@ public class Hub extends Fragment implements ClickListener {
         super.onActivityCreated(savedInstanceState);
         View rootView = getView().getRootView();
         Context context = App.getContext();
+        emptyText = (TextView) rootView.findViewById(R.id.fragment_hub_empty_textview);
         coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinator_layout);
+        setupAlphaAnimation();
         setupRecyclerView();
+        checkSavegameAdapterCount();
 
         fabNewGame = (FloatingActionButton) rootView.findViewById(R.id.fab_new_game);
-        fabNewGameK = (FloatingActionButton) rootView.findViewById(R.id.fab_new_cardgame);
+        fabNewGameC = (FloatingActionButton) rootView.findViewById(R.id.fab_new_cardgame);
         fabNewGameB = (FloatingActionButton) rootView.findViewById(R.id.fab_new_boardgame);
         fabOpenUpper = AnimationUtils.loadAnimation(context, R.anim.fab_open_upper);
         fabCloseUpper = AnimationUtils.loadAnimation(context, R.anim.fab_close_upper);
@@ -90,7 +91,7 @@ public class Hub extends Fragment implements ClickListener {
             }
         });
 
-        fabNewGameK.setOnClickListener(new View.OnClickListener() {
+        fabNewGameC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((todo.spielesammlungprototyp.view.activity.Hub) getActivity()).switchFragment('1');
@@ -98,29 +99,41 @@ public class Hub extends Fragment implements ClickListener {
         });
     }
 
+    private void setupAlphaAnimation() {
+        int animationDuration = 250;
+        alphaOut = new AlphaAnimation(1, 0);
+        alphaIn = new AlphaAnimation(0, 1);
+        alphaOut.setDuration(animationDuration);
+        alphaIn.setDuration(animationDuration);
+    }
+
     private void animateFab() {
         if (isFabOpen) {
             fabNewGameB.startAnimation(fabCloseLower);
-            fabNewGameK.startAnimation(fabCloseUpper);
+            fabNewGameC.startAnimation(fabCloseUpper);
             fabNewGame.startAnimation(fabRotateAnticlockwise);
             fabNewGameB.setClickable(false);
-            fabNewGameK.setClickable(false);
+            fabNewGameC.setClickable(false);
             this.isFabOpen = false;
         } else {
             fabNewGameB.startAnimation(fabOpenLower);
-            fabNewGameK.startAnimation(fabOpenUpper);
+            fabNewGameC.startAnimation(fabOpenUpper);
             fabNewGame.startAnimation(fabRotateClockwise);
             fabNewGameB.setClickable(true);
-            fabNewGameK.setClickable(true);
+            fabNewGameC.setClickable(true);
             this.isFabOpen = true;
         }
     }
 
     private void tintFabs() {
-        String colorStr = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("settings_key_general_accent_color", "#795548");
-        ColorStateList csl = ColorStateList.valueOf(Color.parseColor(colorStr));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int colorStr = prefs.getInt(
+                getString(R.string.settings_general_accent_color_key),
+                AndroidResources.getColor(R.color.colorAccent)
+        );
+        ColorStateList csl = ColorStateList.valueOf(colorStr);
         fabNewGame.setBackgroundTintList(csl);
-        fabNewGameK.setBackgroundTintList(csl);
+        fabNewGameC.setBackgroundTintList(csl);
         fabNewGameB.setBackgroundTintList(csl);
     }
 
@@ -148,11 +161,6 @@ public class Hub extends Fragment implements ClickListener {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                final AlphaAnimation alphaOut = new AlphaAnimation(1, 0);
-                final AlphaAnimation alphaIn = new AlphaAnimation(0, 1);
-                final int duration = 250;
-                alphaOut.setDuration(duration);
-                alphaIn.setDuration(duration);
                 alphaOut.setAnimationListener(new AnimationEndListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
@@ -179,7 +187,17 @@ public class Hub extends Fragment implements ClickListener {
 
     private void setupAdapter() {
         savegameAdapter = new SavegameAdapter(SavegameStorage.getInstance().getSavegameList());
-        savegameAdapter.setClickListener(this);
+        savegameAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                checkSavegameAdapterCount();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                checkSavegameAdapterCount();
+            }
+        });
         recyclerView.setAdapter(savegameAdapter);
     }
 
@@ -187,19 +205,14 @@ public class Hub extends Fragment implements ClickListener {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    @Override
-    public void itemClicked(View view, int position) {
-        Intent intent = new Intent();
-        Context context = view.getContext();
-        Savegame savegame = savegameAdapter.get(position);
-        Game game = Games.getFromUuid(savegame.gameUuid);
-        if (game == null) {
-            throw new NullPointerException();
+    private void checkSavegameAdapterCount() {
+        if (savegameAdapter.getItemCount() == 0) {
+            emptyText.startAnimation(alphaIn);
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.startAnimation(alphaOut);
+            emptyText.setVisibility(View.GONE);
         }
-        String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
-        intent.setClassName(context, str);
-        intent.putExtra(GameActivity.KEY_SAVEGAME_UUID, savegame.uuid);
-        context.startActivity(intent);
     }
 
     private class GameSelectionCallback extends ItemTouchHelper.SimpleCallback {
@@ -222,7 +235,7 @@ public class Hub extends Fragment implements ClickListener {
             String gameTitle = Games.getFromUuid(savegame.gameUuid).getGameTitle();
             String snackbarText = String.format("%s: %s - %s", deleteText, gameTitle, savegame.getDateString());
             Snackbar snackbar = Snackbar.make(coordinatorLayout, snackbarText, Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+            snackbar.setAction(R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     savegameAdapter.addItem(savegame);
@@ -230,6 +243,36 @@ public class Hub extends Fragment implements ClickListener {
             });
             snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
             snackbar.show();
+        }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                View itemView = viewHolder.itemView;
+                Paint rectPaint = new Paint();
+                int rgb = getRgbValue(dX, itemView.getWidth());
+                rectPaint.setARGB(255, rgb, rgb, rgb);
+                if (dX > 0) {
+                    c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
+                            (float) itemView.getBottom(), rectPaint);
+                } else {
+                    c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                            (float) itemView.getRight(), (float) itemView.getBottom(), rectPaint);
+                }
+                float alpha = (1 - getFactor(dX, itemView.getWidth()));
+                itemView.setAlpha(alpha);
+            }
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+
+        private int getRgbValue(float dX, int itemWidth) {
+            int minRgb = 200;
+            int maxRgb = 255;
+            return (int) (minRgb + (maxRgb - minRgb) * getFactor(dX, itemWidth));
+        }
+
+        private float getFactor(float dX, int itemWidth) {
+            return Math.abs(dX) / itemWidth;
         }
     }
 }

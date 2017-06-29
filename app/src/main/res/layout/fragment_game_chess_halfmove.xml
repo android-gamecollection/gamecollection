@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginBottom="4dp"
-        android:layout_marginEnd="4dp"
         android:layout_marginTop="4dp"
         android:adjustViewBounds="true"
         android:src="@drawable/icon_checkerboard" />
@@ -18,23 +17,29 @@
         android:id="@+id/text_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="monospace"
         android:text="@string/game_chess_not_available"
+        android:textAllCaps="true"
         android:textColor="@color/textColorPrimary"
-        android:textSize="24sp" />
+        android:textSize="28sp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         android:src="@drawable/icon_arrow_right" />
 
     <TextView
         android:id="@+id/text_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="monospace"
         android:text="@string/game_chess_not_available"
+        android:textAllCaps="true"
         android:textColor="@color/textColorPrimary"
-        android:textSize="24sp" />
+        android:textSize="28sp" />
 
 
 </LinearLayout>

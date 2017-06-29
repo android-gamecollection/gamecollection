@@ -1,7 +1,5 @@
 package todo.spielesammlungprototyp.view.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,16 +14,13 @@ import java.util.List;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
+import todo.spielesammlungprototyp.model.gamemanager.GameAdapter;
 import todo.spielesammlungprototyp.model.gamemanager.GameCategory;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.view.ClickListener;
-import todo.spielesammlungprototyp.view.GameCardViewAdapter;
-import todo.spielesammlungprototyp.view.activity.GameActivity;
 
-public class GameSelection extends Fragment implements ClickListener {
+public class GameSelection extends Fragment {
 
     private static final String EXTRA_CATEGORY = "category";
-    private static final String ACTIVITY_PACKAGE = ".view.activity.";
     private List<Game> games;
 
     public static GameSelection newInstance(String category) {
@@ -65,19 +60,7 @@ public class GameSelection extends Fragment implements ClickListener {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        GameCardViewAdapter gcvAdapter = new GameCardViewAdapter(games);
-        gcvAdapter.setClickListener(this);
-        recyclerView.setAdapter(gcvAdapter);
-    }
-
-    @Override
-    public void itemClicked(View view, int position) {
-        Intent intent = new Intent();
-        Context context = view.getContext();
-        Game game = games.get(position);
-        String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
-        intent.setClassName(context, str);
-        intent.putExtra(GameActivity.KEY_GAME_UUID, game.getUuid());
-        context.startActivity(intent);
+        GameAdapter gameAdapter = new GameAdapter(games);
+        recyclerView.setAdapter(gameAdapter);
     }
 }

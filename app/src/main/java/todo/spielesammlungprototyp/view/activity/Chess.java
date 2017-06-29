@@ -4,10 +4,13 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +37,7 @@ import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.games.chess.ChessHistoryAdapter;
 import todo.spielesammlungprototyp.model.games.chess.ChessWrapper;
 import todo.spielesammlungprototyp.model.games.chess.Doublemove;
+import todo.spielesammlungprototyp.model.games.chess.MoveTranslator;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
 import todo.spielesammlungprototyp.model.util.AnimatorEndListener;
@@ -63,7 +67,7 @@ public class Chess extends GameActivity {
     private CheckeredGameboardView chessboardView;
     private ImageView[][] figuren;
     private Tuple<Integer, Integer> logged;
-    private Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> whitemove = null;
+    private Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> whitemove = null;
     private int whiteid;
     private ChessWrapper board;
     private int gridSize;
@@ -77,7 +81,7 @@ public class Chess extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        board = new ChessWrapper();
+        board = new ChessWrapper(game.isTaggedWith("chess960"));
         board.setStartPosition();
         aiGame = game.isTaggedWith("aiGame");
         chessBoardFrame = (FrameLayout) findViewById(R.id.frame_layout);
@@ -118,7 +122,7 @@ public class Chess extends GameActivity {
         itemTouchHelper.attachToRecyclerView(recyclerHistory);
     }
 
-    private void testAddItem(final Doublemove doublemove) {
+    private void addItem(final Doublemove doublemove) {
         final Runnable addItem = new Runnable() {
             @Override
             public void run() {
@@ -132,6 +136,20 @@ public class Chess extends GameActivity {
         } else {
             addItem.run();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Context context = getApplicationContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        chessboardView.setColors(
+                prefs.getInt(context.getString(R.string.settings_chess_color_light_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_dark_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_border_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_suggestion_key), 0),
+                prefs.getInt(context.getString(R.string.settings_chess_color_highlight_key), 0)
+        );
     }
 
     @Override
@@ -286,6 +304,7 @@ public class Chess extends GameActivity {
     }
 
     private void update() {
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
         int endgame = board.isEndgame();
         if (endgame != 0) {
             int gameoverReason;
@@ -303,16 +322,18 @@ public class Chess extends GameActivity {
                     gameoverReason = R.string.game_chess_gameover_noreason;
             }
             String snackbarText = getString(R.string.game_chess_snackbar_gameover) + getString(gameoverReason);
-            CoordinatorLayout chessLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
-            final Snackbar snackbar = Snackbar.make(chessLayout, snackbarText, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
-            snackbar.setAction(R.string.ok, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            Snackbar.make(coordinatorLayout, snackbarText, Snackbar.LENGTH_INDEFINITE)
+                    .setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor))
+                    .setAction(R.string.ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                }
-            });
-            snackbar.show();
+                        }
+                    })
+                    .show();
+        } else if (board.isCheck()) {
+            Snackbar.make(coordinatorLayout, getString(R.string.game_chess_mate), Snackbar.LENGTH_SHORT)
+                    .show();
         }
         setFieldFromFEN(board.getBoard());
         addImages();
@@ -465,13 +486,13 @@ public class Chess extends GameActivity {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            int bevore = recyclerAdapter.getItemCount();
+            int before = recyclerAdapter.getItemCount();
             recyclerAdapter.removeItem(viewHolder.getAdapterPosition());
             if (recyclerAdapter.getItemCount() <= 0) {
                 setRecyclerVisibility(false);
                 chessBoardFrame.animate().translationZ(0);
             }
-            undoMoves(bevore-recyclerManager.getItemCount());
+            undoMoves(before - recyclerManager.getItemCount());
         }
     }
 }

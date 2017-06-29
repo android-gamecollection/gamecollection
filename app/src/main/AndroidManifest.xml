@@ -29,16 +29,12 @@
         </activity>
 
         <activity
-            android:name=".view.activity.BauernkriegMenu">
+            android:name=".view.activity.CardgameMenu">
         </activity>
 
         <activity
             android:name=".model.games.bauernkrieg.Bauernkrieg"
             android:label="@string/bauernkrieg">
-        </activity>
-
-        <activity
-            android:name=".view.activity.MauMauMenu">
         </activity>
 
         <activity
@@ -48,13 +44,12 @@
         </activity>
 
         <activity
-            android:name=".view.activity.schafkopf"
+            android:name=".model.games.schafkopf.schafkopf"
             android:label="@string/schafkopf">
         </activity>
 
         <activity
-            android:name=".view.activity.Settings"
-            android:label="@string/title_activity_settings">
+            android:name=".view.activity.SettingsActivity">
         </activity>
 
     </application>

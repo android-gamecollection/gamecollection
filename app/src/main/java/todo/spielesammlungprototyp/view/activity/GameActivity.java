@@ -1,11 +1,6 @@
 package todo.spielesammlungprototyp.view.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -16,12 +11,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.model.util.Savegame;
-import todo.spielesammlungprototyp.model.util.SavegameStorage;
 import todo.spielesammlungprototyp.model.gamemanager.Game;
+import todo.spielesammlungprototyp.model.gamemanager.Games;
+import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
+import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
+import todo.spielesammlungprototyp.model.util.AndroidResources;
+import todo.spielesammlungprototyp.model.util.TextUtils;
 
-import static todo.spielesammlungprototyp.model.util.SavegameStorage.getInstance;
+import static todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage.getInstance;
 
 
 public abstract class GameActivity extends AppCompatActivity {
@@ -29,9 +26,6 @@ public abstract class GameActivity extends AppCompatActivity {
     public static final String KEY_GAME_UUID = "gameUuid";
     public static final String KEY_SAVEGAME_UUID = "UUID";
     protected Game game;
-    protected Savegame currentSaveGame;
-    private String gameUuid;
-    private boolean isSaved;
     private SavegameStorage savegameStorage;
     private String savegameUuid;
 
@@ -39,8 +33,16 @@ public abstract class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         savegameStorage = getInstance();
-        Bundle extras = getIntent().getExtras();
 
+        onCreateExistingGame();
+
+        setContentView(onLayoutRequest());
+        setTitle(game.getGameTitle());
+        setupActionBar();
+    }
+
+    private void onCreateExistingGame() { //TODO: "I don't like my name, please help me!" - sad Method 2017
+        Bundle extras = getIntent().getExtras();
         savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
         Savegame savegame = savegameStorage.getFromUuid(savegameUuid);
         String gameUuid;
@@ -52,12 +54,14 @@ public abstract class GameActivity extends AppCompatActivity {
             onLoadGame(null);
         }
         game = Games.getFromUuid(gameUuid);
-        setContentView(onLayoutRequest());
-        setTitle(game.getGameTitle());
+    }
+
+    private void setupActionBar() {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private boolean saveGame() {
@@ -67,11 +71,12 @@ public abstract class GameActivity extends AppCompatActivity {
             Savegame savegame;
             if (savegameUuid == null) {
                 savegame = new Savegame(game.getUuid(), bundle);
+                savegameUuid = savegame.uuid;
             } else {
                 savegame = savegameStorage.getFromUuid(savegameUuid);
                 savegame.update(bundle);
             }
-            savegameStorage.modifySavegame(savegame, false);
+            savegameStorage.updateSavegame(savegame);
             return true;
         }
         return false;
@@ -81,20 +86,7 @@ public abstract class GameActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.app_bar_items, menu);
-
-        TypedArray typedArray = obtainStyledAttributes(R.style.AppTheme_AppBarOverlay, new int[]{android.R.attr.textColorPrimary});
-        int themedColor = typedArray.getColor(0, Color.RED);
-
-        // Change action bar icon color based on text color of current action bar theme
-        for (int i = 0; i < menu.size(); i++) {
-            Drawable icon = menu.getItem(i).getIcon();
-            if (icon != null) {
-                icon.mutate();
-                icon.setColorFilter(themedColor, PorterDuff.Mode.SRC_ATOP);
-            }
-        }
-
-        typedArray.recycle();
+        AndroidResources.colorMenuItems(menu);
         return true;
     }
 
@@ -102,6 +94,12 @@ public abstract class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         saveGame();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override
@@ -143,17 +141,12 @@ public abstract class GameActivity extends AppCompatActivity {
     protected abstract int onLayoutRequest();
 
     private void showRulesDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getString(R.string.action_gamerules));
-        alertDialog.setMessage(game.getGameRules());
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.action_gamerules))
+                .setMessage(game.getGameRules())
+                .setPositiveButton(R.string.ok, null)
+                .create();
         alertDialog.show();
+        TextUtils.setClickableLinks(alertDialog);
     }
-
 }

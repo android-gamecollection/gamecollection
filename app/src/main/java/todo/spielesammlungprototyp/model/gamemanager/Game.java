@@ -1,18 +1,26 @@
 package todo.spielesammlungprototyp.model.gamemanager;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
 
 public class Game implements Comparable<Game> {
 
     private int gameIconId;
-    private String gameTitle, gameDescription, gameRules, activity, uuid, tag;
+    private String gameTitle, gameDescription, activity, uuid, tag;
+    private CharSequence gameRules;
 
     Game(int gameIconId, String gameTitle, String gameDescription, String gameRules, String activity, @Nullable String tag) {
         this.gameIconId = gameIconId;
         this.gameTitle = gameTitle;
         this.gameDescription = gameDescription;
-        this.gameRules = gameRules;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.gameRules = Html.fromHtml(gameRules, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            //noinspection deprecation
+            this.gameRules = Html.fromHtml(gameRules);
+        }
         this.activity = activity;
         this.tag = tag;
         uuid = String.valueOf(hash());
@@ -30,7 +38,7 @@ public class Game implements Comparable<Game> {
         return gameDescription;
     }
 
-    public String getGameRules() {
+    public CharSequence getGameRules() {
         return gameRules;
     }
 
@@ -42,8 +50,14 @@ public class Game implements Comparable<Game> {
         return uuid;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
     public boolean isTaggedWith(String tag) {
         if (this.tag != null && tag != null) {
+            this.tag = this.tag.toLowerCase();
+            tag = tag.toLowerCase();
             String[] splitTag = this.tag.split("\\|");
             for (String t : splitTag) {
                 if (t.equals(tag)) {
