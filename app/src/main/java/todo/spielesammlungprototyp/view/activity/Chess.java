@@ -100,7 +100,7 @@ public class Chess extends GameActivity {
         chessboardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (board.isEndgame() != 0 || !stateAllowClick) return false;
+                if (!stateAllowClick) return false;
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     Tuple<Integer, Integer> tuple = chessboardView.getSquareFromTouch((int) event.getX(), (int) event.getY());
                     if (tuple != null) {
@@ -194,6 +194,7 @@ public class Chess extends GameActivity {
     }
 
     private void onSquareClicked(Tuple<Integer, Integer> tuple) {
+        if (board.isEndgame() != 0) return;
         boolean hasPiece = figuren[tuple.first][tuple.last] != null;
         boolean wTurn = board.isWhitesTurn();
         boolean wPiece = board.isWhitePiece(tuple);
