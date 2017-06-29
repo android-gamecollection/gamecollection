@@ -37,7 +37,7 @@ public class Hub extends Fragment {
 
     private SavegameAdapter savegameAdapter;
     private CoordinatorLayout coordinatorLayout;
-    private FloatingActionButton fabNewGame, fabNewGameK, fabNewGameB;
+    private FloatingActionButton fabNewGame, fabNewGameC, fabNewGameB;
     private Animation fabOpenUpper, fabCloseUpper, fabCloseLower, fabOpenLower, fabRotateClockwise, fabRotateAnticlockwise;
     private boolean isFabOpen = false;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -65,10 +65,10 @@ public class Hub extends Fragment {
         coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinator_layout);
         setupAlphaAnimation();
         setupRecyclerView();
-        toggleEmptyText();
+        checkSavegameAdapterCount();
 
         fabNewGame = (FloatingActionButton) rootView.findViewById(R.id.fab_new_game);
-        fabNewGameK = (FloatingActionButton) rootView.findViewById(R.id.fab_new_cardgame);
+        fabNewGameC = (FloatingActionButton) rootView.findViewById(R.id.fab_new_cardgame);
         fabNewGameB = (FloatingActionButton) rootView.findViewById(R.id.fab_new_boardgame);
         fabOpenUpper = AnimationUtils.loadAnimation(context, R.anim.fab_open_upper);
         fabCloseUpper = AnimationUtils.loadAnimation(context, R.anim.fab_close_upper);
@@ -91,7 +91,7 @@ public class Hub extends Fragment {
             }
         });
 
-        fabNewGameK.setOnClickListener(new View.OnClickListener() {
+        fabNewGameC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((todo.spielesammlungprototyp.view.activity.Hub) getActivity()).switchFragment('1');
@@ -110,17 +110,17 @@ public class Hub extends Fragment {
     private void animateFab() {
         if (isFabOpen) {
             fabNewGameB.startAnimation(fabCloseLower);
-            fabNewGameK.startAnimation(fabCloseUpper);
+            fabNewGameC.startAnimation(fabCloseUpper);
             fabNewGame.startAnimation(fabRotateAnticlockwise);
             fabNewGameB.setClickable(false);
-            fabNewGameK.setClickable(false);
+            fabNewGameC.setClickable(false);
             this.isFabOpen = false;
         } else {
             fabNewGameB.startAnimation(fabOpenLower);
-            fabNewGameK.startAnimation(fabOpenUpper);
+            fabNewGameC.startAnimation(fabOpenUpper);
             fabNewGame.startAnimation(fabRotateClockwise);
             fabNewGameB.setClickable(true);
-            fabNewGameK.setClickable(true);
+            fabNewGameC.setClickable(true);
             this.isFabOpen = true;
         }
     }
@@ -133,7 +133,7 @@ public class Hub extends Fragment {
         );
         ColorStateList csl = ColorStateList.valueOf(colorStr);
         fabNewGame.setBackgroundTintList(csl);
-        fabNewGameK.setBackgroundTintList(csl);
+        fabNewGameC.setBackgroundTintList(csl);
         fabNewGameB.setBackgroundTintList(csl);
     }
 
@@ -194,7 +194,7 @@ public class Hub extends Fragment {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    private void toggleEmptyText() {
+    private void checkSavegameAdapterCount() {
         if (savegameAdapter.getItemCount() == 0) {
             if (emptyText.getVisibility() == View.INVISIBLE) {
                 emptyText.startAnimation(alphaIn);
@@ -224,7 +224,7 @@ public class Hub extends Fragment {
             int position = viewHolder.getAdapterPosition();
             final Savegame savegame = savegameAdapter.get(position);
             savegameAdapter.removeItem(position);
-            toggleEmptyText();
+            checkSavegameAdapterCount();
             String deleteText = App.getContext().getString(R.string.savegame_deleted);
             String gameTitle = Games.getFromUuid(savegame.gameUuid).getGameTitle();
             String snackbarText = String.format("%s: %s - %s", deleteText, gameTitle, savegame.getDateString());
@@ -233,7 +233,7 @@ public class Hub extends Fragment {
                 @Override
                 public void onClick(View v) {
                     savegameAdapter.addItem(savegame);
-                    toggleEmptyText();
+                    checkSavegameAdapterCount();
                 }
             });
             snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
