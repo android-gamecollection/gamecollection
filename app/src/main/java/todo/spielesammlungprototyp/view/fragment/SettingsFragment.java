@@ -1,5 +1,7 @@
 package todo.spielesammlungprototyp.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -12,6 +14,7 @@ import java.io.Serializable;
 
 import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
+import todo.spielesammlungprototyp.model.util.TextUtils;
 
 public class SettingsFragment extends PreferenceFragment implements Serializable {
 
@@ -32,11 +35,24 @@ public class SettingsFragment extends PreferenceFragment implements Serializable
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_restore:
-                restorePreferences();
+                showDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.settings_restore_preferences_title)
+                .setMessage(R.string.settings_restore_preferences_message)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        restorePreferences();
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .create().show();
     }
 
     private void restorePreferences() {
