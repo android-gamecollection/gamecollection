@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -29,6 +30,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.Map;
@@ -99,6 +101,7 @@ public class Chess extends GameActivity {
         chessboardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (board.isEndgame() != 0 || !stateAllowClick) return false;
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     Tuple<Integer, Integer> tuple = chessboardView.getSquareFromTouch((int) event.getX(), (int) event.getY());
                     if (tuple != null) {
@@ -192,7 +195,6 @@ public class Chess extends GameActivity {
     }
 
     private void onSquareClicked(Tuple<Integer, Integer> tuple) {
-        if (board.isEndgame() != 0 || !stateAllowClick) return;
         boolean hasPiece = figuren[tuple.first][tuple.last] != null;
         boolean wTurn = board.isWhitesTurn();
         boolean wPiece = board.isWhitePiece(tuple);
@@ -223,7 +225,6 @@ public class Chess extends GameActivity {
                 animatefigure(logged, tuple);
                 logged = null;
                 chessboardView.clearColors();
-                aimove();
             }
             if (!aiGame && valid) {
                 stateAllowClick = false;
@@ -278,14 +279,39 @@ public class Chess extends GameActivity {
 
     private void aimove() {
         if (!aiGame || board.isEndgame() != 0) return;
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                String move = board.aimove();
-                animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
-            }
-        }, ANIMATION_SPEED + 1000);
+        new AiMoveTask().execute();
+    }
+
+    private class AiMoveTask extends AsyncTask<Void, Void, String> {
+
+        private long millis;
+        private ProgressBar progressBar;
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return board.aimove();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            millis = System.currentTimeMillis();
+            progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+            progressBar.setVisibility(View.VISIBLE);
+            stateAllowClick = false;
+        }
+
+        @Override
+        protected void onPostExecute(final String move) {
+            progressBar.setVisibility(View.GONE);
+            long ellapsedMillis = System.currentTimeMillis() - millis;
+            long delay = ellapsedMillis > ANIMATION_SPEED ? 0 : ANIMATION_SPEED - ellapsedMillis;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
+                }
+            }, delay);
+        }
     }
 
     private void update() {
@@ -341,6 +367,11 @@ public class Chess extends GameActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     update();
+                    if (aiGame && !board.isWhitesTurn()) {
+                        aimove();
+                    } else {
+                        stateAllowClick = true;
+                    }
                 }
             });
             Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> thismove = new Tuple<>(from, to);

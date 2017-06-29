@@ -1,6 +1,10 @@
 package todo.spielesammlungprototyp.model.games.chess;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.alonsoruibal.chess.Board;
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
@@ -10,6 +14,8 @@ import com.alonsoruibal.chess.search.SearchParameters;
 
 import java.util.ArrayList;
 
+import todo.spielesammlungprototyp.App;
+import todo.spielesammlungprototyp.R;
 import todo.spielesammlungprototyp.model.util.Tuple;
 
 public class ChessWrapper {
@@ -25,9 +31,10 @@ public class ChessWrapper {
 
     public ChessWrapper(boolean isChess960) {
         config = new Config();
+        // TODO: chess 960 fix
         config.setUciChess960(isChess960);
-        config.setTranspositionTableSize(1);
         searchParameters = new SearchParameters();
+        setDifficulty();
         searchEngine = new SearchEngine(config);
         searchEngine.setInitialSearchParameters(searchParameters);
         board = searchEngine.getBoard();
@@ -118,7 +125,6 @@ public class ChessWrapper {
         String smove = Move.toString(move);
         board.doMove(move);
         return smove;
-
     }
 
     public boolean isWhitesTurn() {
@@ -160,5 +166,23 @@ public class ChessWrapper {
         }
         Tuple<Integer, Integer>[] array = new Tuple[liste.size()];
         return liste.toArray(array);
+    }
+
+    private void setDifficulty() {
+        Context context = App.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String difficultyKey = context.getString(R.string.settings_chess_difficulty_key);
+        int difficulty = Integer.valueOf(prefs.getString(difficultyKey, "2"));
+        switch (difficulty) {
+            case 1:
+                searchParameters.setDepth(1);
+                break;
+            case 2:
+                searchParameters.setDepth(6);
+                break;
+            case 3:
+                searchParameters.setDepth(12);
+                break;
+        }
     }
 }

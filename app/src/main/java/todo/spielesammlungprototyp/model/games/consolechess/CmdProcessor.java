@@ -91,7 +91,7 @@ public class CmdProcessor {
         return str.split("\\s+");
     }
 
-    private class ProcessInputTask extends AsyncTask<String, Integer, ConsoleResponse> {
+    private class ProcessInputTask extends AsyncTask<String, Void, ConsoleResponse> {
 
         @Override
         protected ConsoleResponse doInBackground(String... params) {
