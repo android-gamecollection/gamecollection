@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -234,6 +236,36 @@ public class Hub extends Fragment implements ClickListener {
             });
             snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
             snackbar.show();
+        }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                View itemView = viewHolder.itemView;
+                Paint rectPaint = new Paint();
+                int rgb = getRgbValue(dX, itemView.getWidth());
+                rectPaint.setARGB(255, rgb, rgb, rgb);
+                if (dX > 0) {
+                    c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
+                            (float) itemView.getBottom(), rectPaint);
+                } else {
+                    c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                            (float) itemView.getRight(), (float) itemView.getBottom(), rectPaint);
+                }
+                float alpha = (1 - getFactor(dX, itemView.getWidth()));
+                itemView.setAlpha(alpha);
+            }
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+
+        private int getRgbValue(float dX, int itemWidth) {
+            int minRgb = 200;
+            int maxRgb = 255;
+            return (int) (minRgb + (maxRgb - minRgb) * getFactor(dX, itemWidth));
+        }
+
+        private float getFactor(float dX, int itemWidth) {
+            return Math.abs(dX) / itemWidth;
         }
     }
 }
