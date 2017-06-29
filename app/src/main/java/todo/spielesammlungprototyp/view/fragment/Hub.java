@@ -187,6 +187,17 @@ public class Hub extends Fragment {
 
     private void setupAdapter() {
         savegameAdapter = new SavegameAdapter(SavegameStorage.getInstance().getSavegameList());
+        savegameAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                checkSavegameAdapterCount();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                checkSavegameAdapterCount();
+            }
+        });
         recyclerView.setAdapter(savegameAdapter);
     }
 
@@ -196,15 +207,11 @@ public class Hub extends Fragment {
 
     private void checkSavegameAdapterCount() {
         if (savegameAdapter.getItemCount() == 0) {
-            if (emptyText.getVisibility() == View.INVISIBLE) {
-                emptyText.startAnimation(alphaIn);
-                emptyText.setVisibility(View.VISIBLE);
-            }
+            emptyText.startAnimation(alphaIn);
+            emptyText.setVisibility(View.VISIBLE);
         } else {
-            if (emptyText.getVisibility() == View.VISIBLE) {
-                emptyText.startAnimation(alphaOut);
-                emptyText.setVisibility(View.INVISIBLE);
-            }
+            emptyText.startAnimation(alphaOut);
+            emptyText.setVisibility(View.GONE);
         }
     }
 
@@ -224,7 +231,6 @@ public class Hub extends Fragment {
             int position = viewHolder.getAdapterPosition();
             final Savegame savegame = savegameAdapter.get(position);
             savegameAdapter.removeItem(position);
-            checkSavegameAdapterCount();
             String deleteText = App.getContext().getString(R.string.savegame_deleted);
             String gameTitle = Games.getFromUuid(savegame.gameUuid).getGameTitle();
             String snackbarText = String.format("%s: %s - %s", deleteText, gameTitle, savegame.getDateString());
@@ -233,7 +239,6 @@ public class Hub extends Fragment {
                 @Override
                 public void onClick(View v) {
                     savegameAdapter.addItem(savegame);
-                    checkSavegameAdapterCount();
                 }
             });
             snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
