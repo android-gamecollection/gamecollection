@@ -1,7 +1,6 @@
 package todo.spielesammlungprototyp.view.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
@@ -27,32 +26,24 @@ import android.widget.TextView;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
-import todo.spielesammlungprototyp.model.gamemanager.Game;
 import todo.spielesammlungprototyp.model.gamemanager.Games;
-import todo.spielesammlungprototyp.model.interfaces.ClickListener;
 import todo.spielesammlungprototyp.model.savegamestorage.Savegame;
 import todo.spielesammlungprototyp.model.savegamestorage.SavegameAdapter;
 import todo.spielesammlungprototyp.model.savegamestorage.SavegameStorage;
 import todo.spielesammlungprototyp.model.util.AndroidResources;
 import todo.spielesammlungprototyp.model.util.AnimationEndListener;
-import todo.spielesammlungprototyp.view.activity.GameActivity;
 
-public class Hub extends Fragment implements ClickListener {
+public class Hub extends Fragment {
 
-    private final String ACTIVITY_PACKAGE = ".view.activity.";
     private SavegameAdapter savegameAdapter;
     private CoordinatorLayout coordinatorLayout;
-
     private FloatingActionButton fabNewGame, fabNewGameK, fabNewGameB;
     private Animation fabOpenUpper, fabCloseUpper, fabCloseLower, fabOpenLower, fabRotateClockwise, fabRotateAnticlockwise;
     private boolean isFabOpen = false;
-
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private TextView emptyText;
-
     private AlphaAnimation alphaOut, alphaIn;
-    final int duration = 250;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,10 +100,11 @@ public class Hub extends Fragment implements ClickListener {
     }
 
     private void setupAlphaAnimation() {
+        int animationDuration = 250;
         alphaOut = new AlphaAnimation(1, 0);
         alphaIn = new AlphaAnimation(0, 1);
-        alphaOut.setDuration(duration);
-        alphaIn.setDuration(duration);
+        alphaOut.setDuration(animationDuration);
+        alphaIn.setDuration(animationDuration);
     }
 
     private void animateFab() {
@@ -195,7 +187,6 @@ public class Hub extends Fragment implements ClickListener {
 
     private void setupAdapter() {
         savegameAdapter = new SavegameAdapter(SavegameStorage.getInstance().getSavegameList());
-        savegameAdapter.setClickListener(this);
         recyclerView.setAdapter(savegameAdapter);
     }
 
@@ -203,19 +194,18 @@ public class Hub extends Fragment implements ClickListener {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    @Override
-    public void itemClicked(View view, int position) {
-        Intent intent = new Intent();
-        Context context = view.getContext();
-        Savegame savegame = savegameAdapter.get(position);
-        Game game = Games.getFromUuid(savegame.gameUuid);
-        if (game == null) {
-            throw new NullPointerException();
+    private void toggleEmptyText() {
+        if (savegameAdapter.getItemCount() == 0) {
+            if (emptyText.getVisibility() == View.INVISIBLE) {
+                emptyText.startAnimation(alphaIn);
+                emptyText.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (emptyText.getVisibility() == View.VISIBLE) {
+                emptyText.startAnimation(alphaOut);
+                emptyText.setVisibility(View.INVISIBLE);
+            }
         }
-        String str = context.getPackageName() + ACTIVITY_PACKAGE + game.getActivity();
-        intent.setClassName(context, str);
-        intent.putExtra(GameActivity.KEY_SAVEGAME_UUID, savegame.uuid);
-        context.startActivity(intent);
     }
 
     private class GameSelectionCallback extends ItemTouchHelper.SimpleCallback {
@@ -278,20 +268,6 @@ public class Hub extends Fragment implements ClickListener {
 
         private float getFactor(float dX, int itemWidth) {
             return Math.abs(dX) / itemWidth;
-        }
-    }
-
-    public void toggleEmptyText() {
-        if(savegameAdapter.getItemCount() == 0) {
-            if(emptyText.getVisibility() == View.INVISIBLE) {
-                emptyText.startAnimation(alphaIn);
-                emptyText.setVisibility(View.VISIBLE);
-            }
-        } else {
-            if(emptyText.getVisibility() == View.VISIBLE) {
-                emptyText.startAnimation(alphaOut);
-                emptyText.setVisibility(View.INVISIBLE);
-            }
         }
     }
 }
