@@ -65,6 +65,11 @@ public class ChessWrapper {
         board.doMoves(moves);
     }
 
+    public String getLastMove() {
+        String[] parts = getMoves().split(" ");
+        return parts[parts.length - 1];
+    }
+
     public void undoMove() {
         board.undoMove();
     }

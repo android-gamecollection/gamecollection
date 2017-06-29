@@ -203,7 +203,7 @@ public class Chess extends GameActivity {
                 logged = null;
             } else if (board.move(from, to)) {
                 valid = true;
-                animatefigure(logged, tuple);
+                domove(logged, tuple);
                 logged = null;
                 chessboardView.clearColors();
                 aimove();
@@ -212,6 +212,20 @@ public class Chess extends GameActivity {
                 stateAllowClick = false;
             }
         }
+    }
+    private void domove(Tuple<Integer,Integer>from,Tuple<Integer,Integer>to )
+    {
+        Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> thismove =  new Tuple(from,to);
+        int id = (int)figuren[from.first][from.last].getTag();
+        if(whitemove == null) {
+            whitemove = thismove;
+            whiteid = id;
+        }
+        else {
+            testAddItem(new Doublemove(whitemove,thismove,whiteid,id));
+            whitemove = null;
+        }
+        animatefigure(from,to);
     }
 
     private void promotionDialog(final Tuple<Integer, Integer> from, final Tuple<Integer, Integer> to) {
@@ -251,7 +265,7 @@ public class Chess extends GameActivity {
     private void promotionmove(Tuple<Integer, Integer> from, Tuple<Integer, Integer> to, char c) {
         board.promotionmove(MoveTranslator.numToString(from), MoveTranslator.numToString(to), c);
         chessboardView.clearColors();
-        animatefigure(from, to);
+        domove(from, to);
         aimove();
     }
 
@@ -266,7 +280,7 @@ public class Chess extends GameActivity {
             @Override
             public void run() {
                 String move = board.aimove();
-                animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
+                domove(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
             }
         }, ANIMATION_SPEED + 1000);
     }
@@ -323,16 +337,6 @@ public class Chess extends GameActivity {
                     update();
                 }
             });
-            Tuple<Tuple<Integer,Integer>,Tuple<Integer,Integer>> thismove =  new Tuple(from,to);
-            int id = (int)figuren[from.first][from.last].getTag();
-            if(whitemove == null) {
-                whitemove = thismove;
-                whiteid = id;
-            }
-            else {
-                testAddItem(new Doublemove(whitemove,thismove,whiteid,id));
-                whitemove = null;
-            }
             figuren[from.first][from.last].startAnimation(translateAnimation);
             return true;
         }
@@ -415,9 +419,17 @@ public class Chess extends GameActivity {
 
     private void undoMoves(int howmany){
         for (int i = 0; i <howmany; i++) {
-            board.undoMove();
-            board.undoMove();
-            update();
+            for(int  j = 0; j< 2; j++)
+            {
+                String lastmove = board.getLastMove();
+                String from = lastmove.substring(2,4);
+                String to = lastmove.substring(0,2);
+                Log.d("undo",to);
+                Log.d("undo",from);
+                animatefigure(MoveTranslator.stringToNum(from),MoveTranslator.stringToNum(to));
+                board.undoMove();
+            }
+
         }
     }
 
