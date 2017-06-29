@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import todo.spielesammlungprototyp.App;
 import todo.spielesammlungprototyp.R;
@@ -48,6 +49,10 @@ public class Hub extends Fragment implements ClickListener {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
+    private TextView emptyText;
+
+    private AlphaAnimation alphaOut, alphaIn;
+    final int duration = 250;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,8 +70,11 @@ public class Hub extends Fragment implements ClickListener {
         super.onActivityCreated(savedInstanceState);
         View rootView = getView().getRootView();
         Context context = App.getContext();
+        emptyText = (TextView) rootView.findViewById(R.id.fragment_hub_empty_textview);
         coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinator_layout);
+        setupAlphaAnimation();
         setupRecyclerView();
+        toggleEmptyText();
 
         fabNewGame = (FloatingActionButton) rootView.findViewById(R.id.fab_new_game);
         fabNewGameK = (FloatingActionButton) rootView.findViewById(R.id.fab_new_cardgame);
@@ -98,6 +106,13 @@ public class Hub extends Fragment implements ClickListener {
                 ((todo.spielesammlungprototyp.view.activity.Hub) getActivity()).switchFragment('1');
             }
         });
+    }
+
+    private void setupAlphaAnimation() {
+        alphaOut = new AlphaAnimation(1, 0);
+        alphaIn = new AlphaAnimation(0, 1);
+        alphaOut.setDuration(duration);
+        alphaIn.setDuration(duration);
     }
 
     private void animateFab() {
@@ -154,11 +169,6 @@ public class Hub extends Fragment implements ClickListener {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                final AlphaAnimation alphaOut = new AlphaAnimation(1, 0);
-                final AlphaAnimation alphaIn = new AlphaAnimation(0, 1);
-                final int duration = 250;
-                alphaOut.setDuration(duration);
-                alphaIn.setDuration(duration);
                 alphaOut.setAnimationListener(new AnimationEndListener() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
@@ -224,6 +234,7 @@ public class Hub extends Fragment implements ClickListener {
             int position = viewHolder.getAdapterPosition();
             final Savegame savegame = savegameAdapter.get(position);
             savegameAdapter.removeItem(position);
+            toggleEmptyText();
             String deleteText = App.getContext().getString(R.string.savegame_deleted);
             String gameTitle = Games.getFromUuid(savegame.gameUuid).getGameTitle();
             String snackbarText = String.format("%s: %s - %s", deleteText, gameTitle, savegame.getDateString());
@@ -232,6 +243,7 @@ public class Hub extends Fragment implements ClickListener {
                 @Override
                 public void onClick(View v) {
                     savegameAdapter.addItem(savegame);
+                    toggleEmptyText();
                 }
             });
             snackbar.setActionTextColor(AndroidResources.getColor(R.color.snackbarActionColor));
@@ -266,6 +278,20 @@ public class Hub extends Fragment implements ClickListener {
 
         private float getFactor(float dX, int itemWidth) {
             return Math.abs(dX) / itemWidth;
+        }
+    }
+
+    public void toggleEmptyText() {
+        if(savegameAdapter.getItemCount() == 0) {
+            if(emptyText.getVisibility() == View.INVISIBLE) {
+                emptyText.startAnimation(alphaIn);
+                emptyText.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if(emptyText.getVisibility() == View.VISIBLE) {
+                emptyText.startAnimation(alphaOut);
+                emptyText.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }

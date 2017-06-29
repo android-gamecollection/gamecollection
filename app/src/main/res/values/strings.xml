@@ -61,6 +61,7 @@
     <!-- Strings for NavDrawer END -->
 
     <string name="hello_blank_fragment">Spielehub Content</string>
+    <string name="fragment_hub_empty_text">Drücke + um ein neues Spiel zu beginnen</string>
 
     <!-- App Bar -->
     <string name="action_gamerules">Spielregeln</string>
