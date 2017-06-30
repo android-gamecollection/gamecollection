@@ -3,6 +3,7 @@ package todo.spielesammlungprototyp.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import todo.spielesammlungprototyp.R;
@@ -12,7 +13,7 @@ public class CardgameMenu extends GameActivity {
     private static final String GAME_PACKAGE = ".model.games.";
 
     @Override
-    protected void onLoadGame(Bundle savegame) {
+    protected void onLoadGame(@Nullable Bundle savegame) {
 
     }
 

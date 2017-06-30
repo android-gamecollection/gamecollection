@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,6 +51,7 @@ import todo.spielesammlungprototyp.view.view.CheckeredGameboardView;
 
 public class Chess extends GameActivity {
 
+    private static final String KEY_FEN = "FEN";
     private static Map<Character, Integer> chessDrawables = new MapBuilder<Character, Integer>().build(
             'r', R.drawable.game_chess_rook_b,
             'R', R.drawable.game_chess_rook_w,
@@ -77,12 +79,12 @@ public class Chess extends GameActivity {
     private boolean aiGame, stateAllowClick = true;
     private FrameLayout chessBoardFrame;
     private RecyclerView recyclerHistory;
+    private String startValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        board = new ChessWrapper(game.isTaggedWith("chess960"));
         aiGame = game.isTaggedWith("aiGame");
         chessBoardFrame = (FrameLayout) findViewById(R.id.frame_layout);
         chessboardView = (CheckeredGameboardView) findViewById(R.id.boardgameview_chess);
@@ -154,13 +156,20 @@ public class Chess extends GameActivity {
     }
 
     @Override
-    protected void onLoadGame(Bundle savegame) {
-
+    protected void onLoadGame(@Nullable Bundle savegame) {
+        board = new ChessWrapper(game.isTaggedWith("chess960"));
+        String fen;
+        if (savegame != null && (fen = savegame.getString(KEY_FEN)) != null) {
+            board.setPosition(fen);
+        }
+        startValue = board.getBoard();
     }
 
     @Override
     protected void onSaveGame(Bundle savegame) {
-
+        if (!startValue.equals(board.getBoard())) {
+            savegame.putString(KEY_FEN, board.getBoard());
+        }
     }
 
     @Override
@@ -282,38 +291,6 @@ public class Chess extends GameActivity {
         new AiMoveTask().execute();
     }
 
-    private class AiMoveTask extends AsyncTask<Void, Void, String> {
-
-        private long millis;
-        private ProgressBar progressBar;
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return board.aimove();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            millis = System.currentTimeMillis();
-            progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-            progressBar.setVisibility(View.VISIBLE);
-            stateAllowClick = false;
-        }
-
-        @Override
-        protected void onPostExecute(final String move) {
-            progressBar.setVisibility(View.GONE);
-            long ellapsedMillis = System.currentTimeMillis() - millis;
-            long delay = ellapsedMillis > ANIMATION_SPEED ? 0 : ANIMATION_SPEED - ellapsedMillis;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
-                }
-            }, delay);
-        }
-    }
-
     private void update() {
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.chess_coordinatorlayout);
         int endgame = board.isEndgame();
@@ -400,19 +377,21 @@ public class Chess extends GameActivity {
                     addContentView(figuren[i][j], new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     figuren[i][j].getLayoutParams().width = imageSize;
                     figuren[i][j].getLayoutParams().height = imageSize;
-                    if (!aiGame && board.getMoveNumber() > 0) {
-                        int pivotX = point.x + imageSize / 2;
-                        int pivotY = point.y + imageSize / 2;
-                        RotateAnimation rotateAnimation = new RotateAnimation(180, 0, pivotX, pivotY);
-                        rotateAnimation.setDuration(ANIMATION_SPEED / 2);
-                        rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                        rotateAnimation.setAnimationListener(new AnimationEndListener() {
-                            @Override
-                            public void onAnimationEnd(Animation animation) {
-                                stateAllowClick = true;
-                            }
-                        });
-                        figuren[i][j].startAnimation(rotateAnimation);
+                    if (!aiGame) {
+                        if (!startValue.equals(board.getBoard())) {
+                            int pivotX = point.x + imageSize / 2;
+                            int pivotY = point.y + imageSize / 2;
+                            RotateAnimation rotateAnimation = new RotateAnimation(180, 0, pivotX, pivotY);
+                            rotateAnimation.setDuration(ANIMATION_SPEED / 2);
+                            rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                            rotateAnimation.setAnimationListener(new AnimationEndListener() {
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    stateAllowClick = true;
+                                }
+                            });
+                            figuren[i][j].startAnimation(rotateAnimation);
+                        }
                         if (board.isWhitesTurn()) {
                             figuren[i][j].setRotation(0);
                         } else {
@@ -468,6 +447,38 @@ public class Chess extends GameActivity {
             board.undoMove();
             board.undoMove();
             update();
+        }
+    }
+
+    private class AiMoveTask extends AsyncTask<Void, Void, String> {
+
+        private long millis;
+        private ProgressBar progressBar;
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return board.aimove();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            millis = System.currentTimeMillis();
+            progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+            progressBar.setVisibility(View.VISIBLE);
+            stateAllowClick = false;
+        }
+
+        @Override
+        protected void onPostExecute(final String move) {
+            progressBar.setVisibility(View.GONE);
+            long ellapsedMillis = System.currentTimeMillis() - millis;
+            long delay = ellapsedMillis > ANIMATION_SPEED ? 0 : ANIMATION_SPEED - ellapsedMillis;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
+                }
+            }, delay);
         }
     }
 

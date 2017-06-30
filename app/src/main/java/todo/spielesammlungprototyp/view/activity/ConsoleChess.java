@@ -2,6 +2,7 @@ package todo.spielesammlungprototyp.view.activity;
 
 import android.graphics.ColorFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
@@ -21,7 +22,7 @@ import todo.spielesammlungprototyp.model.games.consolechess.CmdProcessor;
 public class ConsoleChess extends GameActivity {
 
     private static final String KEY_FEN = "fen";
-    ColorFilter buttonColorEnabled;
+    private ColorFilter buttonColorEnabled;
     private ScrollView scrollConsole;
     private TextView textConsole;
     private EditText inputConsole;
@@ -48,7 +49,7 @@ public class ConsoleChess extends GameActivity {
     }
 
     @Override
-    protected void onLoadGame(Bundle savegame) {
+    protected void onLoadGame(@Nullable Bundle savegame) {
         final String fen = savegame == null ? null : savegame.getString(KEY_FEN);
         cmdProcessor = new CmdProcessor(this, fen);
         startValue = cmdProcessor.getFen();

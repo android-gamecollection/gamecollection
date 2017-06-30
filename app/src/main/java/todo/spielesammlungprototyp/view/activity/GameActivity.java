@@ -46,14 +46,16 @@ public abstract class GameActivity extends AppCompatActivity {
         savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
         Savegame savegame = savegameStorage.getFromUuid(savegameUuid);
         String gameUuid;
+        Bundle savegameBundle;
         if (savegame != null) {
             gameUuid = savegame.gameUuid;
-            onLoadGame(savegame.bundle);
+            savegameBundle = savegame.bundle;
         } else {
             gameUuid = extras.getString(KEY_GAME_UUID);
-            onLoadGame(null);
+            savegameBundle = null;
         }
         game = Games.getFromUuid(gameUuid);
+        onLoadGame(savegameBundle);
     }
 
     private void setupActionBar() {
@@ -108,7 +110,7 @@ public abstract class GameActivity extends AppCompatActivity {
         saveGame();
     }
 
-    protected abstract void onLoadGame(Bundle savegame);
+    protected abstract void onLoadGame(@Nullable Bundle savegame);
 
     protected abstract void onSaveGame(Bundle savegame);
 
