@@ -19,6 +19,14 @@ public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapte
 
     private List<Doublemove> mItems = new ArrayList<>();
 
+    public ChessHistoryAdapter() {
+
+    }
+
+    public ChessHistoryAdapter(ArrayList<Doublemove> items) {
+        mItems = items;
+    }
+
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_game_chess_move, parent, false);
@@ -49,6 +57,10 @@ public class ChessHistoryAdapter extends RecyclerView.Adapter<ChessHistoryAdapte
             mItems.remove(0);
             notifyItemRemoved(0);
         }
+    }
+
+    public List<Doublemove> getAll() {
+        return mItems;
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {

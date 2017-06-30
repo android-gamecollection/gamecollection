@@ -18,7 +18,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import todo.spielesammlungprototyp.R;
@@ -51,7 +52,9 @@ import todo.spielesammlungprototyp.view.view.CheckeredGameboardView;
 
 public class Chess extends GameActivity {
 
-    private static final String KEY_FEN = "FEN";
+    private static final String KEY_HISTORY = "HISTORY";
+    private static final String KEY_MOVES = "MOVES";
+    private static final int translationZ = 8;
     private static Map<Character, Integer> chessDrawables = new MapBuilder<Character, Integer>().build(
             'r', R.drawable.game_chess_rook_b,
             'R', R.drawable.game_chess_rook_w,
@@ -80,6 +83,7 @@ public class Chess extends GameActivity {
     private FrameLayout chessBoardFrame;
     private RecyclerView recyclerHistory;
     private String startValue;
+    private AiMoveTask mAiMoveTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +123,10 @@ public class Chess extends GameActivity {
         recyclerHistory = (RecyclerView) findViewById(R.id.recyclerview_history);
         recyclerManager = new LinearLayoutManager(this);
         recyclerHistory.setLayoutManager(recyclerManager);
-        recyclerAdapter = new ChessHistoryAdapter();
+        if (recyclerAdapter.getItemCount() > 0) {
+            setRecyclerVisibility(true);
+            chessBoardFrame.animate().translationZ(translationZ);
+        }
         recyclerHistory.setAdapter(recyclerAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ChessHistoryCallback());
         itemTouchHelper.attachToRecyclerView(recyclerHistory);
@@ -135,7 +142,7 @@ public class Chess extends GameActivity {
         };
         if (chessBoardFrame.getZ() <= 0) {
             setRecyclerVisibility(true);
-            chessBoardFrame.animate().translationZ(8).withEndAction(addItem);
+            chessBoardFrame.animate().translationZ(translationZ).withEndAction(addItem);
         } else {
             addItem.run();
         }
@@ -153,22 +160,46 @@ public class Chess extends GameActivity {
                 prefs.getInt(context.getString(R.string.settings_chess_color_suggestion_key), 0),
                 prefs.getInt(context.getString(R.string.settings_chess_color_highlight_key), 0)
         );
+        boolean noAiMoveTask = mAiMoveTask == null || mAiMoveTask.getStatus() != AsyncTask.Status.RUNNING;
+        if (aiGame && !board.isWhitesTurn() && noAiMoveTask) {
+            aimove();
+        }
     }
 
     @Override
     protected void onLoadGame(@Nullable Bundle savegame) {
         board = new ChessWrapper(game.isTaggedWith("chess960"));
-        String fen;
-        if (savegame != null && (fen = savegame.getString(KEY_FEN)) != null) {
-            board.setPosition(fen);
+        if (savegame != null) {
+            board.doMoves(savegame.getString(KEY_MOVES));
+            List<String> stringHistory = savegame.getStringArrayList(KEY_HISTORY);
+            ArrayList<Doublemove> history = new ArrayList<>();
+            assert stringHistory != null;
+            for (String move : stringHistory) {
+                history.add(Doublemove.fromString(move));
+            }
+            recyclerAdapter = new ChessHistoryAdapter(history);
+        } else {
+            recyclerAdapter = new ChessHistoryAdapter();
         }
         startValue = board.getBoard();
     }
 
     @Override
     protected void onSaveGame(Bundle savegame) {
+        if (mAiMoveTask != null) {
+            if (mAiMoveTask.getStatus() == AsyncTask.Status.RUNNING) {
+                board.setPosition(mAiMoveTask.fen);
+            }
+            mAiMoveTask.cancel(true);
+        }
         if (!startValue.equals(board.getBoard())) {
-            savegame.putString(KEY_FEN, board.getBoard());
+            List<Doublemove> history = recyclerAdapter.getAll();
+            ArrayList<String> stringHistory = new ArrayList<>();
+            for (Doublemove move : history) {
+                stringHistory.add(move.toString());
+            }
+            savegame.putStringArrayList(KEY_HISTORY, stringHistory);
+            savegame.putString(KEY_MOVES, board.getMoves());
         }
     }
 
@@ -288,7 +319,8 @@ public class Chess extends GameActivity {
 
     private void aimove() {
         if (!aiGame || board.isEndgame() != 0) return;
-        new AiMoveTask().execute();
+        mAiMoveTask = new AiMoveTask();
+        mAiMoveTask.execute();
     }
 
     private void update() {
@@ -421,7 +453,6 @@ public class Chess extends GameActivity {
     private void setFieldFromFEN(String fen) {
         int x = 0;
         int y = 0;
-        Log.d("Fen :", fen);
         removeAllFigures();
 
         CharacterIterator iterator = new CharacterIterator(fen, true);
@@ -452,6 +483,7 @@ public class Chess extends GameActivity {
 
     private class AiMoveTask extends AsyncTask<Void, Void, String> {
 
+        String fen;
         private long millis;
         private ProgressBar progressBar;
 
@@ -463,6 +495,7 @@ public class Chess extends GameActivity {
         @Override
         protected void onPreExecute() {
             millis = System.currentTimeMillis();
+            fen = board.getBoard();
             progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.VISIBLE);
             stateAllowClick = false;
@@ -470,12 +503,12 @@ public class Chess extends GameActivity {
 
         @Override
         protected void onPostExecute(final String move) {
-            progressBar.setVisibility(View.GONE);
             long ellapsedMillis = System.currentTimeMillis() - millis;
             long delay = ellapsedMillis > ANIMATION_SPEED ? 0 : ANIMATION_SPEED - ellapsedMillis;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    progressBar.setVisibility(View.GONE);
                     animatefigure(MoveTranslator.stringToNum(move.substring(0, 2)), MoveTranslator.stringToNum(move.substring(2, 4)));
                 }
             }, delay);
