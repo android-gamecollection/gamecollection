@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/background">
 
-            <todo.spielesammlungprototyp.view.view.CheckeredGameboardView
+            <todo.gamecollection.view.view.CheckeredGameboardView
                 android:id="@+id/boardgameview_chess"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
