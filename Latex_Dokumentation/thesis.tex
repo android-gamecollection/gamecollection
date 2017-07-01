@@ -25,17 +25,17 @@
 \usepackage{lipsum}
 \usepackage{lscape}
 \usepackage{subfigure}
-\usepackage{pdfpages}  
-\usepackage[verbose]{placeins} 
+\usepackage{pdfpages}
+\usepackage[verbose]{placeins}
 \usepackage[nouppercase,headsepline,plainfootsepline]{scrpage2}
-\usepackage{listings}		
+\usepackage{listings}
 \usepackage{xcolor}
 \usepackage{geometry}
-\usepackage{color}			
+\usepackage{color}
 \usepackage[hypcap]{caption}
-\usepackage{subfigure}			
-\usepackage{epstopdf}		
-\usepackage{tabularx}  
+\usepackage{subfigure}
+\usepackage{epstopdf}
+\usepackage{tabularx}
 \usepackage{setspace}
 \usepackage{booktabs}
 \setcounter{secnumdepth}{2}
@@ -44,7 +44,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Literatur File           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibliography{literatur}            
+\bibliography{literatur}
 
 %%%%%%%%%%%%%%%%%%%
 %% definitions
@@ -86,14 +86,14 @@ pdfkeywords={Keywords}
 \definecolor{pred}{rgb}{0.9,0,0}
 \definecolor{pgrey}{rgb}{0.46,0.45,0.48}
 
-\usepackage{calc} 
+\usepackage{calc}
 
-\newlength\tdima 
-\newlength\tdimb 
+\newlength\tdima
+\newlength\tdimb
 \newlength\offset
 \setlength\offset{6pt}
-\setlength\tdima{ \fboxsep+\fboxrule} 
-\setlength\tdimb{-\fboxsep+\fboxrule+\offset} 
+\setlength\tdima{ \fboxsep+\fboxrule}
+\setlength\tdimb{-\fboxsep+\fboxrule+\offset}
 
 
 \definecolor{listinggray}{gray}{0.6}
@@ -114,13 +114,13 @@ columns=fullflexible, %
  numberfirstline=true, %
  numberblanklines=false, %
  numbers=left,%
- numberstyle=\tiny, % 
+ numberstyle=\tiny, %
  stepnumber=1, %
  numbersep = 10pt, %
  float=tp, %
  breakautoindent = true,%
  %This tells latex to keep more distance to the element above
- %aboveskip={1.5\baselineskip}, 
+ %aboveskip={1.5\baselineskip},
  showstringspaces=false, %
  extendedchars=true,%
  prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}}, %
@@ -134,13 +134,13 @@ columns=fullflexible, %
  stringstyle=\color{black}, %
  breaklines=true, %
  breakatwhitespace=true, %
- columns=fullflexible, % 
+ columns=fullflexible, %
  xleftmargin=8.9mm,%                 % code einrücken (rückt nummern mit ein!)
  framexleftmargin=22pt,%                % box so schieben, dass nummern mit drin sind
  framexrightmargin = 0pt, %
  escapechar=\&,						% char to escape out of listings and back to LaTeX
  literate={«}{{\flqq{}}}1 {»}{{\frqq{}}}1 %
-} 
+}
 \lstdefinelanguage{JavaScript}{
 	basicstyle=\scriptsize\ttfamily,
 	keywords={typeof, new, true, false, catch, function, null, catch, switch, var, if, in, while, do, else, case, break, this},
@@ -194,10 +194,10 @@ columns=fullflexible, %
     showstringspaces=false,
     breaklines=true,
     backgroundcolor=\color{background},
-	morecomment = [l]{//}, 
+	morecomment = [l]{//},
 	morecomment = [l]{///},
 	morecomment = [s]{/*}{*/},
-	morestring=[b]", 
+	morestring=[b]",
 	sensitive = true,
 	morekeywords = {abstract,  event,  new,  struct,
 		as,  explicit,  null,  switch,
@@ -216,8 +216,8 @@ columns=fullflexible, %
 		default,  interface,  sealed,  volatile,
 		delegate,  internal,  short,  void,
 		do,  is,  sizeof,  while,
-		double,  lock,  stackalloc,   
-		else,  long,  static,   
+		double,  lock,  stackalloc,
+		else,  long,  static,
 		enum,  namespace,  string, get, set}
 }
 
@@ -241,7 +241,7 @@ columns=fullflexible, %
   showtabs=false,
   tabsize=4,
   breaklines=true,
-  keepspaces=true,      
+  keepspaces=true,
   numbers=left,
   numberstyle=\scriptsize,
   stepnumber=1,
@@ -291,7 +291,7 @@ columns=fullflexible, %
 %%%%%%%%%%%%%%%%%%%
 %% Inhaltsverzeichnis
 %%%%%%%%%%%%%%%%%%%
-\tableofcontents										
+\tableofcontents
 
 
 
@@ -318,7 +318,7 @@ columns=fullflexible, %
 
 
 \listoffigures
-\addcontentsline{toc}{chapter}{Verzeichnisse}			
+\addcontentsline{toc}{chapter}{Verzeichnisse}
 
 %%%%%%%%%%%%%%%%%%%
 %% create tables list
@@ -329,11 +329,11 @@ columns=fullflexible, %
 %% create listings list
 %%%%%%%%%%%%%%%%%%%
 \lstlistoflistings
-\addcontentsline{toc}{chapter}{Listings}				
+\addcontentsline{toc}{chapter}{Listings}
 
 
 \printbibliography
-\addcontentsline{toc}{chapter}{Literatur}				
+\addcontentsline{toc}{chapter}{Literatur}
 \end{document}
 
 
