@@ -10,7 +10,7 @@ Zu Anfang muss man die Farben und Wertigkeiten der Karten in Form eines Enums fe
 
 Beispiel anhand von Schafkopf:\\
 
-\begin{lstlisting} 
+\begin{lstlisting}
     public enum Suit
     {
         EICHEL, GRUEN, HERZ, SCHELLEN
@@ -46,19 +46,19 @@ Das Deck wird initialisiert aus allen Suits und Ranks, die man Anfangs innerhalb
 Anschließend wird mit einer vorgegebenen Methode gemischt und ausgeteilt.\\
 \\
 dealingOut(int AnzahlHände, int AnzahlKarten, Boolean Mischen)
-     
-     
-      \begin{lstlisting}   
+
+
+      \begin{lstlisting}
         deck = new Deck(Suit.values(), Rank.values(), "cover");
-        
+
         hands = deck.dealingOut(16, 2, true);
 	\end{lstlisting}
 
-	
-		
+
+
 Eine Hand beinhaltet Kartenobjekte und verwaltet diese. Sprich Stack, bids und die Spieler Hände bestehen alle aus Hand Objekten, die auf bestimmten Locations angezeigt werden.
-Mittels .setView() legt man diese Locations für jede Hand einzeln fest und zeigt sie mit .draw() an.	      
-	      \begin{lstlisting}   
+Mittels .setView() legt man diese Locations für jede Hand einzeln fest und zeigt sie mit .draw() an.
+	      \begin{lstlisting}
 	   stacks[i].setView(board, new StackLayout(stackLocations[i]));
 	   stacks[i].draw();
 	\end{lstlisting}
@@ -72,16 +72,18 @@ Mit addActor(TextActor, Location) zeigt man den Actor auf dem Board an und mit r
 
 \begin{lstlisting}
 	        TextActor t1 = new TextActor(hands[0].getNumberOfCards() + "");
-           
+
             Location l1 = new Location(100, 750);
 
 			addActor(t1, l1.toReal());
 
 			removeActor(t1);
-\end{lstlisting}	
-	
-	
-	
-	
-	
-	
+\end{lstlisting}
+
+
+
+
+
+
+
+\section{Android}
