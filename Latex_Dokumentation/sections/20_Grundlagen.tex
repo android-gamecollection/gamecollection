@@ -1,6 +1,87 @@
 \chapter{Grundlagen}
 
-\section{}
+\section{JDroid Library}
 % Mindestens 2 Unterpunkte oder keiner
+Die wichtigste Komponente der Kartenspiele ist die JDroid library.
+Die von \textcolor{blue}{\href{http://www.aplu.ch/home/apluhomex.jsp?site=99}{Äegidius Plüss}} entwickelte Java Bibliothek, implementiert ebenfalls die JCardGame Bibliothek für Android, welche grundlegend für unsere Kartenspiele ist. Sie verfügt über eine ausführliche \textcolor{blue}{\href{http://www.java-online.ch/gamegrid/index.php?inhalt_links=navigation.inc.php&inhalt_mitte=iframedoc1.html}{Dokumentation}}. Im folgenden erkläre ich die wichtigsten von uns genutzten Funktionen der Bibliothek.
 
-\subsection{}
+\subsection{Rank und Suit enum}
+Zu Anfang muss man die Farben und Wertigkeiten der Karten in Form eines Enums festlegen.\\
+
+Beispiel anhand von Schafkopf:\\
+
+\begin{lstlisting} 
+    public enum Suit
+    {
+        EICHEL, GRUEN, HERZ, SCHELLEN
+    }
+
+    public enum Rank
+    {
+        ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
+    }
+\end{lstlisting}
+
+Karten werden durch sprites dargestellt, die man in drawables ablegt. Durch die Namensgebung der Sprites, ordnet die Bibliothek die Sprites der richtigen Karte zu.
+Der Name des Eichel Ass Sprites muss also folgendermaßen lauten:\\
+eichel0.gif\\
+
+\subsection{Locations}
+Um Hände und Kartenstapel anzeigen zu können, muss man zunächst im Konstruktor ein Board erstellen, und Ausrichtung, Farbe, sowie windowZoom(int) angeben. Der windowZoom unterteilt den Bildschirm in Zellen relativ zur Bildschirmgröße, um darauf sogenannte Locations anzulegen, auf welchen man Karten ablegen kann oder Textfelder.\\
+
+Am beispiel Schafkopf haben wir 3 Location Arrays genutzt:\\
+\begin{itemize}
+\item HandLocations (Für alle 2er Kartenstapel)
+\item StackLocations (Ablage Stapel für gestochene Karten)
+\item BidLocations (Stapel um einen Stich zu berechnen)
+\end{itemize}
+
+\subsection{Einstiegspunkt und initPlayers}
+Anders als normal ist der Einstiegspunkt nicht in OnCreate(), sondern wurde durch die Bibliothek überschrieben und startet in main(). Dort werden das Deck auf Basis der enums, sämtliche Locations, die Hände und die Spieler initialisiert . In initPlayers() läuft das Spielgeschehen ab, es wird dem Spieler der soeben an der Reihe ist der CardListener hinzugefügt und longPressed(Card card) wartet darauf, dass eine Karte gedrückt gehalten wird. Wurde eine Karte ausgewählt wird sie auf den jeweiligen bid transferiert und atTarget() wertet den Stich dann aus und/oder gibt einen marker für den aktiven Spieler mittels der Methode setPlayerMove(int playerWon) weiter, welche jeweils .setTouchEnable() der einzelnen Kartenstapel auf true oder false setzt.\\
+
+
+
+\subsection{Deck und Hands}
+Das Deck wird initialisiert aus allen Suits und Ranks, die man Anfangs innerhalb der enums festlegt. Zudem legt man ebenfalls fest wie die Rückseite der Karten aussehen soll. \\
+Anschließend wird mit einer vorgegebenen Methode gemischt und ausgeteilt.\\
+\\
+dealingOut(int AnzahlHände, int AnzahlKarten, Boolean Mischen)
+     
+     
+      \begin{lstlisting}   
+        deck = new Deck(Suit.values(), Rank.values(), "cover");
+        
+        hands = deck.dealingOut(16, 2, true);
+	\end{lstlisting}
+
+	
+		
+Eine Hand beinhaltet Kartenobjekte und verwaltet diese. Sprich Stack, bids und die Spieler Hände bestehen alle aus Hand Objekten, die auf bestimmten Locations angezeigt werden.
+Mittels .setView() legt man diese Locations für jede Hand einzeln fest und zeigt sie mit .draw() an.	      
+	      \begin{lstlisting}   
+	   stacks[i].setView(board, new StackLayout(stackLocations[i]));
+	   stacks[i].draw();
+	\end{lstlisting}
+
+\subsection{Textactor}
+Textactor sind Textfelder welche man auf bestimmten Locations anzeigen lassen kann.
+Da sie sowohl im Schafkopf als anzeige für die verbleibenden Karten, als auch als Punkteanzeige verwendet werden, ist es wichtig sie an dieser Stelle zu erläutern.
+Zuerst muss ein Textactor mit einem String initialisiert werden, im unteren Fall mit der Anzahl der Karten des ersten 2er Stapels. Desweiteren braucht jeder Actor eine Location.
+Mit addActor(TextActor, Location) zeigt man den Actor auf dem Board an und mit removeActor(TextActor) wird er wieder entfernt.
+
+
+\begin{lstlisting}
+	        TextActor t1 = new TextActor(hands[0].getNumberOfCards() + "");
+           
+            Location l1 = new Location(100, 750);
+
+			addActor(t1, l1.toReal());
+
+			removeActor(t1);
+\end{lstlisting}	
+	
+	
+	
+	
+	
+	
