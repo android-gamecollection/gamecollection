@@ -1,0 +1,66 @@
+\chapter{Architektur}
+
+\section{Die Spieleverwaltung}
+\sectionauthor{\frank}
+
+Ziel eines derartigen Frameworks ist, dieses möglichst modular \unsure{Ist das
+das Ziel?} zu entwickeln. Dazu gehört auch, es zu ermöglichen, Spiele einfach
+und dynamisch hinzufügen zu können. Sicher könnte man dessen benötigten Klassen
+erstellen und anschließend an irgendeiner Stelle in die App hardcoden. Doch wir
+wollten diesen ganzen Prozess vereinfachen, und damit flüssiger, angenehmer und
+vor allem modularer gestalten. Dadurch wird auch das Ändern oder Löschen von
+Spielen vereinfacht. Außerdem wird so der Weg für zukünftige Automatisierung --
+wie beispielsweise Spielständen -- geebnet.
+
+\subsection{Deklaration von Spielen}
+
+Die Deklaration von Spielen erfolgt strukturiert in einer XML-Datei, welche
+durch eine \textbf{Document Type Definition} semantisch abgesichert ist. So
+wird gewährleistet, dass die Spiele im passenden Format vorliegen und so
+entsprechend weiterverarbeitet werden können. Die Datei erlaubt außerdem die
+Zuordnung in selbst gewählte Spiele-Kategorien, wie zum Beispiel
+\emph{Kartenspiele} oder \emph{Brettspiele}.
+
+\change{Bessere Graphik und Caption}
+\begin{figure}[h]
+	\centering
+	\includegraphics{resources/gamemanager/gamemanager_uml}
+	\caption{Test}
+	\label{fig:gm_uml}
+\end{figure}
+
+%%%%%% DIVIDER %%%%%%
+
+\section{Die Spielstände}
+\sectionauthor{\leonard}
+
+Da man Spiele nicht immer in einem Zug durchspielt und man zwischendurch Pause 
+macht, ist es sinvoll das Speichern und Laden der Spiele zu ermöglichen. Für 
+diese Funktion sind die Klassen \code{SavegameStorage}, \code{Savegame} 
+und \code{SavegameAdapter} zuständig.
+
+\subsection{Klassen}
+
+\code{Savegame}
+ist das Spielstand-Objekt, welches alle Daten speichert, die nötig sind
+um ein Spiel fortsetzen zu können. Jedes \code{Savegame} ist dabei einzigartig.
+
+\code{SavegameStorage}
+kümmert sich um das Speichern und Laden der \code{Savegame} Objekte. Diese
+werden als Liste serialisiert und auf dem Gerät gespeichert.
+
+\code{SavegameAdapter}
+erstellt aus den gepeicherten \code{Savegame} Objekten, für jeden Spielstand eine
+Karte, welche im Startbildschirm in einer Liste angezeigt wird.
+
+\subsection{Aufbau}
+Wenn ein Spiel gespeichert oder geladen werden soll, so geschieht dies durch einen 
+Aufruf der Instanz \code{SavegameStorage}. Um hier nicht ständig neuen Code
+schreiben zu müssen, haben wir diese Aufgabe in die Klasse \code{GameActivity}
+gelegt. Da jedes Spiel von \code{GameActivity} erben sollte, müssen dadurch zwei 
+abstrakte Methoden implementiert werden, welche genau hierfür zuständig sind.
+Die Methode zum Laden heißt \code{onLoadGame} und die Methode zum Speichern 
+\code{onSaveGame}. Diese Methoden arbeiten lediglich mit einem \textbf{Bundle}, 
+welches die nötigen Informationen beinhaltet. Beim Speichern sollten also alle
+wichtigen Informationen hinzugefügt werden, damit man dann beim Laden Zugriff
+auf jene hat.
