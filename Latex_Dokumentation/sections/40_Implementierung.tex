@@ -90,16 +90,16 @@ der Speicher nur von einer Instanz aufgerufen werden sollte, damit keine
 Speicher- oder Ladefehler entstehen. Andererseits ist es wichtig zu kontrollieren, 
 wann und wo auf den Speicher zugegriffen wird. 
 \begin{lstlisting}[caption={SavegameStorage Singleton},captionpos=b]
-     public static SavegameStorage getInstance() {
-        if (instance == null) {
-            synchronized (SavegameStorage.class) {
-                if (instance == null) {
-                    instance = new SavegameStorage();
-                }
-            }
-        }
-        return instance;
-     }
+public static SavegameStorage getInstance() {
+	if (instance == null) {
+		synchronized (SavegameStorage.class) {
+			if (instance == null) {
+				instance = new SavegameStorage();
+			}
+		}
+	}
+	return instance;
+}
 \end{lstlisting}
 \code{Synchronized} wird hier verwendet um das Pattern \emph{Thread-Sicher} zu 
 machen.
@@ -115,9 +115,32 @@ Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings wieder druch den selben
 \emph{Key} wie beim speichern, dann wird der String deserialisiert und wieder als 
 \textbf{ArrayList\textless Savegame\textgreater} benutzt.
 
+\subsection{Savegame}
+Das ist die \emph{Objekt-Klasse} welche einen Spielstand darstellt. Sie besteht 
+aus 4 wesentlichen Variablen und wird wie folgt aufgebaut:
+\begin{lstlisting}[caption={Savegame Variablen \& Konstruktor},captionpos=b]
+public String uuid;
+public String gameUuid;
+public Bundle bundle;
+public Date date;
 
+public Savegame(String gameUuid, Bundle bundle) {
+	this.uuid = UUID.randomUUID().toString();
+	this.gameUuid = gameUuid;
+	this.bundle = bundle;
+	this.date = new Date();
+}
+\end{lstlisting}
 
+Jeder Spielstand ist durch eine \code{UUID} eindeutig identifizierbar und somit 
+einzigartig. Diese wird beim Anlegen eines neuen Spielstandes generiert.
+Die \code{gameUuid} wird dem \emph{Konstruktor} übergeben und identifiziert den 
+Spielstand mit dem zugehörigen Spiel aus \code{games.xml}.
+Das \code{Bundle} enthält alle Spielspezifischen Informationen die wichtig sind, 
+sie werden vom jeweiligen Spiel-Entwickler selbst gewählt.
+Das Datum dient der Anzeige und Sortierung der Spielstände im Startbildschirm 
+(\code{Hub}) und wird bei jeder Aktualisierung erneuert.
 
-
+\subsection{SavegameAdapter}
 
 
