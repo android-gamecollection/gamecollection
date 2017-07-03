@@ -1,0 +1,34 @@
+\chapter{Implementierung}
+
+\section{Chess}
+\sectionauthor{\oliver}
+
+Schach ist eins der bekanntesten und gleichzeitig eins der anspruchsvollsten Spiele der Welt. Aufgrund der Komplexität
+und benötigten Weitsichtigkeit schaffte es erst 1996 der Schachcomputer "Deep Blue" vom IBM den damalig amtierenden
+Schachweltmeister Garro Kasparow zu besiegen. Heutzutage existieren viele Implementiereungen fähiger
+Schachprogramme und KI`s. In diesem Projekt wurde wurde "Carballo" genommen.\unsure{Kommt das hier überhaut hin? Wenn ja, mehr?}
+
+\subsection{Das Spielfeld}
+
+Für das klassische karierte Spielfeld wurde die Klasse \code{CheckeredGameboardView} erstell,
+welche wie der Name schon sag von der Androidklasse \code{View} erbt. Haputbestandteil ist ein
+Zweidimensionales Array aus Androids\code{Rect}, welche die einzelnen Felder des Spielfelds darstellen.
+Diese werden nach Aufruf von \code{onSizeChanged} der Größe des Displays angepasst und je nach
+Einstellung um die Stärke des gewünschten Randes verschoben, sodass auf jedem Gerät ein identisches
+Spielerlebnis erzegut werden kann. Um bei einem Touch auf die View zu ermitteln, auf welches der
+Felder getippt wurde setzt die Methode \code{getSquareFromTouch(int x, int y)} die in \code{Rect}
+mitgelieferte Funktion \code{contains(int x, int y)} ein und gibt die Array-Koordinaten des gesuchten
+Kastens zurrück. Bei der Colorierung und Markierung der Felder bezieht sich die Klasse auf die in den
+Einstellungen gespeicherten Werte.
+
+\subsection{Der Chesswrapper}
+
+In der Welt der Informatik sucht man den Begriff \emph{"Langlebig"} vergeblich, permanent werden
+Module und Codeabschnitte verändert und ausgetauscht. Auch bei der Spielsammlung sind solche
+Modifikationen vorgekommen und werden wohl in absehbarer Zeit wieder passieren. Aus diesem Grund
+ist die Schachlogik nur über eine einzige Schnittstelle zugänglich, dem \code{ChessWrapper}. Dieser
+umschließt alle benötigten Funktionen der verwendeten Schachbibliothek und erleichtert das Austauschen
+der selbigen beachtlich. Neben grundlegenden Funktionen wie das ausgeben der aktuellen Figurenaufstellung
+und das setzen von Schachzügen beinhaltet der Wrapper auch die Funktionen der künstlichen Intelligenz, welche
+sich in der selben Bibliothek befindet. In zukünftigen Versionen werden diese Funktionen getrennt behandelt,
+um allgemein geltenden Codemetriken gerecht zu werden.\unsure{Soll das so bleiben oder kommt das so rüber als ob wir das schlecht gemacht haben?}
