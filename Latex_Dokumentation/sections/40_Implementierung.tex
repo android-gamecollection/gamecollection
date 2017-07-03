@@ -77,6 +77,45 @@ Die Karten werden auf den Stack des Gewinners transferiert, es wird getestet ob 
 
 
 
+\section{Die Spielstände}
+\sectionauthor{\leonard}
+
+Wie schon in der Architektur beschrieben, werden für die Spielstände die Klassen 
+\code{SavegameStorage}, \code{Savegame} und \code{SavegameAdapter} benutzt.
+Im Folgenden wird näher auf die Klassen eingegangen.
+
+\subsection{SavegameStorage}
+ist in einem Singleton-Pattern geschrieben. Gründe dafür sind einerseits, dass 
+der Speicher nur von einer Instanz aufgerufen werden sollte, damit keine 
+Speicher- oder Ladefehler entstehen. Andererseits ist es wichtig zu kontrollieren, 
+wann und wo auf den Speicher zugegriffen wird. 
+\begin{lstlisting}[caption={SavegameStorage Singleton},captionpos=b]
+     public static SavegameStorage getInstance() {
+        if (instance == null) {
+            synchronized (SavegameStorage.class) {
+                if (instance == null) {
+                    instance = new SavegameStorage();
+                }
+            }
+        }
+        return instance;
+     }
+\end{lstlisting}
+\code{Synchronized} wird hier verwendet um das Pattern \emph{Thread-Sicher} zu 
+machen.
+
+\paragraph{Der Speicherungsvorgang} erfolgt durch die Nutzung des Interfaces  
+\textbf{SharedPreferences} in Android. Dieses ermöglicht das Speichern und Laden von 
+\emph{Key-Value} Paaren auf dem Android-Gerät. Zur Laufzeit werden alle Spielstände 
+als \textbf{ArrayList\textless Savegame\textgreater} gehandhabt. Sobald etwas 
+gespeichert werden soll, wird die Liste dementsprechend geändert und durch 
+\textbf{Gson} in \textbf{JSON} serialisiert und per \textbf{SharedPreferences} 
+unter einem \emph{Key} als String gespeichert.\\
+Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings wieder druch den selben 
+\emph{Key} wie beim speichern, dann wird der String deserialisiert und wieder als 
+\textbf{ArrayList\textless Savegame\textgreater} benutzt.
+
+
 
 
 
