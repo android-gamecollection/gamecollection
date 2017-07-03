@@ -15,27 +15,18 @@ Bibliothek.
 \subsection{Rank und Suit enum}
 
 Zu Anfang muss man die Farben und Wertigkeiten der Karten in Form eines Enums
-festlegen.
-
-Beispiel anhand von Schafkopf:
-
-\begin{lstlisting}
-public enum Suit
-{
-	EICHEL, GRUEN, HERZ, SCHELLEN
-}
-
-public enum Rank
-{
-	ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
-}
-\end{lstlisting}
-
-Karten werden durch sprites dargestellt, die man in drawables ablegt. Durch die
+festlegen. Karten werden durch sprites dargestellt, die man in drawables ablegt. Durch die
 Namensgebung der Sprites, ordnet die Bibliothek die Sprites der richtigen Karte
-zu. Der Name des Eichel Ass Sprites muss also folgendermaßen lauten:\\
-eichel0.gif
+zu. 
+Angenommen die Reihenfolge der Ranks lautet:
 
+Ass, Ober, unter, Zehn, koenig, usw.
+
+und die der Suits sei:
+
+Eichel, Gruen, Herz, Schellen
+
+,wäre der korrekte Name für den Sprite für die Eichel Ass: eichel0.gif, für den Eichel Ober: eichel1.gif, und so weiter.
 \subsection{Locations}
 
 Um Hände und Kartenstapel anzeigen zu können, muss man zunächst im Konstruktor
@@ -54,16 +45,16 @@ Am beispiel Schafkopf haben wir 3 Location Arrays genutzt:
 
 \subsection{Einstiegspunkt und initPlayers}
 
-Anders als normal ist der Einstiegspunkt nicht in OnCreate(), sondern wurde
-durch die Bibliothek überschrieben und startet in main(). Dort werden das Deck
+Anders als normal ist der Einstiegspunkt nicht in \code{OnCreate()}, sondern wurde
+durch die Bibliothek überschrieben und startet in \code{main()}. Dort werden das Deck
 auf Basis der enums, sämtliche Locations, die Hände und die Spieler
-initialisiert . In initPlayers() läuft das Spielgeschehen ab, es wird dem
+initialisiert . In \code{initPlayers()} läuft das Spielgeschehen ab, es wird dem
 Spieler der soeben an der Reihe ist der CardListener hinzugefügt und
-longPressed(Card card) wartet darauf, dass eine Karte gedrückt gehalten wird.
+\code{longPressed(Card card)} wartet darauf, dass eine Karte gedrückt gehalten wird.
 Wurde eine Karte ausgewählt wird sie auf den jeweiligen bid transferiert und
-atTarget() wertet den Stich dann aus und/oder gibt einen marker für den aktiven
-Spieler mittels der Methode setPlayerMove(int playerWon) weiter, welche jeweils
-.setTouchEnable() der einzelnen Kartenstapel auf true oder false setzt.
+\code{atTarget()} wertet den Stich dann aus und/oder gibt einen marker für den aktiven
+Spieler mittels der Methode \code{setPlayerMove(int playerWon)} weiter, welche jeweils
+\code{.setTouchEnable(}) der einzelnen Kartenstapel auf true oder false setzt.
 
 \subsection{Deck und Hands}
 
@@ -72,37 +63,20 @@ der enums festlegt. Zudem legt man ebenfalls fest wie die Rückseite der Karten
 aussehen soll. Anschließend wird mit einer vorgegebenen Methode gemischt und
 ausgeteilt.
 
-dealingOut(int AnzahlHände, int AnzahlKarten, Boolean Mischen)
-
-\begin{lstlisting}
-deck = new Deck(Suit.values(), Rank.values(), "cover");
-hands = deck.dealingOut(16, 2, true);
-\end{lstlisting}
+\code{dealingOut(int AnzahlHände, int AnzahlKarten, Boolean Mischen)}
 
 Eine Hand beinhaltet Kartenobjekte und verwaltet diese. Sprich Stack, bids und
 die Spieler Hände bestehen alle aus Hand Objekten, die auf bestimmten Locations
-angezeigt werden. Mittels .setView() legt man diese Locations für jede Hand
-einzeln fest und zeigt sie mit .draw() an.
-
-\begin{lstlisting}
-stacks[i].setView(board, new StackLayout(stackLocations[i]));
-stacks[i].draw();
-\end{lstlisting}
+angezeigt werden. Mittels \code{stacks[i].setView(board, new StackLayout(stackLocations[i])} legt man diese Locations für jede Hand
+einzeln fest und zeigt sie mit \code{stacks[i].draw()} an.
 
 \subsection{Textactor}
 
 Textactor sind Textfelder welche man auf bestimmten Locations anzeigen lassen
 kann. Da sie sowohl im Schafkopf als anzeige für die verbleibenden Karten, als
 auch als Punkteanzeige verwendet werden, ist es wichtig sie an dieser Stelle zu
-erläutern. Zuerst muss ein Textactor mit einem String initialisiert werden, im
-unteren Fall mit der Anzahl der Karten des ersten 2er Stapels. Desweiteren
-braucht jeder Actor eine Location. Mit addActor(TextActor, Location) zeigt man
-den Actor auf dem Board an und mit removeActor(TextActor) wird er wieder
+erläutern. Zuerst muss ein Textactor mit einem String initialisiert werden, zum Beispiel mit der Anzahl der Karten des ersten 2er Stapels. Desweiteren
+braucht jeder Actor eine Location. Mit \code{addActor(TextActor, Location)} zeigt man
+den Actor auf dem Board an und mit \code{removeActor(TextActor)} wird er wieder
 entfernt.
 
-\begin{lstlisting}
-TextActor t1 = new TextActor(hands[0].getNumberOfCards() + "");
-Location l1 = new Location(100, 750);
-addActor(t1, l1.toReal());
-removeActor(t1);
-\end{lstlisting}
