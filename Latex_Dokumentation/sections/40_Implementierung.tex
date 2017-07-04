@@ -1,5 +1,75 @@
 \chapter{Implementierung}
 
+\section{Die Spieleverwaltung}
+\sectionauthor{\frank}
+
+Ziel eines derartigen Frameworks ist, dieses möglichst modular \unsure{Ist das
+das Ziel?} zu entwickeln. Dazu gehört auch, es zu ermöglichen, Spiele einfach
+und dynamisch hinzufügen zu können. Sicher könnte man dessen benötigten Klassen
+erstellen und anschließend an irgendeiner Stelle in die App hardcoden. Doch wir
+wollten all das, was zu diesem Prozess gehört vereinfachen, und damit
+flüssiger, angenehmer und vor allem modularer gestalten. Dadurch wird auch das
+nachträgliche Ändern oder Löschen von Spielen trivial. Außerdem wird so der Weg
+für zukünftige Automatisierung -- wie beispielsweise Spielständen -- geebnet.
+
+\subsection{Deklaration von Spielen}
+
+Die Deklaration und Deklaration von Spiele-Metadaten erfolgt strukturiert in
+einer XML-Datei, \emph{games.xml}, welche durch eine \textbf{Document Type
+Definition} semantisch abgesichert ist. So wird gewährleistet, dass die Spiele
+im passenden Format vorliegen, und so entsprechend weiterverarbeitet werden
+können. Die Datei erlaubt außerdem die Zuordnung in selbst gewählte
+Spiele-Kategorien, wie zum Beispiel \emph{Kartenspiele} oder
+\emph{Brettspiele}.
+
+Hier ist ein Auszug, der die verwendete DTD zeigt:
+
+\begin{lstlisting}
+<!DOCTYPE games [
+    <!ELEMENT games (category*)>
+    <!ELEMENT category (game*)>
+    <!ATTLIST category id ID #REQUIRED>
+    <!ATTLIST category title CDATA #REQUIRED>
+    <!ATTLIST category icon CDATA #REQUIRED>
+    <!ELEMENT game EMPTY>
+    <!ATTLIST game title CDATA #REQUIRED>
+    <!ATTLIST game description CDATA #REQUIRED>
+    <!ATTLIST game icon CDATA #REQUIRED>
+    <!ATTLIST game rules CDATA #REQUIRED>
+    <!ATTLIST game tag CDATA #IMPLIED>
+    <!ATTLIST game activity CDATA #REQUIRED>
+]>
+\end{lstlisting}
+
+\subsubsection{Kategorien}
+
+Wie man daraus ablesen kann, können unter dem Root-Element \code{games} beliebig
+viele Kategorien hinzugefügt werden. Eine solche Kategorie wird beschrieben
+durch drei verpflichtende Attribute. \code{id} ist eindeutig im gesamten
+Deklarationsbereich, also der Datei zu wählen. Sie wird später weiter verwendet,
+um eine Kategorie eindeutig zu Identifizierung und wiederzufinden.  \code{title}
+ist die Bezeichnung dieser Kategorie, bei welcher es möglich ist Text aus der
+\emph{strings.xml}-Datei zu referenzieren. Solche Referenzierungen werden in der
+Form \code{"@strings/ref"} angegeben, wobei \code{ref} für den entsprechenden
+Identifikator steht. Außerdem ist noch ein Icon anzugeben, das später
+beispielsweise im Navigation Drawer zu finden ist. Hier ist ebenfalls die
+Referenzierung einer Resource möglich.
+
+\subsubsection{Spiele}
+
+Spiele werden analog unter den Kategorien angegeben. Sie besitzen jedoch
+unterschiedliche Attribute. \code{title} und \code{icon} stimmen mit deren der
+Kategorien überein. Ihre Werte kann man beispielsweise in der Spieleliste oder
+in der Android-Actionbar sehen. \improvement{More text}
+
+\change{Bessere Graphik und Caption}
+\begin{figure}[h]
+	\centering
+	\includegraphics{resources/gamemanager/gamemanager_uml}
+	\caption{Test}
+	\label{fig:gm_uml}
+\end{figure}
+
 \section{Chess}
 \sectionauthor{\oliver}
 
