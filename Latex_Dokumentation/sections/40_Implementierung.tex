@@ -133,12 +133,171 @@ Die Karten werden auf den Stack des Gewinners transferiert, es wird getestet ob 
                     }
 \end{lstlisting}
 \subsection{Stiche berechnen}
+Stiche berechnen ist im Schafkopf eine relativ komplexe Angelegenheit, da es viel verschiedenen Trumpf gibt. Das ganze wird in der Methode \code{sticht(int Player)} abgehandelt. Der Methode wird der Spieler als integer mitgegeben, der gerade die erste Karte angespielt hat. Zunächst wird getestet ob der Spieler Trumpf angespielt hat mit \code{isTrumpf(int Player)}. Das wird festgestellt indem man  testet, ob die Karte auf dem bid entweder ein Ober, unter oder Herz ist.
+\begin{lstlisting}[caption={isTrumpf Methode},captionpos=b]
+    public boolean isTrumpf(int Player) {
+        //int Player = Player der ausspielt
+        if(     bids[Player].getLast().getRank() == Rank.OBER ||
+                bids[Player].getLast().getRank() == Rank.UNTER ||
+                bids[Player].getLast().getSuit() == Suit.HERZ)
+        {
+            return true;
+        }
+        return false;
+    }
+\end{lstlisting}
 
-\subsection{UpdateCardNumber}
+Ist diese Karte Trumpf, muss geprüft werden ob der Trumpf höher ist. 
+
+\code{isTrumpfHigher(int Player)}: 
+
+Player = Spieler der ausspielt
+
+Der Ablauf ist folgender:
+\begin{lstlisting}[caption={isTrumpfHigher Methode},captionpos=b]
+    public boolean isTrumpfHigher(int Player) {
+        int otherPlayer = (Player + 1) % 2
+            if (isOber(Player))
+            {
+                if (isOber(otherPlayer))
+                {
+                    if (isColorHigher(otherPlayer))
+                        return false; 
+                }
+                return true;
+            }
+
+            else if(isUnter(Player))
+            {
+                if (isOber(otherPlayer))
+                    return false;
+
+                if (isUnter(otherPlayer))
+                {
+                    if (isColorHigher(otherPlayer))
+                        return false;
+                }
+                return true;
+            }
+
+            else if(isHerz(Player))
+            {
+                if (isOber(otherPlayer))
+                    return false;
+
+                if (isUnter(otherPlayer))
+                    return false;
+
+                else if (isHerz(otherPlayer))
+                {
+                    if (isRankHigher(otherPlayer))
+                        return false; 
+                }
+                return true;
+            }
+
+        return false;
+    }
+    \end{lstlisting}
+ 
+\code{isRankHigher()} und \code{isColorHigher()} funktionieren auf ähnliche weise. Man überprüft welche Karten ID höher beziehungsweise niedriger ist.
+Denn den Suits und Ranks werden jeweils IDs zugewiesen, der Reihenfolge nach wie sie in den enums angegeben sind.
+
+\begin{lstlisting}[caption={IDs am Beispiel von isColorHigher},captionpos=b]
+  public boolean isColorHigher(int Player)  
+  {
+  int otherPlayer = (Player + 1) % 2;
+        
+  if 
+  (
+  bids[Player].getLast().getSuitId() < bids[otherPlayer].getLast().getSuitId()
+  )
+  return true;
+  	return false;
+  }
+\end{lstlisting}
+
+Ist die gespielte Karte kein Trumpf, dann wird geschaut ob die Karten dieselbe Farbe habe. Wenn ja und die Karte des anderen Spielers ist eine Trumpf Karte, gewinnt dieser Spieler den Stich, wenn nicht wird \code{isRankHigher()} aufgerufen und derjenige mit dem höheren Rang gewinnt.
+
+Sind diese Aufrufe alle abgearbeitet, dann wird getestet ob nur der Spieler Trumpf ausgespielt hat, der die zweite Karte gelegt hat. Wenn ja gewinnt er, wenn nicht der andere Spieler.
+
+Zuletzt wird getestet ob beide Karten nicht die selbe Farbe haben, sprich eine Karte liegt, Spieler zwei muss nicht bekennen und darf legen was er will. Dann gewinnt Spieler 2.
+
+Trifft keine der if - Abfragen zu, bekommt automatisch der Spieler, der ausspielt den Stich.
+
+Alles in allem sieht die ganze Methode folgendermaßen aus:
+
+\begin{lstlisting}[caption={sticht() Methode},captionpos=b]
+    public int sticht(int Player)
+    {
+        int otherPlayer = (Player + 1) % 2;
+
+        if(isTrumpf(Player))
+        {
+            if (isTrumpfHigher(Player))
+                return Player;
+            return otherPlayer;
+        }
+        if(sameColor()) {
+            if (isTrumpf(otherPlayer)) return otherPlayer;
+            if (isRankHigher(Player)) return Player;
+                else return otherPlayer;
+        }
+        if(isTrumpf(otherPlayer))return otherPlayer;
+        if(!sameColor()) return otherPlayer;
+        return Player;
+    }
+\end{lstlisting}
+
+Das Ende einer jeden Stechen Phase ist das transferieren der KArten und weitergeben des aktiven Spielers.
+
+
+\begin{lstlisting}[caption={TransferBidsToStock und setPlayerMove},captionpos=b]
+    private void transferBidsToStock(int playerWon)
+    {
+    bids[0].setTargetArea(new TargetArea(stackLocations[playerWon]));
+    bids[1].setTargetArea(new TargetArea(stackLocations[playerWon]));
+    bids[0].transferNonBlocking(bids[0].getLast(), stacks[playerWon], true);
+    bids[1].transferNonBlocking(bids[1].getLast(), stacks[playerWon], true);
+    }
+    private void setPlayerMove(int playerWon)
+    {
+        if(playerWon==0)
+        {
+            if(isGameOver())
+                calculateResult();
+
+            for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(true);
+            for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(false);
+        }
+        if(playerWon==1)
+        {
+            if(isGameOver())
+                calculateResult();
+
+                for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(false);
+                for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(true);
+        }
+    }
+\end{lstlisting}
+
+Um Karten zu transferieren muss man einfach dem bid ein neues Ziel zuweisen und es wird, samt durch die Bibliothek mitgebrachte Animation, transferiert.
+
+Beim Spieler der nun am Zug sein wird, wird \code{setTouchEnabled()} auf true gesetzt, beim anderen auf false.
 
 \subsection{GameOver}
 
+Das Spiel ist vorbei wenn alle 32 Karten auf den stacks liegen. Dazu wird nach jedem Stich getestet ob die Anzahl aller Karten auf den Stacks 32 ergeben.
 
+\begin{lstlisting}[caption={isGameOver() Methode},captionpos=b]
+    private boolean isGameOver(){
+     if(stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32)
+            return true;
+        return false;
+    }
+\end{lstlisting}
+
+Die Punktzahl wird in \code{calculateResult()} berechnet. Dort werden die Anzahl der in den Stacks vorhandenen Assen, Koenigen, und so weiter multipliziert mit deren Wertigkeit zusammengerechnet. Um dies anzuzeigen, gibt calculate die Punktzahl an \code{winLabel(int[] points)} weiter. WinLabel erzeugt Textactors mit den Strings \emph{GEWONNEN} und \emph{VERLOREN} und den Punktzahlen. 
 
 \section{Die Spielstände}
 \sectionauthor{\leonard}
