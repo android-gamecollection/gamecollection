@@ -51,14 +51,14 @@ public class MauMau extends CardGame
     private Deck deck;
     private final Location[] handLocations =
             {
-                    new Location(300, 520),
-                    new Location(75, 300),
-                    new Location(300, 75),
-                    new Location(525, 300)
+                    new Location(500, 520),
+                    new Location(275, 300),
+                    new Location(500, 75),
+                    new Location(725, 300)
             };
-    private final Location talonLocation = new Location(250, 300);
-    private final Location pileLocation = new Location(350, 300);
-    private final Location textLocation = new Location(300, 400);
+    private final Location talonLocation = new Location(450, 300);
+    private final Location pileLocation = new Location(550, 300);
+    private final Location textLocation = new Location(500, 400);
     private final int thinkingTime = 3000;
     //  private final int thinkingTime = 500; // Debug
     private Hand[] hands;
@@ -66,7 +66,7 @@ public class MauMau extends CardGame
     private Hand talon; // Stock
     private boolean isPartnerMoves = false;
     private GGPushButton okBtn;
-    private Location btnLocation = new Location(300, 100);
+    private Location btnLocation = new Location(500, 100);
     private Location hideLocation = new Location(-500, - 500);
     private ToolBarItem spadeItem;
     private ToolBarItem heartItem;
@@ -79,7 +79,7 @@ public class MauMau extends CardGame
     private Location toolBarLocation;
     private Actor trumpActor = null;
     private Suit trump = null;
-    private Location trumpActorLocation = new Location(350, 200);
+    private Location trumpActorLocation = new Location(550, 200);
 
     public MauMau()
     {
