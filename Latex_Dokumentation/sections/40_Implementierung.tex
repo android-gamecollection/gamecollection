@@ -54,11 +54,47 @@ Jedem Spiel ist ein Menu mit \emph{Start} Knopf vorgeschalten, in welchem man di
 \subsection{Ranks und Suits}
 Zum weiteren Verständnis, zeige ich hier die in Schafkopf genutzten enums auf, auf denen das Deck basiert.
 
-\code{public enum Suit{\\EICHEL, GRUEN, HERZ, SCHELLEN}\\public enum Rank{\\ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN}}
+\begin{lstlisting}[caption={Enums für Kartenwertigkeiten},captionpos=b]
+public enum Suit
+{
+EICHEL, GRUEN, HERZ, SCHELLEN
+}
+public enum Rank
+{
+ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
+}
+\end{lstlisting}
 
 \subsection{Schafkopf Board}
 Wir nutzen zwei Klassen für das Schafkopf Spiel \code{schafkopf} und \code{initiateGame}.
 \code{schafkopf} erbt von \code{CardGame}, einer Bibliotheksklasse, welche alle wichtigen Methoden von JDroid implementiert. Bei Aufruf der Schafkopf Klasse wird das Board erstellt und in \code{main()} zunächst das Deck und ein initiateGame Objekt auf dessen Basis. InitiateGame initialisiert alle nötigen Hände, sprich Bids, Stacks und Hands und weist ihnen Locations zu. Ist dies abgeschlossen, wird \code{initPlayers()} und \code{setPlayerMove()} aufgerufen um fortzufahren.
+\begin{lstlisting}[caption={Beispiel Hands initialisieren},captionpos=b]
+private final Location[] handLocations =
+           {
+                    new Location(100, 850),//player1
+                    new Location(200, 850),
+ 					...
+                    new Location(100, 100),//player2
+                    new Location(200, 100),
+       				...
+            };
+public void setHand(){
+    hands = deck.dealingOut(16, 2, true);
+    StackLayout[] layouts = new StackLayout[16];
+
+        for (int i = 0; i < 16; i++)
+    {
+        layouts[i] = new StackLayout(handLocations[i]);
+        hands[i].setView(board, layouts[i]);
+        hands[i].setTargetArea(new TargetArea(bidLocations[0]));
+        if(i>8)hands[i].setTargetArea(new TargetArea(bidLocations[1]));
+        hands[i].draw();
+    }
+
+    board.hands = this.hands;
+}            
+           
+\end{lstlisting}
 
 \subsection{initPlayers()}
 Diese Methode ist das Herzstück unserer Kartenspiele. Hat derjenige Spieler, der eben an der Reihe ist, eine Karte ausgewählt und auf den Bid transferiert, dann gibt es nun zwei Möglichkeiten.
@@ -69,6 +105,33 @@ Diese Methode ist das Herzstück unserer Kartenspiele. Hat derjenige Spieler, de
 Im ersten Falle wird \code{sticht()} aufgerufen und getestet wer den Stich macht.
 Die Karten werden auf den Stack des Gewinners transferiert, es wird getestet ob das Spiel vorbei ist und die Kartenzahl wird geupdatet. Zuletzt wird noch der Playermove auf den Gewinner gesetzt und er darf wieder eine Karte ausspielen.
 
+\begin{lstlisting}[caption={initPlayers gamecycle},captionpos=b]
+                    if (isBidFull()) {
+                            if (sticht(0) == 0)
+                            {
+                                delay(2000);
+                                transferBidsToStock(0);
+                                delay(1500);
+                                if(isGameOver())
+                                    calculateResult();
+
+                                setPlayerMove(0);
+                            }
+
+                            else {
+                                delay(2000);
+                                transferBidsToStock(1);
+                                delay(1500);
+                                if(isGameOver())
+                                    calculateResult();
+
+                                setPlayerMove(1);
+                            }
+                        }
+                        else setPlayerMove(1);
+
+                    }
+\end{lstlisting}
 \subsection{Stiche berechnen}
 
 \subsection{UpdateCardNumber}
