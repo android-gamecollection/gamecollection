@@ -58,7 +58,7 @@ einen Aufruf der Instanz \code{SavegameStorage}. Um hier nicht ständig neuen
 Code schreiben zu müssen, haben wir diese Aufgabe in die Klasse
 \code{GameActivity} gelegt. Da jedes Spiel von \code{GameActivity} erben sollte,
 müssen dadurch zwei abstrakte Methoden implementiert werden, welche genau
-hierfür zuständig sind.  Die Methode zum Laden heißt \code{onLoadGame} und die
+hierfür zuständig sind. Die Methode zum Laden heißt \code{onLoadGame} und die
 Methode zum Speichern \code{onSaveGame}. Diese Methoden arbeiten lediglich mit
 einem \textbf{Bundle}, welches die nötigen Informationen beinhaltet. Beim
 Speichern sollten also alle wichtigen Informationen hinzugefügt werden, damit
