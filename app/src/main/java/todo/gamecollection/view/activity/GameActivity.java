@@ -34,15 +34,15 @@ public abstract class GameActivity extends AppCompatActivity {
 
         savegameStorage = getInstance();
 
-        onCreateExistingGame();
+        onCreateExistingGame(savedInstanceState);
 
         setContentView(onLayoutRequest());
         setTitle(game.getGameTitle());
         setupActionBar();
     }
 
-    private void onCreateExistingGame() { //TODO: "I don't like my name, please help me!" - sad Method 2017
-        Bundle extras = getIntent().getExtras();
+    private void onCreateExistingGame(Bundle savedInstanceState) { //TODO: "I don't like my name, please help me!" - sad Method 2017
+        Bundle extras = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
         savegameUuid = extras.getString(KEY_SAVEGAME_UUID);
         Savegame savegame = savegameStorage.getFromUuid(savegameUuid);
         String gameUuid;
@@ -79,6 +79,8 @@ public abstract class GameActivity extends AppCompatActivity {
                 savegame.update(bundle);
             }
             savegameStorage.updateSavegame(savegame);
+            Bundle extras = getIntent().getExtras();
+            extras.putString(KEY_SAVEGAME_UUID, savegame.uuid);
             return true;
         }
         return false;
@@ -108,6 +110,7 @@ public abstract class GameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         saveGame();
+        savedInstanceState.putString(KEY_SAVEGAME_UUID, savegameUuid);
     }
 
     protected abstract void onLoadGame(@Nullable Bundle savegame);
