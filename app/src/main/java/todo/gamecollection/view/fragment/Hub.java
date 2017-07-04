@@ -186,7 +186,7 @@ public class Hub extends Fragment {
     }
 
     private void setupAdapter() {
-        savegameAdapter = new SavegameAdapter(SavegameStorage.getInstance().getSavegameList());
+        savegameAdapter = new SavegameAdapter();
         savegameAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

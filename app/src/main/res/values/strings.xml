@@ -117,5 +117,18 @@
     <string name="library_carballo_text">Version 1.7\n\nAutor: <a href="http://www.alonsoruibal.com">Alberto Alonso Ruibal</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>\n\n<a href="https://github.com/albertoruibal/carballo">Github</a></string>
     <string name="library_jdroidlib_title">JDroidLib</string>
     <string name="library_jdroidlib_text">Version 1.51\n\nAutor: <a href="http://www.aplu.ch">Aegidius Plüss</a>\n\nLizensiert als <a href="http://www.aplu.ch/home/viewthread.jsp?mid=1519">\&quot;Open Source Free Software\&quot;</a> </string>
+    <string name="info_auhtors_title">Autoren</string>
+    <string name="info_authors_oliver_title">Oliver Gawron</string>
+    <string name="info_authors_oliver_summary">Chess und Stuff</string>
+    <string name="info_authors_oliver_text">Test</string>
+    <string name="info_authors_philipp_title">Philipp Jung</string>
+    <string name="info_authors_philipp_summary">Kartenspiele</string>
+    <string name="info_authors_philipp_text">Test</string>
+    <string name="info_authors_leonard_title">Leonard Nickels</string>
+    <string name="info_authors_leonard_summary">User Interface und Stuff</string>
+    <string name="info_authors_leonard_text">Test</string>
+    <string name="info_authors_frank_title">Frank Rügamer</string>
+    <string name="info_authors_frank_summary">Refactor-Master und Chess</string>
+    <string name="info_authors_frank_text">Test</string>
 
 </resources>

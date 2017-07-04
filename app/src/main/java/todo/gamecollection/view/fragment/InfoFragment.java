@@ -36,6 +36,38 @@ public class InfoFragment extends PreferenceFragment implements Serializable {
                 return true;
             }
         });
+
+        Preference oliver = findPreference("info_authors_oliver");
+        oliver.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference pref) {
+                createAlertDialog(R.string.info_authors_oliver_title, R.string.info_authors_oliver_text);
+                return true;
+            }
+        });
+
+        Preference philipp = findPreference("info_authors_philipp");
+        philipp.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference pref) {
+                createAlertDialog(R.string.info_authors_philipp_title, R.string.info_authors_philipp_text);
+                return true;
+            }
+        });
+
+        Preference leonard = findPreference("info_authors_leonard");
+        leonard.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference pref) {
+                createAlertDialog(R.string.info_authors_leonard_title, R.string.info_authors_leonard_text);
+                return true;
+            }
+        });
+
+        Preference frank = findPreference("info_authors_frank");
+        frank.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference pref) {
+                createAlertDialog(R.string.info_authors_frank_title, R.string.info_authors_frank_text);
+                return true;
+            }
+        });
     }
 
     private void createAlertDialog(int titleID, int messageID) {

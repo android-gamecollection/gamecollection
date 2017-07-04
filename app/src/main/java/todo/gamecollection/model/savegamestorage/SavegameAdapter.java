@@ -24,8 +24,8 @@ public class SavegameAdapter extends RecyclerView.Adapter<SavegameAdapter.Savega
     private SortedList<Savegame> mSavegames = new SortedList<>(Savegame.class, new SavegameAdapterCallback(this));
     private SavegameStorage savegameStorage = SavegameStorage.getInstance();
 
-    public SavegameAdapter(ArrayList<Savegame> savegames) {
-        this.mSavegames.addAll(savegames);
+    public SavegameAdapter() {
+        this.mSavegames.addAll(savegameStorage.getSavegameList());
     }
 
     @Override

@@ -15,4 +15,26 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="info_authors"
+        android:title="@string/info_auhtors_title">
+        <Preference
+            android:key="info_authors_oliver"
+            android:summary="@string/info_authors_oliver_summary"
+            android:title="@string/info_authors_oliver_title"/>
+        <Preference
+            android:key="info_authors_philipp"
+            android:summary="@string/info_authors_philipp_summary"
+            android:title="@string/info_authors_philipp_title"/>
+        <Preference
+            android:key="info_authors_leonard"
+            android:summary="@string/info_authors_leonard_summary"
+            android:title="@string/info_authors_leonard_title"/>
+        <Preference
+            android:key="info_authors_frank"
+            android:summary="@string/info_authors_frank_summary"
+            android:title="@string/info_authors_frank_title"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
