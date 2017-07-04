@@ -47,27 +47,60 @@ wird getrennt behandelt? Haben wir da je darüber geredet?}
 
 \section{Kartenspiele}
 \sectionauthor{\philipp}
-Wir implementierten drei Kartenspiele in unserer Applikation, MauMau, Bauernkrieg und Offiziersschafkopf (auch: aufgelegtes Schafkopf). Letzteres ist für 2 Spieler ausgelegt und vorallem in Bayern bekannt, trotz der relativ komplexen Art in Schafkopf Stiche zu erzielen, war uns die JDroid Bibliothek eine große Hilfe. Diese Bibliothek brachte auch MauMau und Bauernkrieg bereits mit, welche beide lediglich abgeändert werden mussten.
-Aus diesem Grund fokussieren wir uns in diesem Teil auf Schafkopf, zumal in diesem Spiel alles verwendet wird, was auch in den anderen beiden verwendet wird.
-Jedem Spiel ist ein Menu mit \emph{Start} Knopf vorgeschalten, in welchem man die Regeln nochmals lesen könnte.
+
+Wir implementierten drei Kartenspiele in unserer Applikation, MauMau,
+Bauernkrieg und Offiziersschafkopf (auch: aufgelegtes Schafkopf). Letzteres ist
+für 2 Spieler ausgelegt und vorallem in Bayern bekannt, trotz der relativ
+komplexen Art in Schafkopf Stiche zu erzielen, war uns die JDroid Bibliothek
+eine große Hilfe. Diese Bibliothek brachte auch MauMau und Bauernkrieg bereits
+mit, welche beide lediglich abgeändert werden mussten.  Aus diesem Grund
+fokussieren wir uns in diesem Teil auf Schafkopf, zumal in diesem Spiel alles
+verwendet wird, was auch in den anderen beiden verwendet wird.  Jedem Spiel ist
+ein Menu mit \emph{Start} Knopf vorgeschalten, in welchem man die Regeln
+nochmals lesen könnte.
 
 \subsection{Ranks und Suits}
-Zum weiteren Verständnis, zeige ich hier die in Schafkopf genutzten enums auf, auf denen das Deck basiert.
 
-\code{public enum Suit{\\EICHEL, GRUEN, HERZ, SCHELLEN}\\public enum Rank{\\ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN}}
+Zum weiteren Verständnis, zeige ich hier die in Schafkopf genutzten enums auf,
+auf denen das Deck basiert.
+
+\begin{lstlisting}
+public enum Suit {
+	EICHEL, GRUEN, HERZ, SCHELLEN
+}
+
+public enum Rank {
+	ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
+}
+\end{lstlisting}
 
 \subsection{Schafkopf Board}
-Wir nutzen zwei Klassen für das Schafkopf Spiel \code{schafkopf} und \code{initiateGame}.
-\code{schafkopf} erbt von \code{CardGame}, einer Bibliotheksklasse, welche alle wichtigen Methoden von JDroid implementiert. Bei Aufruf der Schafkopf Klasse wird das Board erstellt und in \code{main()} zunächst das Deck und ein initiateGame Objekt auf dessen Basis. InitiateGame initialisiert alle nötigen Hände, sprich Bids, Stacks und Hands und weist ihnen Locations zu. Ist dies abgeschlossen, wird \code{initPlayers()} und \code{setPlayerMove()} aufgerufen um fortzufahren.
+
+Wir nutzen zwei Klassen für das Schafkopf Spiel \code{schafkopf} und
+\code{initiateGame}.  \code{schafkopf} erbt von \code{CardGame}, einer
+Bibliotheksklasse, welche alle wichtigen Methoden von JDroid implementiert. Bei
+Aufruf der Schafkopf Klasse wird das Board erstellt und in \code{main()}
+zunächst das Deck und ein initiateGame Objekt auf dessen Basis. InitiateGame
+initialisiert alle nötigen Hände, sprich Bids, Stacks und Hands und weist ihnen
+Locations zu. Ist dies abgeschlossen, wird \code{initPlayers()} und
+\code{setPlayerMove()} aufgerufen um fortzufahren.
 
 \subsection{initPlayers()}
-Diese Methode ist das Herzstück unserer Kartenspiele. Hat derjenige Spieler, der eben an der Reihe ist, eine Karte ausgewählt und auf den Bid transferiert, dann gibt es nun zwei Möglichkeiten.
+
+Diese Methode ist das Herzstück unserer Kartenspiele. Hat derjenige Spieler, der
+eben an der Reihe ist, eine Karte ausgewählt und auf den Bid transferiert, dann
+gibt es nun zwei Möglichkeiten.
+
 \begin{itemize}
 \item 1. Auf beiden Bids befinden sich Karten und der Stich wird ausgewertet
 \item 2. Auf nur einem Bid befindet sich eine Karte, \code{setPlayermove(otherPlayer)} wird 		 aufgerufen
 \end{itemize}
-Im ersten Falle wird \code{sticht()} aufgerufen und getestet wer den Stich macht.
-Die Karten werden auf den Stack des Gewinners transferiert, es wird getestet ob das Spiel vorbei ist und die Kartenzahl wird geupdatet. Zuletzt wird noch der Playermove auf den Gewinner gesetzt und er darf wieder eine Karte ausspielen.
+
+Im ersten Falle wird \code{sticht()} aufgerufen und getestet wer den Stich
+macht.  Die Karten werden auf den Stack des Gewinners transferiert, es wird
+getestet ob das Spiel vorbei ist und die Kartenzahl wird geupdatet. Zuletzt wird
+noch der Playermove auf den Gewinner gesetzt und er darf wieder eine Karte
+ausspielen.
 
 \subsection{Stiche berechnen}
 
@@ -104,16 +137,17 @@ public static SavegameStorage getInstance() {
 \code{Synchronized} wird hier verwendet um das Pattern \emph{Thread-Sicher} zu 
 machen.
 
-\paragraph{Der Speicherungsvorgang} erfolgt durch die Nutzung des Interfaces  
-\textbf{SharedPreferences} in Android. Dieses ermöglicht das Speichern und Laden von 
-\emph{Key-Value} Paaren auf dem Android-Gerät. Zur Laufzeit werden alle Spielstände 
-als \textbf{ArrayList\textless Savegame\textgreater} gehandhabt. Sobald etwas 
-gespeichert werden soll, wird die Liste dementsprechend geändert und durch 
-\textbf{Gson} in \textbf{JSON} serialisiert und per \textbf{SharedPreferences} 
+\paragraph{Der Speicherungsvorgang}
+erfolgt durch die Nutzung des Interfaces \textbf{SharedPreferences} in Android.
+Dieses ermöglicht das Speichern und Laden von \emph{Key-Value} Paaren auf dem
+Android-Gerät. Zur Laufzeit werden alle Spielstände als
+\textbf{ArrayList<Savegame>} gehandhabt.  Sobald etwas
+gespeichert werden soll, wird die Liste dementsprechend geändert und durch
+\textbf{Gson} in \textbf{JSON} serialisiert und per \textbf{SharedPreferences}
 unter einem \emph{Key} als String gespeichert.\\
-Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings wieder druch den selben 
-\emph{Key} wie beim speichern, dann wird der String deserialisiert und wieder als 
-\textbf{ArrayList\textless Savegame\textgreater} benutzt.
+Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings wieder druch den selben
+\emph{Key} wie beim speichern, dann wird der String deserialisiert und wieder
+als \textbf{ArrayList<Savegame>} benutzt.
 
 \subsection{Savegame}
 Das ist die \emph{Objekt-Klasse} welche einen Spielstand darstellt. Sie besteht 
@@ -136,7 +170,7 @@ Jeder Spielstand ist durch eine \code{UUID} eindeutig identifizierbar und somit
 einzigartig. Diese wird beim Anlegen eines neuen Spielstandes generiert.
 Die \code{gameUuid} wird dem \emph{Konstruktor} übergeben und identifiziert den 
 Spielstand mit dem zugehörigen Spiel aus \code{games.xml}.
-Das \code{Bundle} enthält alle Spielspezifischen Informationen die wichtig sind, 
+Das \code{Bundle} enthält alle Spielspezifischen Informationen die wichtig sind,
 sie werden vom jeweiligen Spiel-Entwickler selbst gewählt.
 Das Datum dient der Anzeige und Sortierung der Spielstände im Startbildschirm 
 (\code{Hub}) und wird bei jeder Aktualisierung erneuert.
