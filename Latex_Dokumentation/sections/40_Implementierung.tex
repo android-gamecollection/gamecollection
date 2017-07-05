@@ -117,21 +117,31 @@ wird getrennt behandelt? Haben wir da je darüber geredet?}
 
 \section{Kartenspiele}
 \sectionauthor{\philipp}
-Wir implementierten drei Kartenspiele in unserer Applikation, MauMau, Bauernkrieg und Offiziersschafkopf (auch: aufgelegtes Schafkopf). Letzteres ist für 2 Spieler ausgelegt und vorallem in Bayern bekannt, trotz der relativ komplexen Art in Schafkopf Stiche zu erzielen, war uns die JDroid Bibliothek eine große Hilfe. Diese Bibliothek brachte auch MauMau und Bauernkrieg bereits mit, welche beide lediglich abgeändert werden mussten.
-Aus diesem Grund fokussieren wir uns in diesem Teil auf Schafkopf, zumal in diesem Spiel alles verwendet wird, was auch in den anderen beiden verwendet wird.
-Jedem Spiel ist ein Menu mit \emph{Start} Knopf vorgeschalten, in welchem man die Regeln nochmals lesen könnte.
+
+Wir implementierten drei Kartenspiele in unserer Applikation, MauMau,
+Bauernkrieg und Offiziersschafkopf (auch: aufgelegtes Schafkopf). Letzteres ist
+für 2 Spieler ausgelegt und vorallem in Bayern bekannt, trotz der relativ
+komplexen Art in Schafkopf Stiche zu erzielen, war uns die JDroid Bibliothek
+eine große Hilfe. Diese Bibliothek brachte auch MauMau und Bauernkrieg bereits
+mit, welche beide lediglich abgeändert werden mussten.  Aus diesem Grund
+fokussieren wir uns in diesem Teil auf Schafkopf, zumal in diesem Spiel alles
+verwendet wird, was auch in den anderen beiden verwendet wird.  Jedem Spiel ist
+ein Menu mit \emph{Start} Knopf vorgeschalten, in welchem man die Regeln
+nochmals lesen könnte.
 
 \subsection{Ranks und Suits}
-Zum weiteren Verständnis, zeige ich hier die in Schafkopf genutzten enums auf, auf denen das Deck basiert.
+
+Zum weiteren Verständnis, zeige ich hier die in Schafkopf genutzten enums auf,
+auf denen das Deck basiert.
 
 \begin{lstlisting}[caption={Enums für Kartenwertigkeiten},captionpos=b]
 public enum Suit
 {
-EICHEL, GRUEN, HERZ, SCHELLEN
+    EICHEL, GRUEN, HERZ, SCHELLEN
 }
 public enum Rank
 {
-ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
+    ASS, OBER, UNTER, ZEHN, KOENIG, NEUN, ACHT, SIEBEN
 }
 \end{lstlisting}
 
@@ -140,19 +150,18 @@ Wir nutzen zwei Klassen für das Schafkopf Spiel \code{schafkopf} und \code{init
 \code{schafkopf} erbt von \code{CardGame}, einer Bibliotheksklasse, welche alle wichtigen Methoden von JDroid implementiert. Bei Aufruf der Schafkopf Klasse wird das Board erstellt und in \code{main()} zunächst das Deck und ein initiateGame Objekt auf dessen Basis. InitiateGame initialisiert alle nötigen Hände, sprich Bids, Stacks und Hands und weist ihnen Locations zu. Ist dies abgeschlossen, wird \code{initPlayers()} und \code{setPlayerMove()} aufgerufen um fortzufahren.
 \begin{lstlisting}[caption={Beispiel Hands initialisieren},captionpos=b]
 private final Location[] handLocations =
-           {
-                    new Location(100, 850),//spieler1
-                    new Location(200, 850),
- 					...
-                    new Location(100, 100),//spieler2
-                    new Location(200, 100),
-       				...
-            };
+        {
+            new Location(100, 850),//spieler1
+            new Location(200, 850),
+
+            new Location(100, 100),//spieler2
+            new Location(200, 100),
+        };
 public void setHand(){
     hands = deck.dealingOut(16, 2, true);
     StackLayout[] layouts = new StackLayout[16];
 
-        for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; i++)
     {
         layouts[i] = new StackLayout(handLocations[i]);
         hands[i].setView(board, layouts[i]);
@@ -162,59 +171,72 @@ public void setHand(){
     }
 
     board.hands = this.hands;
-}            
-           
+}
+
 \end{lstlisting}
 
 \subsection{initPlayers()}
+
 Diese Methode ist das Herzstück unserer Kartenspiele. Hat derjenige Spieler, der eben an der Reihe ist, eine Karte ausgewählt und auf den Bid transferiert, dann gibt es nun zwei Möglichkeiten.
 \begin{itemize}
-\item 1. Auf beiden Bids befinden sich Karten und der Stich wird ausgewertet
-\item 2. Auf nur einem Bid befindet sich eine Karte, \code{setPlayermove(otherPlayer)} wird 		 aufgerufen
+	\item 1. Auf beiden Bids befinden sich Karten und der Stich wird ausgewertet
+	\item 2. Auf nur einem Bid befindet sich eine Karte, \code{setPlayermove(otherPlayer)} wird 		 aufgerufen
 \end{itemize}
-Im ersten Falle wird \code{sticht()} aufgerufen und getestet wer den Stich macht.
-Die Karten werden auf den Stack des Gewinners transferiert, es wird getestet ob das Spiel vorbei ist und die Kartenzahl wird geupdatet. Zuletzt wird noch der Playermove auf den Gewinner gesetzt und er darf wieder eine Karte ausspielen.
+Im ersten Falle wird \code{sticht()} aufgerufen und getestet wer den Stich
+macht.  Die Karten werden auf den Stack des Gewinners transferiert, es wird
+getestet ob das Spiel vorbei ist und die Kartenzahl wird geupdatet. Zuletzt wird
+noch der Playermove auf den Gewinner gesetzt und er darf wieder eine Karte
+ausspielen.
 
 \begin{lstlisting}[caption={initPlayers gamecycle},captionpos=b]
-                    if (isBidFull()) {
-                            if (sticht(0) == 0)
-                            {
-                                delay(2000);
-                                transferBidsToStock(0);
-                                delay(1500);
-                                if(isGameOver())
-                                    calculateResult();
+if (isBidFull()) {
+    if (sticht(0) == 0)
+    {
+        delay(2000);
+        transferBidsToStock(0);
+        delay(1500);
+        if(isGameOver())
+        calculateResult();
 
-                                setPlayerMove(0);
-                            }
-
-                            else {
-                                delay(2000);
-                                transferBidsToStock(1);
-                                delay(1500);
-                                if(isGameOver())
-                                    calculateResult();
-
-                                setPlayerMove(1);
-                            }
-                        }
-                        else setPlayerMove(1);
-
-                    }
-\end{lstlisting}
-\subsection{Stiche berechnen}
-Stiche berechnen ist im Schafkopf eine relativ komplexe Angelegenheit, da es viel verschiedenen Trumpf gibt. Das ganze wird in der Methode \code{sticht(int Player)} abgehandelt. Der Methode wird der Spieler als integer mitgegeben, der gerade die erste Karte angespielt hat. Zunächst wird getestet ob der Spieler Trumpf angespielt hat mit \code{isTrumpf(int Player)}. Das wird festgestellt indem man  testet, ob die Karte auf dem bid entweder ein Ober, unter oder Herz ist.
-\begin{lstlisting}[caption={isTrumpf Methode},captionpos=b]
-    public boolean isTrumpf(int Player) {
-        //int Player = Player der ausspielt
-        if(     bids[Player].getLast().getRank() == Rank.OBER ||
-                bids[Player].getLast().getRank() == Rank.UNTER ||
-                bids[Player].getLast().getSuit() == Suit.HERZ)
-        {
-            return true;
-        }
-        return false;
+        setPlayerMove(0);
     }
+
+    else {
+        delay(2000);
+        transferBidsToStock(1);
+        delay(1500);
+        if(isGameOver())
+        calculateResult();
+
+        setPlayerMove(1);
+    }
+}
+else setPlayerMove(1);
+
+}
+\end{lstlisting}
+
+\subsection{Stiche berechnen}
+
+Stiche berechnen ist im Schafkopf eine relativ komplexe Angelegenheit, da es
+viel verschiedenen Trumpf gibt. Das ganze wird in der Methode \code{sticht(int
+Player)} abgehandelt. Der Methode wird der Spieler als integer mitgegeben, der
+gerade die erste Karte angespielt hat. Zunächst wird getestet ob der Spieler
+Trumpf angespielt hat mit \code{isTrumpf(int Player)}. Das wird festgestellt
+indem man  testet, ob die Karte auf dem bid entweder ein Ober, unter oder Herz
+ist.
+
+\begin{lstlisting}[caption={isTrumpf Methode},captionpos=b]
+public boolean isTrumpf(int Player) {
+    // int Player = Player der ausspielt
+    if(bids[Player].getLast().getRank() == Rank.OBER
+            || bids[Player].getLast().getRank() == Rank.UNTER
+            || bids[Player].getLast().getSuit() == Suit.HERZ)
+    {
+        return true;
+    }
+    return false;
+}
 \end{lstlisting}
 
 Ist diese Karte Trumpf, muss geprüft werden ob der Trumpf höher ist. 
@@ -274,113 +296,129 @@ Der Ablauf ist folgender:
 Denn den Suits und Ranks werden jeweils IDs zugewiesen, der Reihenfolge nach wie sie in den enums angegeben sind.
 
 \begin{lstlisting}[caption={IDs am Beispiel von isColorHigher},captionpos=b]
-  public boolean isColorHigher(int Player)  
-  {
-  int otherPlayer = (Player + 1) % 2;
-        
-  if 
-  (
-  bids[Player].getLast().getSuitId() < bids[otherPlayer].getLast().getSuitId()
-  )
-  return true;
-  	return false;
-  }
+public boolean isColorHigher(int Player)  
+{
+    int otherPlayer = (Player + 1) % 2;
+
+    if(bids[Player].getLast().getSuitId() < bids[otherPlayer].getLast().getSuitId())
+    {
+        return true;
+    }
+    return false;
+}
 \end{lstlisting}
 
-Ist die gespielte Karte kein Trumpf, dann wird geschaut ob die Karten dieselbe Farbe habe. Wenn ja und die Karte des anderen Spielers ist eine Trumpf Karte, gewinnt dieser Spieler den Stich, wenn nicht wird \code{isRankHigher()} aufgerufen und derjenige mit dem höheren Rang gewinnt.
+Ist die gespielte Karte kein Trumpf, dann wird geschaut ob die Karten dieselbe
+Farbe habe. Wenn ja und die Karte des anderen Spielers ist eine Trumpf Karte,
+gewinnt dieser Spieler den Stich, wenn nicht wird \code{isRankHigher()}
+aufgerufen und derjenige mit dem höheren Rang gewinnt.
 
-Sind diese Aufrufe alle abgearbeitet, dann wird getestet ob nur der Spieler Trumpf ausgespielt hat, der die zweite Karte gelegt hat. Wenn ja gewinnt er, wenn nicht der andere Spieler.
+Sind diese Aufrufe alle abgearbeitet, dann wird getestet ob nur der Spieler
+Trumpf ausgespielt hat, der die zweite Karte gelegt hat. Wenn ja gewinnt er,
+wenn nicht der andere Spieler.
 
-Zuletzt wird getestet ob beide Karten nicht die selbe Farbe haben, sprich eine Karte liegt, Spieler zwei muss nicht bekennen und darf legen was er will. Dann gewinnt Spieler 2.
+Zuletzt wird getestet ob beide Karten nicht die selbe Farbe haben, sprich eine
+Karte liegt, Spieler zwei muss nicht bekennen und darf legen was er will. Dann
+gewinnt Spieler 2.
 
-Trifft keine der if - Abfragen zu, bekommt automatisch der Spieler, der ausspielt den Stich.
+Trifft keine der if - Abfragen zu, bekommt automatisch der Spieler, der
+ausspielt den Stich.
 
 Alles in allem sieht die ganze Methode folgendermaßen aus:
 
 \begin{lstlisting}[caption={sticht() Methode},captionpos=b]
-    public int sticht(int Player)
-    {
-        int otherPlayer = (Player + 1) % 2;
+public int sticht(int Player)
+{
+    int otherPlayer = (Player + 1) % 2;
 
-        if(isTrumpf(Player))
-        {
-            if (isTrumpfHigher(Player))
-                return Player;
-            return otherPlayer;
-        }
-        if(sameColor()) {
-            if (isTrumpf(otherPlayer)) return otherPlayer;
-            if (isRankHigher(Player)) return Player;
-                else return otherPlayer;
-        }
-        if(isTrumpf(otherPlayer))return otherPlayer;
-        if(!sameColor()) return otherPlayer;
-        return Player;
+    if(isTrumpf(Player))
+    {
+        if (isTrumpfHigher(Player))
+            return Player;
+        return otherPlayer;
     }
+    if(sameColor()) {
+        if (isTrumpf(otherPlayer)) return otherPlayer;
+        if (isRankHigher(Player)) return Player;
+            else return otherPlayer;
+    }
+    if(isTrumpf(otherPlayer))return otherPlayer;
+    if(!sameColor()) return otherPlayer;
+    return Player;
+}
 \end{lstlisting}
 
-Das Ende einer jeden Stechen Phase ist das transferieren der KArten und weitergeben des aktiven Spielers.
-
+Das Ende einer jeden Stechen Phase ist das transferieren der KArten und
+weitergeben des aktiven Spielers.
 
 \begin{lstlisting}[caption={TransferBidsToStock und setPlayerMove},captionpos=b]
-    private void transferBidsToStock(int playerWon)
-    {
+private void transferBidsToStock(int playerWon)
+{
     bids[0].setTargetArea(new TargetArea(stackLocations[playerWon]));
     bids[1].setTargetArea(new TargetArea(stackLocations[playerWon]));
     bids[0].transferNonBlocking(bids[0].getLast(), stacks[playerWon], true);
     bids[1].transferNonBlocking(bids[1].getLast(), stacks[playerWon], true);
-    }
-    private void setPlayerMove(int playerWon)
+}
+private void setPlayerMove(int playerWon)
+{
+    if(playerWon==0)
     {
-        if(playerWon==0)
-        {
-            if(isGameOver())
-                calculateResult();
+        if(isGameOver())
+            calculateResult();
 
-            for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(true);
-            for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(false);
-        }
-        if(playerWon==1)
-        {
-            if(isGameOver())
-                calculateResult();
-
-                for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(false);
-                for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(true);
-        }
+        for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(true);
+        for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(false);
     }
+    if(playerWon==1)
+    {
+        if(isGameOver())
+            calculateResult();
+
+        for (int i = 0; i < 8; i++) hands[i].setTouchEnabled(false);
+        for (int i = 8; i < 16; i++) hands[i].setTouchEnabled(true);
+    }
+}
 \end{lstlisting}
 
-Um Karten zu transferieren muss man einfach dem bid ein neues Ziel zuweisen und es wird, samt durch die Bibliothek mitgebrachte Animation, transferiert.
+Um Karten zu transferieren muss man einfach dem bid ein neues Ziel zuweisen und
+es wird, samt durch die Bibliothek mitgebrachte Animation, transferiert.
 
-Beim Spieler der nun am Zug sein wird, wird \code{setTouchEnabled()} auf true gesetzt, beim anderen auf false.
+Beim Spieler der nun am Zug sein wird, wird \code{setTouchEnabled()} auf true
+gesetzt, beim anderen auf false.
 
 \subsection{GameOver}
 
-Das Spiel ist vorbei wenn alle 32 Karten auf den stacks liegen. Dazu wird nach jedem Stich getestet ob die Anzahl aller Karten auf den Stacks 32 ergeben.
+Das Spiel ist vorbei wenn alle 32 Karten auf den stacks liegen. Dazu wird nach
+jedem Stich getestet ob die Anzahl aller Karten auf den Stacks 32 ergeben.
 
 \begin{lstlisting}[caption={isGameOver() Methode},captionpos=b]
-    private boolean isGameOver(){
-     if(stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32)
-            return true;
-        return false;
-    }
+private boolean isGameOver(){
+    if(stacks[0].getNumberOfCards() + stacks[1].getNumberOfCards() == 32)
+        return true;
+    return false;
+}
 \end{lstlisting}
 
-Die Punktzahl wird in \code{calculateResult()} berechnet. Dort werden die Anzahl der in den Stacks vorhandenen Assen, Koenigen, und so weiter multipliziert mit deren Wertigkeit zusammengerechnet. Um dies anzuzeigen, gibt calculate die Punktzahl an \code{winLabel(int[] points)} weiter. WinLabel erzeugt Textactors mit den Strings \emph{GEWONNEN} und \emph{VERLOREN} und den Punktzahlen. 
+Die Punktzahl wird in \code{calculateResult()} berechnet. Dort werden die Anzahl
+der in den Stacks vorhandenen Assen, Koenigen, und so weiter multipliziert mit
+deren Wertigkeit zusammengerechnet. Um dies anzuzeigen, gibt calculate die
+Punktzahl an \code{winLabel(int[] points)} weiter. WinLabel erzeugt Textactors
+mit den Strings \emph{GEWONNEN} und \emph{VERLOREN} und den Punktzahlen.
 
 \section{Die Spielstände}
 \sectionauthor{\leonard}
 
-Wie schon in der Architektur beschrieben, werden für die Spielstände die Klassen 
-\code{SavegameStorage}, \code{Savegame} und \code{SavegameAdapter} benutzt.
-Im Folgenden wird näher auf die Klassen eingegangen.
+Wie schon in der Architektur beschrieben, werden für die Spielstände die Klassen
+\code{SavegameStorage}, \code{Savegame} und \code{SavegameAdapter} benutzt. Im
+Folgenden wird näher auf die Klassen eingegangen.
 
 \subsection{SavegameStorage}
-ist in einem Singleton-Pattern geschrieben. Gründe dafür sind einerseits, dass 
-der Speicher nur von einer Instanz aufgerufen werden sollte, damit keine 
-Speicher- oder Ladefehler entstehen. Andererseits ist es wichtig zu kontrollieren, 
-wann und wo auf den Speicher zugegriffen wird. 
+
+ist in einem Singleton-Pattern geschrieben. Gründe dafür sind einerseits, dass
+der Speicher nur von einer Instanz aufgerufen werden sollte, damit keine
+Speicher- oder Ladefehler entstehen. Andererseits ist es wichtig zu
+kontrollieren, wann und wo auf den Speicher zugegriffen wird.
+
 \begin{lstlisting}[caption={SavegameStorage Singleton},captionpos=b]
 public static SavegameStorage getInstance() {
 	if (instance == null) {
@@ -393,21 +431,23 @@ public static SavegameStorage getInstance() {
 	return instance;
 }
 \end{lstlisting}
-\code{Synchronized} wird hier verwendet um das Pattern \emph{Thread-Sicher} zu 
+
+\code{Synchronized} wird hier verwendet um das Pattern \emph{Thread-Sicher} zu
 machen.
 
-\paragraph{Der Speicherungsvorgang} erfolgt durch die Nutzung des Interfaces  
-\textbf{SharedPreferences} in Android. Dieses ermöglicht das Speichern und Laden von 
-\emph{Key-Value} Paaren auf dem Android-Gerät. Zur Laufzeit werden alle Spielstände 
-als \textbf{ArrayList\textless Savegame\textgreater} gehandhabt. Sobald etwas 
-gespeichert werden soll, wird die Liste dementsprechend geändert und durch 
-\textbf{Gson} in \textbf{JSON} serialisiert und per \textbf{SharedPreferences} 
-unter einem \emph{Key} als String gespeichert.\\
-Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings wieder druch den selben 
-\emph{Key} wie beim speichern, dann wird der String deserialisiert und wieder als 
-\textbf{ArrayList\textless Savegame\textgreater} benutzt.
+\paragraph{Der Speicherungsvorgang} erfolgt durch die Nutzung des Interfaces
+\textbf{SharedPreferences} in Android. Dieses ermöglicht das Speichern und Laden
+von \emph{Key-Value} Paaren auf dem Android-Gerät. Zur Laufzeit werden alle
+Spielstände als \textbf{ArrayList\textless Savegame\textgreater} gehandhabt.
+Sobald etwas gespeichert werden soll, wird die Liste dementsprechend geändert
+und durch \textbf{Gson} in \textbf{JSON} serialisiert und per
+\textbf{SharedPreferences} unter einem \emph{Key} als String gespeichert.\\ Beim
+Laden erfolgt der Aufruf des \textbf{JSON}-Strings wieder druch den selben
+\emph{Key} wie beim speichern, dann wird der String deserialisiert und wieder
+als \textbf{ArrayList\textless Savegame\textgreater} benutzt.
 
 \subsection{Savegame}
+
 Das ist die \emph{Objekt-Klasse} welche einen Spielstand darstellt. Sie besteht 
 aus 4 wesentlichen Variablen und wird wie folgt aufgebaut:
 \begin{lstlisting}[caption={Savegame Variablen \& Konstruktor},captionpos=b]
@@ -424,15 +464,13 @@ public Savegame(String gameUuid, Bundle bundle) {
 }
 \end{lstlisting}
 
-Jeder Spielstand ist durch eine \code{UUID} eindeutig identifizierbar und somit 
-einzigartig. Diese wird beim Anlegen eines neuen Spielstandes generiert.
-Die \code{gameUuid} wird dem \emph{Konstruktor} übergeben und identifiziert den 
-Spielstand mit dem zugehörigen Spiel aus \code{games.xml}.
-Das \code{Bundle} enthält alle Spielspezifischen Informationen die wichtig sind, 
-sie werden vom jeweiligen Spiel-Entwickler selbst gewählt.
-Das Datum dient der Anzeige und Sortierung der Spielstände im Startbildschirm 
-(\code{Hub}) und wird bei jeder Aktualisierung erneuert.
+Jeder Spielstand ist durch eine \code{UUID} eindeutig identifizierbar und somit
+einzigartig. Diese wird beim Anlegen eines neuen Spielstandes generiert.  Die
+\code{gameUuid} wird dem \emph{Konstruktor} übergeben und identifiziert den
+Spielstand mit dem zugehörigen Spiel aus \code{games.xml}.  Das \code{Bundle}
+enthält alle Spielspezifischen Informationen die wichtig sind, sie werden vom
+jeweiligen Spiel-Entwickler selbst gewählt.  Das Datum dient der Anzeige und
+Sortierung der Spielstände im Startbildschirm (\code{Hub}) und wird bei jeder
+Aktualisierung erneuert.
 
 \subsection{SavegameAdapter}
-
-
