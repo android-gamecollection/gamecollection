@@ -13,7 +13,7 @@ Spielstände als Liste hält, und den \emph{Kartenspielen} und
 
 \subsection{Naviagtion Drawer}
 
-Als Menu verwenden wir einen \emph{Navigation-Drawer}, welcher nur im \code{Hub}
+Als Menü verwenden wir einen \emph{Navigation-Drawer}, welcher nur im \code{Hub}
 zur Verfügung steht und wie folgt aufgebaut ist.
 
 \section{Die Spielstände}
@@ -39,7 +39,6 @@ für jeden Spielstand eine Karte, welche im Startbildschirm in einer Liste
 angezeigt wird. Die Klasse ist etwas komplizierter aufgebaut als die anderen.
 Sie besitzt innere Klassen, Vererbungen und eine Interface-Implementierung.
 
-\change{Richter Pfeil (gestrichelt) für Interfaces}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/savegamestorage/SavegameAdapter}
@@ -60,6 +59,13 @@ arbeiten jeweils mit einem \textbf{Bundle}, welchem die für einen
 Speicherzustand nötigen Informationen übergeben beziehungsweise entnommen
 werden können.
 
+\begin{mdframed}[frametitle=Erklärung: Bundle]
+Dies ist ein Objekt welches verschiedene Datentypen, wie zum Beispiel:
+\emph{String, int} oder \emph{long}, mit \emph{String-Keys mapped} und hochperfomant
+für \emph{Interprozesskommunikation} ist.
+\end{mdframed}
+
+ \unsure{Diesen Absatz eher in die Implementierung, oder?}
 Das der Methode \code{onSaveGame} übergebene Bundle kann mit Methoden wie
 \code{.putString} oder \code{.putStringArrayList} mit gefüttert werden.
 Anschließend werden die gespeicherten Werte weiterverarbeitet und
@@ -71,9 +77,4 @@ Spielstandliste mit Startaufstellungen von Spielen überfüllt wird. Support fü
 das Löschen eines Spielstandes ist an dieser Stelle zum aktuellen Zeitpunkt
 noch nicht vorhanden.
 
-\change{das in den Anhang}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1.0\textwidth]{resources/savegamestorage/Savegamestorage}
-	\caption{Spielstand Architektur}
-\end{figure}
+\let\thefootnote\relax\footnote{Ein Klassendiagramm der Spielstände, ist im Anhang zu finden.}

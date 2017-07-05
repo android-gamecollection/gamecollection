@@ -142,9 +142,9 @@ vielleicht etwas mehr Überleitung}
 
 \subsection{Das Spielfeld}
 
-Für das klassisch karierte Schachbrett wurde die Klasse
-\code{CheckeredGameboardView} erstellt, welche wie der Name schon sagt von der
-Android-Klasse \code{View} erbt. Hauptbestandteil ist ein zweidimensionales
+Für das klassische karierte Spielfeld wurde die Klasse
+\code{CheckeredGameboardView} erstellt, welche wie der Name schon sag von der
+Androidklasse \code{View} erbt. Hauptbestandteil ist ein Zweidimensionales
 Array aus Androids\code{Rect}, welche die einzelnen Felder des Spielfelds
 darstellen. Diese werden nach Aufruf von \code{onSizeChanged} der Größe des
 Displays angepasst und je nach Einstellung um die Stärke des gewünschten Randes
@@ -308,7 +308,7 @@ public boolean isTrumpf(int Player) {
 }
 \end{lstlisting}
 
-Ist diese Karte Trumpf, muss geprüft werden, ob der Trumpf höher ist. 
+Ist diese Karte Trumpf, muss geprüft werden, ob der Trumpf höher ist.
 
 \code{isTrumpfHigher(int Player)}: 
 
@@ -323,7 +323,7 @@ public boolean isTrumpfHigher(int Player) {
             if (isOber(otherPlayer))
             {
                 if (isColorHigher(otherPlayer))
-                    return false; 
+                    return false;
             }
             return true;
         }
@@ -352,7 +352,7 @@ public boolean isTrumpfHigher(int Player) {
             else if (isHerz(otherPlayer))
             {
                 if (isRankHigher(otherPlayer))
-                    return false; 
+                    return false;
             }
             return true;
         }
@@ -510,15 +510,16 @@ machen.
 
 \subsubsection{Der Speicherungsvorgang}
 
-erfolgt durch die Nutzung des Interfaces \code{SharedPreferences} in Android.
+erfolgt durch die Nutzung des Interfaces \textbf{SharedPreferences} in Android.
 Dieses ermöglicht das Speichern und Laden von \emph{Key-Value} Paaren auf dem
 Android-Gerät. Zur Laufzeit werden alle Spielstände als
-\textbf{ArrayList<Savegame>} gehandhabt. Sobald etwas gespeichert werden soll,
+\code{ArrayList<Savegame>} gehandhabt. Sobald etwas gespeichert werden soll,
 wird die Liste dementsprechend geändert und durch \textbf{Gson} in \textbf{JSON}
 serialisiert und per \textbf{SharedPreferences} unter einem \emph{Key} als
-String gespeichert.\\ Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings
+String gespeichert. Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings
 wieder durch den selben \emph{Key} wie beim Speichern. Anschließend wird der
-String deserialisiert und wieder als \code{ArrayList<Savegame>} benutzt.
+String deserialisiert und wieder in seine ursprüngliche Form, einer 
+\code{ArrayList<Savegame>}, gebracht.
 
 \subsection{Savegame}
 
@@ -541,8 +542,8 @@ Jeder Spielstand ist durch eine \code{UUID} eindeutig identifizierbar und somit
 einzigartig. Diese wird beim Anlegen eines neuen Spielstandes generiert.  Die
 \code{gameUuid} wird dem \emph{Konstruktor} übergeben und identifiziert den
 Spielstand mit dem zugehörigen Spiel aus \code{games.xml}.  Das \code{Bundle}
-enthält alle spielspezifischen Informationen die wichtig sind; sie werden vom
-jeweiligen Spielentwickler selbst gewählt. Das Datum dient der Anzeige und
+enthält alle spielspezifischen Informationen die wichtig sind, sie werden vom
+jeweiligen Spieleentwickler selbst gewählt. Das Datum dient der Anzeige und
 Sortierung der Spielstände im Startbildschirm (\code{Hub}) und wird bei jeder
 Aktualisierung erneuert.\\ Außerdem implementiert \code{Savegame} das Interface
 \code{Comparable<Savegame>} und überschreibt die \code{equals()}-Methode damit
@@ -590,6 +591,7 @@ public String getDateString() {
 \subsection{SavegameAdapter}
 
 Diese Klasse erstellt für den Startbildschirm (\code{fragment.Hub}) Karten, die
-genutzt werden, um Spielstände in einem \code{Recyclerview} Anzuzeigen und zu
+genutzt werden um Spielstände in einem \code{Recyclerview} anzuzeigen und zu
 laden. Außerdem weist sie die Klick-Events zu und sortiert die Spielstände nach
 dem Datum.
+
