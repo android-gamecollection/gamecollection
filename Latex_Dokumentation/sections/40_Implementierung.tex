@@ -521,6 +521,26 @@ wieder durch den selben \emph{Key} wie beim Speichern. Anschließend wird der
 String deserialisiert und wieder in seine ursprüngliche Form, einer 
 \code{ArrayList<Savegame>}, gebracht.
 
+\begin{lstlisting}[caption={SavegameStorage Konstruktor},captionpos=b]
+private SavegameStorage() {
+	saveGameList = new ArrayList<>();
+	savegamesSharedP = App.getContext().getSharedPreferences(SAVE_DATA_NAME, Context.MODE_PRIVATE);
+	String saveGameListAsString = savegamesSharedP.getString(SAVE_DATA_KEY, "");
+	if (!saveGameListAsString.isEmpty()) {
+		saveGameList = gson.fromJson(saveGameListAsString, gsonType);
+	}
+}
+\end{lstlisting}
+
+In Zeile 216 sieht man die Zuweisung der \textbf{SharedPreferenses} Variable
+durch die Methode \code{getSharedPreferences(..., ...)}, welche als erstes
+Argument den Dateinamen enthält und als zweites einen Zugriffsmodus, welcher in
+diesem Fall der \emph{MODE\_PRIVATE} ist. Dieser Modus verhindert den Zugriff
+anderer Apps auf die gespeicherten Daten.\\ Weiter erkennt man das Laden des
+\textbf{JSON}-Strings durch \code{savegamesSharedP.getString(Key, Defaultwert)}.
+Wenn dieser String dann etwas beinhaltet, dann wird er deserialisiert und
+zugewiesen, ansonsten wird mit einer leeren Liste gearbeitet.
+
 \subsection{Savegame}
 
 Das ist die \emph{Objekt-Klasse}, welche einen Spielstand darstellt. Sie besteht
