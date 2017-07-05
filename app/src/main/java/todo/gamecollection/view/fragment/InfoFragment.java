@@ -41,18 +41,19 @@ public class InfoFragment extends PreferenceFragment implements Serializable {
 
     private static class MediaClickListener implements Preference.OnPreferenceClickListener {
 
-        private static WeakReference<MediaPlayer> mp = new WeakReference<>(MediaPlayer.create(App.getContext(), R.raw.rick));
+        private static WeakReference<MediaPlayer> mp;
         private static boolean toggle = true;
 
         @Override
         public boolean onPreferenceClick(Preference preference) {
             if (toggle) {
+                mp = new WeakReference<>(MediaPlayer.create(App.getContext(), R.raw.rick));
                 mp.get().start();
             } else {
                 mp.get().pause();
                 mp.get().seekTo(0);
             }
-            toggle = !toggle;
+            toggle ^= true;
             return true;
         }
     }
