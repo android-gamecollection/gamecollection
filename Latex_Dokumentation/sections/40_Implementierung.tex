@@ -522,10 +522,52 @@ Jeder Spielstand ist durch eine \code{UUID} eindeutig identifizierbar und somit
 einzigartig. Diese wird beim Anlegen eines neuen Spielstandes generiert.  Die
 \code{gameUuid} wird dem \emph{Konstruktor} übergeben und identifiziert den
 Spielstand mit dem zugehörigen Spiel aus \code{games.xml}.  Das \code{Bundle}
-enthält alle Spielspezifischen Informationen die wichtig sind, sie werden vom
-jeweiligen Spiel-Entwickler selbst gewählt.  Das Datum dient der Anzeige und
+enthält alle spielspezifischen Informationen die wichtig sind, sie werden vom
+jeweiligen Spieleentwickler selbst gewählt. Das Datum dient der Anzeige und
 Sortierung der Spielstände im Startbildschirm (\code{Hub}) und wird bei jeder
-Aktualisierung erneuert.
+Aktualisierung erneuert.\\
+Außerdem implementiert \code{Savegame} das \emph{Interface} 
+\code{Comparable<Savegame>} und überschreibt die \code{equals()}-Methode damit
+\code{SavegameAdapter} diese zum Sortierenbenutzen kann.
+
+\begin{lstlisting}[caption={Savegame compareTo() \& equals()},captionpos=b]
+@Override
+public boolean equals(Object obj) {
+	return obj instanceof Savegame && this == obj;
+}
+
+@Override
+public int compareTo(@NonNull Savegame o) {
+	return date.compareTo(o.date);
+}
+\end{lstlisting}
+
+Weitere Methoden die \code{Savegame} besitzt, sind zum einen die \code{update()}
+und die getDateString()-Methode. Wobei erstere, wie der Name schon sagt, für das
+Aktualisieren des \code{Savegame}-Objektes zuständig ist, und zweiteres dafür
+sorgt, dass \code{SavegameAdapter} das Datum in Textform darstellen kann.
+
+\begin{lstlisting}[caption={Savegame update() \& getDateString()},captionpos=b]
+public void update(Bundle bundle) {
+	this.bundle = bundle;
+	this.date = new Date();
+}
+
+public String getDateString() {
+	String str;
+	Locale locale = Locale.getDefault();
+	if (DateUtils.isToday(date)) {
+		str = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT, locale).format(date);
+	} else if (DateUtils.isYesterday(date)) {
+		str = App.getContext().getString(R.string.yesterday);
+	} else if (DateUtils.isLastWeek(date)) {
+		str = DateUtils.dateToCalendar(date).getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, locale);
+	} else {
+		str = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, locale).format(date);
+	}
+	return str;
+}
+\end{lstlisting}
 
 \subsection{SavegameAdapter}
 Diese Klasse erstellt für den Startbildschirm (\code{fragment.Hub}) Karten, die
