@@ -19,8 +19,7 @@ einer XML-Datei, \emph{games.xml}, welche durch eine \textbf{Document Type
 Definition} semantisch abgesichert ist. So wird gewährleistet, dass die Spiele
 im passenden Format vorliegen, und so entsprechend weiterverarbeitet werden
 können. Die Datei erlaubt außerdem die Zuordnung in selbst gewählte
-Spiele-Kategorien, wie zum Beispiel \emph{Kartenspiele} oder
-\emph{Brettspiele}.
+Spiele-Kategorien, wie zum Beispiel \emph{Kartenspiele} oder \emph{Brettspiele}.
 
 Hier ist ein Auszug, der die verwendete DTD zeigt:
 
@@ -56,11 +55,66 @@ beispielsweise im Navigation Drawer zu finden ist. Hier ist ebenfalls die
 Referenzierung einer Resource möglich.
 
 \subsubsection{Spiele}
+\label{sssec:games}
 
 Spiele werden analog unter den Kategorien angegeben. Sie besitzen jedoch
-unterschiedliche Attribute. \code{title} und \code{icon} stimmen mit deren der
-Kategorien überein. Ihre Werte kann man beispielsweise in der Spieleliste oder
-in der Android-Actionbar sehen. \improvement{More text}
+unterschiedliche Attribute. \code{title} und \code{icon} stimmen mit der
+Funktionalität dessen \unsure{dessen?} einer Kategorie überein. Ihre Werte kann
+man beispielsweise in der Spieleliste oder in der Android-Actionbar sehen.
+Zusätzlich sind die beschreibenden Attribute \code{description}, \code{rules}
+hinzuzufügen. \code{activity} bestimmt später in der laufenden Anwendung, welche
+Aktivität gestartet wird, wenn man auf das Spiel in der Liste klickt. Die
+Aktivität muss im Package \emph{activity} unter \emph{view} im Root-Package
+liegen, um gestartet werden zu können. Sie wird mit ihrem Ort unterhalb dieses
+Paketes angegeben, zum Beispiel \emph{``Chess''}. Das letzte Attribut \code{tag}
+ist zur weiteren Eigenschaftsbestimmung eines Spiels gedacht und kann später in
+der Aktiviät selbst abgefragt werden. Mit diesem Tag ist es möglich weitere
+Varianten eines Spieles anzulegen, ohne dafür neue Aktivitäten / Klassen
+anfertigen zu müssen. Es ist darüberhinaus gegeben, mehrere Tags festzulegen,
+diese werden durch \emph{|} getrennt. Im Falle eines 2-Spieler Schach-960's,
+lautet dieser \code{``aiGame|chess960''}.
+
+\subsubsection{Beispiel}
+
+Eine Datei mit genauer einer Kategorie und einem Spiel würde also so aussehen:
+
+\begin{lstlisting}
+<?xml version="1.0" encoding="utf-8"?>
+<games>
+
+    <category
+        id="boardgames"
+        title="@string/boardgames"
+        icon="@drawable/icon_checkerboard">
+
+        <game
+            title="@string/game_chess_title"
+            description="@string/game_chess_player_vs_ai"
+            icon="@mipmap/ic_launcher"
+            rules="@string/game_chess_rules"
+            tag="aiGame"
+            activity="Chess" />
+
+    </category>
+
+</games>
+\end{lstlisting}
+
+Die \textbf{DTD} wurde aus Platzgründen weggelassen.
+
+\subsection{Die Spiele-Klasse}
+
+Passend zu der Beschreibung eines Spiels in der XML-Datei gibt es die Klasse
+\code{Game}. In ihr befinden sich die äquivalenten Attribute zur Markup-Datei.
+Außerdem besitzt diese Klasse eine Instanzmethode \code{boolean
+isTaggedWith(String tag)}, welche abfragt, ob das übergebene Argument Teil des
+Tags ist. So kann eine Spieleaktivität ganz ohne Umschweife die Eigenschaften
+des zugehörigen Elements aus der Deklarationsdatei abfragen, um bestimmte
+Abfolgen des Spielverlaufes zu verändern. Siehe \autoref{sssec:games}.
+
+\subsection{Der Spielemanager}
+
+\includegraphics{resources/tobecontinued}
 
 \change{Bessere Graphik und Caption}
 \begin{figure}[h]
