@@ -4,12 +4,13 @@
     <PreferenceCategory
         android:key="info_licenses"
         android:title="@string/info_libraries_title">
+
         <Preference
-            android:key="info_libraries_carballo"
+            android:key="@string/library_carballo_key"
             android:summary="Für mehr Information drücken"
             android:title="Carballo Chess Engine" />
         <Preference
-            android:key="info_libraries_jdroidlib"
+            android:key="@string/library_jdroidlib_key"
             android:summary="Für mehr Information drücken"
             android:title="JDroidLib" />
 
@@ -18,22 +19,23 @@
     <PreferenceCategory
         android:key="info_authors"
         android:title="@string/info_auhtors_title">
+
         <Preference
-            android:key="info_authors_oliver"
+            android:key="@string/info_authors_oliver_key"
             android:summary="@string/info_authors_oliver_summary"
-            android:title="@string/info_authors_oliver_title"/>
+            android:title="@string/info_authors_oliver_title" />
         <Preference
-            android:key="info_authors_philipp"
+            android:key="@string/info_authors_philipp_key"
             android:summary="@string/info_authors_philipp_summary"
-            android:title="@string/info_authors_philipp_title"/>
+            android:title="@string/info_authors_philipp_title" />
         <Preference
-            android:key="info_authors_leonard"
+            android:key="@string/info_authors_leonard_key"
             android:summary="@string/info_authors_leonard_summary"
-            android:title="@string/info_authors_leonard_title"/>
+            android:title="@string/info_authors_leonard_title" />
         <Preference
-            android:key="info_authors_frank"
+            android:key="@string/info_authors_frank_key"
             android:summary="@string/info_authors_frank_summary"
-            android:title="@string/info_authors_frank_title"/>
+            android:title="@string/info_authors_frank_title" />
 
     </PreferenceCategory>
 

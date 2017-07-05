@@ -115,20 +115,21 @@
     <string name="info_libraries_title">Bibliotheken</string>
     <string name="library_carballo_title">Carballo Chess Engine</string>
     <string name="library_carballo_text">Version 1.7\n\nAutor: <a href="http://www.alonsoruibal.com">Alberto Alonso Ruibal</a>\n\nLizensiert unter <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>\n\n<a href="https://github.com/albertoruibal/carballo">Github</a></string>
+    <string name="library_carballo_key">info_libraries_carballo</string>
     <string name="library_jdroidlib_title">JDroidLib</string>
     <string name="library_jdroidlib_text">Version 1.51\n\nAutor: <a href="http://www.aplu.ch">Aegidius Plüss</a>\n\nLizensiert als <a href="http://www.aplu.ch/home/viewthread.jsp?mid=1519">\&quot;Open Source Free Software\&quot;</a> </string>
+    <string name="library_jdroidlib_key">info_libraries_jdroidlib</string>
     <string name="info_auhtors_title">Autoren</string>
     <string name="info_authors_oliver_title">Oliver Gawron</string>
-    <string name="info_authors_oliver_summary">Chess und Stuff</string>
-    <string name="info_authors_oliver_text">Test</string>
+    <string name="info_authors_oliver_summary">Schach ♜</string>
+    <string name="info_authors_oliver_key">info_authors_oliver</string>
     <string name="info_authors_philipp_title">Philipp Jung</string>
-    <string name="info_authors_philipp_summary">Kartenspiele</string>
-    <string name="info_authors_philipp_text">Test</string>
+    <string name="info_authors_philipp_summary">Kartenspiele 🂠</string>
+    <string name="info_authors_philipp_key">info_authors_philipp</string>
     <string name="info_authors_leonard_title">Leonard Nickels</string>
-    <string name="info_authors_leonard_summary">User Interface und Stuff</string>
-    <string name="info_authors_leonard_text">Test</string>
+    <string name="info_authors_leonard_summary">User Interface und Spielstände 🎮</string>
+    <string name="info_authors_leonard_key">info_authors_leonard</string>
     <string name="info_authors_frank_title">Frank Rügamer</string>
-    <string name="info_authors_frank_summary">Refactor-Master und Chess</string>
-    <string name="info_authors_frank_text">Test</string>
-
+    <string name="info_authors_frank_summary">Spiele-Framework 🎲☜ und Schach</string>
+    <string name="info_authors_frank_key">info_authors_frank</string>
 </resources>

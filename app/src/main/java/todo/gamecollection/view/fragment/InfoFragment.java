@@ -1,12 +1,15 @@
 package todo.gamecollection.view.fragment;
 
 import android.app.AlertDialog;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 
+import todo.gamecollection.App;
 import todo.gamecollection.R;
 import todo.gamecollection.model.util.TextUtils;
 
@@ -21,62 +24,62 @@ public class InfoFragment extends PreferenceFragment implements Serializable {
     }
 
     private void addOnClickListeners() {
-        Preference carballoPreference = findPreference("info_libraries_carballo");
-        carballoPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(R.string.library_carballo_title, R.string.library_carballo_text);
-                return true;
-            }
-        });
+        Preference carballoPreference = findPreference(getString(R.string.library_carballo_key));
+        Preference jDroidLibPreference = findPreference(getString(R.string.library_jdroidlib_key));
+        Preference oliver = findPreference(getString(R.string.info_authors_oliver_key));
+        Preference philipp = findPreference(getString(R.string.info_authors_philipp_key));
+        Preference leonard = findPreference(getString(R.string.info_authors_leonard_key));
+        Preference frank = findPreference(getString(R.string.info_authors_frank_key));
 
-        Preference jDroidLibPreference = findPreference("info_libraries_jdroidlib");
-        jDroidLibPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(R.string.library_jdroidlib_title, R.string.library_jdroidlib_text);
-                return true;
-            }
-        });
-
-        Preference oliver = findPreference("info_authors_oliver");
-        oliver.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(R.string.info_authors_oliver_title, R.string.info_authors_oliver_text);
-                return true;
-            }
-        });
-
-        Preference philipp = findPreference("info_authors_philipp");
-        philipp.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(R.string.info_authors_philipp_title, R.string.info_authors_philipp_text);
-                return true;
-            }
-        });
-
-        Preference leonard = findPreference("info_authors_leonard");
-        leonard.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(R.string.info_authors_leonard_title, R.string.info_authors_leonard_text);
-                return true;
-            }
-        });
-
-        Preference frank = findPreference("info_authors_frank");
-        frank.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference pref) {
-                createAlertDialog(R.string.info_authors_frank_title, R.string.info_authors_frank_text);
-                return true;
-            }
-        });
+        carballoPreference.setOnPreferenceClickListener(new DialogClickListener(R.string.library_carballo_title, R.string.library_carballo_text));
+        jDroidLibPreference.setOnPreferenceClickListener(new DialogClickListener(R.string.library_jdroidlib_title, R.string.library_jdroidlib_text));
+        oliver.setOnPreferenceClickListener(new MediaClickListener());
+        philipp.setOnPreferenceClickListener(new MediaClickListener());
+        leonard.setOnPreferenceClickListener(new MediaClickListener());
+        frank.setOnPreferenceClickListener(new MediaClickListener());
     }
 
-    private void createAlertDialog(int titleID, int messageID) {
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                .setTitle(titleID)
-                .setMessage(messageID)
-                .setPositiveButton(R.string.ok, null)
-                .create();
-        alertDialog.show();
-        TextUtils.setClickableLinks(alertDialog);
+    private static class MediaClickListener implements Preference.OnPreferenceClickListener {
+
+        private static WeakReference<MediaPlayer> mp = new WeakReference<>(MediaPlayer.create(App.getContext(), R.raw.rick));
+        private static boolean toggle = true;
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            if (toggle) {
+                mp.get().start();
+            } else {
+                mp.get().pause();
+                mp.get().seekTo(0);
+            }
+            toggle = !toggle;
+            return true;
+        }
+    }
+
+    private class DialogClickListener implements Preference.OnPreferenceClickListener {
+
+        private int titleID, messageID;
+
+        DialogClickListener(int titleID, int messageID) {
+            this.titleID = titleID;
+            this.messageID = messageID;
+        }
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            createAlertDialog();
+            return true;
+        }
+
+        private void createAlertDialog() {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(titleID)
+                    .setMessage(messageID)
+                    .setPositiveButton(R.string.ok, null)
+                    .create();
+            alertDialog.show();
+            TextUtils.setClickableLinks(alertDialog);
+        }
     }
 }
