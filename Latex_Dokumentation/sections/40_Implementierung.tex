@@ -296,7 +296,7 @@ Der Ablauf ist folgender:
 Denn den Suits und Ranks werden jeweils IDs zugewiesen, der Reihenfolge nach wie sie in den enums angegeben sind.
 
 \begin{lstlisting}[caption={IDs am Beispiel von isColorHigher},captionpos=b]
-public boolean isColorHigher(int Player)  
+public boolean isColorHigher(int Player)
 {
     int otherPlayer = (Player + 1) % 2;
 
@@ -448,7 +448,7 @@ als \textbf{ArrayList\textless Savegame\textgreater} benutzt.
 
 \subsection{Savegame}
 
-Das ist die \emph{Objekt-Klasse} welche einen Spielstand darstellt. Sie besteht 
+Das ist die \emph{Objekt-Klasse} welche einen Spielstand darstellt. Sie besteht
 aus 4 wesentlichen Variablen und wird wie folgt aufgebaut:
 \begin{lstlisting}[caption={Savegame Variablen \& Konstruktor},captionpos=b]
 public String uuid;
@@ -474,3 +474,7 @@ Sortierung der Spielstände im Startbildschirm (\code{Hub}) und wird bei jeder
 Aktualisierung erneuert.
 
 \subsection{SavegameAdapter}
+Diese Klasse erstellt für den Startbildschirm (\code{fragment.Hub}) Karten, die
+genutzt werden um Spielstände in einem \code{Recyclerview} anzuzeigen und zu laden.
+Außerdem weißt sie die Klick-Events zu und sortiert die Spielstände nach dem Datum.
+

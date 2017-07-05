@@ -1,5 +1,20 @@
 \chapter{Architektur}
 
+\section{Der Hub}
+\sectionauthor{\leonard}
+
+Der \emph{Spielehub} ist der zentrale Zugangspunkt und auch das Erste was der 
+Nutzer sieht, wenn er die App startet. Dieser ist in 3 Teile aufgespalten und besitzt 
+eine seitliche Navigationsleiste (\emph{Navigation-Drawer}). Jedes Teil ist dabei
+ein \code{Fragment}. Der \code{Hub} besteht aus dem \emph{Spielehub}, welcher 
+die Spielstände als Liste hält, den \emph{Kartenspielen} und den \emph{Brettspielen}.
+
+
+\subsection{Naviagtion Drawer}
+
+Als Menu verwenden wir einen \emph{Navigation-Drawer}, welcher nur im \code{Hub} 
+zur Verfügung steht und wie folgend aufgebaut ist. 
+
 \section{Die Spielstände}
 \sectionauthor{\leonard}
 
