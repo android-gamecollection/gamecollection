@@ -5,78 +5,81 @@
 
 Die wichtigste Komponente der Kartenspiele ist die JDroid library. Die von
 \href{http://www.aplu.ch/home/apluhomex.jsp?site=99}{Äegidius Plüss} entwickelte
-Java Bibliothek, implementiert ebenfalls die JCardGame Bibliothek für Android,
+Java Bibliothek implementiert ebenfalls die JCardGame Bibliothek für Android,
 welche grundlegend für unsere Kartenspiele ist. Sie verfügt über eine
 ausführliche
 \href{http://www.java-online.ch/gamegrid/index.php?inhalt_links=navigation.inc.php&inhalt_mitte=iframedoc1.html}{Dokumentation}.
-Im folgenden erkläre ich die wichtigsten von uns genutzten Funktionen der
-Bibliothek.
+Im Folgenden werde ich die wichtigsten von uns genutzten Funktionen der
+Bibliothek erklären.
 
 \subsection{Rank und Suit enum}
 
 Zu Anfang muss man die Farben und Wertigkeiten der Karten in Form eines Enums
-festlegen. Karten werden durch sprites dargestellt, die man in drawables ablegt. Durch die
-Namensgebung der Sprites, ordnet die Bibliothek die Sprites der richtigen Karte
-zu. 
-Angenommen die Reihenfolge der Ranks lautet:
+festlegen. Karten werden durch Sprites dargestellt, die man in drawables ablegt.
+Durch die Namensgebung der Sprites ordnet die Bibliothek die Sprites der
+richtigen Karte zu. Angenommen die Reihenfolge der Ranks lautet:
 
-Ass, Ober, unter, Zehn, koenig, usw.
+Ass, Ober, Unter, Zehn, König, usw.
 
 und die der Suits sei:
 
-Eichel, Gruen, Herz, Schellen
+Eichel, Grün, Herz, Schellen
 
-,wäre der korrekte Name für den Sprite für die Eichel Ass: eichel0.gif, für den Eichel Ober: eichel1.gif, und so weiter.
+, wäre der korrekte Name für das Sprite für die Eichel Ass: eichel0.gif, für den
+Eichel Ober: eichel1.gif, und so weiter.
+
 \subsection{Locations}
 
 Um Hände und Kartenstapel anzeigen zu können, muss man zunächst im Konstruktor
-ein Board erstellen, und Ausrichtung, Farbe, sowie windowZoom(int) angeben. Der
-windowZoom unterteilt den Bildschirm in Zellen relativ zur Bildschirmgröße, um
-darauf sogenannte Locations anzulegen, auf welchen man Karten ablegen kann oder
-Textfelder.
+ein Board erstellen, und Ausrichtung, Farbe, sowie \code{windowZoom(int)}
+angeben. Der windowZoom unterteilt den Bildschirm in Zellen relativ zur
+Bildschirmgröße, um darauf sogenannte Locations anzulegen, auf welchen man
+Karten oder Textfelder ablegen kann.
 
-Am beispiel Schafkopf haben wir 3 Location Arrays genutzt:
+Am Beispiel Schafkopf haben wir 3 Location Arrays genutzt:
 
 \begin{itemize}
-\item HandLocations (Für alle 2er Kartenstapel)
-\item StackLocations (Zwei Ablage Stapel für gestochene Karten)
-\item BidLocations (Zwei Stapel um einen Stich zu berechnen)
+	\item \code{HandLocations} (Für alle 2er Kartenstapel)
+	\item \code{StackLocations} (Zwei Ablage Stapel für gestochene Karten)
+	\item \code{BidLocations} (Zwei Stapel um einen Stich zu berechnen)
 \end{itemize}
 
 \subsection{Einstiegspunkt und initPlayers}
 
-Anders als normal ist der Einstiegspunkt nicht in \code{OnCreate()}, sondern wurde
-durch die Bibliothek überschrieben und startet in \code{main()}. Dort werden das Deck
-auf Basis der enums, sämtliche Locations, die Hände und die Spieler
-initialisiert . In \code{initPlayers()} läuft das Spielgeschehen ab, es wird dem
-Spieler der soeben an der Reihe ist der CardListener hinzugefügt und
-\code{longPressed(Card card)} wartet darauf, dass eine Karte gedrückt gehalten wird.
-Wurde eine Karte ausgewählt wird sie auf den jeweiligen bid transferiert und
-\code{atTarget()} wertet den Stich dann aus und/oder gibt einen marker für den aktiven
-Spieler mittels der Methode \code{setPlayerMove(int playerWon)} weiter, welche jeweils
-\code{.setTouchEnable(}) der einzelnen Kartenstapel auf true oder false setzt.
+Anders als normal ist der Einstiegspunkt nicht in \code{OnCreate()}, sondern
+wurde durch die Bibliothek überschrieben und startet deshalb in \code{main()}.
+Dort werden das Deck auf Basis der enums, sämtliche Locations, die Hände und
+die Spieler initialisiert. In \code{initPlayers()} läuft das Spielgeschehen ab:
+es wird dem Spieler, der soeben an der Reihe ist, der CardListener hinzugefügt
+und \code{longPressed(Card card)} wartet darauf, dass eine Karte gedrückt
+gehalten wird. Wurde eine Karte ausgewählt, wird sie auf den jeweiligen
+\emph{bid} transferiert und \code{atTarget()} wertet den Stich dann aus und
+/ oder gibt einen Marker für den aktiven Spieler mittels der Methode
+\code{setPlayerMove(int playerWon)} weiter, welche jeweils
+\code{setTouchEnable(}) der einzelnen Kartenstapel auf true oder false setzt.
 
 \subsection{Deck und Hands}
 
-Das Deck wird initialisiert aus allen Suits und Ranks, die man Anfangs innerhalb
-der enums festlegt. Zudem legt man ebenfalls fest wie die Rückseite der Karten
-aussehen soll. Anschließend wird mit einer vorgegebenen Methode gemischt und
-ausgeteilt.
+Das Deck wird initialisiert aus allen Suits und Ranks, die man Anfangs
+innerhalb der enums festgelegt hat. Zudem legt man ebenfalls fest, wie die
+Kartenrückseite aussehen soll. Anschließend wird mit einer vorgegebenen Methode
+gemischt und ausgeteilt:
 
 \code{dealingOut(int AnzahlHände, int AnzahlKarten, Boolean Mischen)}
 
 Eine Hand beinhaltet Kartenobjekte und verwaltet diese. Sprich Stack, bids und
-die Spieler Hände bestehen alle aus Hand Objekten, die auf bestimmten Locations
-angezeigt werden. Mittels \code{stacks[i].setView(board, new StackLayout(stackLocations[i])} legt man diese Locations für jede Hand
-einzeln fest und zeigt sie mit \code{stacks[i].draw()} an.
+die Spieler Hände bestehen alle aus Hand-Objekten, die auf bestimmten Locations
+angezeigt werden. Mittels \code{stacks[i].setView(board, new
+StackLayout(stackLocations[i])} legt man diese Locations für jede Hand einzeln
+fest und zeigt sie mit \code{stacks[i].draw()} an.
 
 \subsection{Textactor}
 
-Textactor sind Textfelder welche man auf bestimmten Locations anzeigen lassen
-kann. Da sie sowohl im Schafkopf als anzeige für die verbleibenden Karten, als
-auch als Punkteanzeige verwendet werden, ist es wichtig sie an dieser Stelle zu
-erläutern. Zuerst muss ein Textactor mit einem String initialisiert werden, zum Beispiel mit der Anzahl der Karten des ersten 2er Stapels. Desweiteren
-braucht jeder Actor eine Location. Mit \code{addActor(TextActor, Location)} zeigt man
-den Actor auf dem Board an und mit \code{removeActor(TextActor)} wird er wieder
-entfernt.
-
+Textactor sind Textfelder, welche man auf bestimmten Locations anzeigen lassen
+kann. Da sie als einziges sowohl im Schafkopf für die verbleibenden Karten, als
+auch als Punkteanzeige verwendet werden, ist es wichtig, sie an dieser Stelle
+zu erläutern. Zuerst muss ein Textactor mit einem String initialisiert werden
+-- zum Beispiel mit der Anzahl der Karten des ersten 2er Stapels. Desweiteren
+braucht jeder Actor eine Location. Mit \code{addActor(TextActor, Location)}
+zeigt man den Actor auf dem Board an, und mit \code{removeActor(TextActor)}
+wird dieser wieder entfernt.
