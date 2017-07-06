@@ -739,13 +739,13 @@ genutzt werden um Spielstände in einem \code{RecyclerView} anzuzeigen und zu
 laden. Außerdem weist sie die Klick-Events zu und sortiert die Spielstände nach
 dem Datum.
 
-\begin{mdframed}[frametitle=Erklärung: RecyclerView]
+\begin{infobox}[frametitle=RecyclerView]
 Ein flexibler \textbf{View}, welcher eine große Datenmenge in einem begrenzten
 Fenster anzeigen kann. Dabei ist er sehr performant, da er schon genutzte
 \textbf{View}s im \textbf{cache} platziert, um sie später wieder zu nutzen. 
-\end{mdframed}
+\end{infobox}
 
-Im \emph{Konstruktor} holt sich die Klasse die Spielstände von 
+Im \emph{Konstruktor} holt sich die Klasse die Spielstände von
 \code{Savegamestorage} und führt sie intern als \textbf{SortedList<Savegame>}.
 Wegen dieser \textbf{SortedList} wird die innere Klasse
 \code{SavegameAdapterCallback} implementiert. Diese erbt von
@@ -823,7 +823,7 @@ public Savegame get(int position) {
 
 Grundlegende Methoden wie \code{getItemCount()},
 \code{add-  \& removeItem(Savegame)} oder \code{get(Position)} sind auch in
-\code{SavegameAdapter} enthalten. Wobei \code{add \& remove} auf 
+\code{SavegameAdapter} enthalten. Wobei \code{add \& remove} auf
 \code{SavegameStorage} zugreifen, um dem Nutzer die Möglichkeit zu bieten,
 seine Spielstände zu löschen. Diese Funktion wird in \code{fragment.Hub}
 realisiert.
