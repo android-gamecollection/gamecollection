@@ -89,7 +89,6 @@ public class Chess extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        aiGame = game.isTaggedWith("aiGame");
         chessBoardFrame = (FrameLayout) findViewById(R.id.frame_layout);
         chessboardView = (CheckeredGameboardView) findViewById(R.id.boardgameview_chess);
         gridSize = chessboardView.getGridSize();
@@ -169,6 +168,7 @@ public class Chess extends GameActivity {
     @Override
     protected void onLoadGame(@Nullable Bundle savegame) {
         board = new ChessWrapper(game.isTaggedWith("chess960"));
+        aiGame = game.isTaggedWith("aiGame");
         if (savegame != null) {
             board.doMoves(savegame.getString(KEY_MOVES));
             List<String> stringHistory = savegame.getStringArrayList(KEY_HISTORY);
