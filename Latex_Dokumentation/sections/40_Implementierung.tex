@@ -174,28 +174,28 @@ rüber als ob wir das schlecht gemacht haben?} \info{Was meinst du damit, es
 wird getrennt behandelt? Haben wir da je darüber geredet?}
 
 \subsection{Die Chess Activity}
+
 In der Activity Chess werden die oben genannten Komponenten unter einem Dach 
 vereint und miteinander kombiniert.
 
-
 \subsubsection{onLoadGame()}
-Die Methode \code{onLoadGame()},welche die abstrakte Methode der Oberklasse 
-\code{GameActivity} überschreibt wird sowohl bei neuen Spielen, als auch beim 
-Laden 
-eines alten Spielstandes aufgerufen und setzt in Kenntnis, um welche Art von 
-Schachspiel es sich handelt. Dies gelingt durch das überprüfen der gesetzten 
-Tags in der Instanz von \code{Game()}, welche ebenfalls über \code{GameActivity} 
-vererbt wurde. Die hierbei infrage kommenden Tags sind \emph{aiGame}, welches 
-anzeigt ob es sich um ein Mensch gegen Computer Spiel handelt und 
-\emph{chess960}, welcher definiert, ob die erweiterten Schachspielregeln für 
-Chess960 verwendet werden, dazu später mehr.\newline
-Im selben Vorgang wir eine Instanz des \code{Chesswrapper} erstellt, welcher die 
-Spiellogik und eine unberührte Spielaufstellung beinhaltet. Falls ein alter 
-Spielstand geladen wird, wird bei \code{onLoadGame()} zusätzlich 
-ein Bundle übergeben, welches die bisherigen Spielzüge beinhaltet. Diese werden 
-dem Chesswrapper mithilfe der Methode \code{doMoves()} übergeben, sodass dieser 
-seine Figurenaufstellung auf den aktuellen Stand bringen kann. Auch der 
-\code{ChessHistoryAdapter} wir hier mit den bereits getätigten Zügen aufgefüllt.
+
+Die Methode \code{onLoadGame()},welche die abstrakte Methode der Oberklasse
+\code{GameActivity} überschreibt wird sowohl bei neuen Spielen, als auch beim
+Laden eines alten Spielstandes aufgerufen und setzt in Kenntnis, um welche Art
+von Schachspiel es sich handelt. Dies gelingt durch das überprüfen der gesetzten
+Tags in der Instanz von \code{Game()}, welche ebenfalls über \code{GameActivity}
+vererbt wurde. Die hierbei infrage kommenden Tags sind \emph{aiGame}, welches
+anzeigt ob es sich um ein Mensch gegen Computer Spiel handelt und
+\emph{chess960}, welcher definiert, ob die erweiterten Schachspielregeln für
+Chess960 verwendet werden, dazu später mehr.\newline Im selben Vorgang wir eine
+Instanz des \code{Chesswrapper} erstellt, welcher die Spiellogik und eine
+unberührte Spielaufstellung beinhaltet. Falls ein alter Spielstand geladen wird,
+wird bei \code{onLoadGame()} zusätzlich ein Bundle übergeben, welches die
+bisherigen Spielzüge beinhaltet. Diese werden dem Chesswrapper mithilfe der
+Methode \code{doMoves()} übergeben, sodass dieser seine Figurenaufstellung auf
+den aktuellen Stand bringen kann. Auch der \code{ChessHistoryAdapter} wir hier
+mit den bereits getätigten Zügen aufgefüllt.
 
 \subsubsection{onCreate()}
 In der \code{onCreate()} wird das Spiel für die eigentliche Benutzung 
@@ -221,6 +221,7 @@ einem Touch-Event das entsprechende Kästchen des Spielfeldes als Tuple-paar an
 die Methode \code{onSquareClicked()} übergibt.
 
 \subsubsection{setFieldFromFEN()}
+
 Die Methode \code{setFieldFromFEN()} dient zur Neubelegung des zweidimensionalen 
 Imageview-Arrays, welches die Spielfiguren beinhaltet. Zu Anfang der 
 Neubesetzung werden erst alle Einträge aus dem Array gelöscht, um eventuelle 
@@ -233,30 +234,23 @@ jedoch einen Buchstaben als nächstes hat, wird and die entsprechende Koordinate
 eine neue Imageview erstellt, dessen Ressource man anhand der fest codierten Map 
 und dem ausgelesenem Buchstaben heraussuchen kann.
 
+\subsubsection{onSquareClicked()}
 
-\subsubsection{onSquarClicked()}
-Die Methode \code{onSquarClicked()} ist das Herzstück der Chess Activity und 
-besitzt die komplette Logik welche die Züge des Spielers verwaltet. Sie bekommt 
-vom \code{OnTouchListener} des Spielfedes die Koordinaten des Feldes zurrück auf 
-welches gerade getippt wurde. Ob dieses Tupel nun eine Auswirkung auf das Spiel 
-hat hängt von einer Vielzahl von Eigenschaften ab, welche elegant mit boolescher 
-Algebra kombiniert werden können. Falls man zuvor noch nicht auf ein Feld 
-getippt hat und nun eine valide Auswahl getroffen hat, wird dieses Feld nun in 
-der Klasse als \code{logged} gespeichert, sodass bei nochmaligem Tippen auf ein 
-anderes Feld geprüft werden kann, ob ein gültiger Schachzug von \code{logged} 
-zum neuen Feld durchgeführt werden kann. In diesem Fall muss zuerst der 
-Spezialfall der Promotion getestet werden, bei welcher der Promotionsdialog 
-geöffnet wird, dazu später mehr. Im Regulärfall wird der Zug durch 
-\code{animatefigure()} durchgeführt, was ebenfalls eine Animation der Figur zur 
-Folge hat. Falls es sich um ein Spiel gegen die künstliche Intelligenz handelt 
+Die Methode \code{onSquarClicked()} ist das Herzstück der Chess Activity und
+besitzt die komplette Logik welche die Züge des Spielers verwaltet. Sie bekommt
+vom \code{OnTouchListener} des Spielfedes die Koordinaten des Feldes zurrück auf
+welches gerade getippt wurde. Ob dieses Tupel nun eine Auswirkung auf das Spiel
+hat hängt von einer Vielzahl von Eigenschaften ab, welche elegant mit boolescher
+Algebra kombiniert werden können. Falls man zuvor noch nicht auf ein Feld
+getippt hat und nun eine valide Auswahl getroffen hat, wird dieses Feld nun in
+der Klasse als \code{logged} gespeichert, sodass bei nochmaligem Tippen auf ein
+anderes Feld geprüft werden kann, ob ein gültiger Schachzug von \code{logged}
+zum neuen Feld durchgeführt werden kann. In diesem Fall muss zuerst der
+Spezialfall der Promotion getestet werden, bei welcher der Promotionsdialog
+geöffnet wird, dazu später mehr. Im Regulärfall wird der Zug durch
+\code{animatefigure()} durchgeführt, was ebenfalls eine Animation der Figur zur
+Folge hat. Falls es sich um ein Spiel gegen die künstliche Intelligenz handelt
 wird nun auch ein Zug der KI berechnet und ausgeführt.
-
-
-
-
-
-
-
 
 \section{Kartenspiele}
 \sectionauthor{\philipp}
