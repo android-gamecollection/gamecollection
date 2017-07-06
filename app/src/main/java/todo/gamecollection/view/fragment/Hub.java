@@ -60,13 +60,16 @@ public class Hub extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View rootView = getView().getRootView();
-        Context context = App.getContext();
         emptyText = (TextView) rootView.findViewById(R.id.fragment_hub_empty_textview);
         coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinator_layout);
         setupAlphaAnimation();
         setupRecyclerView();
         checkSavegameAdapterCount();
+        setupFabs(rootView);
+    }
 
+    private void setupFabs(View rootView) {
+        Context context = App.getContext();
         fabNewGame = (FloatingActionButton) rootView.findViewById(R.id.fab_new_game);
         fabNewGameC = (FloatingActionButton) rootView.findViewById(R.id.fab_new_cardgame);
         fabNewGameB = (FloatingActionButton) rootView.findViewById(R.id.fab_new_boardgame);
