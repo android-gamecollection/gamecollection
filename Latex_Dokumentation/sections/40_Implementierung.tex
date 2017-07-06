@@ -226,7 +226,7 @@ Kann zum Zeitversetzten ausführen eine Prozesses oder der Einreihung einer
 Aktion für einen anderen \emph{Thread} benutzt werden.
 \end{infobox}
 
-\begin{lstlisting}[caption={Hub setupNavigationView) Methode},captionpos=b]
+\begin{lstlisting}[caption={Hub setupNavigationView() Methode},captionpos=b]
 public void setupNavigationView() {
 	navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 		@Override
@@ -259,8 +259,69 @@ Hier werden dem \emph{NavDrawer} die Klick-Events zugewiesen. Die Abfrage
 erfolgt durch den Vergleich des \code{currentTag} mit dem in der
 \code{nav\_drawer\_items.xml} definierten \emph{NumericShortcut}.
 
-
 \subsection{Die Fragments}
+
+Die mit der Hub-Activity verbundenen Fragmente heißen \code{GameCollection} und
+\code{Hub}. Ersteres ist für Brettspiele und Kartenspiele zuständig, zweiteres
+für die Auflistung und Verwaltung laufender Spiele, also Spielstände.
+
+\subsubsection{GameCollection}
+
+Es ist möglich ein \textbf{Fragment} für mehrere Sachen zu Verwenden, auch können
+sie von verschiedenen \emph{Activites} gerufen werden. Durch einen
+\textbf{String}-Parameter in der Methode \code{newInctance(String)} wird
+zwischen Brett- und Kartenspielen unterschieden.
+
+\begin{lstlisting}[caption={Hub setupNavigationView() Methode},captionpos=b]
+public static GameSelection newInstance(String category) {
+	Bundle args = new Bundle();
+	args.putString(EXTRA_CATEGORY, category);	
+	GameSelection fragment = new GameSelection();
+	fragment.setArguments(args);
+	return fragment;
+}
+
+@Override
+public void onCreate(@Nullable Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	String gameCategory = getArguments().getString(EXTRA_CATEGORY);
+	games = Games.getGameList(gameCategory);
+}
+\end{lstlisting}
+
+In \code{onCreate(Bundle)} wird dann ermittelt, welches der beiden geladen wird.
+Da der String in das \textbf{Bundle} des \textbf{Intent}s geladen wurde, kann
+er so wieder heraus geholt werden. Die Methode \code{Game.getGameList{String}}
+unterscheidet dann intern zwischen den beiden und gibt die entsprechende Liste
+zurück.\\
+
+\begin{lstlisting}[caption={Hub onCreateView() \& onActivityCreated() Methode},
+captionpos=b]
+@Nullable
+@Override
+public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+	return inflater.inflate(R.layout.fragment_game_selection, container, false);
+}
+@Override
+public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
+	View rootView = getView();
+	if (rootView == null) {
+		throw new NullPointerException("Root view is null");
+	}
+	RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_game_selection);
+	RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+	recyclerView.setLayoutManager(layoutManager);
+	GameAdapter gameAdapter = new GameAdapter(games);
+	recyclerView.setAdapter(gameAdapter);
+}
+\end{lstlisting}
+
+In \code{onCreateView(...)} wird das \textbf{FrameLayout} zugewiesen. In
+\code{onActivityCreated(...)} wird dann der \textbf{RecyclerView} und der
+Adapter zugewiesen. Der Adapter ist diesem Fall der \code{GameAdapter}.
+
+\subsubsection{Spielehub}
 
 \subsection{Navigation Drawer}
 

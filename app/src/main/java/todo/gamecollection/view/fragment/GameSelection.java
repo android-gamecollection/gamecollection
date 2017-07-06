@@ -37,10 +37,6 @@ public class GameSelection extends Fragment {
 
         String gameCategory = getArguments().getString(EXTRA_CATEGORY);
         games = Games.getGameList(gameCategory);
-        List<GameCategory> categoryList = Games.getCategoryList();
-        for (GameCategory category : categoryList) {
-            Log.d("GameSelection", category.toString());
-        }
     }
 
     @Nullable
