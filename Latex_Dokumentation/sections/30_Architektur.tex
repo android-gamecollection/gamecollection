@@ -4,12 +4,23 @@
 \sectionauthor{\leonard}
 
 Der \emph{Spielehub} ist der zentrale Zugangspunkt, und auch das Erste, was der
-Nutzer sieht, wenn er die App startet. Er ist in 3 Teile aufgespalten und
-besitzt eine seitliche Navigationsleiste (\emph{Navigation-Drawer}). Jedes Teil
-ist dabei ein Fragment. Der Hub besteht aus dem \emph{Spielehub}, welcher die
-Spielstände als Liste hält, und den \emph{Kartenspielen} und
-\emph{Brettspielen}.
+Nutzer sieht. Er ist in 3 Teile aufgespalten und besitzt eine seitliche
+Navigationsleiste(\emph{Navigation-Drawer}). Jedes Teil ist dabei ein
+\textbf{Fragment}. Der Hub besteht aus dem \emph{Spielehub}, welcher die
+Spielstände als Liste hält, und den \emph{Kartenspielen} und \emph{Brettspielen}.
 
+\begin{infobox}[frametitle=Fragment]
+Dies kann man wie eine Sub-\textbf{Activity} sehen, welche in einer
+\textbf{Activity} platziert wird. Sie ist an den \textbf{Lifecycle} der
+\textbf{Activity} gekoppelt, aber hat auch einen eigenen. Es können
+mehrere Fragmente innerhalb einer \textbf{Activity} existieren.
+\end{infobox}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/savegamestorage/Hub}
+	\caption{Der Hub}
+\end{figure}
 
 \subsection{Naviagtion Drawer}
 
@@ -64,11 +75,11 @@ arbeiten jeweils mit einem \textbf{Bundle}, welchem die für einen
 Speicherzustand nötigen Informationen übergeben beziehungsweise entnommen
 werden können.
 
-\begin{mdframed}[frametitle=Erklärung: Bundle]
+\begin{infobox}[frametitle=Bundle]
 Dies ist ein Objekt welches verschiedene Datentypen, wie zum Beispiel:
 \emph{String, int} oder \emph{long}, mit \emph{String-Keys mapped} und hochperfomant
 für \emph{Interprozesskommunikation} ist.
-\end{mdframed}
+\end{infobox}
 
  \unsure{Diesen Absatz eher in die Implementierung, oder?}
 Das der Methode \code{onSaveGame} übergebene Bundle kann mit Methoden wie
