@@ -372,7 +372,7 @@ private void setupRecyclerView() {
 	recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview_game_selection);
 	RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 	recyclerView.setLayoutManager(layoutManager);
-	
+
 	setupAdapter();
 	ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new GameSelectionCallback());
 	itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -472,8 +472,8 @@ einem Tupel von Integers einen String ausgibt, welcher von den
 wandelt die Methode \code{stringToNum} aus einem String des Formats \emph{A4} 
 einen Tuple um, welcher Array-kompatible Koordinaten besitzt. Hierfür verwenden 
 die privaten Methoden \code{colToChar},\code{rowToChar},\code{charToCol}, und 
-\code{charToRow} die eigenschaft von Chars und Integern, mittels der \emph{+} 
-und \emph{-} Operatoren miteineander addiert und subtrahiert zu werden.
+\code{charToRow} die Eigenschaft von Chars und Integern, mittels der \emph{+}
+und \emph{-} Operatoren miteinander addiert und subtrahiert zu werden.
 
 
 \subsection{Die Chess Activity}
