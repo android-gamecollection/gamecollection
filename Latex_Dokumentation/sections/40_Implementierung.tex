@@ -321,6 +321,12 @@ In \code{onCreateView(...)} wird das \textbf{FrameLayout} zugewiesen. In
 \code{onActivityCreated(...)} wird dann der \textbf{RecyclerView} und der
 Adapter zugewiesen. Der Adapter ist diesem Fall der \code{GameAdapter}.
 
+\begin{infobox}[frametitle=RecyclerView]
+Ein flexibler \textbf{View}, welcher eine große Datenmenge in einem begrenzten
+Fenster anzeigen kann. Dabei ist er sehr performant, da er schon genutzte
+\textbf{View}s im \textbf{cache} platziert, um sie später wieder zu nutzen. 
+\end{infobox}
+
 \subsubsection{Spielehub}
 
 \subsection{Navigation Drawer}
@@ -791,16 +797,21 @@ machen.
 
 \subsubsection{Der Speicherungsvorgang}
 
-erfolgt durch die Nutzung des Interfaces \textbf{SharedPreferences} in Android.
-Dieses ermöglicht das Speichern und Laden von \emph{Key-Value} Paaren auf dem
-Android-Gerät. Zur Laufzeit werden alle Spielstände als
-\code{ArrayList<Savegame>} gehandhabt. Sobald etwas gespeichert werden soll,
-wird die Liste dementsprechend geändert und durch \textbf{Gson} in \textbf{JSON}
-serialisiert und per \textbf{SharedPreferences} unter einem \emph{Key} als
-String gespeichert. Beim Laden erfolgt der Aufruf des \textbf{JSON}-Strings
-wieder durch den selben \emph{Key} wie beim Speichern. Anschließend wird der
-String deserialisiert und wieder in seine ursprüngliche Form, einer 
-\code{ArrayList<Savegame>}, gebracht.
+erfolgt durch die Nutzung von \textbf{SharedPreferences} (kurz SharedPref) in
+Android.
+
+\begin{infobox}[frametitle=SharedPreferences]
+Ein Interface welches das Speichern und Laden von \emph{Key-Value} Paaren auf
+dem Android Gerät ermöglicht. Modifikation von SharedPref müssen durch einen
+SharedPref Editor geschehen.
+\end{infobox}
+Zur Laufzeit werden alle Spielstände als \code{ArrayList<Savegame>} gehandhabt.
+Sobald etwas gespeichert werden soll, wird die Liste dementsprechend geändert und
+durch \textbf{Gson} in \textbf{JSON} serialisiert und per
+\textbf{SharedPreferences} unter einem \emph{Key} als String gespeichert. Beim
+Laden erfolgt der Aufruf des \textbf{JSON}-Strings wieder durch den selben
+\emph{Key} wie beim Speichern. Anschließend wird der String deserialisiert und
+wieder in seine ursprüngliche Form, einer \code{ArrayList<Savegame>}, gebracht.
 
 \begin{lstlisting}[caption={SavegameStorage Konstruktor},captionpos=b]
 private SavegameStorage() {
@@ -941,19 +952,13 @@ genutzt werden um Spielstände in einem \code{RecyclerView} anzuzeigen und zu
 laden. Außerdem weist sie die Klick-Events zu und sortiert die Spielstände nach
 dem Datum.
 
-\begin{infobox}[frametitle=RecyclerView]
-Ein flexibler \textbf{View}, welcher eine große Datenmenge in einem begrenzten
-Fenster anzeigen kann. Dabei ist er sehr performant, da er schon genutzte
-\textbf{View}s im \textbf{cache} platziert, um sie später wieder zu nutzen. 
-\end{infobox}
-
 Im \emph{Konstruktor} holt sich die Klasse die Spielstände von
 \code{Savegamestorage} und führt sie intern als \textbf{SortedList<Savegame>}.
 Wegen dieser \textbf{SortedList} wird die innere Klasse
 \code{SavegameAdapterCallback} implementiert. Diese erbt von
 \code{SortedListAdapterCallback<>} und hat den Zweck, die Liste mit
 \textbf{RecyclerView.Adapter} zu binden. So ist es möglich die Liste zu
-sortieren und aktuell zu halten.\\
+sortieren und aktuell zu halten.
 
 Wenn die Klasse gerufen wird oder eine Aktualisierung verlangt wird, kümmert
 sich \code{onBindViewHolder(ViewHolder, Position)} darum, dass alle
