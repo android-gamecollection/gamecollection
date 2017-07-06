@@ -572,6 +572,19 @@ von ihnen mit einem eigenen \code{PromotionClickListener}, welcher den Dialog
 beendet und den entsprechenden  \code{promotionmove} mit der jeweiligen neuen 
 Figur durchführt.
 
+\subsubsection{update()}
+Die Methode \code{update()} wird nach jedem Zug aufgerufen und prüft sowohl, ob 
+das Spiel durch den letzten Spielzug beendet wurde als auch ob es sich im 
+Zustand \emph{Schach} befindet. In beiden Fällen wird eine \code{Snackbar} 
+erstellt, um den Spieler über das Spielende, bzw. den Schachzustand zu 
+informieren. Die Informationen über den derzeitigen Zustand des Spiels bekommt 
+die Methode über die Funktion \code{isCheck()} oder den Wert \code{endgame}, 
+welcher sich je nach Spielausgang ändert. Zusätzlich wird bei ausführen von 
+\code{setFieldFromFEN()} das komplette Spielfeld von Figuren bereinigt und 
+wieder mit den aktuellen Figuren bestückt, sodass eventuelle Uneinigkeit 
+zwischen der Visualisierung und der tatsächlichen Aufstellung das Spielerlebnis 
+nicht blockieren.
+
 \subsection{Chess960}
 Schach960 ist eine leichte Abwandlung des normalen Schachspiels. 
 Hauptbestandteil sind die zufällig aufgestellten Figuren der Zweiten Reihe, 
