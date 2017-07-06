@@ -463,6 +463,19 @@ Codemetriken gerecht zu werden.\unsure{Soll das so bleiben oder kommt das so
 rüber als ob wir das schlecht gemacht haben?} \info{Was meinst du damit, es
 wird getrennt behandelt? Haben wir da je darüber geredet?}
 
+\subsection{Der MoveTranslator}
+Schach besitzt ein ein Koordinatensystem, welches leider nicht mit dem 
+Indexsystem eines Java-array übereinstimmt. Aus diesem Grund braucht man eine 
+Hilfsklasse \code{MoveTranslator},welche in der Methode \code{numToString} aus 
+einem Tupel von Integers einen String ausgibt, welcher von den 
+\code{ChessWrapper} Methoden akzeptiert werden kann. Auf die selbe Art und Weise 
+wandelt die Methode \code{stringToNum} aus einem String des Formats \emph{A4} 
+einen Tuple um, welcher Array-kompatible Koordinaten besitzt. Hierfür verwenden 
+die privaten Methoden \code{colToChar},\code{rowToChar},\code{charToCol}, und 
+\code{charToRow} die eigenschaft von Chars und Integern, mittels der \emph{+} 
+und \emph{-} Operatoren miteineander addiert und subtrahiert zu werden.
+
+
 \subsection{Die Chess Activity}
 
 In der Activity Chess werden die oben genannten Komponenten unter einem Dach 
@@ -541,6 +554,24 @@ geöffnet wird, dazu später mehr. Im Regulärfall wird der Zug durch
 \code{animatefigure()} durchgeführt, was ebenfalls eine Animation der Figur zur
 Folge hat. Falls es sich um ein Spiel gegen die künstliche Intelligenz handelt
 wird nun auch ein Zug der KI berechnet und ausgeführt.
+
+\subsubsection{promotionDialog()}
+Der \code{promotionDialog} wird im dem Spezialfall aufgerufen, in welchem ein 
+Bauer die letzte Zeile der gegenüberliegenden Seite betritt. Wenn dies als 
+normaler Spielzug übergeben wird setzt die Schachlogik automatisch eine Dame als 
+gewählte Promotionsfigur. Dies ist zwar in den meisten fällen die beste Wahl, 
+dennoch kann diese Entscheidung das Spiel zu Gunsten des Gegners fallen, z.B. 
+wenn dadurch ein Patt ausgelöst wird, welches man durch eine Übermacht an 
+Figuren zu einem Schachmatt ausbauen könnte. Ebenfalls kann es in sehr seltenen 
+Fällen vorkommen, das ein Springer, welcher andere Angriffsmöglichkeiten als die 
+Dame hat als neue Figur zu einem sofortigen Gewinn des Spieles führen könnte. 
+Deswegen muss man auswählen können, welche der Vier Figuren Dame, Läufer, Turm 
+und Springer man als Promotionsfigur wählt. Dies wird durch einen Alterdialog 
+realisiert, welcher Vier Imageviews für die entsprechenden Figuren besitzt, jede 
+von ihnen mit einem eigenen \code{PromotionClickListener}, welcher den Dialog 
+beendet und den entsprechenden  \code{promotionmove} mit der jeweiligen neuen 
+Figur durchführt.
+
 
 \section{Kartenspiele}
 \sectionauthor{\philipp}
