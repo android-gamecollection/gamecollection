@@ -751,4 +751,85 @@ Fenster anzeigen kann. Dabei ist er sehr performant, da er schon genutzte
 \textbf{View}s im \textbf{cache} platziert, um sie später wieder zu nutzen. 
 \end{mdframed}
 
+Im \emph{Konstruktor} holt sich die Klasse die Spielstände von 
+\code{Savegamestorage} und führt sie intern als \textbf{SortedList<Savegame>}.
+Wegen dieser \textbf{SortedList} wird die innere Klasse
+\code{SavegameAdapterCallback} implementiert. Diese erbt von
+\code{SortedListAdapterCallback<>} und hat den Zweck, die Liste mit
+\textbf{RecyclerView.Adapter} zu binden. So ist es möglich die Liste zu
+sortieren und aktuell zu halten.\\
 
+Wenn die Klasse gerufen wird oder eine Aktualisierung verlangt wird, kümmert
+sich \code{onBindViewHolder(ViewHolder, Position)} darum, dass alle
+Spielstände jeweils einer Karte zugeordnet werden.
+
+\begin{lstlisting}[caption={SavegameAdapter onBindViewHolder() Methode},captionpos=b]
+@Override
+public void onBindViewHolder(SavegameViewHolder holder, int position) {
+	Savegame savegame = mSavegames.get(position);
+	Game game = Games.getFromUuid(savegame.gameUuid);
+	if (game != null) {
+		holder.gameTitle.setText(game.getGameTitle());
+		holder.gameSubtitle.setText(game.getGameDescription());
+		holder.gameIcon.setImageDrawable(App.getContext().getDrawable(game.getGameIconId()));
+		holder.gameDate.setText(savegame.getDateString().toUpperCase());
+	}
+}
+\end{lstlisting}
+
+\code{onBindViewHolder(...,...)} hat als erstes Argument den \textbf{ViewHolder}.
+Dieser ist als innere Klasse implementiert und schaut wie folgt aus:
+
+\begin{lstlisting}[caption={SavegameAdapter SavegameViewHolder Klasse},captionpos=b]
+class SavegameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+	private final String ACTIVITY_PACKAGE = ".view.activity.";
+	private final ImageView gameIcon;
+	private final TextView gameTitle, gameSubtitle, gameDate;
+
+	SavegameViewHolder(View itemView) {
+		super(itemView);
+		gameIcon = (ImageView) itemView.findViewById(R.id.icon_savegame);
+		gameTitle = (TextView) itemView.findViewById(R.id.text_game_title);
+		gameSubtitle = (TextView) itemView.findViewById(R.id.text_game_subtitle);
+		gameDate = (TextView) itemView.findViewById(R.id.text_date);
+		itemView.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {...}
+}
+\end{lstlisting}
+
+Der \emph{Konstruktor} weist die \textbf{View}s zu und setzt diese auf einen
+\textbf{OnClickListener}. Jener ist mit der Methode \code{onClick(View)}
+implementiert und gibt den jeweiligen Karten die richtigen \textbf{Intent}s zu
+den \textbf{Activities}.\\
+
+\begin{lstlisting}[caption={SavegameAdapter Grundlegende Methoden},captionpos=b]
+@Override
+public int getItemCount() {
+	return mSavegames.size();
+}
+
+public void addItem(Savegame savegame) {
+	mSavegames.add(savegame);
+	savegameStorage.addSavegame(savegame);
+}
+
+public void removeItem(int position) {
+	Savegame savegame = mSavegames.removeItemAt(position);
+	savegameStorage.deleteSavegame(savegame);
+}
+
+public Savegame get(int position) {
+	return mSavegames.get(position);
+}
+\end{lstlisting}
+
+Grundlegende Methoden wie \code{getItemCount()},
+\code{add-  \& removeItem(Savegame)} oder \code{get(Position)} sind auch in
+\code{SavegameAdapter} enthalten. Wobei \code{add \& remove} auf 
+\code{SavegameStorage} zugreifen, um dem Nutzer die Möglichkeit zu bieten,
+seine Spielstände zu löschen. Diese Funktion wird in \code{fragment.Hub}
+realisiert.
