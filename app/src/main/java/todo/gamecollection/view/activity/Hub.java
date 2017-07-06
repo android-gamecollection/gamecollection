@@ -44,7 +44,7 @@ public class Hub extends AppCompatActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        setUpNavigationView();
+        setupNavigationView();
 
         if (savedInstanceState == null) {
             currentTag = tagHub;
@@ -121,7 +121,7 @@ public class Hub extends AppCompatActivity {
         return currentTag - '0';
     }
 
-    public void setUpNavigationView() {
+    public void setupNavigationView() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override

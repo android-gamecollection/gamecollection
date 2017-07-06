@@ -137,6 +137,129 @@ Laden anbieten und alle Spiele, nach Kategorie aufgeteilt, anzeigen.
 
 \subsection{Die Hub Activity}
 
+Grundsätzlich arbeitet sie mit \emph{Tags}, welche bestimmen welches Fragment
+gerade aktiv und zu sehen ist. Sie setzt den Titel der \textbf{Toolbar} passend
+zu jedem Fragment. Außerdem wird hier der \emph{Navigation Drawer}
+(kurz \emph{NavDrawer}) aufgebaut und gesteuert.
+
+\subsubsection{Initialisierung}
+
+\begin{lstlisting}[caption={Hub onCreate() Methode},captionpos=b]
+private final char tagHub = '0', tagCards = '1', tagBoard = '2', tagInfo = '3', tagSettings = '4';
+...
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setDefaultValuesOfSettingsFirstTime();
+	setContentView(R.layout.activity_hub);
+	setupActionBar();
+
+	drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+	navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+	setupNavigationView();
+
+	if (savedInstanceState == null) {
+		currentTag = tagHub;
+		loadHomeFragment();
+	} else {
+		setToolbarTitle();
+	}
+}
+\end{lstlisting}
+
+Die Methode in Zeile 39 setzt die Standardwerte der \emph{Einstellungen}, sie
+wird nur aufgerufen wenn die App das erste mal startet. Weiter setzt
+\code{setupActionBar()}, die \textbf{Toolbar} auf. Zeile 43 \& 44 weisen die
+\textbf{Views} für den \emph{NavDrawer} zu und \code{setupNavigationView()}
+definiert den \emph{NavDrawer} mit den jeweiligen Klick-Events. Die
+\code{if(...)} Abfrage überprüft ob die App neu gestartet wurde und setzt
+dementsprechend den \code{currentTag} auf \code{tagHub}, also dem Spielehub,
+oder behält den momentanen und setzt den richtigen Titel für die
+\textbf{Toolbar}. Die Variablen für die Tags werden als \code{final char}
+zugewiesen, um nicht veränderbar zu sein.
+
+\begin{lstlisting}[caption={Hub loadHomeFragment() Methode},captionpos=b]
+private void loadHomeFragment() {
+	selectNavMenu();
+	setToolbarTitle();
+
+	if (getSupportFragmentManager().findFragmentByTag(Character.toString(currentTag)) != null) {
+		drawer.closeDrawers();
+	return;
+	}
+
+	// add to the message queue
+	new Handler().post(new Runnable() {
+	@Override
+	public void run() {
+		Fragment fragment = getHomeFragment();
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+		fragmentTransaction.replace(R.id.frame, fragment, Character.toString(currentTag));
+		fragmentTransaction.commitAllowingStateLoss();
+	}
+});
+
+drawer.closeDrawers();
+}
+\end{lstlisting}
+
+Die Methode \code{loadHomeFragment} lädt das gewünschte \textbf{Fragment} in den
+Vordergrund. \code{selectNavMenu()} markiert das ausgewählt \textbf{Fragment} im
+\emph{NavDrawer}. Die \code{if(...)} Abfrage checkt ob das ausgewählte 
+\textbf{Fragment} nicht schon im Vordergrund ist. Wenn es im Vordergrund ist,
+wird der \emph{NavDrawer} einfach geschlossen. Ansonsten wird ein \code{Handler}
+mit dem jeweiligen \textbf{Fragment} \emph{geposted}. Der \code{Handler} wird
+mit einer \code{Runnable()} aufgerufen, welche Vorort implementiert wird. Mit
+\code{getHomeFragment()} wird das \textbf{Fragment} geladen. Die Transaktion
+bekommt eine eigene Animation zugewiesen und dann wird das zugehörige
+\textbf{FrameLayout}, das \textbf{Fragment} und der \emph{Tag} deklariert. Diese
+Herangehensweise mit einem \code{Handler} wird verwendet, da sie für größere
+Datenmengen performanter ist. Am Ende wird der \emph{NavDrawer} geschlossen.
+
+\begin{infobox}[frametitle=Handler]
+Erlaubt das Senden und Ausführen von \textbf{Message} oder \textbf{Runnable}
+Objekten in Verbindung mit der \textbf{MessageQueue} eines \emph{Threads}. Jeder
+Handler ist einem \emph{Thread} und deren \textbf{MessageQueue} zugewiesen.
+Kann zum Zeitversetzten ausführen eine Prozesses oder der Einreihung einer
+Aktion für einen anderen \emph{Thread} benutzt werden.
+\end{infobox}
+
+\begin{lstlisting}[caption={Hub setupNavigationView) Methode},captionpos=b]
+public void setupNavigationView() {
+	navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+		@Override
+		public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+			char numericShortcut = menuItem.getNumericShortcut();
+			switch (numericShortcut) {
+				case tagHub:
+				case tagCards:
+				case tagBoard:
+					currentTag = numericShortcut;
+					break;
+				case tagInfo:
+					openPreferenceScreen(getString(R.string.nav_item_info), new InfoFragment());
+					break;
+				case tagSettings:
+					openPreferenceScreen(getString(R.string.nav_item_settings), new SettingsFragment());
+					break;
+				default:
+					currentTag = tagHub;
+		}
+	loadHomeFragment();
+	return true;
+	}
+});
+...
+}
+\end{lstlisting}
+
+Hier werden dem \emph{NavDrawer} die Klick-Events zugewiesen. Die Abfrage
+erfolgt durch den Vergleich des \code{currentTag} mit dem in der
+\code{nav\_drawer\_items.xml} definierten \emph{NumericShortcut}.
+
+
 \subsection{Die Fragments}
 
 \subsection{Navigation Drawer}
