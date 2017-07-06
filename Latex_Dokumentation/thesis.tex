@@ -39,7 +39,8 @@
 \usepackage{tabularx}
 \usepackage{setspace}
 \usepackage{booktabs}
-\usepackage{mdframed}
+\usepackage[framemethod=TikZ]{mdframed}
+\usetikzlibrary{shadows}
 \setcounter{secnumdepth}{2}
 \usepackage[style=numeric,backend=bibtex,sorting=none]{biblatex}
 \setcounter{tocdepth}{2}
@@ -266,6 +267,14 @@ columns=fullflexible, %
 %  moredelim=[il][\textcolor{pgrey}]{$$},
 %  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }
+
+\newmdenv[%
+	frametitlebackgroundcolor = black!15,
+	roundcorner               = 1pt,
+	shadow                    = true,
+	shadowsize                = 4pt,
+]{infobox}
+
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 \geometry{a4paper, top=28mm, left=28mm, right=28mm, bottom=28mm, footskip=18mm}
 \begin{document}
