@@ -13,8 +13,8 @@ import todo.gamecollection.App;
 
 public class SavegameStorage {
 
-    private static final String SAVE_DATA_NAME = "Test.Savegames";
-    private static final String SAVE_DATA_KEY = "TESTKEY0";
+    private static final String SAVE_DATA_NAME = "Gamecollection";
+    private static final String SAVE_DATA_KEY = "SAVEGAMES";
     private static final Type gsonType = new TypeToken<ArrayList<Savegame>>() {
     }.getType();
     private static SavegameStorage instance = null;
@@ -87,10 +87,11 @@ public class SavegameStorage {
     }
 
     public synchronized Savegame getFromUuid(String uuid) {
-        if (uuid == null) return null;
-        for (Savegame savegame : saveGameList) {
-            if (savegame.uuid.equals(uuid)) {
-                return savegame;
+        if (uuid != null) {
+            for (Savegame savegame : saveGameList) {
+                if (savegame.uuid.equals(uuid)) {
+                    return savegame;
+                }
             }
         }
         return null;

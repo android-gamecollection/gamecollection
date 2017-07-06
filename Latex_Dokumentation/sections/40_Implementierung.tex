@@ -617,7 +617,7 @@ private SavegameStorage() {
 }
 \end{lstlisting}
 
-In Zeile 216 sieht man die Zuweisung der \textbf{SharedPreferenses} Variable
+In Zeile 216 sieht man die Zuweisung der \textbf{SharedPreferences} Variable
 durch die Methode \code{getSharedPreferences(..., ...)}, welche als erstes
 Argument den Dateinamen enthält und als zweites einen Zugriffsmodus, welcher in
 diesem Fall der \emph{MODE\_PRIVATE} ist. Dieser Modus verhindert den Zugriff
@@ -625,6 +625,51 @@ anderer Apps auf die gespeicherten Daten.\\ Weiter erkennt man das Laden des
 \textbf{JSON}-Strings durch \code{savegamesSharedP.getString(Key, Defaultwert)}.
 Wenn dieser String dann etwas beinhaltet, dann wird er deserialisiert und
 zugewiesen, ansonsten wird mit einer leeren Liste gearbeitet.
+
+\begin{lstlisting}[caption={SavegameStorage Speicherfunktionen},captionpos=b]
+public synchronized void addSavegame(Savegame savegame) {
+	if (savegame != null) {
+		saveGameList.add(savegame);
+		putStringToEditor();
+	}
+}
+
+public synchronized void updateSavegame(Savegame savegame) {...}
+
+public synchronized void deleteSavegame(Savegame savegame) {...}
+
+private synchronized void putStringToEditor() {
+	for (Savegame savegame : saveGameList) {
+		savegame.bundle.setClassLoader(null);
+	}
+	String saveGameListToString = gson.toJson(saveGameList, gsonType);
+	SharedPreferences.Editor editor = savegamesSharedP.edit();
+	editor.putString(SAVE_DATA_KEY, saveGameListToString);
+	editor.apply();
+}
+\end{lstlisting}
+ 
+Ob \emph{add-()}, \emph{update-()} oder \emph{deleteSavegame()}; alle diese
+Methoden arbeiten gleich. Sie bekommen ein Savegame als Parameter und verändern
+damit die interne \code{saveGameList}. Am Ende wird diese mit
+\code{putStringToEditor()} via \textbf{Gson} serialisiert und dann mit
+\textbf{SharedPreferences} gespeichert.
+
+\begin{lstlisting}[caption={SavegameStorage Suche der Spielstände},captionpos=b]
+public synchronized Savegame getFromUuid(String uuid) {
+	if (uuid != null) {
+		for (Savegame savegame : saveGameList) {
+			if (savegame.uuid.equals(uuid)) {
+				return savegame;
+			}
+		}
+	}
+	return null;
+}
+\end{lstlisting}
+
+Eine sehr einfache, dennoch essentielle Methode ist die \code{getFromUuid()},
+welche das zu einer \code{UUID} zugehörige \code{Savegame} zurückgibt.
 
 \subsection{Savegame}
 
@@ -696,7 +741,14 @@ public String getDateString() {
 \subsection{SavegameAdapter}
 
 Diese Klasse erstellt für den Startbildschirm (\code{fragment.Hub}) Karten, die
-genutzt werden um Spielstände in einem \code{Recyclerview} anzuzeigen und zu
+genutzt werden um Spielstände in einem \code{RecyclerView} anzuzeigen und zu
 laden. Außerdem weist sie die Klick-Events zu und sortiert die Spielstände nach
 dem Datum.
+
+\begin{mdframed}[frametitle=Erklärung: RecyclerView]
+Ein flexibler \textbf{View}, welcher eine große Datenmenge in einem begrenzten
+Fenster anzeigen kann. Dabei ist er sehr performant, da er schon genutzte
+\textbf{View}s im \textbf{cache} platziert, um sie später wieder zu nutzen. 
+\end{mdframed}
+
 

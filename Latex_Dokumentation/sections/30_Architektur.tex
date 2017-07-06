@@ -37,13 +37,18 @@ gespeichert.
 \code{SavegameAdapter} erstellt aus den gepeicherten \code{Savegame} Objekten;
 für jeden Spielstand eine Karte, welche im Startbildschirm in einer Liste
 angezeigt wird. Die Klasse ist etwas komplizierter aufgebaut als die anderen.
-Sie besitzt innere Klassen, Vererbungen und eine Interface-Implementierung.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/savegamestorage/SavegameAdapter}
 	\caption{Spielstand SavegameAdapter}
 \end{figure}
+
+\code{SavegameViewHolder} \& \code{SavegameAdapterCallback} sind zwei innere
+Klassen. Erstere erbt von \code{RecyclerView.ViewHolder} und implementiert
+gleichzeitig das Interface \code{View.OnClickListener}. Zweitere erbt von
+\code{SortedListAdapterCallback<Savegame>}. \code{SavegameAdapter} erbt von
+\code{RecyclerViewAdapter<SavegameAdapter.SavegameViewHolder>}
 
 \subsection{Aufbau}
 \subsectionauthor{\frank}
