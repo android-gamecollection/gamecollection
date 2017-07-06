@@ -487,7 +487,7 @@ Die Methode \code{onLoadGame()},welche die abstrakte Methode der Oberklasse
 \code{GameActivity} überschreibt wird sowohl bei neuen Spielen, als auch beim
 Laden eines alten Spielstandes aufgerufen und setzt in Kenntnis, um welche Art
 von Schachspiel es sich handelt. Dies gelingt durch das überprüfen der gesetzten
-Tags in der Instanz von \code{Game()}, welche ebenfalls über \code{GameActivity}
+Tags in der Instanz von \code{Game}, welche ebenfalls über \code{GameActivity}
 vererbt wurde. Die hierbei infrage kommenden Tags sind \emph{aiGame}, welches
 anzeigt ob es sich um ein Mensch gegen Computer Spiel handelt und
 \emph{chess960}, welcher definiert, ob die erweiterten Schachspielregeln für
@@ -572,6 +572,18 @@ von ihnen mit einem eigenen \code{PromotionClickListener}, welcher den Dialog
 beendet und den entsprechenden  \code{promotionmove} mit der jeweiligen neuen 
 Figur durchführt.
 
+\subsection{Chess960}
+Schach960 ist eine leichte Abwandlung des normalen Schachspiels. 
+Hauptbestandteil sind die zufällig aufgestellten Figuren der Zweiten Reihe, 
+welche eine erfrischende Abwechslung zur normalen Schachaufstellung sind. Daher 
+kommt auch die Namensgebung, da insgesamt 960 verschiedene 
+Aufstellungsmöglichkeiten existieren. Neben dem Faktor der Abwechslung fordert 
+dieser Spielmodus auch Schach-KIs heraus, da die Vielzahl von Startmöglichkeiten 
+verhindert, das sogenannte \emph{Startbücher} benutzt werden können, welche die 
+ersten Züge vorberechnet gespeichert haben und einer KI einen Zeitvorteil geben. 
+Um ein Schach960 Spiel zu starten muss lediglich der Tag \emph{chess960} in der 
+Instanz von \code{Game} gespeichert werden. Die Schachlogik stellt sich beim 
+starten von selbst ein und benutzt von nun an die erweiterten Schach960-Regeln.
 
 \section{Kartenspiele}
 \sectionauthor{\philipp}
