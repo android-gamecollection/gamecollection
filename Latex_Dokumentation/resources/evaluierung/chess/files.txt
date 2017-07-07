@@ -1,0 +1,10 @@
+castling_after
+castling_before
+checkmate
+enpassant_after
+enpassant_bofore
+promotion_checkmate
+promotion_dialog
+screen
+special
+stalemate
