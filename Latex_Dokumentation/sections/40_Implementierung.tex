@@ -1296,7 +1296,7 @@ Im \emph{Konstruktor} holt sich die Klasse die Spielstände von
 \code{Savegamestorage} und führt sie intern als \textbf{SortedList<Savegame>}.
 Wegen dieser \textbf{SortedList} wird die innere Klasse
 \code{SavegameAdapterCallback} implementiert. Diese erbt von
-\code{SortedListAdapterCallback<>} und hat den Zweck, die Liste mit
+\code{SortedList\allowbreak AdapterCallback<>} und hat den Zweck, die Liste mit
 \textbf{RecyclerView.Adapter} zu binden. So ist es möglich die Liste zu
 sortieren und aktuell zu halten.
 
@@ -1312,7 +1312,8 @@ public void onBindViewHolder(SavegameViewHolder holder, int position) {
 	if (game != null) {
 		holder.gameTitle.setText(game.getGameTitle());
 		holder.gameSubtitle.setText(game.getGameDescription());
-		holder.gameIcon.setImageDrawable(App.getContext().getDrawable(game.getGameIconId()));
+		holder.gameIcon.setImageDrawable(App.getContext()
+		.getDrawable(game.getGameIconId()));
 		holder.gameDate.setText(savegame.getDateString().toUpperCase());
 	}
 }
@@ -1374,3 +1375,80 @@ Grundlegende Methoden wie \code{getItemCount()},
 \code{SavegameStorage} zugreifen, um dem Nutzer die Möglichkeit zu bieten,
 seine Spielstände zu löschen. Diese Funktion wird in \code{fragment.Hub}
 realisiert.
+
+\section{Einstellungen und Info}
+\sectionauthor{\leonard}
+
+Beide Fragmente werden durch \code{SettingsActivity} gestartet und besitzen eine
+\textbf{XML}-Datei welche \textbf{Preferences} darstellen.
+
+\begin{infobox}[frametitle=Preferences]
+Sind Einstellungsobjekte welche mit einem Key und einer Value gespeichert
+werden. PreferenceScreen ist die höchste Ebene einer Preference-Hierarchie. Sie
+kann mehrere Preferences enthalten und auch diese durch PreferenceCategory in
+Kategorien unterteilen. Preferences werden mit SharedPreferences gespeichert.
+\end{infobox}
+
+Die Standard-Einstellungen werden im \emph{Activity-Hub} geladen. 
+
+\subsection{SettingsActivity}
+
+Diese lädt je nach Parametern das richtige \textbf{Fragment}.
+
+\begin{lstlisting}[caption={SettingsActivity onCreate() Methode},captionpos=b]
+public static final String KEY_PREFERENCE_ITEMS = "xmlToLoad";
+public static final String KEY_TITLE = "title";
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_settings);
+	Bundle extras = getIntent().getExtras();
+	setTitle(extras.getString(KEY_TITLE));
+	Fragment fragment = (Fragment) extras.getSerializable(KEY_PREFERENCE_ITEMS);
+	getFragmentManager().beginTransaction().replace(R.id.settings_frame_layout, fragment).commit();
+	setupActionBar();
+}
+\end{lstlisting} 
+
+In der \code{onCreate(Bundle)} Methode, wird aus dem im \textbf{Bundle}
+mitgelieferten Parametern, \code{title} und \code{xmlToLoad}, das Fragment
+bestimmt, welches geladen werden soll. Der \emph{Key} \code{title} wird hierbei
+nur für den in der \textbf{Toolbar} angezeigten Namen benutzt. Der zweite
+\emph{Key} trägt das \textbf{Fragment} mit sich. Diese Parameter werden in der
+\emph{Hub-Activity} beim Aufruf mitgegeben.
+
+\subsection{SettingsFragment}
+
+Vorweg sei gesagt, dass beide \textbf{Fragmente}, das Interface
+\textbf{Serializable} implementieren, um sich durch ein \textbf{Bundle} senden
+lassen zu können.
+
+Das Fragment lädt \code{settings.xml} und zeigt es an. Die \textbf{XML}-Datei
+erledigt schon den meisten Teil. Sinn der Sache ist es, die Einstellungswerte in
+einer \textbf{Activity} zu laden und zu verwenden. Zum Beispiel kann man bei
+diesen Einstellungen die Farbe des \emph{FAB}s wählen, welche in der zugehörigen
+\textbf{Activity} geladen wird und dann dem \emph{FAB} zugewiesen wird. Die
+Einstellungen sind also ein \emph{Key-Value} Speicher.
+
+Auch hat diese Klasse eine Methode und einen zugehörigen Knopf, welche für das
+wiederherstellen der Standard-Einstellungen ist. Diese Methode heißt
+\code{restorePreferences()}. Wird der Knopf, welcher sich in der
+\textbf{Toolbar} befindet, gedrückt, so erscheint zur Sicherheit noch ein Dialog
+zur Abfrage ob auch wirklich die Einstellungen zurückgesetzt werden sollen.
+
+\subsection{InfoFragment}
+
+Man kann die \textbf{Preferences} aber auch verwenden um Information
+strukturiert wieder zu geben. Natürlich könnte man auch sein eigenes
+\textbf{Layout} mit mehreren Listen, Texten und Bildern erstellen, aber so geht
+es einfacher. Das \code{InfoFragment} dient der Vermittlung von Information über
+die Bibliotheken und Entwickler. 
+
+Die Implementierung selbst enthält einige Dialoge die beim drücken des
+jeweiligen Listenobjektes erscheinen.	
+
+
+
+
+
