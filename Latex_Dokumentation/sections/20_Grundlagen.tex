@@ -251,7 +251,7 @@ ausschlaggebend für die stärke der Künstlichen Intelligenz sind. So kann man
 hier mithilfe einer der vielen Getter und Setter-Methoden einstellen, wie lange 
 die KI maximal für einen Zug brauchen darf. Eine effektivere Methode die 
 Intelligenz zu regeln ist jedoch die maximale Suchtiefe der KI festzulegen, was 
-sich bei versuchen mit Suchtiefen 1,6 und 12 als passend herausgestellt hat.
+sich bei Versuchen mit Suchtiefen 1,6 und 12 als passend herausgestellt hat.
 
 \subsubsection{SearchEngine}
 
@@ -259,7 +259,7 @@ Die \code{SearchEngine} ist das Herzstück der Künstlichen Intelligenz von
 Carballo und besitzt dementsprechend ein menge komplizierter Methoden von denen 
 man zum Glück nur eine handvoll selber ausführt. Zum Initialisieren benötigt man 
 eine vorher erstelle \code{Config}, welche man dem Konstruktor übergibt. 
-daraufhin sollte man \code{SearchParameters} mit der 
+Daraufhin sollte man \code{SearchParameters} mit der 
 Methode \code{setInitialSearchParameters()} übergeben um seine KI richtig 
 einzustellen. Um den besten berechneten Move zu bekommen muss man zuerst das 
 Runnable von dem \code{SearchEngine} erbt laufen lassen und dann 
@@ -274,7 +274,8 @@ Aufstellung beginnen. Alle wichtigen Funktionen, wir das setzen und Rückgängig
 machen von Zügen und das ausgeben des Spielfeldes als FEN-String werden hier 
 untergebracht. Beim erschaffen des Boardes ist darauf zu achten, das man bei 
 Benutzung der KI das Board nicht selber erstellt wird, sondern aus der 
-\code{SearchEngine} bekommt, nachdem diese Wiederum mit einer \code{Config} 
+\code{SearchEngine} extrahiert wird, nachdem diese Wiederum mit einer 
+\code{Config} 
 gestartet wurde, da ansonsten KI und Spieler auf unterschiedlichen Boards 
 spielen würden.
 
