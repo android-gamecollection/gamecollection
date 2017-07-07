@@ -1168,7 +1168,7 @@ wieder in seine ursprüngliche Form, einer \code{ArrayList<Savegame>}, gebracht.
 \begin{lstlisting}[caption={SavegameStorage Konstruktor},captionpos=b]
 private SavegameStorage() {
 	saveGameList = new ArrayList<>();
-	savegamesSharedP = App.getContext().getSharedPreferences(SAVE_DATA_NAME, Context.MODE_PRIVATE);
+	savegamesSharedP = App.getContext().getSharedPreferences(SAVE_DATA_NAME, Context.MODE_PRIVATE); &\label{line:SharedPref}&
 	String saveGameListAsString = savegamesSharedP.getString(SAVE_DATA_KEY, "");
 	if (!saveGameListAsString.isEmpty()) {
 		saveGameList = gson.fromJson(saveGameListAsString, gsonType);
@@ -1176,7 +1176,7 @@ private SavegameStorage() {
 }
 \end{lstlisting}
 
-In Zeile 216 sieht man die Zuweisung der \textbf{SharedPreferences} Variable
+In Zeile Zeile~\ref{line:SharedPref} sieht man die Zuweisung der \textbf{SharedPreferences} Variable
 durch die Methode \code{getSharedPreferences(..., ...)}, welche als erstes
 Argument den Dateinamen enthält und als zweites einen Zugriffsmodus, welcher in
 diesem Fall der \emph{MODE\_PRIVATE} ist. Dieser Modus verhindert den Zugriff
