@@ -84,8 +84,93 @@ braucht jeder Actor eine Location. Mit \code{addActor(TextActor, Location)}
 zeigt man den Actor auf dem Board an, und mit \code{removeActor(TextActor)}
 wird dieser wieder entfernt.
 
-\section{Carballo Library}
-\sectionauthor{\oliver}
+\section{Schach}
+
+\subsection{Die Forsyth-Edwards-Notation}
+\subsectionauthor{\frank}
+
+Dise unserverselle Notation ermöglicht es, jede Figurenaufstellung und weitere
+Zusatzinformationen wie beispielsweise die aktuelle Zugnummer in Schach zu
+beschreiben.\\ Ein typischer Notationsstring sieht so aus:
+
+\code{rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1}
+
+Dies ist die Notation, welche die Standardaufstellung im Schach beschreibt.\\
+Ein FEN-String ist unterteilt in 6 Gruppen.
+
+\subsubsection{1. Gruppe: Aufstellung}
+
+\code{rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR}
+
+\begin{wraptable}{r}{0pt}
+\begin{tabular}{ l|l|l }
+	\textbf{Symbol} & \textbf{Englisch}    & \textbf{Deutsch} \\
+	\rule{0pt}{16pt}%
+	\code{r / R}    & rook                 & Turm             \\
+	\code{n / N}    & knight               & Springer         \\
+	\code{b / B}    & bishop               & Läufer           \\
+	\code{q / Q}    & queen                & Dame             \\
+	\code{k / K}    & king                 & König            \\
+	\code{p / P}    & pawn                 & Bauer            \\
+\end{tabular}
+\end{wraptable}
+Diese Gruppe beschreibt die Aufstellung der Figuren, indem das Schachbrett in
+seine acht Reihen aufgeteilt wird. Die Reihen werden durch Schrägstriche
+voneinander getrennt. Die Positionen werden durch Zahlen, welche die Anzahl der
+leeren Felder zwischen Figuren beschreibt, und durch Buchstaben, welche die
+Schachfiguren repräsentieren. Die schwarzen Figuren werden durch
+Kleinbuchstaben, die weißen durch Großbuchstaben dargestellt. Somit bedeutet
+\code{r5P1}: Ein schwarzer Turm gefolgt von fünf leeren Feldern gefolgt von
+einem weißen Bauern im 7. Feld
+(r$\square\square\square\square\square$P$\square$).
+
+\subsubsection{2. Gruppe: Zugrecht}
+
+\code{w}
+
+Diese Gruppe beschreibt die Farbe, die aktuell am Zug ist. \code{w} für Weiß und
+\code{b} für Schwarz.
+
+\subsubsection{3. Gruppe: Rochade}
+
+\code{KQkq}
+
+Hier wird festgelegt, ob noch Rochiert werden kann. Ein \code{k / K} steht für
+eine kurze Rochade von Schwarz beziehungsweiße Weiß, \code{q / Q} für eine lange
+Rochade. \code{-} heißt, eine Rochade ist nicht mehr möglich.
+
+\subsubsection{4. Gruppe: En passant}
+
+\code{-}
+
+Beschreibt die Schachfeldposition, auf die ein \emph{En passant}-Schlag möglich
+wäre, unabhängig davon, ob eine passende gegenerische Figur dazu bereit steht.
+Die Form, die diese Gruppe annehmen kann ist:\\ \code{\dq-\dq | (\dq a\dq | \dq
+b\dq | \dq c\dq | \dq d\dq | \dq e\dq | \dq f\dq | \dq g\dq | \dq h\dq)(\dq3\dq
+| \dq6\dq)}
+
+\subsubsection{5. Gruppe: Halbzüge}
+
+\code{0}
+
+Hier wird die Anzahl der Halbzüge seit dem letzten Bauernzug oder Schlagen einer
+Figur angegeben, um die 50-Züge-Remisregel einzuhalten.
+
+\subsubsection{6. Gruppe: Zugnummer}
+
+\code{1}
+
+In der letzten Gruppe steht die Nummer des nächsten Zuges. Nach jedem Zug von
+Schwarz wird sie erhöht.
+
+\rule{\textwidth}{0.5pt}
+
+Die Forsyth-Edwards-Notation wird im Laufe dieser Dokumentation mit der
+Abkürzung \textbf{FEN} benannt.
+
+\subsection{Carballo Library}
+\subsectionauthor{\oliver}
+
 Da zusätzlich eine eigene Schach-Library zu schreiben den Ramen des 
 Programmierprojektes sprengen würde wird eine Library für die Schach-Logik 
 verwendet. Nachdem anfangs die Library 
@@ -97,7 +182,8 @@ sehr bedingt auffindbaren Kommentaren konnte mit Hilfe des Quellcodes der
 Webseite \href{https://www.mobialia.com/webchessgwt/}{www.mobilia.com} welche 
 ebenfalls Carballo als Engine verwendet die Library zum laufen gebracht werden.
 
-\subsection{Config}
+\subsubsection{Config}
+
 Die \code{Config} ist wie der Name schon sagt für die Konfiguration eines Spiels 
 zuständig. In ihr wird festgelegt, um welche Art von Schach es sich handelt, wie 
 Stark die KI ist und ob ein Startbuch verwendet wird, welches die KI in den 
@@ -106,7 +192,8 @@ mit Startbuch eingestellt, obwohl keines mitgeliefert wurde. Dies hat zwar keine
 Auswirkungen auf den Spielverlauf, sollte aber dennoch mithilfe einer der für 
 alle Attribute verfügbaren Setter-Methoden konfiguriert werden.
 
-\subsection{SearchParameters}
+\subsubsection{SearchParameters}
+
 Die Klasse \code{SearchParameters} enthält wichtige Informationen welche später 
 ausschlaggebend für die stärke der Künstlichen Intelligenz sind. So kann man 
 hier mithilfe einer der vielen Getter und Setter-Methoden einstellen, wie lange 
@@ -114,7 +201,8 @@ die KI maximal für einen Zug brauchen darf. Eine effektivere Methode die
 Intelligenz zu regeln ist jedoch die maximale Suchtiefe der KI festzulegen, was 
 sich bei versuchen mit Suchtiefen 1,6 und 12 als passend herausgestellt hat.
 
-\subsection{SearchEngine}
+\subsubsection{SearchEngine}
+
 Die \code{SearchEngine} ist das Herzstück der Künstlichen Intelligenz von 
 Carballo und besitzt dementsprechend ein menge komplizierter Methoden von denen 
 man zum Glück nur eine handvoll selber ausführt. Zum Initialisieren benötigt man 
@@ -126,7 +214,8 @@ Runnable von dem \code{SearchEngine} erbt laufen lassen und dann
 \code{getBestMove()} aufrufen, was einen Integer im Move-format zurückgibt, 
 später dazu mehr.
 
-\subsection{Board}
+\subsubsection{Board}
+
 Die Klasse \code{Board} stellt das Spielfeld dar. Es kann je nach belieben mit 
 einem FEN-String initialisiert werden oder einfach mit der standard Schach 
 Aufstellung beginnen. Alle wichtigen Funktionen, wir das setzen und Rückgängig 
@@ -137,7 +226,8 @@ Benutzung der KI das Board nicht selber erstellt wird, sondern aus der
 gestartet wurde, da ansonsten KI und Spieler auf unterschiedlichen Boards 
 spielen würden.
 
-\subsection{Move}
+\subsubsection{Move}
+
 Die Klasse \code{Move} erstellt nicht wie zunächst vermuten lässt Elemente von 
 Move. Jeder Move der an das Spielfeld geht wird von der Klasse \code{Move} durch 
 verschiedene Methoden generiert und als Integer übergeben. Dies wurde 
@@ -145,4 +235,4 @@ anscheinend aufgrund von Performancegründen so realisiert. Die wichtigste diese
 Methoden ist wohl \code{getFromString}, welcher man einen für Menschen 
 verständlichen Schachzug übergibt und in einen für das \code{Board} 
 verständliche Version umwandelt. Für Debug-Zwecke kann man sich entscheiden 
-diesen Move nicht zu validiert, sodass ungültige Züge gesetzt werden können. 
+diesen Move nicht zu validiert, sodass ungültige Züge gesetzt werden können.
