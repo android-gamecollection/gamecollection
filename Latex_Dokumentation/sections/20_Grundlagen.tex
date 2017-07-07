@@ -1,5 +1,48 @@
 \chapter{Grundlagen}
 
+\section{Android}
+\sectionauthor{\oliver}
+
+\subsection{Activity}
+Aktivitäten sind die Grundbausteine für eine Android-App. Sie dienen als 
+Einstiegspunkt für die Interaktion des Benutzers der App. Hauptaufgaben einer 
+\code{Activity} sind sowohl einen Gelungenen Übergang zwischen dem Landscape und 
+dem Portait Modus herzustellen, als auch dem System mitzuteilen, wann eine 
+Prozess terminiert werden darf, ohne Benutzerinformationen zu verlieren. Für 
+gewöhnlich füllt eine Aktivität einen kompletten Bildschirm aus, sie kann aber 
+auch kleiner sein und über einer anderen \emph{schweben}. Typischerweise ist 
+jeder Screen einer App eine eigene Activity, sodass eine Aktivität als 
+\emph{main activity} spezifiziert wird, welche beim starten der App ausgeführt 
+wird.
+
+\subsection{Activity Lifecycle}
+Der Activity Lifecycle beschreibt den Lebenszyklus einer Aktivität. Neben den drei Zuständen die eine Aktivität besitzt, beschreibt der Lifecycle auch die Methoden der Klasse \code{Activity}, welche nach belieben überschrieben werden können um bestimmte Statusübergänge zu programmieren.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{resources/android/lifecycle}
+	\caption{Activity Livecycle}
+\end{figure}
+Die drei genannten zustände sind:
+\begin{itemize}
+	\item \code{Resumed} (Aktivität ist im Vordergrund und wird benutzt)
+	\item \code{Paused} (Eine andere Aktivität überdeckt die eigene Aktivität, aber 
+nicht komplett. Die Aktivität ist von voll intakt und \emph{am leben}. Das 
+Android System kann die Aktivität bei niedrigem Speicher zerstören)
+	\item \code{Stopped} (Die Aktivität ist komplett im Bildschirmhintergrund. Auch 
+diese Aktivität ist intakt und kann vom System zu Speicherzwecken gelöscht 
+werden)
+	
+\end{itemize}
+Im folgenden werden alle überschreibbaren Lifecycle-Callbacks im grundlegenden erklärt:
+\begin{itemize}
+	\item \code{onCreate()} (Wird beim ersten erzeugen aufgerufen, bekommt ein \code{Bundle} mit den Informaitonen des vorherigen Zustands übergeben)
+	\item \code{onRestart()} (wird aus dem gestopptem Zustand aufgerufen, bevor die Aktivität erneut gestartet wird)
+	\item \code{onStart()} (wird aufgerufen, kurz bevor die Aktivität sichtbar wird)
+	\item \code{onResume()} (wird aufgerufen, kurz bevor der User mit ihr interagieren kann)
+	\item \code{onPause()} (wird aufgerufen, kurz bevor eine andere Aktivität startet. Hier sollten wichtige Informationen gespeichert werden. Nach diesem Punkt kann die Aktivität vom System beendet werden)
+	\item \code{onStopp()} (wird aufgerufen, wenn die Aktivität nicht mehr sichtbar ist)
+	\item \code{onDestroy()} (wird aufgerufen, kurz bevor die Aktivität zerstört wird. Nach dieser Methode folgt keine weitere Callback-Methode)
+\end{itemize}
 \section{JDroid Library}
 \sectionauthor{\philipp}
 
