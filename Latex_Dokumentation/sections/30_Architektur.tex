@@ -90,3 +90,26 @@ das Löschen eines Spielstandes ist an dieser Stelle zum aktuellen Zeitpunkt
 noch nicht vorhanden.
 
 \let\thefootnote\relax\footnote{Ein Klassendiagramm der Spielstände, ist im Anhang zu finden.}
+
+\section{Einstellungen und Info}
+\sectionauthor{\leonard}
+
+Da der Nutzer gerne seine App selbst ein wenig gestalten will, ist es ratsam
+Einstellung zu haben. Ob farbliche Akzente oder die Schwierigkeit des
+Gegenspielers, der Nutzer ist glücklicher wenn er bestimmen darf. Deswegen
+haben wir Einstellungen implementiert und außerdem noch eine Informationsseite,
+welche für den Nutzer von Interesse sein könnte. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/settingsandinfo/settingsandinfo}
+	\caption{Einstellungen und Info}
+\end{figure}
+
+Die \code{SettingsActivity} wählt das jeweilige \textbf{Fragment}, welches
+angezeigt werden soll. \code{SettingsFragment} ist für die Einstellungen und
+\code{InfoFragment} für die Informationsseite zuständig. Beide erben von
+\code{PreferenceFragment}und implementieren das Interface
+\code{Serializable}. Da \emph{Info} einige Dialoge anzeigen muss, enthält es
+die innere Klasse \code{DialogClickListener}.
+
