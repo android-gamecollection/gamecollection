@@ -464,7 +464,16 @@ public void onCreate(@Nullable Bundle savedInstanceState) {
 
 In \code{onCreate(Bundle)} wird dann ermittelt, welches der beiden geladen wird.
 Da der String in das \textbf{Bundle} des \textbf{Intent}s geladen wurde, kann
-er so wieder heraus geholt werden. Die Methode \code{Game.getGameList{String}}
+er so wieder heraus geholt werden. 
+
+\begin{infobox}[frametitle=Intent]
+Ist eine abstrakte Beschreibung einer Operation die ausgeführt werden soll. Man
+kann damit eine Activity starten, oder mit einem Service kommunizieren. Auch
+kann man einem Intent Daten übergeben, welche am anderen Ende gelesen werden
+können.
+\end{infobox}
+
+Die Methode \code{Game.getGameList{String}}
 unterscheidet dann intern zwischen den beiden und gibt die entsprechende Liste
 zurück.\\
 
@@ -506,7 +515,8 @@ Im Vergleich zu \code{GameSelection}, ist dieses Fragment etwas überfüllter, d
 es viel mehr Funktionen hat. Zum einen wäre da der \textbf{FloatingActionButton}
 (kurz FAB). Welcher zusätzlich zu der \emph{NavDrawer} Menüleiste, auch zu
 Brett- und Kartenspielen weiter leiten kann. Hier speziell ist es sogar eine
-\emph{nested} Version des \emph{FAB}s.
+\emph{nested} Version des \emph{FAB}s. (Implementierung orientiert sich an
+die von PRABEESH\cite{PRABEESHR2016})
 
 \begin{infobox}[frametitle=FloatingActionButton]
 Ein runder Button der immer eine positive Aktion ausführt. Er
@@ -587,7 +597,8 @@ flüssiger wirkt.
 \subsection{Navigation Drawer}
 
 Als Menü verwenden wir einen \emph{Navigation-Drawer}, welcher nur im \emph{Hub}
-zur Verfügung steht. Seine Bestandteile sind:
+zur Verfügung steht. Die Implementierung orientiert sich an die von
+\emph{Ravi Tamada}\cite{Tamada2013} Seine Bestandteile sind:
 \begin{enumerate}
 \item activity\_hub.xml
 \item fragment\_hub.xml
