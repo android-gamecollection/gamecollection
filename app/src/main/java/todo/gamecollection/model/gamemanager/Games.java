@@ -76,6 +76,7 @@ public final class Games {
 
                 switch (xmlParser.getDepth()) {
                     case 2:
+                        // Tiefe 2: Kategorie
                         String[] categoryAttributes = getAttributes(xmlParser, CATEGORY_ATTRIBUTES);
                         int categoryIcon = AndroidResources.getResourceIDFromString(categoryAttributes[0]);
                         GameCategory category = new GameCategory(categoryIcon, categoryAttributes[1], categoryAttributes[2]);
@@ -84,6 +85,7 @@ public final class Games {
                         games.put(stateGameCategory, new ArrayList<Game>());
                         break;
                     case 3:
+                        // Tiefe 3: Spiel
                         String[] gameAttributes = getAttributes(xmlParser, GAME_ATTRIBUTES);
                         int gameIcon = AndroidResources.getResourceIDFromString(gameAttributes[0]);
                         Game game = new Game(gameIcon, gameAttributes[1], gameAttributes[2], gameAttributes[3], gameAttributes[4], gameAttributes[5]);

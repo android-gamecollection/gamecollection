@@ -42,6 +42,7 @@ Hier ist ein Auszug der Datei, welcher die verwendete DTD zeigt:
 \end{lstlisting}
 
 \subsubsection{Kategorien}
+\label{sssec:categories}
 
 Wie man daraus ablesen kann, können unter dem Root-Element \code{games} beliebig
 viele Kategorien hinzugefügt werden. Eine solche Kategorie wird beschrieben
@@ -117,15 +118,187 @@ Abfolgen des Spielverlaufes zu verändern. Siehe \autoref{sssec:games}.
 
 \subsection{Der Spielemanager}
 
-\includegraphics{resources/tobecontinued}
+Doch wie kommen die Spieleinformationen in eine \code{Game}-Klasse? Die Antwort
+darauf ist die Spieleverwaltung \code{Games}. Dieses Quasi-\textbf{Singleton}
+legt beim erstmaligen Initialisieren eine Liste aller Spiele und Kategorien an.
+Das geschieht mithilfe des \code{XmlResourceParser}s. Eine Übersicht über die
+Klassen- und Dateistruktur findet sich in \autoref{fig:gm_uml}. 
 
-\change{Bessere Graphik und Caption}
 \begin{figure}[h]
 	\centering
 	\includegraphics{resources/gamemanager/gamemanager_uml}
-	\caption{Test}
+	\caption{Gamemanager Übersicht}
 	\label{fig:gm_uml}
 \end{figure}
+
+\subsubsection{Der XmlResourceParser}
+
+Hierbei handelt es sich um einen einfachen Parser, der es erlaubt, XML-Dokumente
+von Anfang bis Ende zu durchlaufen.\\ Zuerst wird die Spiele-Deklarationsdatei
+mittels \emph{try-with-resources} aus den Resourcen geladen:
+
+\begin{lstlisting} 
+try (XmlResourceParser xmlParser = mContext.getResources().getXml(R.xml.games)) {
+	&[\dots]&
+} catch (XmlPullParserException | IOException e) {
+	&[\dots]&
+}
+\end{lstlisting}
+
+Anschließend kann der Parser wie ein Iterator durchlaufen werden:
+
+\begin{lstlisting}
+int eventType = xmlParser.getEventType();
+for (; eventType != XmlPullParser.END_DOCUMENT; eventType = xmlParser.next()) {
+    if (eventType != XmlPullParser.START_TAG) continue; &\label{line:starttag}&
+\end{lstlisting}
+
+Hierbei interessieren nur die Positionen am Anfang von einem Tag, da man dort
+die Attribute eines Tags abfragen kann (Zeile~\ref{line:starttag}). Weitere
+Informationen werden nicht benötigt. Jetzt ist es also so, dass der Parser in
+der Schleife immer am Anfang eines Tags steht; das ist in unserem Fall entweder
+\code{games}, \code{category} oder \code{game}, wobei nur die beiden letzteren
+relevant sind. Da diese sich auf der zweiten und dritten Verschachtelungsebene
+befinden, ist die Erkennung, um welchen es sich handelt, mit der Abfrage
+
+\begin{lstlisting} 
+switch (xmlParser.getDepth()) {
+    case 2:
+        // Tiefe 2: Kategorie
+    case 3:
+        // Tiefe 3: Spiel
+}
+\end{lstlisting}
+
+realisierbar. Nun weiß man also, ob es sich beim aktuellen Element um eine
+Kategorie oder ein Spiel handelt. Aufgrund der Tatsache, dass ein Spiel sich
+immer unter einer Kategorie befinden muss, kann man sich sicher sein, dass Fall
+\code{3} nie eintritt, bevor Fall \code{2} nicht eingetreten ist. Dies erlaubt
+uns, in Tiefe 2 Werte zu setzen, welche in Tiefe zwei für ein Spiel gebraucht
+werden, ohne zum Beispiel eine \code{NullPointerException} zu werfen. Das können
+wir für die Feststellung der Kategorie eines Spiels ausnutzen, denn der
+\code{XmlResourceParser} kennt von sich aus keine Beziehungen zwischen den
+einzelnen Tags. Die aktuelle Kategorie wird in der Status-Variablen
+\code{stateGameCategory} gesichert und anschließend benutzt, wenn ein Spiel in
+der Speicherstruktur zusammen mit der Kategorie abgespeichert wird.\\ Bei dem
+Versuch ein Objekt der \code{GameCategory} -- oder später der \code{Game} --
+Klasse zu erzeugen stößt man nun auf ein Problem: Wie schafft man es, dass aus
+dieser Attribut-Liste eine Parameter-Liste für das zu erzeugende Objekt wird?
+Und vor allem: Wie kann man diese Liste den \emph{passenden} Argumenten
+zuordnen? Da das mit Java nur sehr schwer beziehungsweise unter gewissen
+Umständen unmöglich ist, haben wir uns dafür entschieden, die geforderten
+Parameter der \code{GameCategory}- und \code{Game}-Klasse redundant im Singleton
+als Liste abzulegen. In diesen Listen befinden sich die Attributsnamen aus
+\code{games.xml} in der Reihenfolge wie sie der Konstruktor erwartet.\\ Der
+Vorgang, eine Kategorie ein Objekt der Klasse \code{GameCategory} umzuwandeln,
+sieht also folgendermaßen aus:
+
+\begin{lstlisting}
+private final String[] CATEGORY_ATTRIBUTES = {"icon", "id", "title"};
+private final List<GameCategory> categories = new ArrayList<>();
+private final Map<String, List<Game>> games = new HashMap<>();
+
+&[\dots]&
+
+String[] categoryAttributes = getAttributes(xmlParser, CATEGORY_ATTRIBUTES);
+int categoryIcon = AndroidResources.getResourceIDFromString(categoryAttributes[0]);
+GameCategory category = new GameCategory(categoryIcon, categoryAttributes[1], categoryAttributes[2]);
+stateGameCategory = category.getCategoryId();
+categories.add(category);
+games.put(stateGameCategory, new ArrayList<Game>());
+\end{lstlisting}
+
+Eine Besonderheit befindet sich in diesem Ausschnitt: Die Parameter des
+Konstruktors der Klasse haben unterschiedliche Datentypen. Das Icon wird nämlich
+nicht als String, sondern als Integer, der eine Drawable-Resource referenziert,
+abgespeichert. Da dieses Attribut das erste in \code{CATEGORY\_ATTRIBUTES} ist,
+wird es mithilfe von \code{AndroidResources} in den Integer umgewandelt.\\ Die
+nun erstellbare Kategorie wird in der Instanzliste \code{categories} und als Key
+in der Map \code{games}, welche die Spiele aufnehmen wird, abgelegt. Die Spiele
+selbst funktionieren ganz ähnlich zu den Kategorien.
+
+\begin{lstlisting} 
+String[] gameAttributes = getAttributes(xmlParser, GAME_ATTRIBUTES);
+int gameIcon = AndroidResources.getResourceIDFromString(gameAttributes[0]);
+Game game = new Game(gameIcon, gameAttributes[1], gameAttributes[2], gameAttributes[3], gameAttributes[4], gameAttributes[5]);
+games.get(stateGameCategory).add(game);
+\end{lstlisting}
+
+Da nun die Kategorie, in der das Spiel sich befindet, in
+\code{stateGameCategory} steht, kann ein Spiel zusammen mit seinen Attributen
+einfach der Liste, die an der Kategorie als Schlüssel in der \code{games}-Map
+hängt, hinzugefügt werden. Anschließend werden alle Listen mithilfe der
+Implementierung des Interfaces \code{Comparable} in \code{GameCategory} und
+\code{Game} sortiert.
+
+\subsubsection{Schnittstelle}
+
+Oben wurde erwähnt, dass es sich bei dieser Klasse um ein \emph{Quasi}-Singleton
+handelt. Damit ist gemeint, dass es mit Methoden wie \code{getInstance()} nicht
+sich selbst sondern mit statischen Methoden den Inhalt dieser Instanz
+zurückgibt. Intern befindet sich jedoch ein echtes Singleton, um zu verhindern,
+dass die Spiele-Datei mehrfach geparsed wird. Die Klasse bietet drei
+Schnittstellen, um auf die Spiele- und Kategorienliste zuzugreifen. Sie liefern
+jeweils \textbf{Unmodifiable Collections} zurück.
+
+\begin{itemize}
+\item \code{Map<String, List<Game>> getGameList()}\\
+Liefert die komplette Spieleliste aller Kategorien als Mapping zurück
+\item \code{List<Game> getGameList(String~category)}\\
+Liefert alle Spiele einer Kategorie-ID zurück; siehe \autoref{sssec:categories}
+\item \code{List<GameCategory> getCategoryList()}\\
+Liefert alle Kategorien inklusive IDs zurück
+\end{itemize}
+
+\vspace{5mm}
+\begin{infobox}[frametitle=Unmodifiable Collections]
+Wörtlich übersetzt heißt das in etwa \emph{Unmodifizierbare Sammlungen}. Sie
+stellen einen Oberbegriff zu unter anderem unmodifizierbaren Listen oder Maps
+dar. Solche Datenstrukturen bilden eine Sicht zur ursprünglichen Struktur. Das
+bedeutet, man kann sie zwar modifizieren, jedoch verändern sie die ursprüngliche
+Instanz nicht. Ihr Inhalt passt sich bei Veränderung der Ursprungskollektion
+daran an.
+\end{infobox}
+
+\subsection{Spiele finden}
+
+Der Spielemanager hat noch eine weitere Schnittstelle:
+\code{Game getFromUuid(String uuid)}. Diese Methode erlaubt es, ein Spiel anhand
+der ID dieses zu erhalten. Anders als bei einer Kategorie muss diese im
+XML-Dokument nicht für Spiele definiert werden. Doch woher kommt diese ID? Die
+Antwort darauf lautet: Hashing. Die generierte ID muss eine wichtige Eigenschaft
+erfüllen: Sie muss auch nach Hinzufügen von Spielen und Neustart der App
+konsistent bleiben, also den gleichen Wert besitzen, da ein Spielstand diesen
+referenziert. Wäre das nicht der Fall, so würden Spielstände nur in der
+App-Laufzeit, in der sie erstellt wurden, funktionieren. Daraus schließe man,
+man benötigt eine deterministische Berechnungsart eine ID aus einem Spiel zu
+erzeugen. Und hier kommt Hashing ins Spiel. Wir haben uns dafür für die
+\code{Fowler-Noll-Vo-1a 64-bit} Hash-Funktion ausgesucht, da sie die für uns
+notwendigen Merkmale einer solchen Funktion besitzt. Bei einem Spiel betrachten
+wir zwei Werte als Primärschlüssel: \code{activity} und \code{tag}. Diese
+sollten sich im Gegensatz zu zum Beispiel \code{title}, welcher sich bereits
+beim Wechsel der Systemsprache wechselt, im Laufe des App-Entwicklungsprozesses
+und darüber hinaus nicht verändern. Diese beiden Attribute werden mithilfe der
+String-Methode \code{.hashCode()} als Bytes der Funktion übergeben, um den
+Hash-Wert zu erhalten. Die Gesamtgröße der Berechnung ist relativ kurz und sieht
+folgendermaßen aus:
+
+\begin{lstlisting} 
+private long hash() {
+	String[] strList = {activity, tag};
+	long hash = 0xCBF29CE484222325L;
+	for (String str : strList) {
+		hash ^= str == null ? "null".hashCode() : str.hashCode();
+		hash *= 0x100000001B3L;
+	}
+	return hash;
+}
+\end{lstlisting}
+
+Die beiden Konstanten sind vom Algorithmus vorgegeben. Außerdem wird
+sichergestellt, dass es zu keiner Ausnahme kommt, wenn der String \code{null}
+ist, wie es bei \code{tag} der Fall sein kann. Nun ist sichergestellt, dass die
+ID eindeutig und auch über Neustarts den gleichen Wert aufzeigt.
 
 \section{Der Hub}
 \sectionauthor{\leonard}
