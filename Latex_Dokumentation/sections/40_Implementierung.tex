@@ -642,7 +642,7 @@ Spiele der Welt. Aufgrund der Komplexität und benötigten Weitsichtigkeit
 schaffte es erstmalig erst 1997 der Schachcomputer "Deep Blue" von IBM den
 damalig amtierenden Schachweltmeister Garro Kasparow unter Turnierbedingungen  zu \href{http://www.chessgames.com/perl/chesscollection?cid=1014770}{besiegen}.
 Heutzutage hingegen existieren viele Implementierungen
-fähiger Schachprogramme und KI. In diesem Projekt wurde die Schachengine
+fähiger Schachprogramme und KIs. In diesem Projekt wurde die Schachengine
 \hyperlink{https://github.com/albertoruibal/carballo}{\emph{Carballo}}
 verwendet.
 
@@ -651,7 +651,7 @@ verwendet.
 Für das klassisch karierte Schachbrett wurde die Klasse
 \code{CheckeredGameboardView} erstellt, welche wie der Name schon sagt von der
 Android-Klasse \code{View} erbt. Hauptbestandteil ist ein zweidimensionales
-Array aus Androids\code{Rect}, welche die einzelnen Felder des Spielfelds
+Array aus Androids \code{Rect}, welche die einzelnen Felder des Spielfelds
 darstellen. Diese werden nach Aufruf von \code{onSizeChanged} der Größe des
 Displays angepasst und je nach Einstellung um die Stärke des gewünschten Randes
 verschoben, sodass auf jedem Gerät ein identisches Spielerlebnis erzeugt werden
@@ -725,17 +725,17 @@ Spielfelds überschrieben, wobei der \code{ChessWrapper} die nötigen Daten
 mittels eines FEN-Strings liefert. Die Methode \code{addImages()}, welche die 
 korrekten Größen und Koordinaten der Bilder festlegt darf allerdings erst 
 aufgerufen werden nachdem das Layout des Spielfeldes gesetzt wurde, da sich eine 
-Imageview auf die Große des darunterliegenden \code{Rect} bezieht, welches zuvor 
+Imageview auf die Größe des darunterliegenden \code{Rect} bezieht, welches zuvor 
 noch nicht gesetzt wäre. Mithilfe des \code{ViewTreeObserver} welcher den 
 Listener \code{addOnGlobalLayoutListener()} zur Verfügung stellt kann dieses 
 Problem einfach gelöst werden. Für die weitere Verwendung kann 
 \code{addImages()} problemlos verwendet werden, da sich das Layout von nun an 
 nicht ändert. Mit \code{ setupRecyclerView()} wird die RecyclerView mit eigens 
-geschriebenen Adaptern aufgesetzt\newline
-Damit man die Spielfelder später auch antippen kann wird letztendlich der 
-\code{CheckeredGameboardView} ein \code{OnTouchListener} angelegt, welcher bei 
-einem Touch-Event das entsprechende Kästchen des Spielfeldes als Tuple-paar an 
-die Methode \code{onSquareClicked()} übergibt.
+geschriebenen Adaptern aufgesetzt. Damit man die Spielfelder später auch 
+antippen kann wird letztendlich der \code{CheckeredGameboardView} ein 
+\code{OnTouchListener} angelegt, welcher bei einem Touch-Event das entsprechende 
+Kästchen des Spielfeldes als Tuple-paar an die Methode \code{onSquareClicked()} 
+übergibt.
 
 \subsubsection{setFieldFromFEN()}
 
@@ -755,7 +755,7 @@ und dem ausgelesenem Buchstaben heraussuchen kann.
 
 Die Methode \code{onSquarClicked()} ist das Herzstück der Chess Activity und
 besitzt die komplette Logik welche die Züge des Spielers verwaltet. Sie bekommt
-vom \code{OnTouchListener} des Spielfedes die Koordinaten des Feldes zurrück auf
+vom \code{OnTouchListener} des Spielfedes die Koordinaten des Feldes zurück auf
 welches gerade getippt wurde. Ob dieses Tupel nun eine Auswirkung auf das Spiel
 hat hängt von einer Vielzahl von Eigenschaften ab, welche elegant mit boolescher
 Algebra kombiniert werden können. Falls man zuvor noch nicht auf ein Feld
@@ -780,7 +780,7 @@ Figuren zu einem Schachmatt ausbauen könnte. Ebenfalls kann es in sehr seltenen
 Fällen vorkommen, das ein Springer, welcher andere Angriffsmöglichkeiten als die 
 Dame hat als neue Figur zu einem sofortigen Gewinn des Spieles führen könnte. 
 Deswegen muss man auswählen können, welche der Vier Figuren Dame, Läufer, Turm 
-und Springer man als Promotionsfigur wählt. Dies wird durch einen Alterdialog 
+und Springer man als Promotionsfigur wählt. Dies wird durch einen Alertdialog 
 realisiert, welcher Vier Imageviews für die entsprechenden Figuren besitzt, jede 
 von ihnen mit einem eigenen \code{PromotionClickListener}, welcher den Dialog 
 beendet und den entsprechenden  \code{promotionmove} mit der jeweiligen neuen 
@@ -823,7 +823,7 @@ eine große Hilfe. Diese Bibliothek brachte auch Mau-Mau und Bauernkrieg bereits
 mit, welche beide lediglich abgeändert werden mussten.  Aus diesem Grund
 fokussieren wir uns in diesem Teil auf Schafkopf, zumal in diesem Spiel alles
 verwendet wird, was auch in den anderen beiden verwendet wird. Jedem Spiel ist
-ein Menu mit \emph{Start} Knopf vorgeschalten, in welchem man die Regeln
+ein Menü mit \emph{Start} Knopf vorgeschalten, in welchem man die Regeln
 nochmals lesen könnte.
 
 \subsection{Ranks und Suits}
