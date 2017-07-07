@@ -1176,11 +1176,12 @@ private SavegameStorage() {
 }
 \end{lstlisting}
 
-In Zeile Zeile~\ref{line:SharedPref} sieht man die Zuweisung der \textbf{SharedPreferences} Variable
-durch die Methode \code{getSharedPreferences(..., ...)}, welche als erstes
-Argument den Dateinamen enthält und als zweites einen Zugriffsmodus, welcher in
-diesem Fall der \emph{MODE\_PRIVATE} ist. Dieser Modus verhindert den Zugriff
-anderer Apps auf die gespeicherten Daten.\\ Weiter erkennt man das Laden des
+In Zeile Zeile~\ref{line:SharedPref} sieht man die Zuweisung der
+\textbf{SharedPreferences} Variable durch die Methode
+\code{getSharedPreferences(..., ...)}, welche als erstes Argument den Dateinamen
+enthält und als zweites einen Zugriffsmodus, welcher in diesem Fall der
+\emph{MODE\_PRIVATE} ist. Dieser Modus verhindert den Zugriff anderer Apps auf
+die gespeicherten Daten.\\ Weiter erkennt man das Laden des
 \textbf{JSON}-Strings durch \code{savegamesSharedP.getString(Key, Defaultwert)}.
 Wenn dieser String dann etwas beinhaltet, dann wird er deserialisiert und
 zugewiesen, ansonsten wird mit einer leeren Liste gearbeitet.
