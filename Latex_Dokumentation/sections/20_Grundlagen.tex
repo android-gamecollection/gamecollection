@@ -83,3 +83,27 @@ zu erläutern. Zuerst muss ein Textactor mit einem String initialisiert werden
 braucht jeder Actor eine Location. Mit \code{addActor(TextActor, Location)}
 zeigt man den Actor auf dem Board an, und mit \code{removeActor(TextActor)}
 wird dieser wieder entfernt.
+
+\section{Carballo Library}
+\sectionauthor{\oliver}
+Da zusätzlich eine eigene Schach-Library zu schreiben den Ramen des 
+Programmierprojektes sprengen würde wird eine Library für die Schach-Logik 
+verwendet. Nachdem anfangs die Library 
+\href{http://www.chesspresso.org/}{Chesspresso} verwendet wurde, wurde bald 
+danach auf die \href{https://github.com/albertoruibal/carballo}{Carballo} 
+Library gewechselt, da diese eine erhöhte Funktionalität und 
+Benutzerfreundlichkeit aufweist. Trotz einer fehlenden Dokumentation und nur 
+sehr bedingt auffindbaren Kommentaren konnte mit Hilfe des Quellcodes der 
+Webseite \href{https://www.mobialia.com/webchessgwt/}{www.mobilia.com} welche 
+ebenfalls Carballo als Engine verwendet die Library zum laufen gebracht werden.
+
+\subsection{Board}
+Die Klasse \code{Board} stellt das Spielfeld dar. Es kann je nach belieben mit 
+einem FEN-String initialisiert werden oder einfach mit der standard Schach 
+Aufstellung beginnen. Alle wichtigen Funktionen, wir das setzen und Rückgängig 
+machen von Zügen und das ausgeben des Spielfeldes als FEN-String werden hier 
+untergebracht. Beim erschaffen des Boardes ist darauf zu achten, das man bei 
+Benutzung der KI das Board nicht selber erstellt wird, sondern aus der 
+\code{SearchEngine} bekommt, nachdem diese Wiederum mit einer \code{Config} 
+gestartet wurde, da ansonsten KI und Spieler auf unterschiedlichen Boards 
+spielen würden.
