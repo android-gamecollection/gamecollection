@@ -16,7 +16,11 @@ jeder Screen einer App eine eigene Activity, sodass eine Aktivität als
 wird.
 
 \subsection{Activity Lifecycle}
-Der Activity Lifecycle beschreibt den Lebenszyklus einer Aktivität. Neben den drei Zuständen die eine Aktivität besitzt, beschreibt der Lifecycle auch die Methoden der Klasse \code{Activity}, welche nach belieben überschrieben werden können um bestimmte Statusübergänge zu programmieren.
+Der Activity Lifecycle beschreibt den Lebenszyklus einer Aktivität. Neben den 
+drei Zuständen die eine Aktivität besitzt, beschreibt der Lifecycle auch die 
+Methoden der Klasse \code{Activity}, welche nach belieben überschrieben werden 
+können um bestimmte Statusübergänge zu programmieren.
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{resources/android/lifecycle}
@@ -30,8 +34,11 @@ Die drei genannten zustände sind:
 nicht komplett. Die Aktivität ist von voll intakt und \emph{am leben}. Das 
 Android System kann die Aktivität bei niedrigem Speicher zerstören)
 	\item \code{Stopped} (Die Aktivität ist komplett im Bildschirmhintergrund. Auch 
-diese Aktivität ist intakt und kann vom System zu Speicherzwecken gelöscht 
-werden)
+diese Aktivität ist noch intakt, kann aber vom System aus Speichergründen 
+gelöscht werden)
+
+
+
 	
 \end{itemize}
 Im folgenden werden alle überschreibbaren Lifecycle-Callbacks im grundlegenden erklärt:
