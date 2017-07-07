@@ -323,12 +323,12 @@ private final char tagHub = '0', tagCards = '1', tagBoard = '2', tagInfo = '3', 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setDefaultValuesOfSettingsFirstTime();
+	setDefaultValuesOfSettingsFirstTime(); &\label{line:setDefault}&
 	setContentView(R.layout.activity_hub);
 	setupActionBar();
 
-	drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-	navigationView = (NavigationView) findViewById(R.id.nav_view);
+	drawer = (DrawerLayout) findViewById(R.id.drawer_layout); &\label{line:drawer1}&
+	navigationView = (NavigationView) findViewById(R.id.nav_view); &\label{line:drawer2}&
 
 	setupNavigationView();
 
@@ -341,16 +341,17 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 \end{lstlisting}
 
-Die Methode in Zeile 39 setzt die Standardwerte der \emph{Einstellungen}, sie
-wird nur aufgerufen wenn die App das erste mal startet. Weiter setzt
-\code{setupActionBar()}, die \textbf{Toolbar} auf. Zeile 43 \& 44 weisen die
-\textbf{Views} für den \emph{NavDrawer} zu und \code{setupNavigationView()}
-definiert den \emph{NavDrawer} mit den jeweiligen Klick-Events. Die
-\code{if(...)} Abfrage überprüft ob die App neu gestartet wurde und setzt
-dementsprechend den \code{currentTag} auf \code{tagHub}, also dem Spielehub,
-oder behält den momentanen und setzt den richtigen Titel für die
-\textbf{Toolbar}. Die Variablen für die Tags werden als \code{final char}
-zugewiesen, um nicht veränderbar zu sein.
+Die Methode in Zeile~\ref{line:setDefault} setzt die Standardwerte der
+\emph{Einstellungen}, sie wird nur aufgerufen wenn die App das erste mal
+startet. Weiter setzt \code{setupActionBar()}, die \textbf{Toolbar} auf.
+Zeile~\ref{line:drawer1} \& \ref{line:drawer2} weisen die \textbf{Views} für den
+\emph{NavDrawer} zu und \code{setupNavigationView()} definiert den
+\emph{NavDrawer} mit den jeweiligen Klick-Events. Die \code{if(...)} Abfrage
+überprüft ob die App neu gestartet wurde und setzt dementsprechend den
+\code{currentTag} auf \code{tagHub}, also dem Spielehub, oder behält den
+momentanen und setzt den richtigen Titel für die \textbf{Toolbar}. Die Variablen
+für die Tags werden als \code{final char} zugewiesen, um nicht veränderbar zu
+sein.
 
 \begin{lstlisting}[caption={Hub loadHomeFragment() Methode},captionpos=b]
 private void loadHomeFragment() {
