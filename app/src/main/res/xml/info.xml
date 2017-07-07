@@ -7,12 +7,16 @@
 
         <Preference
             android:key="@string/library_carballo_key"
-            android:summary="Für mehr Information drücken"
-            android:title="Carballo Chess Engine" />
+            android:summary="@string/more_information"
+            android:title="@string/library_carballo_title" />
         <Preference
             android:key="@string/library_jdroidlib_key"
-            android:summary="Für mehr Information drücken"
-            android:title="JDroidLib" />
+            android:summary="@string/more_information"
+            android:title="@string/library_jdroidlib_title" />
+        <Preference
+            android:key="@string/library_colorpicker_key"
+            android:summary="@string/more_information"
+            android:title="@string/library_colorpicker_title" />
 
     </PreferenceCategory>
 

@@ -26,6 +26,7 @@ public class InfoFragment extends PreferenceFragment implements Serializable {
     private void addOnClickListeners() {
         Preference carballoPreference = findPreference(getString(R.string.library_carballo_key));
         Preference jDroidLibPreference = findPreference(getString(R.string.library_jdroidlib_key));
+        Preference colorPickerPreference = findPreference(getString(R.string.library_colorpicker_key));
         Preference oliver = findPreference(getString(R.string.info_authors_oliver_key));
         Preference philipp = findPreference(getString(R.string.info_authors_philipp_key));
         Preference leonard = findPreference(getString(R.string.info_authors_leonard_key));
@@ -33,6 +34,7 @@ public class InfoFragment extends PreferenceFragment implements Serializable {
 
         carballoPreference.setOnPreferenceClickListener(new DialogClickListener(R.string.library_carballo_title, R.string.library_carballo_text));
         jDroidLibPreference.setOnPreferenceClickListener(new DialogClickListener(R.string.library_jdroidlib_title, R.string.library_jdroidlib_text));
+        colorPickerPreference.setOnPreferenceClickListener(new DialogClickListener(R.string.library_colorpicker_title, R.string.library_colorpicker_text));
         oliver.setOnPreferenceClickListener(new MediaClickListener());
         philipp.setOnPreferenceClickListener(new MediaClickListener());
         leonard.setOnPreferenceClickListener(new MediaClickListener());
