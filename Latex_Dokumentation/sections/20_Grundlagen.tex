@@ -97,6 +97,35 @@ sehr bedingt auffindbaren Kommentaren konnte mit Hilfe des Quellcodes der
 Webseite \href{https://www.mobialia.com/webchessgwt/}{www.mobilia.com} welche 
 ebenfalls Carballo als Engine verwendet die Library zum laufen gebracht werden.
 
+\subsection{Config}
+Die \code{Config} ist wie der Name schon sagt für die Konfiguration eines Spiels 
+zuständig. In ihr wird festgelegt, um welche Art von Schach es sich handelt, wie 
+Stark die KI ist und ob ein Startbuch verwendet wird, welches die KI in den 
+ersten Zügen unterstützen würde. Standardmäßig ist  ein normales Schach Spiel 
+mit Startbuch eingestellt, obwohl keines mitgeliefert wurde. Dies hat zwar keine 
+Auswirkungen auf den Spielverlauf, sollte aber dennoch mithilfe einer der für 
+alle Attribute verfügbaren Setter-Methoden konfiguriert werden.
+
+\subsection{SearchParameters}
+Die Klasse \code{SearchParameters} enthält wichtige Informationen welche später 
+ausschlaggebend für die stärke der Künstlichen Intelligenz sind. So kann man 
+hier mithilfe einer der vielen Getter und Setter-Methoden einstellen, wie lange 
+die KI maximal für einen Zug brauchen darf. Eine effektivere Methode die 
+Intelligenz zu regeln ist jedoch die maximale Suchtiefe der KI festzulegen, was 
+sich bei versuchen mit Suchtiefen 1,6 und 12 als passend herausgestellt hat.
+
+\subsection{SearchEngine}
+Die \code{SearchEngine} ist das Herzstück der Künstlichen Intelligenz von 
+Carballo und besitzt dementsprechend ein menge komplizierter Methoden von denen 
+man zum Glück nur eine handvoll selber ausführt. Zum Initialisieren benötigt man 
+eine vorher erstelle \code{Config}, welche man dem Konstruktor übergibt. 
+daraufhin sollte man \code{SearchParameters} mit der 
+Methode \code{setInitialSearchParameters()} übergeben um seine KI richtig 
+einzustellen. Um den besten berechneten Move zu bekommen muss man zuerst das 
+Runnable von dem \code{SearchEngine} erbt laufen lassen und dann 
+\code{getBestMove()} aufrufen, was einen Integer im Move-format zurückgibt, 
+später dazu mehr.
+
 \subsection{Board}
 Die Klasse \code{Board} stellt das Spielfeld dar. Es kann je nach belieben mit 
 einem FEN-String initialisiert werden oder einfach mit der standard Schach 
@@ -107,3 +136,13 @@ Benutzung der KI das Board nicht selber erstellt wird, sondern aus der
 \code{SearchEngine} bekommt, nachdem diese Wiederum mit einer \code{Config} 
 gestartet wurde, da ansonsten KI und Spieler auf unterschiedlichen Boards 
 spielen würden.
+
+\subsection{Move}
+Die Klasse \code{Move} erstellt nicht wie zunächst vermuten lässt Elemente von 
+Move. Jeder Move der an das Spielfeld geht wird von der Klasse \code{Move} durch 
+verschiedene Methoden generiert und als Integer übergeben. Dies wurde 
+anscheinend aufgrund von Performancegründen so realisiert. Die wichtigste dieser 
+Methoden ist wohl \code{getFromString}, welcher man einen für Menschen 
+verständlichen Schachzug übergibt und in einen für das \code{Board} 
+verständliche Version umwandelt. Für Debug-Zwecke kann man sich entscheiden 
+diesen Move nicht zu validiert, sodass ungültige Züge gesetzt werden können. 
