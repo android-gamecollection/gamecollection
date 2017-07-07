@@ -183,11 +183,6 @@ public class Hub extends Fragment {
         tintFabs();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
     private void setupAdapter() {
         savegameAdapter = new SavegameAdapter();
         savegameAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {

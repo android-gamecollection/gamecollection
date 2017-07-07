@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/action_bar"
-        layout="@layout/fragment_app_bar" />
+        layout="@layout/app_bar" />
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/chess_coordinatorlayout"

@@ -139,7 +139,7 @@ public abstract class GameActivity extends AppCompatActivity {
 
     /**
      * Gets called when setting the content view of the activity
-     * The returned layout has to include the layout '@layout/fragment_app_bar'
+     * The returned layout has to include the layout '@layout/app_bar'
      *
      * @return The reference to the layout
      */

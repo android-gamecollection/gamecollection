@@ -587,7 +587,39 @@ flüssiger wirkt.
 \subsection{Navigation Drawer}
 
 Als Menü verwenden wir einen \emph{Navigation-Drawer}, welcher nur im \emph{Hub}
-zur Verfügung steht und wie folgt aufgebaut ist.
+zur Verfügung steht. Seine Bestandteile sind:
+\begin{enumerate}
+\item activity\_hub.xml
+\item fragment\_hub.xml
+\item app\_bar.xml
+\item nav\_header\_main.xml
+\item nav\_drawer\_items.xml
+\end{enumerate}
+
+Im \emph{Activity-Hub} wird er verwaltet. Die Zusammensetzung dieser vielen
+\textbf{Layout}-Dateien ist etwas unübersichtlich. Sie stehen wie folgt
+zueinander:
+
+1. Das ist das Grundlegende Layout des \emph{Activity-Hub} welcher als Wurzel
+ein \textbf{DrawerLayout} besitzt. Zu dem importiert er die 2. als erstes Kind 
+und hat einen \textbf{NavigationView} als zweites Kind. Dieses zweite Kind
+deklariert das \textbf{HeaderLayout} mit 4. und das \textbf{Menu} mit 5.
+
+Die 2. besteht aus einem \textbf{CoordinatorLayout} als Wurzel und importiert
+die 3. welche die \textbf{Toolbar} darstellt. Außerdem enthält sie ein
+\textbf{FrameLayout} für die \textbf{Fragments} des \emph{Hub}.
+
+Die 4. und die 5. beschreiben jeweils den Kopf des \emph{NavDrawer} (Header) und
+die einzelnen Listen-Objekte (Menu).
+
+\subsubsection{Hinzufügen}
+Wenn man nun eine neue Kategorie hinzufügen wollte, zum Beispiel eine neue
+Spiele-Sorte, so müsste man diese im \code{nav\_drawer\_items.xml} als
+\textbf{item} definieren. Und im Hub dementsprechend einen neuen \emph{Tag}
+anlegen, sowie die Methoden \code{setupNavigationView()} \&
+\code{getHomeFragment()} bearbeiten. Natürlich müsste man auch ein neues
+\textbf{Fragment} oder eine neue \textbf{Activity} erstellen, oder das gegebene
+\textbf{Fragment} \code{GameSelection} weiter aufteilen.
 
 
 \section{Chess}
