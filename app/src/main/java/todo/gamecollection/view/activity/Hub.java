@@ -27,7 +27,6 @@ public class Hub extends AppCompatActivity {
 
     private final char tagHub = '0', tagCards = '1', tagBoard = '2', tagInfo = '3', tagSettings = '4';
     // index to identify current nav menu item
-    // I hope this last commit wont destroy the app
     public char currentTag = tagHub;
     private NavigationView navigationView;
     private DrawerLayout drawer;
