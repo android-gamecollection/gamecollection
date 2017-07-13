@@ -1,0 +1,41 @@
+\chapter{Ausblick}
+\chapterauthor{\frank}
+
+Trotz des sehr großen Erfolges unseres Programmierprojektes, gibt es immer noch
+Sachen, die man vielleicht doch noch zu unserer Applikation hinzufügen möchte.
+Oder vielleicht gibt es ja Sachen, die es aufgrund der relativ kurzen Zeit nicht
+hinein geschafft werden. Ein paar dieser Dinge und Ideen werden im Folgenden
+aufgelistet.
+
+\section{Module}
+
+Mit unserem Projekt lassen sich ziemlich einfach neue Spiele hinzufügen. Alles,
+was man dafür tun muss ist, das Spiel in \code{games.xml} einzutragen und die
+benötigten Klassen und Resourcendateien hinzuzufügen. Auch die Vererbung von der
+Klasse \code{GameActivity} erleichtert die ganze Sache ungemein.\\ Doch ein
+großer Nachteil bleibt: Um ein neues Spiel hinzufügen zu können braucht man
+immer noch Einsicht und Zugriff auf den Quellcode der Applikation. Wie wäre es,
+wenn man Spiele einfach von einem Repository herunterladen könnte, um sie der
+App hinzuzufügen? Das Format hierfür würde einer API entsprechen, die ein Spiel
+ansprechen kann. Man kann es sich ähnlich wie eine Spielemodifikation für
+Minecraft oder Factorio -- wer es kennt -- vorstellen. Das Spiel wird als
+ZIP-Datei in einen bestimmten Ordner eingefügt und kann dann beim Starten der
+Applikation automatisch aus diesen Dateien geladen und dem Spielmenü hinzugefügt
+werden. Die Struktur dieser Datei selbst würde aus einer Meta-Beschreibung des
+Spiels und dem eigentlichen Spielinhalt bestehen. Diese Idee kann mit einem
+zentralen Online-Repo und InApp-Downloadmöglichkeit verknüpft werden.
+
+\section{Onlinespiele}
+
+Aktuell ist man limitiert auf das Spielen an einem Gerät. Ob gegen den Computer
+oder gegen den besten Freund gegenüber, beides ist möglich. Doch was ist, wenn
+mal keinen Kumpel in der Nähe hat und die KI einem irgendwann langweilig wird?
+Für den, der lieber im Keller sozial ist, wäre die Lösung: ein asynchroner
+Onlinemodus. Hierfür werden die Spielstände zusammen mit Meta-Informationen, wie
+etwa den beteiligten Spielern auf einem Server gespeichert. Anschließend kann
+der gegnerische Spieler die entsprechenden Daten des Servers bei sich
+herunterladen und den nächsten Zug ausführen. Das wäre ein ziemlich großes
+Unterfangen, denn man braucht nicht nur die ganze Logik, die dahinter steckt,
+sondern auch die Infrastruktur mit Datenbank und Wartungsarbeiten -- wie etwa
+veraltete Spielstände zu löschen. Der Umfang hier wäre wieder in etwa so groß
+wie die Dauer eines gesamten Programmierprojektes.
