@@ -27,6 +27,8 @@ public class Hub extends AppCompatActivity {
 
     private final char tagHub = '0', tagCards = '1', tagBoard = '2', tagInfo = '3', tagSettings = '4';
     // index to identify current nav menu item
+    // this is the test-file for testing github commits now :)
+    // this is now a dialog
     public char currentTag = tagHub;
     private NavigationView navigationView;
     private DrawerLayout drawer;
