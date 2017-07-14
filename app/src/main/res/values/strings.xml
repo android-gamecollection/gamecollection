@@ -128,12 +128,12 @@
     <string name="info_authors_oliver_summary">Schach ♜</string>
     <string name="info_authors_oliver_key">info_authors_oliver</string>
     <string name="info_authors_philipp_title">Philipp Jung</string>
-    <string name="info_authors_philipp_summary">Kartenspiele 🂠</string>
+    <string name="info_authors_philipp_summary">Kartenspiele</string>
     <string name="info_authors_philipp_key">info_authors_philipp</string>
     <string name="info_authors_leonard_title">Leonard Nickels</string>
-    <string name="info_authors_leonard_summary">User Interface und Spielstände 🎮</string>
+    <string name="info_authors_leonard_summary">User Interface und Spielstände</string>
     <string name="info_authors_leonard_key">info_authors_leonard</string>
     <string name="info_authors_frank_title">Frank Rügamer</string>
-    <string name="info_authors_frank_summary">Spiele-Framework 🎲☜ und Schach</string>
+    <string name="info_authors_frank_summary">Spiele-Framework ☜ und Schach</string>
     <string name="info_authors_frank_key">info_authors_frank</string>
 </resources>

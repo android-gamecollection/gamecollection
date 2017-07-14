@@ -111,6 +111,7 @@ public abstract class GameActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         saveGame();
         savedInstanceState.putString(KEY_SAVEGAME_UUID, savegameUuid);
+        savedInstanceState.putString(KEY_GAME_UUID, game.getUuid());
     }
 
     protected abstract void onLoadGame(@Nullable Bundle savegame);
