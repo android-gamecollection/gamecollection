@@ -65,6 +65,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/fragment_hub_empty_text"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
 </android.support.design.widget.CoordinatorLayout>

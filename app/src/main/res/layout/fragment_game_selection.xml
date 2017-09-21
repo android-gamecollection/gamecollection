@@ -4,11 +4,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_game_selection"
-        android:background="@color/backgroundDarker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroundDarker"
         android:clipToPadding="false"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp" />
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp" />
 
 </FrameLayout>

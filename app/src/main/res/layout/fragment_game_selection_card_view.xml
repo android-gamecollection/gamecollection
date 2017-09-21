@@ -4,10 +4,10 @@
     android:id="@+id/cardview_game_selection"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="6dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="6dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="4dp"
     card_view:cardBackgroundColor="@color/background"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2dp">
@@ -16,31 +16,36 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="8dp">
 
         <ImageView
             android:id="@+id/image_game"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:layout_marginStart="4dp"
             android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/text_game_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@+id/image_game"
-            android:textSize="30sp" />
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/image_game"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_game_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_game_title"
-            android:layout_toEndOf="@+id/image_game" />
+            <TextView
+                android:id="@+id/text_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/text_game_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
